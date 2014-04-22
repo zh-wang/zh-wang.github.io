@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Android | Welcome to FutureAppLaboratory]]></title>
+  <link href="http://zh-wang.github.io/blog/categories/android/atom.xml" rel="self"/>
+  <link href="http://zh-wang.github.io/"/>
+  <updated>2014-04-22T18:10:52+09:00</updated>
+  <id>http://zh-wang.github.io/</id>
+  <author>
+    <name><![CDATA[viennakanon]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mozc完全解析01]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01/"/>
+    <updated>2014-04-22T12:20:06+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<h2>(1) ソースを手に入れよう</h2>
+
+<p>ここからダウンロード　<a href="https://code.google.com/p/mozc/">mozc project from google code</a></p>
+
+<p>今回使うmozcのバージョンは
+<code>
+MAJOR=1
+MINOR=10
+BUILD=1390
+REVISION=103
+ANDROID_VERSION_CODE=1794
+FLAG=RELEASE
+TARGET_PLATFORM=Android
+ANDROID_APPLICATION_ID=org.mozc.android.inputmethod.japanese
+ANDROID_SERVICE_NAME=org.mozc.android.inputmethod.japanese.MozcService
+</code></p>
+
+<p>android版のビルドはMac非対応なので、vagrantを通してVMのubuntuでビルドします。<br/>
+こちらのリポジトリを使えば楽です。
+<a href="https://github.com/niw/mozc">https://github.com/niw/mozc</a></p>
+
+<p>デフォルトでビルドすると、eclipseで開けるプロジェクトは作ってくれないので、手動で作りました。こちらからダウンロードできます。
+<a href="https://dl.dropboxusercontent.com/u/40868784/mozc_android.zip">https://dl.dropboxusercontent.com/u/40868784/mozc_android.zip</a>
+フォルダ自体とその中のprotobuff, resources_ossをeclipseにインポートすればOK。後はMozcProxyPreferenceActivityというプロジェクトを実行するだけ。</p>
+
+<p>※ ビルドする際に、"SDK does not have any Build Tools installed.&ldquo;が表示されたら、Build Toolsをダウンロードする必要があります。<br/>
+<code>
+$ /usr/bin/curl -L -O 'http://dl.google.com/android/repository/build-tools_r19-linux.zip' &amp;&amp; unzip build-tools_r19-linux.zip -d /opt/android/android-sdk-linux/build-tools/
+$ mv /opt/android/android-sdk-linux/build-tools/android-4.4 /opt/android/android-sdk-linux/build-tools/19.0.0
+</code></p>
+
+<h2>(2) キーのタッチから、変換候補がもらうまで、簡単な解析をやります</h2>
+
+<p>android側のフリックキーボードで「あ」を押し、タッチエベントを発生される。そうすると、以下のコードが順番的に実行されます。</p>
+
+<p>org.mozc.android.inputmethod.japanese.ViewManager:260:onKey<br/>
+ここでViewのタッチエベントをキャッチする。<br/>
+↓<br/>
+org.mozc.android.inputmethod.japanese.MozcService:245:onKeyEvent  <br/>
+メーンサービスでKeyEventを処理する。</p>
+
+<p>```java</p>
+
+<pre><code>@Override
+public void onKeyEvent( ProtoCommands.KeyEvent mozcKeyEvent, KeyEventInterface keyEvent, KeyboardSpecification keyboardSpecification, List&lt;? extends TouchEvent&gt; touchEventList) {
+
+...
+
+  sendKeyWithKeyboardSpecification(mozcKeyEvent, keyEvent,
+                                   keyboardSpecification, getResources().getConfiguration(),
+                                   touchEventList);
+}
+</code></pre>
+
+<p>```</p>
+
+<p>↓<br/>
+org.mozc.android.inputmethod.japanese.MozcService:968:sendKeyWithKeyboardSpecification</p>
+
+<p><code>java
+  /**
+   * Sends mozcKeyEvent and/or Request to mozc server.
+   *
+   * This skips to send request if the given keyboard specification is
+   * same as before.
+   */
+  boolean sendKeyWithKeyboardSpecification( ...
+</code>
+↓<br/>
+org.mozc.android.inputmethod.japanese.session.SessionExecutor:626:sendKey</p>
+
+<p>```java
+  /<em>*
+   * Sends {@code SEND_KEY} command to the server asynchronously.
+   </em>/
+  public void sendKey(ProtoCommands.KeyEvent mozcKeyEvent, KeyEventInterface triggeringKeyEvent, List&lt;? extends TouchEvent> touchEventList, EvaluationCallback callback) {</p>
+
+<pre><code>...
+
+evaluateAsynchronously(inputBuilder, triggeringKeyEvent, callback);
+</code></pre>
+
+<p>  }
+```</p>
+
+<p>↓<br/>
+org.mozc.android.inputmethod.japanese.session.SessionExecutor:612:evaluateAsynchronously<br/>
+asyncなので、handlerに渡します。<br/>
+```java
+  void evaluateAsynchronously(Input.Builder inputBuilder, KeyEventInterface triggeringKeyEvent, EvaluationCallback callback) {</p>
+
+<pre><code>...
+
+handler.sendMessage(handler.obtainMessage(type, context));
+</code></pre>
+
+<p>  }
+```</p>
+
+<p>↓<br/>
+org.mozc.android.inputmethod.japanese.session.SessionExecutor:300:handlerMessage<br/>
+SessionExecutorの中のExecutorMainCallbackがmessageを取り、処理する。<br/>
+```java
+  /<em>*
+   * A core implementation of evaluation executing process.
+   *
+   * <p>This class takes messages from the UI thread. By using {@link SessionHandler},
+   * it evaluates the {@link Input} in a message, and then returns the result with notifying
+   * the UI thread if necessary.
+   * All evaluations should be done with this class in order to keep evaluation in the incoming
+   * order.
+   * Package private for testing purpose.
+   </em>/
+  static class ExecutorMainCallback implements Handler.Callback {</p>
+
+<pre><code>...
+
+@Override
+public boolean handleMessage(Message message) {
+  // Dispatch the message.
+  switch (message.what) {
+    case INITIALIZE_SESSION_HANDLER:
+      sessionHandler.initialize(Context.class.cast(message.obj));
+      break;
+    case DELETE_SESSION:
+      deleteSession();
+      break;
+    case EVALUATE_ASYNCHRONOUSLY:
+    case EVALUATE_KEYEVENT_ASYNCHRONOUSLY:
+      evaluateAsynchronously(
+          AsynchronousEvaluationContext.class.cast(message.obj), message.getTarget());
+...
+</code></pre>
+
+<p>```</p>
+
+<p>↓<br/>
+org.mozc.android.inputmethod.japanese.session.SessionExecutor:459<br/>
+```java</p>
+
+<pre><code>  context.outCommand = evaluate(inputBuilder.build());
+</code></pre>
+
+<p>```</p>
+
+<p>↓<br/>
+org.mozc.android.inputmethod.japanese.session.SessionExecutor:333<br/>
+ここで、JNIを通してnative変換エンジンと通信する。（同期で）
+```java</p>
+
+<pre><code>private Command evaluate(Input input) {
+    ...
+    Command outCommand = sessionHandler.evalCommand(inCommand);
+    ...
+}
+</code></pre>
+
+<p>```</p>
+
+<p>↓<br/>
+org.mozc.android.inputmethod.japanese.session.LocalSessionHandler:100<br/>
+```java
+  @Override
+  public Command evalCommand(Command command) {</p>
+
+<pre><code>byte[] inBytes = command.toByteArray();
+byte[] outBytes = null;
+outBytes = MozcJNI.evalCommand(inBytes);
+try {
+  return Command.parseFrom(outBytes);
+} catch (InvalidProtocolBufferException e) {
+  MozcLog.w("InvalidProtocolBufferException is thrown."
+      + "We can do nothing so just return default instance.");
+  MozcLog.w(e.toString());
+  return Command.getDefaultInstance();
+}
+</code></pre>
+
+<p>  }
+```</p>
+
+<p>ここでのCommand.parseFrom(outBytes)をデーバッグすると、以下の入力、出力、変換候補リストが分かります。</p>
+
+<p>```ruby
+  input {</p>
+
+<pre><code>type: SEND_KEY
+id: 6381052470309579002
+key {
+    key_code: 49
+  }
+touch_events {
+    source_id: 2
+    stroke {
+          action: TOUCH_DOWN
+          x: 0.30168644
+          y: 0.16023746
+          timestamp: 0
+        }
+    stroke {
+          action: TOUCH_UP
+          x: 0.30168644
+          y: 0.16023746
+          timestamp: 25
+        }
+  }
+</code></pre>
+
+<p>  } <br/>
+  output {</p>
+
+<pre><code>id: 6381052470309579002
+mode: HIRAGANA
+consumed: true
+preedit {
+  cursor: 1
+  Segment {
+        annotation: UNDERLINE
+        value: "\343\201\204"
+        value_length: 1
+        key: "\343\201\204"
+      }
+ }
+ candidates {
+  size: 151
+  Candidate {
+        index: 0
+        value: "\343\201\204\343\202\215"
+        annotation {
+                description: "Suffix"
+              }
+        id: 0
+      }
+  Candidate {
+        index: 1
+        value: "\343\201\204"
+        annotation {
+                description: "Realtime"
+              }
+        id: 1
+      }
+  Candidate {
+        index: 2
+        value: "\350\203\203"
+        annotation {
+                description: "Realtime"
+              }
+        id: 2
+      }
+  Candidate {
+        index: 3
+        value: "\343\201\203"
+        annotation {
+                description:
+            "\346\215\250\343\201\246\344\273\256\345\220\215
+                \345\260\217\346\233\270\343\201\215\346\226\207\345\255\227"
+              }
+        id: 3
+      }
+
+  ... // 省略
+
+  Candidate {
+        index: 8
+        value: "\344\275\215"
+        annotation {
+                description: "Realtime"
+              }
+        id: 8
+      }
+  position: 0
+  category: SUGGESTION
+  display_type: MAIN
+  footer {
+        label:
+      "Tab\343\202\255\343\203\274\343\201\247\351\201\270\346\212\236"
+      }
+}
+</code></pre>
+
+<p>  status {</p>
+
+<pre><code>  activated: true
+  mode: HIRAGANA
+  comeback_mode: HIRAGANA
+}
+</code></pre>
+
+<p>  all_candidate_words {</p>
+
+<pre><code>  candidates {
+        id: 0
+        index: 0
+        key: "\343\201\204\343\202\215"
+        value: "\343\201\204\343\202\215"
+        annotation {
+                description: "Suffix"
+              }
+      }
+  candidates {
+        id: 1
+        index: 1
+        value: "\343\201\204"
+        annotation {
+                description: "Realtime"
+              }
+      }
+  candidates {
+        id: 2
+        index: 2
+        value: "\350\203\203"
+        annotation {
+                description: "Realtime"
+              }
+      }
+  candidates {
+        id: 3
+        index: 3
+        key: "\343\201\203"
+        value: "\343\201\203"
+        annotation {
+                description:
+            "\346\215\250\343\201\246\344\273\256\345\220\215
+                \345\260\217\346\233\270\343\201\215\346\226\207\345\255\227"
+              }
+      }
+
+  ... // 省略
+</code></pre>
+
+<p>```</p>
+
+<p>第一回目はここまで。(^O^)／</p>
+]]></content>
+  </entry>
+  
+</feed>
