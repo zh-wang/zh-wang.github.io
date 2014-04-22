@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mozc | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/mozc/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-04-22T18:10:52+09:00</updated>
+  <updated>2014-04-22T18:12:09+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -41,7 +41,7 @@ ANDROID_SERVICE_NAME=org.mozc.android.inputmethod.japanese.MozcService
 こちらのリポジトリを使えば楽です。
 <a href="https://github.com/niw/mozc">https://github.com/niw/mozc</a></p>
 
-<p>デフォルトでビルドすると、eclipseで開けるプロジェクトは作ってくれないので、手動で作りました。こちらからダウンロードできます。
+<p>デフォルトでビルドすると、eclipseで開けるプロジェクトは作ってくれないので、手動で作りました。こちらからダウンロードできます。<br/>
 <a href="https://dl.dropboxusercontent.com/u/40868784/mozc_android.zip">https://dl.dropboxusercontent.com/u/40868784/mozc_android.zip</a>
 フォルダ自体とその中のprotobuff, resources_ossをeclipseにインポートすればOK。後はMozcProxyPreferenceActivityというプロジェクトを実行するだけ。</p>
 
