@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mozc | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/mozc/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-04-22T18:12:47+09:00</updated>
+  <updated>2014-04-23T11:28:23+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -52,6 +52,9 @@ $ mv /opt/android/android-sdk-linux/build-tools/android-4.4 /opt/android/android
 </code></p>
 
 <h2>(2) キーのタッチから、変換候補がもらうまで、簡単な解析をやります</h2>
+
+<!-- more -->
+
 
 <p>android側のフリックキーボードで「あ」を押し、タッチエベントを発生される。そうすると、以下のコードが順番的に実行されます。</p>
 
@@ -353,6 +356,16 @@ preedit {
 <p>```</p>
 
 <p>第一回目はここまで。(^O^)／</p>
+
+<script language="javaScript">
+$(document).ready( function () {
+        $("a[href^='http']:not([href*='" + location.hostname +
+            "'])").attr('target', '_blank');
+        })
+      </script>
+
+
+
 ]]></content>
   </entry>
   
