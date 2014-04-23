@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-04-23T11:38:05+09:00</updated>
+  <updated>2014-04-23T12:03:32+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -563,11 +563,8 @@ org.mozc.android.inputmethod.japanese.session.LocalSessionHandler:100</p>
 <p>第一回目はここまで。(^O^)／</p>
 
 <script language="javaScript">
-$(document).ready( function () {
-        $("a[href^='http']:not([href*='" + location.hostname +
-            "'])").attr('target', '_blank');
-        })
-      </script>
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
 
 
 
