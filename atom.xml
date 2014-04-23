@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-04-23T11:28:23+09:00</updated>
+  <updated>2014-04-23T11:38:05+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -14,11 +14,15 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Mozc完全解析01]]></title>
+    <title type="html"><![CDATA[Mozc完全解説01]]></title>
     <link href="http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01/"/>
     <updated>2014-04-22T12:20:06+09:00</updated>
     <id>http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01</id>
-    <content type="html"><![CDATA[<h1></h1>
+    <content type="html"><![CDATA[<h1>What is mozc?</h1>
+
+<blockquote><p>Mozc is a Japanese Input Method Editor (IME) designed for multi-platform such
+as Chromium OS, Android, Windows, Mac and Linux. This open-source project
+originates from Google Japanese Input.</p></blockquote>
 
 <h2>(1) ソースを手に入れよう</h2>
 
@@ -67,7 +71,7 @@
 <!-- more -->
 
 
-<p>android側のフリックキーボードで「あ」を押し、タッチエベントを発生される。そうすると、以下のコードが順番的に実行されます。</p>
+<p>android側のフリックキーボードで「あ」を押し、タッチイベントが発生する。そうすると、以下のコードが順番的に実行されます。</p>
 
 <p>org.mozc.android.inputmethod.japanese.ViewManager:260:onKey<br/>
 ここでViewのタッチエベントをキャッチする。<br/>

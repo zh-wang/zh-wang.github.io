@@ -5,23 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Mozc完全解析01 - Welcome to FutureAppLaboratory</title>
+  <title>Mozc完全解説01 - Welcome to FutureAppLaboratory</title>
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="(1) ソースを手に入れよう ここからダウンロード　mozc project from google code 今回使うmozcのバージョンは 1
-2
-3
-4
-5
-6
-7
-8
-9
-MAJOR=1
-MINOR=10
-BUILD=1390
-REVISION=103 &hellip;">
+  <meta name="description" content="What is mozc? Mozc is a Japanese Input Method Editor (IME) designed for multi-platform such
+as Chromium OS, Android, Windows, Mac and Linux. This &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -43,18 +32,6 @@ REVISION=103 &hellip;">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-50285032-1']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
 
 </head>
 
@@ -92,7 +69,7 @@ REVISION=103 &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Mozc完全解析01</h1>
+      <h1 class="entry-title">Mozc完全解説01</h1>
     
     
       <p class="meta">
@@ -110,15 +87,16 @@ REVISION=103 &hellip;">
 
 <time datetime="2014-04-22T12:20:06+09:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2014</time>
         
-           | <a href="#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io">Comments</a>
-        
       </p>
     
   </header>
 
 
-<div class="entry-content"><h1></h1>
+<div class="entry-content"><h1>What is mozc?</h1>
+
+<blockquote><p>Mozc is a Japanese Input Method Editor (IME) designed for multi-platform such
+as Chromium OS, Android, Windows, Mac and Linux. This open-source project
+originates from Google Japanese Input.</p></blockquote>
 
 <h2>(1) ソースを手に入れよう</h2>
 
@@ -167,7 +145,7 @@ REVISION=103 &hellip;">
 <!-- more -->
 
 
-<p>android側のフリックキーボードで「あ」を押し、タッチエベントを発生される。そうすると、以下のコードが順番的に実行されます。</p>
+<p>android側のフリックキーボードで「あ」を押し、タッチイベントが発生する。そうすると、以下のコードが順番的に実行されます。</p>
 
 <p>org.mozc.android.inputmethod.japanese.ViewManager:260:onKey<br/>
 ここでViewのタッチエベントをキャッチする。<br/>
@@ -694,7 +672,7 @@ $(document).ready( function () {
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/mozc/'>Mozc</a>, <a class='category' href='/blog/categories/android/'>android</a>
+    <a class='category' href='/blog/categories/android/'>android</a>, <a class='category' href='/blog/categories/mozc/'>mozc</a>
   
 </span>
 
@@ -703,13 +681,9 @@ $(document).ready( function () {
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01/" data-via="" data-counturl="http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01/" >Tweet</a>
   
   
-  <div class="g-plusone" data-size="medium"></div>
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
   
 </div>
 
@@ -721,12 +695,6 @@ $(document).ready( function () {
   </footer>
 </article>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-  </section>
-
 </div>
 
 <aside class="sidebar">
@@ -736,7 +704,7 @@ $(document).ready( function () {
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2014/04/22/mozc-analysis-01/">Mozc完全解析01</a>
+        <a href="/blog/2014/04/22/mozc-analysis-01/">Mozc完全解説01</a>
       </li>
     
   </ul>
@@ -816,42 +784,9 @@ $(document).ready( function () {
 </footer>
   
 
-<script type="text/javascript">
-      var disqus_shortname = 'viennakanon';
-      
-        
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01/';
-        var disqus_url = 'http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01/';
-        var disqus_script = 'embed.js';
-      
-    (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    }());
-</script>
 
 
 
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id; js.async = true;
-  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
-
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
 
 
 
