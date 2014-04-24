@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Welcome to FutureAppLaboratory</title>
+  <title>Zshのpromptにvcsを表示する - Welcome to FutureAppLaboratory</title>
   <meta name="author" content="viennakanon">
 
   
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://zh-wang.github.io">
+  <link rel="canonical" href="http://zh-wang.github.io/blog/2014/04/24/vcs-info-for-zsh">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Welcome to FutureAppLaboratory" type="application/atom+xml">
@@ -76,15 +76,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/04/24/vcs-info-for-zsh/">Zshのpromptにvcsを表示する</a></h1>
+      <h1 class="entry-title">Zshのpromptにvcsを表示する</h1>
     
     
       <p class="meta">
@@ -102,15 +99,15 @@
 
 <time datetime="2014-04-24T10:38:49+09:00" pubdate data-updated="true">Apr 24<span>th</span>, 2014</time>
         
-           | <a href="/blog/2014/04/24/vcs-info-for-zsh/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/04/24/vcs-info-for-zsh/">Comments</a>
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io">Comments</a>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><h2>What is vcs?</h2>
+<div class="entry-content"><h2>What is vcs?</h2>
 
 <blockquote><p>バージョン管理システム(Version Control System)。</p></blockquote>
 
@@ -206,22 +203,16 @@ Local status:<br/>
 <p>これでOK。
 <img src="/images/2014_04_24_zsh_vcs_snapshot.png" title="zsh_vcs" alt="zsh_vcs_snapshot" /></p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/04/22/mozc-analysis-01/">Mozc完全解説01</a></h1>
-    
-    
-      <p class="meta">
-        
+  
+
+<span class="byline author vcard">Posted by <span class="fn">viennakanon</span></span>
+
+      
 
 
 
@@ -233,83 +224,48 @@ Local status:<br/>
   
 
 
-<time datetime="2014-04-22T12:20:06+09:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2014</time>
-        
-           | <a href="/blog/2014/04/22/mozc-analysis-01/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01/">Comments</a>
-        
-      </p>
+<time datetime="2014-04-24T10:38:49+09:00" pubdate data-updated="true">Apr 24<span>th</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/zsh/'>zsh</a>
+  
+</span>
+
+
+    </p>
     
-  </header>
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2014/04/24/vcs-info-for-zsh/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2014/04/24/vcs-info-for-zsh/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/04/22/mozc-analysis-01/" title="Previous Post: mozc完全解説01">&laquo; mozc完全解説01</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-  <div class="entry-content"><h1>What is mozc?</h1>
-
-<blockquote><p>Mozc is a Japanese Input Method Editor (IME) designed for multi-platform such
-as Chromium OS, Android, Windows, Mac and Linux. This open-source project
-originates from Google Japanese Input.</p></blockquote>
-
-<h2>(1) ソースを手に入れよう</h2>
-
-<p>ここからダウンロード　<a href="https://code.google.com/p/mozc/">mozc project from google code</a></p>
-
-<p>今回使うmozcのバージョンは</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MAJOR=1
-</span><span class='line'>MINOR=10
-</span><span class='line'>BUILD=1390
-</span><span class='line'>REVISION=103
-</span><span class='line'>ANDROID_VERSION_CODE=1794
-</span><span class='line'>FLAG=RELEASE
-</span><span class='line'>TARGET_PLATFORM=Android
-</span><span class='line'>ANDROID_APPLICATION_ID=org.mozc.android.inputmethod.japanese
-</span><span class='line'>ANDROID_SERVICE_NAME=org.mozc.android.inputmethod.japanese.MozcService</span></code></pre></td></tr></table></div></figure>
-
-
-<p>android版のビルドはMac非対応なので、vagrantを通してVMのubuntuでビルドします。<br/>
-こちらのリポジトリを使えば楽です。
-<a href="https://github.com/niw/mozc">https://github.com/niw/mozc</a></p>
-
-<p>デフォルトでビルドすると、eclipseで開けるプロジェクトは作ってくれないので、手動で作りました。こちらからダウンロードできます。<br/>
-<a href="https://dl.dropboxusercontent.com/u/40868784/mozc_android.zip  ">https://dl.dropboxusercontent.com/u/40868784/mozc_android.zip  </a>
-フォルダ自体とその中のprotobuff, resources_ossをeclipseにインポートすればOK。後はMozcProxyPreferenceActivityというプロジェクトを実行するだけ。</p>
-
-<p>※ ビルドする際に、&#8221;SDK does not have any Build Tools installed.&ldquo;が表示されたら、Build Toolsをダウンロードする必要があります。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ /usr/bin/curl -L -O 'http://dl.google.com/android/repository/build-tools_r19-linux.zip' && unzip build-tools_r19-linux.zip -d /opt/android/android-sdk-linux/build-tools/ 
-</span><span class='line'>$ mv /opt/android/android-sdk-linux/build-tools/android-4.4 /opt/android/android-sdk-linux/build-tools/19.0.0</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>(2) キーのタッチから、変換候補がもらうまで、簡単な解析をやります</h2>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/04/22/mozc-analysis-01/">Read on &rarr;</a>
-    </footer>
-  
 
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
 <aside class="sidebar">
   
     <section>
@@ -398,6 +354,7 @@ originates from Google Japanese Input.</p></blockquote>
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -412,7 +369,10 @@ originates from Google Japanese Input.</p></blockquote>
       var disqus_shortname = 'viennakanon';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://zh-wang.github.io/blog/2014/04/24/vcs-info-for-zsh/';
+        var disqus_url = 'http://zh-wang.github.io/blog/2014/04/24/vcs-info-for-zsh/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

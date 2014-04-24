@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-04-23T17:43:22+09:00</updated>
+  <updated>2014-04-24T12:25:58+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,109 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Zshのpromptにvcsを表示する]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/04/24/vcs-info-for-zsh/"/>
+    <updated>2014-04-24T10:38:49+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/04/24/vcs-info-for-zsh</id>
+    <content type="html"><![CDATA[<h2>What is vcs?</h2>
+
+<blockquote><p>バージョン管理システム(Version Control System)。</p></blockquote>
+
+<p>zshというshellを使い始めたので、便利なカスタマイズプラグインを紹介します。<br/>
+今回はこちらのプラグイン<a href="https://github.com/yonchu/zsh-vcs-prompt">zsh-vcs-prompt</a>を使って、zshのpromptにバージョン管理システム(git/svn/hg
+)の情報を表示ます。<br/>
+現在作業中branchは一目瞭然ですね。<br/>
+<img src="http://zh-wang.github.io/images/2014_04_24_zsh_vcs_snapshot.png" title="zsh_vcs" alt="zsh_vcs_snapshot" /></p>
+
+<p>各図形の意味は</p>
+
+<blockquote><p>Remote status:<br/>
+  ↑ n : ahead<br/>
+  ↓ n : behind<br/>
+Local status:<br/>
+  ✔ : repository clean<br/>
+  ● n : there are n staged files<br/>
+  ✖ n : there are n unmerged files<br/>
+  ✚ n : there are n changed but unstaged files<br/>
+  … n : there are n untracked files<br/>
+  ⚑n : there are n stashed<br/>
+  branch(n) : there are n unmerged commits to master</p></blockquote>
+
+<h2>How to use?</h2>
+
+<ol>
+<li><p>まずは、どこかのディレクトリに、<a href="https://github.com/yonchu/zsh-vcs-prompt">zsh-vcs-prompt</a>をclone。私の場合は~/projects/に。</p></li>
+<li>zshの設定ファイル.zshrcに追加すればOK。</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">source</span> ~/projects/zsh-vcs-prompt/zshrc.sh
+</span><span class='line'><span class="nv">ZSH_VCS_PROMPT_ENABLE_CACHING</span><span class="o">=</span><span class="s1">&#39;true&#39;</span>
+</span><span class='line'><span class="nv">RPROMPT</span><span class="o">=</span><span class="s1">&#39;$(vcs_super_info)&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これで右端に表示されました(RPROMPTはright promptの意味なので)<br/>
+<img src="http://zh-wang.github.io/images/2014_04_24_zsh_rprompt.png" title="zsh_vcs_rprompt" alt="zsh_vcs_rprompt" /></p>
+
+<h2>Customize it</h2>
+
+<ol>
+<li><p>右端に表示されると画面が狭い時邪魔になるので、私の場合、promptの末に表示したい。少しカストマイズが必要です。</p></li>
+<li>まずこれをコメントアウト</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#RPROMPT=&#39;$(vcs_super_info)&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li><p>以下のコードを.zshrcに追加。(hookしなくても動けますが、promptの中身は更新されないので、ディレクトリ移動しても、gitコマンドを実行しても変わらない。)</p></li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">typeset</span> -ga precmd_functions
+</span><span class='line'>
+</span><span class='line'>precmd_functions+<span class="o">=</span><span class="s1">&#39;update_prompt&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># promptを作るメソッド</span>
+</span><span class='line'>get_prompt<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="nv">result</span><span class="o">=</span><span class="s2">&quot;%{$fg[yellow]%}%T%{$reset_color%} %{$fg_bold[yellow]%}%n%{$reset_color%}@%{$fg_bold[magenta]%}%m%{$reset_color%}:%{$fg_bold[blue]%}%3~%{$reset_color%} $(vcs_super_info)%(!.#.$) &quot;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># コマンド実行する前にhookとして実行、promptにあるvcsを更新</span>
+</span><span class='line'>update_prompt<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  get_prompt
+</span><span class='line'>  <span class="nv">PROMPT</span><span class="o">=</span><span class="nv">$result</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>これでOK。
+<img src="http://zh-wang.github.io/images/2014_04_24_zsh_vcs_snapshot.png" title="zsh_vcs" alt="zsh_vcs_snapshot" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mozc完全解説01]]></title>
