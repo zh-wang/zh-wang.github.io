@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-04-24T12:25:58+09:00</updated>
+  <updated>2014-04-24T16:56:18+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -41,6 +41,9 @@ Local status:<br/>
   … n : there are n untracked files<br/>
   ⚑n : there are n stashed<br/>
   branch(n) : there are n unmerged commits to master</p></blockquote>
+
+<!-- more -->
+
 
 <h2>How to use?</h2>
 
