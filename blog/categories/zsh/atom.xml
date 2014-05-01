@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Zsh | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/zsh/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-04-24T16:56:18+09:00</updated>
+  <updated>2014-05-01T15:16:46+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -95,6 +95,13 @@ typeset -ga precmd_functions</p></li>
 
 <p>これでOK。
 <img src="/images/2014_04_24_zsh_vcs_snapshot.png" title="zsh_vcs" alt="zsh_vcs_snapshot" /></p>
+
+<script language="javaScript">
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
+
+
 ]]></content>
   </entry>
   
