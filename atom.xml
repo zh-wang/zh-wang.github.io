@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-05-01T15:16:46+09:00</updated>
+  <updated>2014-05-01T22:32:31+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,135 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Mozc完全解説02]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/05/01/mozc-analysis-02/"/>
+    <updated>2014-05-01T15:18:39+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/05/01/mozc-analysis-02</id>
+    <content type="html"><![CDATA[<h1>はじめに</h1>
+
+<p><a href="http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01/">前回</a>では、android側からタッチ反応を発生してから、jniを通して変換エンジンのnative側が候補を返すまで説明した。<br/>
+今回ではjni部分のコードを少し解説する。</p>
+
+<h2>What is jni?</h2>
+
+<p>言わばjavaとc, cppとの間のインターフェイスですね。cやcppを使って、java側とデータのやり取りができる。<br/>
+<a href="http://ja.wikipedia.org/wiki/Java_Native_Interface">Java Native Interface</a></p>
+
+<h2>mozcに使われているjni</h2>
+
+<p>java側ではMozcJNI.javaというラッパーがある。メソッドはこの通り。</p>
+
+<ul>
+<li><code>load(String, Buffer, Buffer, String)</code><br/>
+  初期化用のメソッド、apkの中に入っている辞書データなどをnative側に渡す</li>
+<li><code>evalCommand(byte[])</code><br/>
+  native側と通信するメソッド、jniで実装</li>
+<li><code>onPostLoad(String, Buffer, Buffer)</code><br/>
+  loadメソッドに使われている、jniで実装</li>
+<li><code>getVersion()</code><br/>
+  native側のバージョン情報をjava側に渡す。loadメソッドに使われている、jniで実装</li>
+</ul>
+
+
+<p>jniの実装ファイルはjni/mozcjni.cc。では、<code>evalCommand(byte[])</code>を詳しく見てみよう。</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="c1">// ------&gt; この矢印のあたりは、私の追加したコメントです</span>
+</span><span class='line'><span class="n">jbyteArray</span> <span class="n">JNICALL</span> <span class="n">evalCommand</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jclass</span> <span class="n">clazz</span><span class="p">,</span> <span class="n">jbyteArray</span> <span class="n">in_bytes_array</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">jboolean</span> <span class="n">is_copy</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">jbyte</span> <span class="o">*</span><span class="n">in_bytes</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetByteArrayElements</span><span class="p">(</span><span class="n">in_bytes_array</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">is_copy</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">const</span> <span class="n">jsize</span> <span class="n">in_size</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetArrayLength</span><span class="p">(</span><span class="n">in_bytes_array</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// ------&gt; commandにパースする。session/commands.protoにはcommandの定義が書かれいる。</span>
+</span><span class='line'>  <span class="c1">// ------&gt; protobuf(Protocol Buffers)というライブラリを使っています。</span>
+</span><span class='line'>  <span class="n">mozc</span><span class="o">::</span><span class="n">commands</span><span class="o">::</span><span class="n">Command</span> <span class="n">command</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">command</span><span class="p">.</span><span class="n">ParseFromArray</span><span class="p">(</span><span class="n">in_bytes</span><span class="p">,</span> <span class="n">in_size</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// ------&gt; native側でcommandを処理する。結果はcommandの中に格納する。</span>
+</span><span class='line'>  <span class="n">mozc</span><span class="o">::</span><span class="n">Singleton</span><span class="o">&lt;</span><span class="n">SessionHandlerSingletonAdapter</span><span class="o">&gt;::</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getHandler</span><span class="p">()</span>
+</span><span class='line'>      <span class="o">-&gt;</span><span class="n">EvalCommand</span><span class="p">(</span><span class="o">&amp;</span><span class="n">command</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Use JNI_ABORT because in_bytes is read only.</span>
+</span><span class='line'>  <span class="c1">// ------&gt; JNI_ABORT: 要素列をJava配列に反映させず、要素列バッファを解放する。</span>
+</span><span class='line'>  <span class="n">env</span><span class="o">-&gt;</span><span class="n">ReleaseByteArrayElements</span><span class="p">(</span><span class="n">in_bytes_array</span><span class="p">,</span> <span class="n">in_bytes</span><span class="p">,</span> <span class="n">JNI_ABORT</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// 変換結果はjbyteArrayとしてjava側に返す</span>
+</span><span class='line'>  <span class="k">const</span> <span class="kt">int</span> <span class="n">out_size</span> <span class="o">=</span> <span class="n">command</span><span class="p">.</span><span class="n">ByteSize</span><span class="p">();</span>
+</span><span class='line'>  <span class="n">jbyteArray</span> <span class="n">out_bytes_array</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">NewByteArray</span><span class="p">(</span><span class="n">out_size</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// ------&gt; is_copy: 0の場合、生成された配列(out_bytes)を変更すると、java側にも変更される。</span>
+</span><span class='line'>  <span class="c1">//                  1の場合、変更してもjava側には変更されない。</span>
+</span><span class='line'>  <span class="n">jbyte</span> <span class="o">*</span><span class="n">out_bytes</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetByteArrayElements</span><span class="p">(</span><span class="n">out_bytes_array</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">is_copy</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">command</span><span class="p">.</span><span class="n">SerializeToArray</span><span class="p">(</span><span class="n">out_bytes</span><span class="p">,</span> <span class="n">out_size</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Use 0 to copy out_bytes to out_bytes_array.</span>
+</span><span class='line'>  <span class="c1">// ------&gt; 0の場合、要素列をJava配列に反映させ、要素列バッファを解放する。</span>
+</span><span class='line'>  <span class="n">env</span><span class="o">-&gt;</span><span class="n">ReleaseByteArrayElements</span><span class="p">(</span><span class="n">out_bytes_array</span><span class="p">,</span> <span class="n">out_bytes</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="n">out_bytes_array</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>in_bytes_array</code>には、タッチされたキーの情報などが入っている。<br/>
+<code>out_bytes_array</code>には、変換候補などが入っている。<br/>
+<a href="http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01/">前回</a>最後のlog部分を参考してくだい。</p>
+
+<h2>終わりに</h2>
+
+<p>jni側の実装に関する説明はここまで。<br/>
+次回では<code>evalCommand</code>メソッドをもっと細かく説明する。</p>
+
+<script language="javaScript">
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Zshのpromptにvcsを表示する]]></title>

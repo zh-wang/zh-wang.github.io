@@ -1,0 +1,452 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Mozc完全解説02 - Welcome to FutureAppLaboratory</title>
+  <meta name="author" content="viennakanon">
+
+  
+  <meta name="description" content="はじめに 前回では、android側からタッチ反応を発生してから、jniを通して変換エンジンのnative側が候補を返すまで説明した。
+今回ではjni部分のコードを少し解説する。 What is jni? 言わばjavaとc, cppとの間のインターフェイスですね。cやcppを使って、 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://zh-wang.github.io/blog/2014/05/01/mozc-analysis-02">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Welcome to FutureAppLaboratory" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50285032-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Welcome to FutureAppLaboratory</a></h1>
+  
+    <h2>v=（*＾ワ＾*）=v</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:zh-wang.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Mozc完全解説02</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-01T15:18:39+09:00" pubdate data-updated="true">May 1<span>st</span>, 2014</time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1>はじめに</h1>
+
+<p><a href="/blog/2014/04/22/mozc-analysis-01/">前回</a>では、android側からタッチ反応を発生してから、jniを通して変換エンジンのnative側が候補を返すまで説明した。<br/>
+今回ではjni部分のコードを少し解説する。</p>
+
+<h2>What is jni?</h2>
+
+<p>言わばjavaとc, cppとの間のインターフェイスですね。cやcppを使って、java側とデータのやり取りができる。<br/>
+<a href="http://ja.wikipedia.org/wiki/Java_Native_Interface">Java Native Interface</a></p>
+
+<h2>mozcに使われているjni</h2>
+
+<p>java側ではMozcJNI.javaというラッパーがある。メソッドはこの通り。</p>
+
+<ul>
+<li><code>load(String, Buffer, Buffer, String)</code><br/>
+  初期化用のメソッド、apkの中に入っている辞書データなどをnative側に渡す</li>
+<li><code>evalCommand(byte[])</code><br/>
+  native側と通信するメソッド、jniで実装</li>
+<li><code>onPostLoad(String, Buffer, Buffer)</code><br/>
+  loadメソッドに使われている、jniで実装</li>
+<li><code>getVersion()</code><br/>
+  native側のバージョン情報をjava側に渡す。loadメソッドに使われている、jniで実装</li>
+</ul>
+
+
+<p>jniの実装ファイルはjni/mozcjni.cc。では、<code>evalCommand(byte[])</code>を詳しく見てみよう。</p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="c1">// ------&gt; この矢印のあたりは、私の追加したコメントです</span>
+</span><span class='line'><span class="n">jbyteArray</span> <span class="n">JNICALL</span> <span class="n">evalCommand</span><span class="p">(</span><span class="n">JNIEnv</span> <span class="o">*</span><span class="n">env</span><span class="p">,</span> <span class="n">jclass</span> <span class="n">clazz</span><span class="p">,</span> <span class="n">jbyteArray</span> <span class="n">in_bytes_array</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">jboolean</span> <span class="n">is_copy</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">jbyte</span> <span class="o">*</span><span class="n">in_bytes</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetByteArrayElements</span><span class="p">(</span><span class="n">in_bytes_array</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">is_copy</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">const</span> <span class="n">jsize</span> <span class="n">in_size</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetArrayLength</span><span class="p">(</span><span class="n">in_bytes_array</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// ------&gt; commandにパースする。session/commands.protoにはcommandの定義が書かれいる。</span>
+</span><span class='line'>  <span class="c1">// ------&gt; protobuf(Protocol Buffers)というライブラリを使っています。</span>
+</span><span class='line'>  <span class="n">mozc</span><span class="o">::</span><span class="n">commands</span><span class="o">::</span><span class="n">Command</span> <span class="n">command</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">command</span><span class="p">.</span><span class="n">ParseFromArray</span><span class="p">(</span><span class="n">in_bytes</span><span class="p">,</span> <span class="n">in_size</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// ------&gt; native側でcommandを処理する。結果はcommandの中に格納する。</span>
+</span><span class='line'>  <span class="n">mozc</span><span class="o">::</span><span class="n">Singleton</span><span class="o">&lt;</span><span class="n">SessionHandlerSingletonAdapter</span><span class="o">&gt;::</span><span class="n">get</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">getHandler</span><span class="p">()</span>
+</span><span class='line'>      <span class="o">-&gt;</span><span class="n">EvalCommand</span><span class="p">(</span><span class="o">&amp;</span><span class="n">command</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Use JNI_ABORT because in_bytes is read only.</span>
+</span><span class='line'>  <span class="c1">// ------&gt; JNI_ABORT: 要素列をJava配列に反映させず、要素列バッファを解放する。</span>
+</span><span class='line'>  <span class="n">env</span><span class="o">-&gt;</span><span class="n">ReleaseByteArrayElements</span><span class="p">(</span><span class="n">in_bytes_array</span><span class="p">,</span> <span class="n">in_bytes</span><span class="p">,</span> <span class="n">JNI_ABORT</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// 変換結果はjbyteArrayとしてjava側に返す</span>
+</span><span class='line'>  <span class="k">const</span> <span class="kt">int</span> <span class="n">out_size</span> <span class="o">=</span> <span class="n">command</span><span class="p">.</span><span class="n">ByteSize</span><span class="p">();</span>
+</span><span class='line'>  <span class="n">jbyteArray</span> <span class="n">out_bytes_array</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">NewByteArray</span><span class="p">(</span><span class="n">out_size</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// ------&gt; is_copy: 0の場合、生成された配列(out_bytes)を変更すると、java側にも変更される。</span>
+</span><span class='line'>  <span class="c1">//                  1の場合、変更してもjava側には変更されない。</span>
+</span><span class='line'>  <span class="n">jbyte</span> <span class="o">*</span><span class="n">out_bytes</span> <span class="o">=</span> <span class="n">env</span><span class="o">-&gt;</span><span class="n">GetByteArrayElements</span><span class="p">(</span><span class="n">out_bytes_array</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">is_copy</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">command</span><span class="p">.</span><span class="n">SerializeToArray</span><span class="p">(</span><span class="n">out_bytes</span><span class="p">,</span> <span class="n">out_size</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Use 0 to copy out_bytes to out_bytes_array.</span>
+</span><span class='line'>  <span class="c1">// ------&gt; 0の場合、要素列をJava配列に反映させ、要素列バッファを解放する。</span>
+</span><span class='line'>  <span class="n">env</span><span class="o">-&gt;</span><span class="n">ReleaseByteArrayElements</span><span class="p">(</span><span class="n">out_bytes_array</span><span class="p">,</span> <span class="n">out_bytes</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">return</span> <span class="n">out_bytes_array</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>in_bytes_array</code>には、タッチされたキーの情報などが入っている。<br/>
+<code>out_bytes_array</code>には、変換候補などが入っている。<br/>
+<a href="/blog/2014/04/22/mozc-analysis-01/">前回</a>最後のlog部分を参考してくだい。</p>
+
+<h2>終わりに</h2>
+
+<p>jni側の実装に関する説明はここまで。<br/>
+次回では<code>evalCommand</code>メソッドをもっと細かく説明する。</p>
+
+<script language="javaScript">
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">viennakanon</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-01T15:18:39+09:00" pubdate data-updated="true">May 1<span>st</span>, 2014</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/android/'>android</a>, <a class='category' href='/blog/categories/jni/'>jni</a>, <a class='category' href='/blog/categories/mozc/'>mozc</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2014/05/01/mozc-analysis-02/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2014/05/01/mozc-analysis-02/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/04/24/vcs-info-for-zsh/" title="Previous Post: zshのpromptにvcsを表示する">&laquo; zshのpromptにvcsを表示する</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/05/01/mozc-analysis-02/">Mozc完全解説02</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/04/24/vcs-info-for-zsh/">Zshのpromptにvcsを表示する</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/04/22/mozc-analysis-01/">Mozc完全解説01</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+</section>
+<section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><a href='/blog/categories/android' style='font-size: 120.0%'>android(2)</a> <a href='/blog/categories/jni' style='font-size: 90.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 120.0%'>mozc(2)</a> <a href='/blog/categories/zsh' style='font-size: 90.0%'>zsh(1)</a> </span>
+</section>
+<section>
+      <h1>Latest Tweets</h1>
+      <a class="twitter-timeline" href="https://twitter.com/viennakanon" data-widget-id="458542348645830656">Tweets by @viennakanon</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+<section>
+  <h1>About Me</h1>
+  <div id="gravatar-aside-profile" style="clear: both; padding-top: 5px;"></div>
+  <div style="clear:both"></div>
+  <script type="text/javascript">
+    $(function(){
+      var url = "http://www.gravatar.com/23650956f68b532003138fb2bec1bbe6.json?callback=?";
+      var $box = $("#gravatar-aside-profile")
+      var $msg = $box.children().children()
+
+      var blink = function(a){a.fadeOut(400).fadeIn(400)};
+      var intervalID = window.setInterval(blink, 1500, $msg)
+
+      var setupProfile = function(data) {
+        var entry = data.entry[0]
+        $box
+          .empty()
+          .css("padding-top", 5)
+          .append($("<img>")
+            .attr("src", entry.thumbnailUrl)
+            .attr("alt", "thumbnail from Gravatar")
+            .css("float", "left")
+            .css("margin-right", 5)
+          )
+          .append($("<div>")
+            .css("padding", "5px 0px")
+            .append($("<h2>")
+              .css("margin-bottom", 5)
+              .append("(<a href='" + entry.profileUrl + "'>@" +
+                  entry.preferredUsername + "<\/a>)")
+            )
+            .append($("<p>")
+              .css("padding-left",90)
+              .css("margin", 0)
+              .css("font-size", "90%")
+              .html(entry.aboutMe.replace(/\n/g, "<br/>"))
+            )
+          )
+      }
+
+      var clearInterval = function(){window.clearInterval(intervalID)}
+      var updateMessageToError = function(){$msg.stop().fadeOut().text("profile load failed.").fadeIn()}
+
+      jQuery.getJSON(url)
+        .always(clearInterval)
+        .done(setupProfile)
+        .fail(updateMessageToError)
+    })
+  
+  </script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - viennakanon -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'viennakanon';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://zh-wang.github.io/blog/2014/05/01/mozc-analysis-02/';
+        var disqus_url = 'http://zh-wang.github.io/blog/2014/05/01/mozc-analysis-02/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=749935801705374&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

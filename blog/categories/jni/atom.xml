@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Jni | Welcome to FutureAppLaboratory]]></title>
+  <link href="http://zh-wang.github.io/blog/categories/jni/atom.xml" rel="self"/>
+  <link href="http://zh-wang.github.io/"/>
+  <updated>2014-05-01T22:32:31+09:00</updated>
+  <id>http://zh-wang.github.io/</id>
+  <author>
+    <name><![CDATA[viennakanon]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mozc完全解説02]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/05/01/mozc-analysis-02/"/>
+    <updated>2014-05-01T15:18:39+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/05/01/mozc-analysis-02</id>
+    <content type="html"><![CDATA[<h1>はじめに</h1>
+
+<p><a href="/blog/2014/04/22/mozc-analysis-01/">前回</a>では、android側からタッチ反応を発生してから、jniを通して変換エンジンのnative側が候補を返すまで説明した。<br/>
+今回ではjni部分のコードを少し解説する。</p>
+
+<h2>What is jni?</h2>
+
+<p>言わばjavaとc, cppとの間のインターフェイスですね。cやcppを使って、java側とデータのやり取りができる。<br/>
+<a href="http://ja.wikipedia.org/wiki/Java_Native_Interface">Java Native Interface</a></p>
+
+<h2>mozcに使われているjni</h2>
+
+<p>java側ではMozcJNI.javaというラッパーがある。メソッドはこの通り。</p>
+
+<ul>
+<li><code>load(String, Buffer, Buffer, String)</code><br/>
+  初期化用のメソッド、apkの中に入っている辞書データなどをnative側に渡す</li>
+<li><code>evalCommand(byte[])</code><br/>
+  native側と通信するメソッド、jniで実装</li>
+<li><code>onPostLoad(String, Buffer, Buffer)</code><br/>
+  loadメソッドに使われている、jniで実装</li>
+<li><code>getVersion()</code><br/>
+  native側のバージョン情報をjava側に渡す。loadメソッドに使われている、jniで実装</li>
+</ul>
+
+
+<p>jniの実装ファイルはjni/mozcjni.cc。では、<code>evalCommand(byte[])</code>を詳しく見てみよう。</p>
+
+<!-- more -->
+
+
+<p>```cpp
+// &mdash;&mdash;&mdash;> この矢印のあたりは、私の追加したコメントです
+jbyteArray JNICALL evalCommand(JNIEnv <em>env, jclass clazz, jbyteArray in_bytes_array) {
+  jboolean is_copy = false;
+  jbyte </em>in_bytes = env->GetByteArrayElements(in_bytes_array, &amp;is_copy);
+  const jsize in_size = env->GetArrayLength(in_bytes_array);</p>
+
+<p>  // &mdash;&mdash;&mdash;> commandにパースする。session/commands.protoにはcommandの定義が書かれいる。
+  // &mdash;&mdash;&mdash;> protobuf(Protocol Buffers)というライブラリを使っています。
+  mozc::commands::Command command;
+  command.ParseFromArray(in_bytes, in_size);</p>
+
+<p>  // &mdash;&mdash;&mdash;> native側でcommandを処理する。結果はcommandの中に格納する。
+  mozc::Singleton<SessionHandlerSingletonAdapter>::get()&ndash;>getHandler()</p>
+
+<pre><code>  -&gt;EvalCommand(&amp;command);
+</code></pre>
+
+<p>  // Use JNI_ABORT because in_bytes is read only.
+  // &mdash;&mdash;&mdash;> JNI_ABORT: 要素列をJava配列に反映させず、要素列バッファを解放する。
+  env->ReleaseByteArrayElements(in_bytes_array, in_bytes, JNI_ABORT);</p>
+
+<p>  // 変換結果はjbyteArrayとしてjava側に返す
+  const int out_size = command.ByteSize();
+  jbyteArray out_bytes_array = env->NewByteArray(out_size);</p>
+
+<p>  // &mdash;&mdash;&mdash;> is_copy: 0の場合、生成された配列(out_bytes)を変更すると、java側にも変更される。
+  //                  1の場合、変更してもjava側には変更されない。
+  jbyte *out_bytes = env->GetByteArrayElements(out_bytes_array, &amp;is_copy);
+  command.SerializeToArray(out_bytes, out_size);</p>
+
+<p>  // Use 0 to copy out_bytes to out_bytes_array.
+  // &mdash;&mdash;&mdash;> 0の場合、要素列をJava配列に反映させ、要素列バッファを解放する。
+  env->ReleaseByteArrayElements(out_bytes_array, out_bytes, 0);</p>
+
+<p>  return out_bytes_array;
+}
+```</p>
+
+<p><code>in_bytes_array</code>には、タッチされたキーの情報などが入っている。<br/>
+<code>out_bytes_array</code>には、変換候補などが入っている。<br/>
+<a href="/blog/2014/04/22/mozc-analysis-01/">前回</a>最後のlog部分を参考してくだい。</p>
+
+<h2>終わりに</h2>
+
+<p>jni側の実装に関する説明はここまで。<br/>
+次回では<code>evalCommand</code>メソッドをもっと細かく説明する。</p>
+
+<script language="javaScript">
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
+
+
+]]></content>
+  </entry>
+  
+</feed>
