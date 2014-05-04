@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-05-01T22:32:31+09:00</updated>
+  <updated>2014-05-04T11:19:25+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -20,8 +20,8 @@
     <id>http://zh-wang.github.io/blog/2014/05/01/mozc-analysis-02</id>
     <content type="html"><![CDATA[<h1>はじめに</h1>
 
-<p><a href="http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01/">前回</a>では、android側からタッチ反応を発生してから、jniを通して変換エンジンのnative側が候補を返すまで説明した。<br/>
-今回ではjni部分のコードを少し解説する。</p>
+<p><a href="http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01/">前回</a>では、android側からタッチ反応を発生してから、jniを通して変換エンジンのnative側が候補を返すまでを説明した。<br/>
+今回ではjni部分のコードを少し説明する。</p>
 
 <h2>What is jni?</h2>
 
