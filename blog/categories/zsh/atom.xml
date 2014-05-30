@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Zsh | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/zsh/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-05-07T11:12:35+09:00</updated>
+  <updated>2014-05-30T17:39:00+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -62,18 +62,19 @@ RPROMPT='$(vcs_super_info)'
 
 <h2>Customize it</h2>
 
-<ol>
-<li><p>右端に表示されると画面が狭い時邪魔になるので、私の場合、promptの末に表示したい。少しカストマイズが必要です。</p></li>
+<p>右端に表示されると画面が狭い時邪魔になるので、私の場合、promptの末に表示したい。少しカストマイズが必要です。</p>
+
+<ul>
 <li>まずこれをコメントアウト
-```bash
+```
 
 <h1>RPROMPT=&lsquo;$(vcs_super_info)&rsquo;</h1>
 
 <p>```</p></li>
-<li><p>以下のコードを.zshrcに追加。(hookしなくても動けますが、promptの中身は更新されないので、ディレクトリ移動しても、gitコマンドを実行しても変わらない。)
+<li>以下のコードを.zshrcに追加。(hookしなくても動けますが、promptの中身は更新されないので、ディレクトリ移動しても、gitコマンドを実行しても変わらない。)
 ```bash
-typeset -ga precmd_functions</p></li>
-</ol>
+typeset -ga precmd_functions</li>
+</ul>
 
 
 <p>precmd_functions+=&lsquo;update_prompt&rsquo;</p>

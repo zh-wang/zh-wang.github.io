@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Algorithm | Welcome to FutureAppLaboratory]]></title>
+  <link href="http://zh-wang.github.io/blog/categories/algorithm/atom.xml" rel="self"/>
+  <link href="http://zh-wang.github.io/"/>
+  <updated>2014-05-30T17:39:00+09:00</updated>
+  <id>http://zh-wang.github.io/</id>
+  <author>
+    <name><![CDATA[viennakanon]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Codility - Magnesium 2014]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/05/27/codility-magnesium-2014-challenge-report/"/>
+    <updated>2014-05-27T19:05:37+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/05/27/codility-magnesium-2014-challenge-report</id>
+    <content type="html"><![CDATA[<h2>Introduction</h2>
+
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Magnesium 2014 Challenge</a>.</p>
+
+<ul>
+<li>The problem is that, finding the longest path in a weighted graph in which the weights are ascending. Vertices can be visited multiple times.</li>
+<li>Here, <strong>length of a path</strong> means the number of vertices the path visits, not the weight sum of all edges that compose the path.</li>
+<li>Therefore, <strong>longest path</strong> means a path that visits more vertices than any other paths for the given graph.</li>
+<li>Time bound is O(V+E*log(E)).</li>
+</ul>
+
+
+<!-- more -->
+
+
+<h2>Analysis</h2>
+
+<ul>
+<li>A classic DFS search on every vertex can do this job, despite its worst time complexity is O(VE), which cause timeout.</li>
+<li>Let&rsquo;s make an O(V+E*log(E)) approach.</li>
+<li>Because we do <strong>NOT</strong> need to trace the whole path, we just need to store a {<em>w</em>, <em>l</em>} pair for each vertex of the graph.</li>
+<li>This pair of data means that for a vertex <em>V</em>, the longest path ends with <em>V</em> has a length <em>l</em> path, and, the largest weight of the path is <em>w</em>.</li>
+<li>Then we pick edges one by one in ascending order, do some comparison and update the paired data for node which the edge connects.</li>
+</ul>
+
+
+<h2>Why this algorithm works?</h2>
+
+<ul>
+<li>For any <em>w_1</em> >= <em>w_2</em> and <em>l_1</em> >= <em>l_2</em>, we can always say that {<em>w_1</em>, <em>l_1</em>} is a better answer that {<em>w_2</em>, <em>l_2</em>}. Therefore, we only store the former answer. Note that, this only goes right when edges are picked by ascending order. That&rsquo;s the <strong>GREEDY</strong> algorithm works.</li>
+</ul>
+
+
+<h2>Source</h2>
+
+<p>```java</p>
+
+<pre><code>int result = 0;
+Node root;
+Edge[] edges;
+Node[] nodes;
+
+public int solution(int N, int[] A, int[] B, int[] C) {
+    edges = new Edge[A.length];
+    for (int i = 0; i &lt; A.length; i++) {
+        edges[i] = new Edge(A[i], B[i], C[i]);
+    }
+    Arrays.sort(edges, new Comparator&lt;Edge&gt;() {
+        @Override
+        public int compare(Edge o1, Edge o2) {
+            // TODO Auto-generated method stub
+            return o1.c - o2.c;
+        }
+    });
+
+    int n = edges.length;
+
+    nodes = new Node[200000];
+    for (int i = 0; i &lt; 200000; i++) {
+        nodes[i] = new Node(0, 0);
+    }
+
+    for (int i = 0; i &lt; n; i++) {
+        // get start node
+        int start = edges[i].a;
+        int end = edges[i].b;
+
+        Node cnodefront = nodes[start];
+        Node cnodeend = nodes[end];
+
+        Node nextEndNode = nodes[end];
+        Node nextStartNode = nodes[start];
+
+        if (cnodefront.value &lt; edges[i].c) {
+            nextEndNode = createNextNode(i, end, cnodefront.depth + 1); 
+        }
+
+        if (cnodeend.value &lt; edges[i].c) {
+            nextStartNode = createNextNode(i, start, cnodeend.depth + 1);
+        }
+
+        nodes[end] = nextEndNode;
+        nodes[start] = nextStartNode;
+
+    }
+
+    return result;
+}
+
+private Node createNextNode(int i, int end, int depth) {
+    Node node = new Node(edges[i].c, depth);
+    Node cnode = nodes[end];
+
+    if (depth &gt; cnode.depth) {
+        result = Math.max(result, depth);
+        return node;
+    } else {
+        return cnode;
+    }
+}
+
+private class Edge {
+    int a, b, c;
+    public Edge(int a, int b, int c) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+    }
+}
+
+private class Node {
+    int value;
+    int depth;
+    public Node(int value, int depth) {
+        this.value = value;
+        this.depth = depth;
+    }
+}
+</code></pre>
+
+<p>```</p>
+
+<script language="javaScript">
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
+]]></content>
+  </entry>
+  
+</feed>
