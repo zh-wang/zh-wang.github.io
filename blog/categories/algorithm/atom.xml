@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithm | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/algorithm/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-05-30T17:39:00+09:00</updated>
+  <updated>2014-05-30T17:48:50+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -48,6 +48,7 @@
 
 <ul>
 <li>For any <em>w_1</em> >= <em>w_2</em> and <em>l_1</em> >= <em>l_2</em>, we can always say that {<em>w_1</em>, <em>l_1</em>} is a better answer that {<em>w_2</em>, <em>l_2</em>}. Therefore, we only store the former answer. Note that, this only goes right when edges are picked by ascending order. That&rsquo;s the <strong>GREEDY</strong> algorithm works.</li>
+<li>Sorting edges costs O(E*log(E)). Updating paired data costs O(V). The whole time cost is O(V+E*log(E)).</li>
 </ul>
 
 
