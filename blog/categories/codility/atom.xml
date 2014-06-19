@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Codility | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/codility/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-06-19T16:59:17+09:00</updated>
+  <updated>2014-06-19T17:18:59+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -102,7 +102,7 @@ private int cal(List&lt;Integer&gt; A) {
 private List&lt;Integer&gt; partial_sum(List&lt;Integer&gt; data, Comparator&lt;Integer&gt; comparator) {
     List&lt;Integer&gt; res = new ArrayList&lt;Integer&gt;();
     if (data.size() == 0) {
-        return null;
+        return res;
     }
     res.add(data.get(0));
     for (int i = 1; i &lt; data.size(); i++) {
