@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Codility | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/codility/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-06-19T17:18:59+09:00</updated>
+  <updated>2014-06-23T13:13:06+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -14,19 +14,148 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Codility - Aluminium 2014 - Part 2]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/06/20/codility-aluminium-2014-p2/"/>
+    <updated>2014-06-20T11:17:21+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/06/20/codility-aluminium-2014-p2</id>
+    <content type="html"><![CDATA[<h2>Introduction</h2>
+
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Aluminium 2014 Challenge</a>, Part 2.</p>
+
+<p>In <a href="http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014/">Part 1</a>, we introduced a solution for CLASSIC maximal subarray problem.<br/>
+Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> version.</p>
+
+<!-- more -->
+
+
+<h2>Analysis</h2>
+
+<p>We still can split the whole given array $a_0, a_1, \cdots, a_n-1$ by index $i$.<br/>
+Now we have subarray $L_1 = \{a_0, a_1, \cdots, a_i\}$ and $L-2 = \{a_i+1, a_i+2, \cdots, a_n-1\}$.</p>
+
+<ul>
+<li>We only consider that <strong>forward</strong> swapping of $a_j$ and $a_k$ only occurs in the former subarray, $a_0, a_1, \cdots, a_i$, for $0 \leq j &lt; k &lt; i$. For the case of <strong>backward</strong> swapping in the latter subarray, we do the same calculation on reversed given array. Note that, any element swapped forward will <strong>NOT</strong> be considered into maximal subarray. (Why?)</li>
+<li>As we argued in Part 1, we want to minimize sum of $L_1$ and sum of $L_2$. Because we don&rsquo;t consider swap in $L_2$, we can do the same calculation as in Part 1.</li>
+<li>How can we minimize the sum of $L_1$ after a single swap within it? Obviously, swapping an element with the largest element before it yields a largest decrease, by <strong>sum of subarray minus largest</strong>, and this is saved in $sub$ array in decreasing order.</li>
+<li>let the element which swaps with the largest element before it to be $a_x$, for each $0 \leq x \leq i$, we will calculate
+
+<ul>
+<li>Swap $a_x$ with the largest element. The subarray sum to index $x$ will be decreased again by value of $a_x$, based on $sub_x-1$.</li>
+<li>Not swap with $a_x$. Let swap occurs before index $x$, just use the value of index $x-1$ minimal value.
+We will choose the smaller. Then save results in an array.</li>
+</ul>
+</li>
+<li>Calculate results of $L_2$.</li>
+<li>Use the whole sum of given array to subtract results of $L_1$ and $L_2$. The largest one is the answer.</li>
+<li>Because calculation above is on 1-d array, time and space complexity are O(n).</li>
+</ul>
+
+
+<p>Code
+```java</p>
+
+<pre><code>public int solution(int[] inputs) {
+
+    List&lt;Integer&gt;data = new ArrayList&lt;Integer&gt;();
+    List&lt;Integer&gt; rdata = new ArrayList&lt;Integer&gt;();
+    for (int i = 0; i &lt; inputs.length; i++) data.add(inputs[i]);
+    for (int i = 0; i &lt; inputs.length; i++) rdata.add(inputs[inputs.length - 1 - i]);
+
+    int r1 = cal(data);
+    int r2 = cal(rdata);
+
+    return Math.max(r1, r2);
+}
+
+private int cal(List&lt;Integer&gt; data) {
+    int n = data.size();
+    int sum = 0;
+    for (Integer integer : data) sum += integer;
+
+    List&lt;Integer&gt; psum = partial_sum(data, compAdd);
+    List&lt;Integer&gt; min_psum = partial_sum(data, compMax);
+    List&lt;Integer&gt; sub = new ArrayList&lt;Integer&gt;();
+    for (int i = 0; i &lt; n; i++) {
+        sub.add(psum.get(i) - min_psum.get(i));
+    }
+
+    List&lt;Integer&gt; min_sub = partial_sum(sub, compMin);
+    List&lt;Integer&gt; former = new ArrayList&lt;Integer&gt;();
+    for (int i = 0; i &lt; n; i++) {
+        former.add(
+                Math.min(
+                        (i - 1 &gt;= 0 ? min_sub.get(i - 1) : 0) + data.get(i), 
+                        (i - 1 &gt;= 0 ? former.get(i - 1) : 0)
+                        )
+                );
+    }
+
+    Collections.reverse(data);
+    List&lt;Integer&gt; r_psum = partial_sum(data, compAdd);
+    List&lt;Integer&gt; min_r_psum = partial_sum(r_psum, compMin);
+    Collections.reverse(min_r_psum);
+
+    List&lt;Integer&gt; latter = new ArrayList&lt;Integer&gt;();
+    for (int i = 0; i &lt; n; i++) {
+        latter.add(sum - former.get(i) - (i + 1 &gt;= n ? 0 : min_r_psum.get(i+1)) );
+    }
+    return Collections.max(latter);
+}
+
+private List&lt;Integer&gt; partial_sum(List&lt;Integer&gt; data, Comparator&lt;Integer&gt; comparator) {
+    List&lt;Integer&gt; res = new ArrayList&lt;Integer&gt;();
+    if (data.size() == 0) {
+        return null;
+    }
+    res.add(data.get(0));
+    for (int i = 1; i &lt; data.size(); i++) {
+        Integer lastValue = res.get(i - 1);
+        Integer currentValue = data.get(i);
+        res.add(comparator.compare(lastValue, currentValue));
+    }
+    return res;
+}
+
+Comparator&lt;Integer&gt; compAdd = new Comparator&lt;Integer&gt;() {
+    @Override
+    public int compare(Integer o1, Integer o2) {
+        return o1 + o2;
+    }
+};
+
+Comparator&lt;Integer&gt; compMax = new Comparator&lt;Integer&gt;() {
+    @Override
+    public int compare(Integer o1, Integer o2) {
+        return Math.max(o1, o2);
+    }
+};
+
+Comparator&lt;Integer&gt; compMin = new Comparator&lt;Integer&gt;() {
+    @Override
+    public int compare(Integer o1, Integer o2) {
+        return Math.min(o1, o2);
+    }
+};
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Codility - Aluminium 2014 - Part 1]]></title>
     <link href="http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014/"/>
     <updated>2014-06-18T15:54:12+09:00</updated>
     <id>http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014</id>
     <content type="html"><![CDATA[<h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Aluminium 2014 Challenge</a>.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Aluminium 2014 Challenge</a>, Part 1.</p>
 
 <ul>
-<li>Find the maximum sum of a compact subsequence of array elements after performing a single swap operation.</li>
+<li>The problem is, finding the maximum sum of a compact subsequence of array elements after performing a single swap operation. It&rsquo;s a little tricky <a href="http://en.wikipedia.org/wiki/Maximum_subarray_problem">maximal subarray</a> problem.</li>
 <li>For example, given an array {3, -10, 4, 5}, we can swap 3 and -10 to get a compact subsequence {3, 4, 5}, which has the maximum sum 12</li>
 <li>Time bound and space bound are both O(n)</li>
-<li>There exists many maximum subarray algorithms, but they cannot directly applied to this problem.</li>
+<li>There exists many algorithms to solve maximal subarray problems, but they cannot directly applied to this problem.</li>
 </ul>
 
 
@@ -36,32 +165,32 @@
 <h2>Analysis</h2>
 
 <ul>
-<li>First, we should take a look at the solution while <strong>swap is not allowed</strong>.</li>
+<li>First, we should take a look at the solution of a CLASSIC maximal subarray problem, which means <strong>swapping is not allowed</strong>.</li>
 </ul>
 
 
 <p>For a given array $a_0, a_1, \cdots, a_n-1$,</p>
 
 <p><p>
-The maximum sum of a compact subsequence can be expressed by the following formular.</p>
+The maximum sum of a compact subsequence can be expressed by the following formula.</p>
 
 <p>$$ \max \{ \sum_{k=i}^j a_k, 0 \leq i &lt; j \leq n &ndash; 1 \} $$
 </p></p>
 
 <p><p>
-Because we want the maximal part from $i$ to $j$, by thinking reversely, we can calculate the minimal <a href="http://mathworld.wolfram.com/PartialSum.html">partial sum</a> of sub array $a_0, a_1, \cdots, a_x-1$ as $f(x)$, mininal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-1$ as $g(x)$. Then use the whole sum to substract them if them are minus values.</p>
+Because we want the maximal part from $i$ to $j$, by thinking reversely, we can calculate the minimal <a href="http://mathworld.wolfram.com/PartialSum.html">partial sum</a> of sub array $a_0, a_1, \cdots, a_x-1$ as $f(x)$, minimal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-1$ as $g(x)$. Then use the whole sum to subtract them if them are minus values.</p>
 
 <p>let S to be the accumulation of the given array.</p>
 
 <p>let $$
-  f(x) = \min \{ \min \{ partial\_sum(p), 0 \leq p \leq x &ndash; 1 \} , 0 \}
+  f(x) = \min \{ \min \{ partial_sum(p), 0 \leq p \leq x &ndash; 1 \} , 0 \}
 $$ to be the minimal partial sum of sub array $a_0, a_1, \cdots, a_x-1$.</p>
 
 <p>let $$
-g(x) = \min \{ \min \{ partial\_sum(q), x + 1 \leq q \leq n &ndash; 1 \} , 0 \}
-$$ to be the mininal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-w$.</p>
+g(x) = \min \{ \min \{ partial_sum(q), x + 1 \leq q \leq n &ndash; 1 \} , 0 \}
+$$ to be the minimal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-w$.</p>
 
-<p>then we calculate the following formular. $$ \max \{ S &ndash; f(x) &ndash; g(x), 0 \leq x \leq n &ndash; 1 \} $$
+<p>then we calculate the following formula. $$ \max \{ S &ndash; f(x) &ndash; g(x), 0 \leq x \leq n &ndash; 1 \} $$
 </p></p>
 
 <ul>

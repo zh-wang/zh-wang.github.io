@@ -9,7 +9,7 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Introduction This is an analysis of Codility &ndash; Aluminium 2014 Challenge. Find the maximum sum of a compact subsequence of array elements after &hellip;">
+  <meta name="description" content="Introduction This is an analysis of Codility &ndash; Aluminium 2014 Challenge, Part 2. In Part 1, we introduced a solution for CLASSIC maximal &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -45,6 +45,10 @@ MathJax.Hub.Config({
                           src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
                           </script>
                           -->
+
+<script language="javaScript">
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
 
 
 
@@ -101,6 +105,55 @@ MathJax.Hub.Config({
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/06/20/codility-aluminium-2014-p2/">Codility - Aluminium 2014 - Part 2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-06-20T11:17:21+09:00" pubdate data-updated="true">Jun 20<span>th</span>, 2014</time>
+        
+           | <a href="/blog/2014/06/20/codility-aluminium-2014-p2/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/06/20/codility-aluminium-2014-p2/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Introduction</h2>
+
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Aluminium 2014 Challenge</a>, Part 2.</p>
+
+<p>In <a href="http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014/">Part 1</a>, we introduced a solution for CLASSIC maximal subarray problem.<br/>
+Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> version.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/06/20/codility-aluminium-2014-p2/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/06/18/codility-aluminium-2014/">Codility - Aluminium 2014 - Part 1</a></h1>
     
     
@@ -129,13 +182,13 @@ MathJax.Hub.Config({
 
   <div class="entry-content"><h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Aluminium 2014 Challenge</a>.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Aluminium 2014 Challenge</a>, Part 1.</p>
 
 <ul>
-<li>Find the maximum sum of a compact subsequence of array elements after performing a single swap operation.</li>
+<li>The problem is, finding the maximum sum of a compact subsequence of array elements after performing a single swap operation. It&rsquo;s a little tricky <a href="http://en.wikipedia.org/wiki/Maximum_subarray_problem">maximal subarray</a> problem.</li>
 <li>For example, given an array {3, -10, 4, 5}, we can swap 3 and -10 to get a compact subsequence {3, 4, 5}, which has the maximum sum 12</li>
 <li>Time bound and space bound are both O(n)</li>
-<li>There exists many maximum subarray algorithms, but they cannot directly applied to this problem.</li>
+<li>There exists many algorithms to solve maximal subarray problems, but they cannot directly applied to this problem.</li>
 </ul>
 
 
@@ -445,6 +498,10 @@ originates from Google Japanese Input.</p></blockquote>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/06/20/codility-aluminium-2014-p2/">Codility - Aluminium 2014 - Part 2</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/06/18/codility-aluminium-2014/">Codility - Aluminium 2014 - Part 1</a>
       </li>
     
@@ -460,10 +517,6 @@ originates from Google Japanese Input.</p></blockquote>
         <a href="/blog/2014/04/24/vcs-info-for-zsh/">Zshのpromptにvcsを表示する</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/04/22/mozc-analysis-01/">Mozc完全解説01</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -472,11 +525,11 @@ originates from Google Japanese Input.</p></blockquote>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (2)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>Codility (2)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (3)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>Codility (3)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 120.0%'>algorithm(2)</a> <a href='/blog/categories/android' style='font-size: 120.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 120.0%'>Codility(2)</a> <a href='/blog/categories/jni' style='font-size: 90.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 120.0%'>mozc(2)</a> <a href='/blog/categories/zsh' style='font-size: 90.0%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 120.0%'>algorithm(3)</a> <a href='/blog/categories/android' style='font-size: 100.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 120.0%'>Codility(3)</a> <a href='/blog/categories/jni' style='font-size: 80.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 100.0%'>mozc(2)</a> <a href='/blog/categories/zsh' style='font-size: 80.0%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

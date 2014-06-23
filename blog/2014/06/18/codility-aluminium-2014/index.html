@@ -9,7 +9,7 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Introduction This is an analysis of Codility &ndash; Aluminium 2014 Challenge. Find the maximum sum of a compact subsequence of array elements after &hellip;">
+  <meta name="description" content="Introduction This is an analysis of Codility &ndash; Aluminium 2014 Challenge, Part 1. The problem is, finding the maximum sum of a compact &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -45,6 +45,10 @@ MathJax.Hub.Config({
                           src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
                           </script>
                           -->
+
+<script language="javaScript">
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
 
 
 
@@ -126,13 +130,13 @@ MathJax.Hub.Config({
 
 <div class="entry-content"><h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Aluminium 2014 Challenge</a>.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Aluminium 2014 Challenge</a>, Part 1.</p>
 
 <ul>
-<li>Find the maximum sum of a compact subsequence of array elements after performing a single swap operation.</li>
+<li>The problem is, finding the maximum sum of a compact subsequence of array elements after performing a single swap operation. It&rsquo;s a little tricky <a href="http://en.wikipedia.org/wiki/Maximum_subarray_problem">maximal subarray</a> problem.</li>
 <li>For example, given an array {3, -10, 4, 5}, we can swap 3 and -10 to get a compact subsequence {3, 4, 5}, which has the maximum sum 12</li>
 <li>Time bound and space bound are both O(n)</li>
-<li>There exists many maximum subarray algorithms, but they cannot directly applied to this problem.</li>
+<li>There exists many algorithms to solve maximal subarray problems, but they cannot directly applied to this problem.</li>
 </ul>
 
 
@@ -142,32 +146,32 @@ MathJax.Hub.Config({
 <h2>Analysis</h2>
 
 <ul>
-<li>First, we should take a look at the solution while <strong>swap is not allowed</strong>.</li>
+<li>First, we should take a look at the solution of a CLASSIC maximal subarray problem, which means <strong>swapping is not allowed</strong>.</li>
 </ul>
 
 
 <p>For a given array $a_0, a_1, \cdots, a_n-1$,</p>
 
 <p><p>
-The maximum sum of a compact subsequence can be expressed by the following formular.</p>
+The maximum sum of a compact subsequence can be expressed by the following formula.</p>
 
 <p>$$ \max \{ \sum_{k=i}^j a_k, 0 \leq i &lt; j \leq n &ndash; 1 \} $$
 </p></p>
 
 <p><p>
-Because we want the maximal part from $i$ to $j$, by thinking reversely, we can calculate the minimal <a href="http://mathworld.wolfram.com/PartialSum.html">partial sum</a> of sub array $a_0, a_1, \cdots, a_x-1$ as $f(x)$, mininal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-1$ as $g(x)$. Then use the whole sum to substract them if them are minus values.</p>
+Because we want the maximal part from $i$ to $j$, by thinking reversely, we can calculate the minimal <a href="http://mathworld.wolfram.com/PartialSum.html">partial sum</a> of sub array $a_0, a_1, \cdots, a_x-1$ as $f(x)$, minimal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-1$ as $g(x)$. Then use the whole sum to subtract them if them are minus values.</p>
 
 <p>let S to be the accumulation of the given array.</p>
 
 <p>let $$
-  f(x) = \min \{ \min \{ partial\_sum(p), 0 \leq p \leq x &ndash; 1 \} , 0 \}
+  f(x) = \min \{ \min \{ partial_sum(p), 0 \leq p \leq x &ndash; 1 \} , 0 \}
 $$ to be the minimal partial sum of sub array $a_0, a_1, \cdots, a_x-1$.</p>
 
 <p>let $$
-g(x) = \min \{ \min \{ partial\_sum(q), x + 1 \leq q \leq n &ndash; 1 \} , 0 \}
-$$ to be the mininal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-w$.</p>
+g(x) = \min \{ \min \{ partial_sum(q), x + 1 \leq q \leq n &ndash; 1 \} , 0 \}
+$$ to be the minimal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-w$.</p>
 
-<p>then we calculate the following formular. $$ \max \{ S &ndash; f(x) &ndash; g(x), 0 \leq x \leq n &ndash; 1 \} $$
+<p>then we calculate the following formula. $$ \max \{ S &ndash; f(x) &ndash; g(x), 0 \leq x \leq n &ndash; 1 \} $$
 </p></p>
 
 <ul>
@@ -352,6 +356,8 @@ $$ to be the mininal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-w$.</p>
         <a class="basic-alignment left" href="/blog/2014/05/27/codility-magnesium-2014-challenge-report/" title="Previous Post: Codility - Magnesium 2014">&laquo; Codility - Magnesium 2014</a>
       
       
+        <a class="basic-alignment right" href="/blog/2014/06/20/codility-aluminium-2014-p2/" title="Next Post: Codility - Aluminium 2014 - Part 2">Codility - Aluminium 2014 - Part 2 &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -371,6 +377,10 @@ $$ to be the mininal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-w$.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/06/20/codility-aluminium-2014-p2/">Codility - Aluminium 2014 - Part 2</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/06/18/codility-aluminium-2014/">Codility - Aluminium 2014 - Part 1</a>
       </li>
     
@@ -386,10 +396,6 @@ $$ to be the mininal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-w$.</p>
         <a href="/blog/2014/04/24/vcs-info-for-zsh/">Zshのpromptにvcsを表示する</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/04/22/mozc-analysis-01/">Mozc完全解説01</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -398,11 +404,11 @@ $$ to be the mininal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-w$.</p>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (2)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>Codility (2)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (3)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>Codility (3)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 120.0%'>algorithm(2)</a> <a href='/blog/categories/android' style='font-size: 120.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 120.0%'>Codility(2)</a> <a href='/blog/categories/jni' style='font-size: 90.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 120.0%'>mozc(2)</a> <a href='/blog/categories/zsh' style='font-size: 90.0%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 120.0%'>algorithm(3)</a> <a href='/blog/categories/android' style='font-size: 100.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 120.0%'>Codility(3)</a> <a href='/blog/categories/jni' style='font-size: 80.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 100.0%'>mozc(2)</a> <a href='/blog/categories/zsh' style='font-size: 80.0%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>
