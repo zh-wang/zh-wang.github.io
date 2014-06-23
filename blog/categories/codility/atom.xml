@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Codility | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/codility/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-06-23T13:13:06+09:00</updated>
+  <updated>2014-06-23T13:30:07+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -64,7 +64,14 @@ We will choose the smaller. Then save results in an array.</li>
     int r1 = cal(data);
     int r2 = cal(rdata);
 
-    return Math.max(r1, r2);
+    int result = Math.max(r1, r2);
+    // result equals 0 means no subarray have sum larger than 0,
+    // we need to choose a largest negative element.
+    if (result == 0) {
+        return Collections.max(data);
+    } else {
+        return result;
+    }
 }
 
 private int cal(List&lt;Integer&gt; data) {
