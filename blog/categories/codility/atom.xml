@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Codility | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/codility/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-06-23T13:30:07+09:00</updated>
+  <updated>2014-06-29T09:16:52+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -80,10 +80,10 @@ private int cal(List&lt;Integer&gt; data) {
     for (Integer integer : data) sum += integer;
 
     List&lt;Integer&gt; psum = partial_sum(data, compAdd);
-    List&lt;Integer&gt; min_psum = partial_sum(data, compMax);
+    List&lt;Integer&gt; pmax = partial_sum(data, compMax);
     List&lt;Integer&gt; sub = new ArrayList&lt;Integer&gt;();
     for (int i = 0; i &lt; n; i++) {
-        sub.add(psum.get(i) - min_psum.get(i));
+        sub.add(psum.get(i) - pmax.get(i));
     }
 
     List&lt;Integer&gt; min_sub = partial_sum(sub, compMin);
