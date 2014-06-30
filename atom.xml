@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-06-30T18:08:19+09:00</updated>
+  <updated>2014-06-30T18:30:15+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -38,7 +38,7 @@
 
 <p>For example,</p>
 
-<p><img src="http://zh-wang.github.io/images/2014_06_27_mathjax.png" title=" =340x100 &quot;Latex Style" alt="MathJax snapshot" /> will become</p>
+<p><img src="http://zh-wang.github.io/images/2014_06_27_mathjax.png" height="100" width="340" title="Latex Style" alt="MathJax snapshot" /> will become</p>
 
 <script type="math/tex; mode=display"> 
 e^{x+iy} = e^x(\cos y + i\sin y)\\
