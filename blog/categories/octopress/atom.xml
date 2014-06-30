@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Octopress | Welcome to FutureAppLaboratory]]></title>
+  <link href="http://zh-wang.github.io/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://zh-wang.github.io/"/>
+  <updated>2014-06-30T18:08:19+09:00</updated>
+  <id>http://zh-wang.github.io/</id>
+  <author>
+    <name><![CDATA[viennakanon]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Import MathJax to Octopress]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/06/27/import-mathjax-to-octopress/"/>
+    <updated>2014-06-27T20:26:41+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/06/27/import-mathjax-to-octopress</id>
+    <content type="html"><![CDATA[<h2>What is MathJax?</h2>
+
+<blockquote><p>MathJax is an open source JavaScript display engine for mathematics that works in all browsers.</p></blockquote>
+
+<p>By importing MathJax to Octopress(Jekeyll), you can write formulars in Latex style. That&rsquo;s cool!</p>
+
+<!-- more -->
+
+
+<h2>How to import?</h2>
+
+<ol>
+<li>Copy <a href="https://gist.github.com/jessykate/834610">this ruby plugin</a> into <code>plugin</code> folder.</li>
+<li>Add <code>&lt;script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"&gt; &lt;/script&gt;</code> in <code>source/_includes/custom/head.html</code>.</li>
+<li>Write your formulars between tags <code>math</code>, <code>m</code> or <code>endmath</code>, <code>em</code>.</li>
+</ol>
+
+
+<p>For example,</p>
+
+<p><img src="/images/2014_06_27_mathjax.png" title=" =340x100 &quot;Latex Style" alt="MathJax snapshot" /> will become</p>
+
+<p><script type="math/tex; mode=display">
+e^{x+iy} = e<sup>x</sup>(\cos y + i\sin y)\</p>
+
+<p>x = \frac{-b \pm \sqrt{b<sup>2</sup> &ndash; 4ac}}{2a}
+</script></p>
+
+<p>Enjoy it!</p>
+]]></content>
+  </entry>
+  
+</feed>
