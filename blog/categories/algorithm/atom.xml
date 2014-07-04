@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithm | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/algorithm/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-07-04T12:59:18+09:00</updated>
+  <updated>2014-07-04T17:42:04+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -31,7 +31,7 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
 <h2>Analysis</h2>
 
 <p>We still can split the whole given array $a_0, a_1, \cdots, a_n-1$ by index $i$.<br/>
-Now we have subarray $L_1 = \{a_0, a_1, \cdots, a_i\}$ and $L-2 = \{a_i+1, a_i+2, \cdots, a_n-1\}$.</p>
+Now we have subarray $L_1 = \{a_0, a_1, \cdots, a_i\}$ and $L_2 = \{a_i+1, a_i+2, \cdots, a_n-1\}$.</p>
 
 <ul>
 <li>We only consider that <strong>forward</strong> swapping of $a_j$ and $a_k$ only occurs in the former subarray, $a_0, a_1, \cdots, a_i$, for $0 \leq j &lt; k &lt; i$. For the case of <strong>backward</strong> swapping in the latter subarray, we do the same calculation on reversed given array. Note that, any element swapped forward will <strong>NOT</strong> be considered into maximal subarray. (Why?)</li>
@@ -87,26 +87,27 @@ private int cal(List&lt;Integer&gt; data) {
     }
 
     List&lt;Integer&gt; min_sub = partial_sum(sub, compMin);
-    List&lt;Integer&gt; former = new ArrayList&lt;Integer&gt;();
+    List&lt;Integer&gt; L1 = new ArrayList&lt;Integer&gt;();
     for (int i = 0; i &lt; n; i++) {
-        former.add(
+        L1.add(
                 Math.min(
                         (i - 1 &gt;= 0 ? min_sub.get(i - 1) : 0) + data.get(i), 
-                        (i - 1 &gt;= 0 ? former.get(i - 1) : 0)
+                        (i - 1 &gt;= 0 ? L1.get(i - 1) : 0)
                         )
                 );
     }
 
     Collections.reverse(data);
     List&lt;Integer&gt; r_psum = partial_sum(data, compAdd);
-    List&lt;Integer&gt; min_r_psum = partial_sum(r_psum, compMin);
-    Collections.reverse(min_r_psum);
+    List&lt;Integer&gt; L2 = partial_sum(r_psum, compMin);
+    Collections.reverse(L2);
 
-    List&lt;Integer&gt; latter = new ArrayList&lt;Integer&gt;();
+    // We can split array into L1 and L2 at index i form 0 to n - 1. We just take the largest.
+    int best = 0;
     for (int i = 0; i &lt; n; i++) {
-        latter.add(sum - former.get(i) - (i + 1 &gt;= n ? 0 : min_r_psum.get(i+1)) );
+        best = Math.max(best, sum - L1.get(i) - (i + 1 &gt;= n ? 0 : L2.get(i+1)) );
     }
-    return Collections.max(latter);
+    return best;
 }
 
 private List&lt;Integer&gt; partial_sum(List&lt;Integer&gt; data, Comparator&lt;Integer&gt; comparator) {
