@@ -170,8 +170,16 @@ originates from Google Japanese Input.</p></blockquote>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>$ /usr/bin/curl -L -O 'http://dl.google.com/android/repository/build-tools_r19-linux.zip' && unzip build-tools_r19-linux.zip -d /opt/android/android-sdk-linux/build-tools/ 
-</span><span class='line'>$ mv /opt/android/android-sdk-linux/build-tools/android-4.4 /opt/android/android-sdk-linux/build-tools/19.0.0</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>$ mv /opt/android/android-sdk-linux/build-tools/android-4.4 /opt/android/android-sdk-linux/build-tools/19.0.0
+</span><span class='line'>
+</span><span class='line'>or
+</span><span class='line'>
+</span><span class='line'>$ /opt/android/android-sdk-linux/tools/android update sdk -u -t build-tools-20.0.0</span></code></pre></td></tr></table></div></figure>
 
 
 <h2>(2) キーのタッチから、変換候補がもらうまで、簡単な解析をやります</h2>

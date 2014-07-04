@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-07-01T15:04:13+09:00</updated>
+  <updated>2014-07-04T12:59:18+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -143,10 +143,14 @@ ANDROID_SERVICE_NAME=org.mozc.android.inputmethod.japanese.MozcService
 フォルダ自体とその中のprotobuff, resources_ossをeclipseにインポートすればOK。後はMozcProxyPreferenceActivityというプロジェクトを実行するだけ。</p>
 
 <p>※ ビルドする際に、"SDK does not have any Build Tools installed.&ldquo;が表示されたら、Build Toolsをダウンロードする必要があります。<br/>
-<code>
-$ /usr/bin/curl -L -O 'http://dl.google.com/android/repository/build-tools_r19-linux.zip' &amp;&amp; unzip build-tools_r19-linux.zip -d /opt/android/android-sdk-linux/build-tools/
-$ mv /opt/android/android-sdk-linux/build-tools/android-4.4 /opt/android/android-sdk-linux/build-tools/19.0.0
-</code></p>
+```
+$ /usr/bin/curl -L -O &lsquo;<a href="http://dl.google.com/android/repository/build-tools_r19-linux.zip">http://dl.google.com/android/repository/build-tools_r19-linux.zip</a>&rsquo; &amp;&amp; unzip build-tools_r19-linux.zip -d /opt/android/android-sdk-linux/build-tools/
+$ mv /opt/android/android-sdk-linux/build-tools/android-4.4 /opt/android/android-sdk-linux/build-tools/19.0.0</p>
+
+<p>or</p>
+
+<p>$ /opt/android/android-sdk-linux/tools/android update sdk -u -t build-tools-20.0.0
+```</p>
 
 <h2>(2) キーのタッチから、変換候補がもらうまで、簡単な解析をやります</h2>
 
