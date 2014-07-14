@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Jni | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/jni/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-07-04T17:42:04+09:00</updated>
+  <updated>2014-07-14T11:47:24+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -18,7 +18,7 @@
     <link href="http://zh-wang.github.io/blog/2014/05/01/mozc-analysis-02/"/>
     <updated>2014-05-01T15:18:39+09:00</updated>
     <id>http://zh-wang.github.io/blog/2014/05/01/mozc-analysis-02</id>
-    <content type="html"><![CDATA[<h1>はじめに</h1>
+    <content type="html"><![CDATA[<h2>はじめに</h2>
 
 <p><a href="/blog/2014/04/22/mozc-analysis-01/">前回</a>では、android側からタッチ反応を発生してから、jniを通して変換エンジンのnative側が候補を返すまでを説明した。<br/>
 今回ではjni部分のコードを少し説明する。</p>

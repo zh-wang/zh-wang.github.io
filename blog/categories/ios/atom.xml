@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: iOS | Welcome to FutureAppLaboratory]]></title>
+  <link href="http://zh-wang.github.io/blog/categories/ios/atom.xml" rel="self"/>
+  <link href="http://zh-wang.github.io/"/>
+  <updated>2014-07-14T11:47:24+09:00</updated>
+  <id>http://zh-wang.github.io/</id>
+  <author>
+    <name><![CDATA[viennakanon]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mozc for iOS]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/07/11/mozc-for-ios/"/>
+    <updated>2014-07-11T18:10:34+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/07/11/mozc-for-ios</id>
+    <content type="html"><![CDATA[<h2>はじめに</h2>
+
+<p>iOS 8ではサードパーティIMEが開発できるようになったので、mozcのiOS版を作ってみたい。<br/>
+まだ初期段階ですが、JUST KEEP BUILDING!</p>
+
+<h2>環境について</h2>
+
+<p>今回は、android版を参考し、mozcのコア機能が含まれるライブラリを作りたいですね。<br/>
+使うmozcソースのリビジョンは</p>
+
+<pre><code>18:06 zhenghongwang@viennakanon:projects/mozc/src (svn)[src:266]$ svn log -r COMMITTED
+------------------------------------------------------------------------
+r266 | yukawa@google.com | 2014-07-06 16:49:48 +0900 (日, 06  7 2014) | 11 lines
+
+Use Ninja to build Android, NaCl, and Linux Desktop binaries
+
+With this CL, Mozc starts using Ninja instead of Make to build Android, NaCl, and Linux Desktop binaries.  Note that Windows binaries have already been built with Ninja for one and a half years.
+
+This CL is supposed not to change any user-visible behavior.
+
+Closes Issue 222.
+
+BUG=Issue mozc:222
+TEST=unittest
+</code></pre>
+
+<p>ninjaを使い始めたみたいです。まあ、iOSやMACならxcodeでビルドするからあんまり関係ないよね。</p>
+
+<p>ビルドマシンはMBP, OSX 10.9, xcode 5。</p>
+
+<p>他の注意点</p>
+
+<ul>
+<li>変換のコアライブラリだけをビルドする。androidのnative側と同じです。</li>
+<li>gypは事前にインストールした。</li>
+<li>protobufをiOS向けにビルドすると、<code>target specifies product type 'com.apple.product-type.tool', but there's no such product type for the 'iphoneos' platform</code>が出てしまうので、protobufも事前にインストール。</li>
+<li>ソースの中のprotobufをarm64にビルドするために、patchが必要みたい。まだ未解決なので、今回はarmv7とarmv7sにビルドする。</li>
+</ul>
+
+
+<h2>ソースの変更点</h2>
+
+<ol>
+<li>src/iosのフォルダを新規。中はgypの設定、ビルドのターゲットなどが書かれている。</li>
+<li>src/build_ios.pyを新規。ビルドのスクリプトです。</li>
+<li>一部のソールを変更した。srcの中で、<code>svn diff</code>を見ればわかる。</li>
+</ol>
+
+
+<!-- more -->
+
+
+<h2>ビルド</h2>
+
+<p>srcの中で<code>python build_ios.py</code>を叩くだけ。<br/>
+ビルドしたファイルはout_iosに入っている。</p>
+
+<p>結果はこちらです。</p>
+
+<pre><code>11:37 zhenghongwang@viennakanon:projects/mozc_ios/src (git)[master|✚ 9]$ lipo -info out_ios/Default-iphoneos/libiMozc.a
+Architectures in the fat file: out_ios/Default-iphoneos/libiMozc.a are: armv7 armv7s
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>
