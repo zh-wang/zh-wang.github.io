@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-07-14T11:47:24+09:00</updated>
+  <updated>2014-07-22T19:27:23+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,205 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Codility-silicium-2014]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/07/22/codility-silicium-2014/"/>
+    <updated>2014-07-22T17:02:26+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/07/22/codility-silicium-2014</id>
+    <content type="html"><![CDATA[<h2>Introduction</h2>
+
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Silicium 2014 Challenge</a>.</p>
+
+<ul>
+<li>The problem is, finding the k-th largest piece of cake after cutting a big cake with straight cuts.</li>
+<li>The longest edge of a cake piece is 10000.</li>
+<li>Time bound is O(N * log(N + X + Y)), where N is the number of cuts, X and Y are largest size of the cake.</li>
+<li>Space bound is O(N).</li>
+</ul>
+
+
+<h2>Analysis</h2>
+
+<p>In order to find the k-th element is an array of set of elements, we can always do binary search. Find a middle elements, calculate the rank, do partition if needed, recursively.</p>
+
+<ul>
+<li>First, we calculate length of each edges, the sort them by their length.</li>
+<li>Then do a traditional binary search.</li>
+</ul>
+
+
+<p>The only <strong>interesting</strong> thing is that, for calculating the rank of a element in 2-d array, we need O(N) time.<br/>
+But in this problem, after we sort edges in <em>x</em> and <em>y</em>, we can do rank calculation in O(N) time, as implemented in <code>fastPartition</code> method.</p>
+
+<p>(Hint: after we sort the edges, we can ensure that elements in left-bottom are always equal or smaller than elements in right-top. We just need to find the smallest element of each column, follow the red arrow, in O(N) time)</p>
+
+<p><img src="http://zh-wang.github.io/images/2014_07_22_illustration.png" title="hint" alt="hint" /></p>
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">int</span> <span class="n">N</span><span class="o">;</span>
+</span><span class='line'><span class="kt">int</span><span class="o">[]</span> <span class="n">largerEqualList</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">private</span> <span class="kt">int</span> <span class="nf">fastPartition</span><span class="o">(</span><span class="kt">int</span> <span class="n">target</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">x</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// find the element equal or larger than target in left-most column</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">nx</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">low</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">high</span> <span class="o">=</span> <span class="n">N</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">low</span> <span class="o">&lt;=</span> <span class="n">high</span> <span class="o">&amp;&amp;</span> <span class="n">low</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="o">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">high</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">[</span><span class="n">nx</span><span class="o">]</span> <span class="o">*</span> <span class="n">y</span><span class="o">[</span><span class="n">mid</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">low</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">high</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">ny</span> <span class="o">=</span> <span class="n">low</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">largerEqualList</span><span class="o">[</span><span class="n">nx</span><span class="o">]</span> <span class="o">=</span> <span class="n">ny</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// search elements&#39; index by red arrow mentioned above</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(++</span><span class="n">nx</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">while</span> <span class="o">(</span><span class="n">ny</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">x</span><span class="o">[</span><span class="n">nx</span><span class="o">]</span> <span class="o">*</span> <span class="n">y</span><span class="o">[</span><span class="n">ny</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span> <span class="o">&gt;=</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="o">--</span><span class="n">ny</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="n">largerEqualList</span><span class="o">[</span><span class="n">nx</span><span class="o">]</span> <span class="o">=</span> <span class="n">ny</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// get the rank of target</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">rank</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">rank</span> <span class="o">+=</span> <span class="n">N</span> <span class="o">-</span> <span class="n">largerEqualList</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">rank</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">X</span><span class="o">,</span> <span class="kt">int</span> <span class="n">Y</span><span class="o">,</span> <span class="kt">int</span> <span class="n">K</span><span class="o">,</span> <span class="kt">int</span> <span class="o">[]</span> <span class="n">A</span><span class="o">,</span> <span class="kt">int</span> <span class="o">[]</span> <span class="n">B</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">int</span> <span class="o">[]</span> <span class="n">x</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">+</span> <span class="mi">1</span><span class="o">];</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="o">[]</span> <span class="n">y</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">+</span> <span class="mi">1</span><span class="o">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">x</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">?</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">:</span> <span class="n">X</span><span class="o">)</span> <span class="o">-</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span> <span class="o">:</span> <span class="mi">0</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">y</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">?</span> <span class="n">B</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">:</span> <span class="n">Y</span><span class="o">)</span> <span class="o">-</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">B</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span> <span class="o">:</span> <span class="mi">0</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">x</span><span class="o">);</span>
+</span><span class='line'>    <span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">y</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">N</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">largerEqualList</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">N</span><span class="o">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">low</span> <span class="o">=</span> <span class="n">x</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">*</span> <span class="n">y</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">high</span> <span class="o">=</span> <span class="n">x</span><span class="o">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span> <span class="o">*</span> <span class="n">y</span><span class="o">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="o">];</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">rank</span> <span class="o">=</span> <span class="n">K</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// binary search</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">low</span> <span class="o">&lt;=</span> <span class="n">high</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="o">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">high</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">crank</span> <span class="o">=</span> <span class="n">fastPartition</span><span class="o">(</span><span class="n">mid</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">crank</span> <span class="o">&gt;=</span> <span class="n">rank</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">low</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">crank</span> <span class="o">&lt;</span> <span class="n">rank</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">high</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">high</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Each <code>fastPartition</code> cost O(N) time, and we do log(10000 * 10000) times. So the total time is O(N * log(10000 * 10000). There is no X and Y occurs. <br/>
+Note that even a traditional O(N<sup>2</sup>) time partition could pass system test. :)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mozc for iOS]]></title>
