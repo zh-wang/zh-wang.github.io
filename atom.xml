@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-07-23T14:25:50+09:00</updated>
+  <updated>2014-07-23T18:46:02+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,176 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Noto - Fonts]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/07/23/noto-font/"/>
+    <updated>2014-07-23T18:25:58+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/07/23/noto-font</id>
+    <content type="html"><![CDATA[<p>最近<a href="http://www.google.com/get/noto/#/">Google Noto Fonts</a>はアジア系文字をサポートし始めたので、Octopressのデフォルトフォントを変えてみようと思いました。</p>
+
+<p>やり方<br/>
+1. <a href="http://www.google.com/get/noto/#/">Google Noto Fonts</a> ここからフォントをダンロード。<br/>
+2. /source/fontsを作ります。<br/>
+3. 先ダンロードしたファイルを解凍し、好きなフォントを/source/fontsに入れます。私の場合、日本語と英語を合わせて10個入れました。NotoSans系とNotoSerif系とNotoSansJP-Bold、NotoSansJP-Regular。<br/>
+4. ソースを修正。/sass/custom/_fonts.scssに、次のコードを追加します。完成。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>
+</span><span class='line'>    $sans: "Noto Sans", sans-serif;
+</span><span class='line'>    $serif: "Noto Serif", "Noto Sans" serif;
+</span><span class='line'>    $heading-font-family: "Noto Serif", sans-serif;
+</span><span class='line'>    $header-title-font-family: "Noto Sans JP", "Noto Serif", sans-serif;
+</span><span class='line'>    $header-subtitle-font-family: "Noto Sans JP", "Noto Serif", sans-serif;
+</span><span class='line'>
+</span><span class='line'>    @font-face {
+</span><span class='line'>        font-family: 'Noto Sans';
+</span><span class='line'>        font-style: normal;
+</span><span class='line'>        font-weight: 400;
+</span><span class='line'>        src: local('NotoSans-Regular') url(/fonts/NotoSans-Regular.ttf) format('truetype');
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @font-face {
+</span><span class='line'>        font-family: 'Noto Sans';
+</span><span class='line'>        font-style: normal;
+</span><span class='line'>        font-weight: 700;
+</span><span class='line'>        src: local('NotoSans-Bold') url(/fonts/NotoSans-Bold.ttf) format('truetype');
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @font-face {
+</span><span class='line'>        font-family: 'Noto Sans';
+</span><span class='line'>        font-style: italic;
+</span><span class='line'>        font-weight: 400;
+</span><span class='line'>        src: local('NotoSans-Italic') url(/fonts/NotoSans-Italic.ttf) format('truetype');
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @font-face {
+</span><span class='line'>        font-family: 'Noto Sans';
+</span><span class='line'>        font-style: italic;
+</span><span class='line'>        font-weight: 700;
+</span><span class='line'>        src: local('NotoSans-BoldItalic') url(/fonts/NotoSans-BoldItalic.ttf) format('truetype');
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @font-face {
+</span><span class='line'>        font-family: 'Noto Sans JP';
+</span><span class='line'>        font-style: normal;
+</span><span class='line'>        font-weight: 400;
+</span><span class='line'>        src: local('NotoSansJP-Regular') url(/fonts/NotoSansJP-Regular.otf) format('truetype');
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @font-face {
+</span><span class='line'>        font-family: 'Noto Sans JP';
+</span><span class='line'>        font-style: normal;
+</span><span class='line'>        font-weight: 700;
+</span><span class='line'>        src: local('NotoSansJP-Regular') url(/fonts/NotoSansJP-Bold.otf) format('truetype');
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @font-face {
+</span><span class='line'>        font-family: 'Noto Serif';
+</span><span class='line'>        font-style: normal;
+</span><span class='line'>        font-weight: 400;
+</span><span class='line'>        src: local('NotoSerif-Regular') url(/fonts/NotoSerif-Regular.ttf) format('truetype');
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @font-face {
+</span><span class='line'>        font-family: 'Noto Serif';
+</span><span class='line'>        font-style: normal;
+</span><span class='line'>        font-weight: 700;
+</span><span class='line'>        src: local('NotoSerif-Bold') url(/fonts/NotoSerif-Bold.ttf) format('truetype');
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @font-face {
+</span><span class='line'>        font-family: 'Noto Serif';
+</span><span class='line'>        font-style: italic;
+</span><span class='line'>        font-weight: 400;
+</span><span class='line'>        src: local('NotoSerif-Italic') url(/fonts/NotoSerif-Italic.ttf) format('truetype');
+</span><span class='line'>    }
+</span><span class='line'>
+</span><span class='line'>    @font-face {
+</span><span class='line'>        font-family: 'Noto Serif';
+</span><span class='line'>        font-style: italic;
+</span><span class='line'>        font-weight: 700;
+</span><span class='line'>        src: local('NotoSerif-BoldItalic') url(/fonts/NotoSerif-BoldItalic.ttf) format('truetype');
+</span><span class='line'>    }
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Codility - Silicium - 2014]]></title>
@@ -305,9 +475,9 @@ Architectures in the fat file: out_ios/Default-iphoneos/libiMozc.a are: armv7 ar
 </ol>
 
 
-<p>For example,</p>
-
-<p><img src="http://zh-wang.github.io/images/2014_06_27_mathjax.png" height="100" width="340" title="Latex Style" alt="MathJax snapshot" /> will become</p>
+<p>For example,<br/>
+<img src="http://zh-wang.github.io/images/2014_06_27_mathjax.png" height="100" width="340" title="Latex Style" alt="MathJax snapshot" /> <br/>
+will become</p>
 
 <script type="math/tex; mode=display"> 
 e^{x+iy} = e^x(\cos y + i\sin y)\\
