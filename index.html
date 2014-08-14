@@ -9,10 +9,7 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="最近Google Noto Fontsはアジア系文字をサポートし始めたので、Octopressのデフォルトフォントを変えてみようと思いました。 やり方
-1. Google Noto Fonts ここからフォントをダンロード。
-2. /source/fontsを作ります。
-3. &hellip;">
+  <meta name="description" content="Introduction This is an analysis of Codility &ndash; Prosphorus 2014 Challenge. This problem is, finding the minimal number of guards to set in a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -99,6 +96,68 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/08/14/codility-phosphorus-2014/">Codility - Phosphorus - 2014</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-14T15:04:36+09:00" pubdate data-updated="true">Aug 14<span>th</span>, 2014</time>
+        
+           | <a href="/blog/2014/08/14/codility-phosphorus-2014/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/08/14/codility-phosphorus-2014/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Introduction</h2>
+
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Prosphorus 2014 Challenge</a>.</p>
+
+<ul>
+<li>This problem is, finding the minimal number of guards to set in a tree which can prevent prisoners escaping to tree leaves.</li>
+<li>Time bound and space bound are both O(N).</li>
+</ul>
+
+
+<h2>Analysis</h2>
+
+<ul>
+<li>Create a <code>Node</code> structure, holding its parent index, a boolean value presenting it is a prisoner or not. Then a boolean value presenting whether prisoners can escape down to leaves, and another boolean value presenting whether prisoners can escape from the root.</li>
+<li>Depth-First-Search from node 0.</li>
+<li>Adjust the result according to node 0&rsquo;s state. Done.</li>
+<li>A classic DFS holds time bound and space bound.</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/08/14/codility-phosphorus-2014/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -803,107 +862,9 @@ Local status:<br/>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/04/22/mozc-analysis-01/">Mozc完全解説01</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-22T12:20:06+09:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2014</time>
-        
-           | <a href="/blog/2014/04/22/mozc-analysis-01/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>What is mozc?</h2>
-
-<blockquote><p>Mozc is a Japanese Input Method Editor (IME) designed for multi-platform such
-as Chromium OS, Android, Windows, Mac and Linux. This open-source project
-originates from Google Japanese Input.</p></blockquote>
-
-<h2>(1) ソースを手に入れよう</h2>
-
-<p>ここからダウンロード　<a href="https://code.google.com/p/mozc/">mozc project from google code</a></p>
-
-<p>今回使うmozcのバージョンは</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MAJOR=1
-</span><span class='line'>MINOR=10
-</span><span class='line'>BUILD=1390
-</span><span class='line'>REVISION=103
-</span><span class='line'>ANDROID_VERSION_CODE=1794
-</span><span class='line'>FLAG=RELEASE
-</span><span class='line'>TARGET_PLATFORM=Android
-</span><span class='line'>ANDROID_APPLICATION_ID=org.mozc.android.inputmethod.japanese
-</span><span class='line'>ANDROID_SERVICE_NAME=org.mozc.android.inputmethod.japanese.MozcService</span></code></pre></td></tr></table></div></figure>
-
-
-<p>android版のビルドはMac非対応なので、vagrantを通してVMのubuntuでビルドします。<br/>
-こちらのリポジトリを使えば楽です。
-<a href="https://github.com/niw/mozc">https://github.com/niw/mozc</a></p>
-
-<p>デフォルトでビルドすると、eclipseで開けるプロジェクトは作ってくれないので、手動で作りました。こちらからダウンロードできます。<br/>
-<a href="https://dl.dropboxusercontent.com/u/40868784/mozc_android.zip  ">https://dl.dropboxusercontent.com/u/40868784/mozc_android.zip  </a>
-フォルダ自体とその中のprotobuff, resources_ossをeclipseにインポートすればOK。後はMozcProxyPreferenceActivityというプロジェクトを実行するだけ。</p>
-
-<p>※ ビルドする際に、&#8221;SDK does not have any Build Tools installed.&ldquo;が表示されたら、Build Toolsをダウンロードする必要があります。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ /usr/bin/curl -L -O 'http://dl.google.com/android/repository/build-tools_r19-linux.zip' && unzip build-tools_r19-linux.zip -d /opt/android/android-sdk-linux/build-tools/ 
-</span><span class='line'>$ mv /opt/android/android-sdk-linux/build-tools/android-4.4 /opt/android/android-sdk-linux/build-tools/19.0.0
-</span><span class='line'>
-</span><span class='line'>or
-</span><span class='line'>
-</span><span class='line'>$ /opt/android/android-sdk-linux/tools/android update sdk -u -t build-tools-20.0.0</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>(2) キーのタッチから、変換候補がもらうまで、簡単な解析をやります</h2>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/04/22/mozc-analysis-01/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -914,6 +875,10 @@ originates from Google Japanese Input.</p></blockquote>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/08/14/codility-phosphorus-2014/">Codility - Phosphorus - 2014</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/07/23/noto-font/">Noto - Fonts</a>
@@ -931,10 +896,6 @@ originates from Google Japanese Input.</p></blockquote>
         <a href="/blog/2014/06/27/import-mathjax-to-octopress/">Import MathJax to Octopress</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/06/20/codility-aluminium-2014-p2/">Codility - Aluminium 2014 - Part 2</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -943,11 +904,11 @@ originates from Google Japanese Input.</p></blockquote>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (4)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>Codility (4)</a></li><li><a href='/blog/categories/ios/'>iOS (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>Codility (5)</a></li><li><a href='/blog/categories/ios/'>iOS (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 120.0%'>algorithm(4)</a> <a href='/blog/categories/android' style='font-size: 90.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 120.0%'>Codility(4)</a> <a href='/blog/categories/ios' style='font-size: 75.0%'>iOS(1)</a> <a href='/blog/categories/jni' style='font-size: 75.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 105.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 90.0%'>octopress(2)</a> <a href='/blog/categories/zsh' style='font-size: 75.0%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 120.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 84.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 120.0%'>Codility(5)</a> <a href='/blog/categories/ios' style='font-size: 72.0%'>iOS(1)</a> <a href='/blog/categories/jni' style='font-size: 72.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 96.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 84.0%'>octopress(2)</a> <a href='/blog/categories/zsh' style='font-size: 72.0%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

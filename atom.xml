@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-07-25T17:47:33+09:00</updated>
+  <updated>2014-08-14T15:20:43+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,240 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Codility - Phosphorus - 2014]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/08/14/codility-phosphorus-2014/"/>
+    <updated>2014-08-14T15:04:36+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/08/14/codility-phosphorus-2014</id>
+    <content type="html"><![CDATA[<h2>Introduction</h2>
+
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Prosphorus 2014 Challenge</a>.</p>
+
+<ul>
+<li>This problem is, finding the minimal number of guards to set in a tree which can prevent prisoners escaping to tree leaves.</li>
+<li>Time bound and space bound are both O(N).</li>
+</ul>
+
+
+<h2>Analysis</h2>
+
+<ul>
+<li>Create a <code>Node</code> structure, holding its parent index, a boolean value presenting it is a prisoner or not. Then a boolean value presenting whether prisoners can escape down to leaves, and another boolean value presenting whether prisoners can escape from the root.</li>
+<li>Depth-First-Search from node 0.</li>
+<li>Adjust the result according to node 0&rsquo;s state. Done.</li>
+<li>A classic DFS holds time bound and space bound.</li>
+</ul>
+
+
+<!-- more -->
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">static</span> <span class="kt">int</span> <span class="n">N</span> <span class="o">=</span> <span class="mi">200003</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">boolean</span><span class="o">[]</span> <span class="n">visited</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">boolean</span><span class="o">[</span><span class="n">N</span><span class="o">];</span>
+</span><span class='line'><span class="n">Node</span><span class="o">[]</span> <span class="n">nodes</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">[</span><span class="n">N</span><span class="o">];</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">A</span><span class="o">[],</span> <span class="kt">int</span> <span class="n">B</span><span class="o">[],</span> <span class="kt">int</span> <span class="n">C</span><span class="o">[])</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">nodes</span><span class="o">[</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]]</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="n">nodes</span><span class="o">[</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">();</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">nodes</span><span class="o">[</span><span class="n">B</span><span class="o">[</span><span class="n">i</span><span class="o">]]</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="n">nodes</span><span class="o">[</span><span class="n">B</span><span class="o">[</span><span class="n">i</span><span class="o">]]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">();</span>
+</span><span class='line'>        <span class="n">nodes</span><span class="o">[</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]].</span><span class="na">tlist</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">B</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+</span><span class='line'>        <span class="n">nodes</span><span class="o">[</span><span class="n">B</span><span class="o">[</span><span class="n">i</span><span class="o">]].</span><span class="na">tlist</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">C</span><span class="o">.</span><span class="na">length</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// if a prison is on leaf(exit), then we cannot stop them escaping</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">C</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">isLeaf</span><span class="o">(</span><span class="n">nodes</span><span class="o">[</span><span class="n">C</span><span class="o">[</span><span class="n">i</span><span class="o">]]))</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="n">nodes</span><span class="o">[</span><span class="n">C</span><span class="o">[</span><span class="n">i</span><span class="o">]].</span><span class="na">isPrisoner</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">dfs</span><span class="o">(</span><span class="mi">0</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// if node 0 is has only one path, then it is an exit. </span>
+</span><span class='line'>    <span class="c1">// we should set a guard if node 0 is exit &amp;&amp; prisoners can escape to root</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">nodes</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">hasEscapeRoot</span> <span class="o">&amp;&amp;</span> <span class="n">nodes</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="na">tlist</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span> <span class="o">?</span> <span class="n">res</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">:</span> <span class="n">res</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">dfs</span><span class="o">(</span><span class="kt">int</span> <span class="n">nodeIndex</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">visited</span><span class="o">[</span><span class="n">nodeIndex</span><span class="o">]</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">[</span><span class="n">nodeIndex</span><span class="o">];</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">node</span><span class="o">.</span><span class="na">tlist</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">nextNodeIndex</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">tlist</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(!</span><span class="n">visited</span><span class="o">[</span><span class="n">nextNodeIndex</span><span class="o">])</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">nodes</span><span class="o">[</span><span class="n">nextNodeIndex</span><span class="o">].</span><span class="na">parentIndex</span> <span class="o">=</span> <span class="n">nodeIndex</span><span class="o">;</span>
+</span><span class='line'>            <span class="n">dfs</span><span class="o">(</span><span class="n">nextNodeIndex</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">nodeIndex</span> <span class="o">!=</span> <span class="n">node</span><span class="o">.</span><span class="na">parentIndex</span> <span class="o">&amp;&amp;</span> <span class="o">(</span><span class="n">isLeaf</span><span class="o">(</span><span class="n">node</span><span class="o">)))</span>  <span class="k">return</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">escapesLeaf</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">escapesRoot</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">node</span><span class="o">.</span><span class="na">tlist</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">next</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="na">tlist</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">parentIndex</span> <span class="o">==</span> <span class="n">next</span><span class="o">)</span> <span class="k">continue</span><span class="o">;</span>
+</span><span class='line'>        <span class="n">n</span><span class="o">++;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">nodes</span><span class="o">[</span><span class="n">next</span><span class="o">].</span><span class="na">hasEscapeLeaf</span><span class="o">)</span> <span class="n">escapesLeaf</span><span class="o">++;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">nodes</span><span class="o">[</span><span class="n">next</span><span class="o">].</span><span class="na">hasEscapeRoot</span><span class="o">)</span> <span class="n">escapesRoot</span><span class="o">++;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">isPrisoner</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// if root is PRISONER,</span>
+</span><span class='line'>        <span class="n">node</span><span class="o">.</span><span class="na">hasEscapeLeaf</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// then it must not have escape paths to leaf</span>
+</span><span class='line'>        <span class="n">node</span><span class="o">.</span><span class="na">hasEscapeRoot</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span> <span class="c1">// but it can escape to root</span>
+</span><span class='line'>        <span class="n">res</span> <span class="o">+=</span> <span class="n">escapesLeaf</span><span class="o">;</span> <span class="c1">// set guards on those leaves</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span> <span class="c1">// if root is NOT PRISONER, </span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">escapesLeaf</span> <span class="o">==</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// all subtrees has escape to leaf</span>
+</span><span class='line'>            <span class="c1">// it a empty subtree, do nothing</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">escapesLeaf</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// no subtree has escape to leaf</span>
+</span><span class='line'>            <span class="c1">// then we do NOT need a guard here</span>
+</span><span class='line'>            <span class="n">node</span><span class="o">.</span><span class="na">hasEscapeLeaf</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// set no escape to leaf</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">escapesRoot</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// if at least one subtree has prisoner can escape to root</span>
+</span><span class='line'>                <span class="n">node</span><span class="o">.</span><span class="na">hasEscapeRoot</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span> <span class="c1">// has SOME escape path</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">escapesRoot</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// if no prisoner can escape to root</span>
+</span><span class='line'>                <span class="c1">// then we do NOT need a guard here</span>
+</span><span class='line'>                <span class="n">node</span><span class="o">.</span><span class="na">hasEscapeLeaf</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span> <span class="c1">// because it has escape paths</span>
+</span><span class='line'>                <span class="n">node</span><span class="o">.</span><span class="na">hasEscapeRoot</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// obviously</span>
+</span><span class='line'>            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span> <span class="c1">// if some prisoner can escape to root</span>
+</span><span class='line'>                <span class="n">res</span><span class="o">++;</span> <span class="c1">// set guard here, prevent them escape to leaves through this node</span>
+</span><span class='line'>                <span class="n">node</span><span class="o">.</span><span class="na">hasEscapeLeaf</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// we set the guard, so there is no escape path to leaves</span>
+</span><span class='line'>                <span class="n">node</span><span class="o">.</span><span class="na">hasEscapeRoot</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span> <span class="c1">// as above</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">boolean</span> <span class="nf">isLeaf</span><span class="o">(</span><span class="n">Node</span> <span class="n">node</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">tlist</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">else</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">class</span> <span class="nc">Node</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">parentIndex</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">boolean</span> <span class="n">isPrisoner</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">boolean</span> <span class="n">hasEscapeLeaf</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">boolean</span> <span class="n">hasEscapeRoot</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">tlist</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<script language="javaScript">
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Noto - Fonts]]></title>
@@ -379,6 +613,11 @@ But in this problem, after we sort edges in <em>x</em> and <em>y</em>, we can do
 
 <p>Each <code>fastPartition</code> cost O(N) time, and we do log(10000 * 10000) times. So the total time is O(N * log(10000 * 10000). There is no X and Y occurs. <br/>
 Note that even a traditional O(N<sup>2</sup>) time partition could pass system test. :)</p>
+
+<script language="javaScript">
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
 ]]></content>
   </entry>
   
@@ -714,6 +953,13 @@ We will choose the smaller. Then save results in an array.</li>
 </span><span class='line'><span class="o">};</span>
 </span></code></pre></td></tr></table></div></figure>
 
+
+
+
+<script language="javaScript">
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
 ]]></content>
   </entry>
   
@@ -898,6 +1144,10 @@ $$ to be the minimal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-w$.</p>
 </span><span class='line'>        <span class="o">}</span>
 </span><span class='line'>    <span class="o">};</span>
 </span></code></pre></td></tr></table></div></figure></p>
+
+<p><script language="javaScript">
+$(document).ready( function () { $(&ldquo;a[href^=&lsquo;http&rsquo;]:not([href*=&lsquo;&rdquo; + location.hostname + &ldquo;&rsquo;])&rdquo;).attr(&lsquo;target&rsquo;, &lsquo;_blank&rsquo;); })
+</script></p>
 ]]></content>
   </entry>
   

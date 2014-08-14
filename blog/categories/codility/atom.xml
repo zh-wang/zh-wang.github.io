@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Codility | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/codility/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-07-25T17:47:33+09:00</updated>
+  <updated>2014-08-14T15:20:43+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,143 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Codility - Phosphorus - 2014]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/08/14/codility-phosphorus-2014/"/>
+    <updated>2014-08-14T15:04:36+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/08/14/codility-phosphorus-2014</id>
+    <content type="html"><![CDATA[<h2>Introduction</h2>
+
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Prosphorus 2014 Challenge</a>.</p>
+
+<ul>
+<li>This problem is, finding the minimal number of guards to set in a tree which can prevent prisoners escaping to tree leaves.</li>
+<li>Time bound and space bound are both O(N).</li>
+</ul>
+
+
+<h2>Analysis</h2>
+
+<ul>
+<li>Create a <code>Node</code> structure, holding its parent index, a boolean value presenting it is a prisoner or not. Then a boolean value presenting whether prisoners can escape down to leaves, and another boolean value presenting whether prisoners can escape from the root.</li>
+<li>Depth-First-Search from node 0.</li>
+<li>Adjust the result according to node 0&rsquo;s state. Done.</li>
+<li>A classic DFS holds time bound and space bound.</li>
+</ul>
+
+
+<!-- more -->
+
+
+<p>```java</p>
+
+<pre><code>static int N = 200003;
+
+boolean[] visited = new boolean[N];
+Node[] nodes = new Node[N];
+int res = 0;
+
+public int solution(int A[], int B[], int C[]) {
+    for (int i = 0; i &lt; A.length; i++) {
+        if (nodes[A[i]] == null) nodes[A[i]] = new Node();
+        if (nodes[B[i]] == null) nodes[B[i]] = new Node();
+        nodes[A[i]].tlist.add(B[i]);
+        nodes[B[i]].tlist.add(A[i]);
+    }
+
+    if (C.length == 0) return 0;
+
+    // if a prison is on leaf(exit), then we cannot stop them escaping
+    for (int i = 0; i &lt; C.length; i++) {
+        if (isLeaf(nodes[C[i]])) {
+            return -1;
+        }
+        nodes[C[i]].isPrisoner = true;
+    }
+
+    dfs(0);
+
+    // if node 0 is has only one path, then it is an exit. 
+    // we should set a guard if node 0 is exit &amp;&amp; prisoners can escape to root
+    return nodes[0].hasEscapeRoot &amp;&amp; nodes[0].tlist.size() == 1 ? res + 1 : res;
+}
+
+void dfs(int nodeIndex) {
+    visited[nodeIndex] = true;
+    Node node = nodes[nodeIndex];
+
+    for (int i = 0; i &lt; node.tlist.size(); i++) {
+        int nextNodeIndex = node.tlist.get(i);
+        if (!visited[nextNodeIndex]) {
+            nodes[nextNodeIndex].parentIndex = nodeIndex;
+            dfs(nextNodeIndex);
+        }
+    }
+
+    if (nodeIndex != node.parentIndex &amp;&amp; (isLeaf(node)))  return;
+
+    int n = 0;
+    int escapesLeaf = 0;
+    int escapesRoot = 0;
+    for (int i = 0; i &lt; node.tlist.size(); ++i) {
+        int next = node.tlist.get(i);
+        if (node.parentIndex == next) continue;
+        n++;
+        if (nodes[next].hasEscapeLeaf) escapesLeaf++;
+        if (nodes[next].hasEscapeRoot) escapesRoot++;
+    }
+
+    if (node.isPrisoner) { // if root is PRISONER,
+        node.hasEscapeLeaf = false; // then it must not have escape paths to leaf
+        node.hasEscapeRoot = true; // but it can escape to root
+        res += escapesLeaf; // set guards on those leaves
+    } else { // if root is NOT PRISONER, 
+        if (escapesLeaf == n) { // all subtrees has escape to leaf
+            // it a empty subtree, do nothing
+        } else if (escapesLeaf == 0) { // no subtree has escape to leaf
+            // then we do NOT need a guard here
+            node.hasEscapeLeaf = false; // set no escape to leaf
+            if (escapesRoot &gt; 0) { // if at least one subtree has prisoner can escape to root
+                node.hasEscapeRoot = true;
+            }
+        } else { // has SOME escape path
+            if (escapesRoot == 0) { // if no prisoner can escape to root
+                // then we do NOT need a guard here
+                node.hasEscapeLeaf = true; // because it has escape paths
+                node.hasEscapeRoot = false; // obviously
+            } else { // if some prisoner can escape to root
+                res++; // set guard here, prevent them escape to leaves through this node
+                node.hasEscapeLeaf = false; // we set the guard, so there is no escape path to leaves
+                node.hasEscapeRoot = false; // as above
+            }
+        }
+    }
+
+}
+
+boolean isLeaf(Node node) {
+    if (node.tlist.size() == 1) return true;
+    else return false;
+}
+
+class Node {
+    int parentIndex;
+    boolean isPrisoner = false;
+    boolean hasEscapeLeaf = true;
+    boolean hasEscapeRoot = false;
+    List&lt;Integer&gt; tlist = new ArrayList&lt;Integer&gt;();
+}
+</code></pre>
+
+<p>```</p>
+
+<script language="javaScript">
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Codility - Silicium - 2014]]></title>
@@ -134,6 +271,11 @@ public int solution(int X, int Y, int K, int [] A, int [] B) {
 
 <p>Each <code>fastPartition</code> cost O(N) time, and we do log(10000 * 10000) times. So the total time is O(N * log(10000 * 10000). There is no X and Y occurs. <br/>
 Note that even a traditional O(N<sup>2</sup>) time partition could pass system test. :)</p>
+
+<script language="javaScript">
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
 ]]></content>
   </entry>
   
@@ -271,6 +413,11 @@ Comparator&lt;Integer&gt; compMin = new Comparator&lt;Integer&gt;() {
 </code></pre>
 
 <p>```</p>
+
+<script language="javaScript">
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
 ]]></content>
   </entry>
   
@@ -397,6 +544,10 @@ Comparator&lt;Integer&gt; compMin = new Comparator&lt;Integer&gt;() {
 </code></pre>
 
 <p>```</p>
+
+<p><script language="javaScript">
+$(document).ready( function () { $(&ldquo;a[href^=&lsquo;http&rsquo;]:not([href*=&lsquo;&rdquo; + location.hostname + &ldquo;&rsquo;])&rdquo;).attr(&lsquo;target&rsquo;, &lsquo;_blank&rsquo;); })
+</script></p>
 ]]></content>
   </entry>
   

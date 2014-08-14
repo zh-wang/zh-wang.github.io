@@ -5,14 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Noto - Fonts - Welcome to FutureAppLaboratory</title>
+  <title>Welcome to FutureAppLaboratory</title>
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="最近Google Noto Fontsはアジア系文字をサポートし始めたので、Octopressのデフォルトフォントを変えてみようと思いました。 やり方
-1. Google Noto Fonts ここからフォントをダンロード。
-2. /source/fontsを作ります。
-3. &hellip;">
+  <meta name="description" content="What is mozc? Mozc is a Japanese Input Method Editor (IME) designed for multi-platform such
+as Chromium OS, Android, Windows, Mac and Linux. This &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://zh-wang.github.io/blog/2014/07/23/noto-font">
+  <link rel="canonical" href="http://zh-wang.github.io/blog/page/2">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Welcome to FutureAppLaboratory" type="application/atom+xml">
@@ -97,12 +95,15 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 </nav>
   <div id="main">
     <div id="content">
-      <div>
-<article class="hentry" role="article">
+      <div class="blog-index">
   
+  
+  
+    <article>
+      
   <header>
     
-      <h1 class="entry-title">Noto - Fonts</h1>
+      <h1 class="entry-title"><a href="/blog/2014/04/22/mozc-analysis-01/">Mozc完全解説01</a></h1>
     
     
       <p class="meta">
@@ -118,23 +119,27 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
   
 
 
-<time datetime="2014-07-23T18:25:58+09:00" pubdate data-updated="true">Jul 23<span>rd</span>, 2014</time>
+<time datetime="2014-04-22T12:20:06+09:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2014</time>
         
-           | <a href="#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io">Comments</a>
+           | <a href="/blog/2014/04/22/mozc-analysis-01/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01/">Comments</a>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>最近<a href="http://www.google.com/get/noto/#/">Google Noto Fonts</a>はアジア系文字をサポートし始めたので、Octopressのデフォルトフォントを変えてみようと思いました。</p>
+  <div class="entry-content"><h2>What is mozc?</h2>
 
-<p>やり方<br/>
-1. <a href="http://www.google.com/get/noto/#/">Google Noto Fonts</a> ここからフォントをダンロード。<br/>
-2. /source/fontsを作ります。<br/>
-3. 先ダンロードしたファイルを解凍し、好きなフォントを/source/fontsに入れます。私の場合、日本語と英語を合わせて10個入れました。NotoSans系とNotoSerif系とNotoSansJP-Bold、NotoSansJP-Regular。<br/>
-4. ソースを修正。/sass/custom/_fonts.scssに、次のコードを追加します。完成。</p>
+<blockquote><p>Mozc is a Japanese Input Method Editor (IME) designed for multi-platform such
+as Chromium OS, Android, Windows, Mac and Linux. This open-source project
+originates from Google Japanese Input.</p></blockquote>
+
+<h2>(1) ソースを手に入れよう</h2>
+
+<p>ここからダウンロード　<a href="https://code.google.com/p/mozc/">mozc project from google code</a></p>
+
+<p>今回使うmozcのバージョンは</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -145,217 +150,62 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>    $sans: "Noto Sans", sans-serif;
-</span><span class='line'>    $serif: "Noto Serif", "Noto Sans" serif;
-</span><span class='line'>    $heading-font-family: "Noto Serif", sans-serif;
-</span><span class='line'>    $header-title-font-family: "Noto Sans JP", "Noto Serif", sans-serif;
-</span><span class='line'>    $header-subtitle-font-family: "Noto Sans JP", "Noto Serif", sans-serif;
+</pre></td><td class='code'><pre><code class=''><span class='line'>MAJOR=1
+</span><span class='line'>MINOR=10
+</span><span class='line'>BUILD=1390
+</span><span class='line'>REVISION=103
+</span><span class='line'>ANDROID_VERSION_CODE=1794
+</span><span class='line'>FLAG=RELEASE
+</span><span class='line'>TARGET_PLATFORM=Android
+</span><span class='line'>ANDROID_APPLICATION_ID=org.mozc.android.inputmethod.japanese
+</span><span class='line'>ANDROID_SERVICE_NAME=org.mozc.android.inputmethod.japanese.MozcService</span></code></pre></td></tr></table></div></figure>
+
+
+<p>android版のビルドはMac非対応なので、vagrantを通してVMのubuntuでビルドします。<br/>
+こちらのリポジトリを使えば楽です。
+<a href="https://github.com/niw/mozc">https://github.com/niw/mozc</a></p>
+
+<p>デフォルトでビルドすると、eclipseで開けるプロジェクトは作ってくれないので、手動で作りました。こちらからダウンロードできます。<br/>
+<a href="https://dl.dropboxusercontent.com/u/40868784/mozc_android.zip  ">https://dl.dropboxusercontent.com/u/40868784/mozc_android.zip  </a>
+フォルダ自体とその中のprotobuff, resources_ossをeclipseにインポートすればOK。後はMozcProxyPreferenceActivityというプロジェクトを実行するだけ。</p>
+
+<p>※ ビルドする際に、&#8221;SDK does not have any Build Tools installed.&ldquo;が表示されたら、Build Toolsをダウンロードする必要があります。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ /usr/bin/curl -L -O 'http://dl.google.com/android/repository/build-tools_r19-linux.zip' && unzip build-tools_r19-linux.zip -d /opt/android/android-sdk-linux/build-tools/ 
+</span><span class='line'>$ mv /opt/android/android-sdk-linux/build-tools/android-4.4 /opt/android/android-sdk-linux/build-tools/19.0.0
 </span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 400;
-</span><span class='line'>        src: local('NotoSans-Regular') url(/fonts/NotoSans-Regular.ttf) format('truetype');
-</span><span class='line'>    }
+</span><span class='line'>or
 </span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 700;
-</span><span class='line'>        src: local('NotoSans-Bold') url(/fonts/NotoSans-Bold.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans';
-</span><span class='line'>        font-style: italic;
-</span><span class='line'>        font-weight: 400;
-</span><span class='line'>        src: local('NotoSans-Italic') url(/fonts/NotoSans-Italic.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans';
-</span><span class='line'>        font-style: italic;
-</span><span class='line'>        font-weight: 700;
-</span><span class='line'>        src: local('NotoSans-BoldItalic') url(/fonts/NotoSans-BoldItalic.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans JP';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 400;
-</span><span class='line'>        src: local('NotoSansJP-Regular') url(/fonts/NotoSansJP-Regular.otf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans JP';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 700;
-</span><span class='line'>        src: local('NotoSansJP-Regular') url(/fonts/NotoSansJP-Bold.otf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Serif';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 400;
-</span><span class='line'>        src: local('NotoSerif-Regular') url(/fonts/NotoSerif-Regular.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Serif';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 700;
-</span><span class='line'>        src: local('NotoSerif-Bold') url(/fonts/NotoSerif-Bold.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Serif';
-</span><span class='line'>        font-style: italic;
-</span><span class='line'>        font-weight: 400;
-</span><span class='line'>        src: local('NotoSerif-Italic') url(/fonts/NotoSerif-Italic.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Serif';
-</span><span class='line'>        font-style: italic;
-</span><span class='line'>        font-weight: 700;
-</span><span class='line'>        src: local('NotoSerif-BoldItalic') url(/fonts/NotoSerif-BoldItalic.ttf) format('truetype');
-</span><span class='line'>    }
-</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>$ /opt/android/android-sdk-linux/tools/android update sdk -u -t build-tools-20.0.0</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>(2) キーのタッチから、変換候補がもらうまで、簡単な解析をやります</h2>
 
 </div>
-
-
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">viennakanon</span></span>
-
-      
-
-
-
-
-
-
-
-
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/04/22/mozc-analysis-01/">Read on &rarr;</a>
+    </footer>
   
 
 
-<time datetime="2014-07-23T18:25:58+09:00" pubdate data-updated="true">Jul 23<span>rd</span>, 2014</time>
-      
-
-<span class="categories">
+    </article>
   
-    <a class='category' href='/blog/categories/octopress/'>octopress</a>
-  
-</span>
-
-
-    </p>
+  <div class="pagination">
     
-      <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2014/07/23/noto-font/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2014/07/23/noto-font/" >Tweet</a>
-  
-  
-  <div class="g-plusone" data-size="medium"></div>
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
+    <a href="/blog/archives">Blog Archives</a>
     
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2014/07/22/codility-silicium-2014/" title="Previous Post: Codility - Silicium - 2014">&laquo; Codility - Silicium - 2014</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2014/08/14/codility-phosphorus-2014/" title="Next Post: Codility - Phosphorus - 2014">Codility - Phosphorus - 2014 &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a class="next" href="/">Newer &rarr;</a>
+    
+  </div>
 </div>
-  </section>
-
-</div>
-
 <aside class="sidebar">
   
     <section>
@@ -476,7 +326,6 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
   
 </aside>
 
-
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -491,10 +340,7 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
       var disqus_shortname = 'viennakanon';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://zh-wang.github.io/blog/2014/07/23/noto-font/';
-        var disqus_url = 'http://zh-wang.github.io/blog/2014/07/23/noto-font/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
