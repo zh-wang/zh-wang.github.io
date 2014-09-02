@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
+  <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
+  <link href="http://zh-wang.github.io/"/>
+  <updated>2014-09-02T18:38:04+09:00</updated>
+  <id>http://zh-wang.github.io/</id>
+  <author>
+    <name><![CDATA[viennakanon]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Learning Swift Part 1]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/09/02/learning-swift-part-1/"/>
+    <updated>2014-09-02T18:28:36+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/09/02/learning-swift-part-1</id>
+    <content type="html"><![CDATA[<p>Just some notes of Apple&rsquo;s official guide book &ndash; &ldquo;The Swift Programming Language"<br/>
+Most code are from the book, with some modification by me.</p>
+
+<h2>A Swift Tour</h2>
+
+<p>Modified some code in the following parts. Some better example or fixing in new Xcode.</p>
+
+<ul>
+<li><p>Function as parameter (like Comparator)</p>
+
+<pre><code>  // Bubble sort with a custom comparator
+  func sort(inout list: [Int], sorter: ((Int, Int) -&gt; Bool)) {
+      var i : Int = 0
+      while i &lt; list.count {
+          var j : Int = i + 1
+          if j &lt; list.count &amp;&amp; !sorter(list[i], list[j]) {
+              var temp = list[i]
+              list[i] = list[j]
+              list[j] = temp
+          }
+          i++
+      }
+  }
+  var list = [3, 2, 1]
+  func sorter(a : Int, b : Int) -&gt; Bool {
+      return a &lt; b
+  }
+  sort(&amp;list, sorter)
+</code></pre></li>
+<li><p>Closure</p>
+
+<pre><code>  numbers.map({
+      (number: Int) -&gt; Int in
+      let result = 3 * number
+      return result
+  })
+  // can be simplied to
+  numbers.map({ number in 3 * number })
+  // sort a array
+  var list = [3, 2, 1]
+  sort(&amp;list) // NOT sort(list), this function only accept a reference
+  var listSorted = sorted(list) // This is OK
+</code></pre></li>
+</ul>
+
+
+<!-- more -->
+
+
+<h2>===== Full Notes =====</h2>
+
+<ul>
+<li><p>variable.</p>
+
+<pre><code>  var myVariable = 42   // variable
+  myVariable = 50       // variable
+  let myConstant = 42   // Constant
+</code></pre></li>
+<li><p><strong>implicit</strong> vs <strong>explicit</strong>.</p>
+
+<pre><code>  let implicitInteger = 70
+  let implicitDouble = 70.0
+  let explicitDouble: Double = 70  // Type is written right to variable
+</code></pre></li>
+<li><p>Values never implicitly converted.</p>
+
+<pre><code>  let label = "The width is"
+  let width = 94
+  let withlabel = label + String(width)
+</code></pre></li>
+<li><p>Include values in strings.</p>
+
+<pre><code>  let apples = 3
+  let oranges = 5
+  let appleSummary = "I have \(apples) apples."
+  let fruitSummary = "I have \(apples + oranges) pieces of fruit."
+</code></pre></li>
+<li><p><strong>Arrays</strong> and <strong>Dictionaries</strong>.</p>
+
+<pre><code>  var shopppingList = ["catfish", "water", "tulips", "blue paint"] // [] for empty array
+  shoppingList[1] = "bottle of water"
+
+  var occupations = [
+      "Malcolm": "Captain",
+      "Kaylee": "Mechanic",
+  ] // [:] for empty dictionary
+  occupations["Jayne"] = "Public Relations"
+</code></pre></li>
+<li><p>Control Flows</p>
+
+<ul>
+<li><p><strong>for-in</strong></p>
+
+<pre><code>  let individualScores = [75, 43, 103, 87, 12]
+  var teamScore = 0
+  for score in individualScores {
+      if score &gt; 50 {
+          teamScore += 3
+      } else {
+          teamScore += 1
+      }
+  }
+  teamScore
+</code></pre></li>
+<li><p>optional-value with <strong>if</strong></p>
+
+<pre><code>  var optionalString: String? = "Hello"
+  optionalString == nil
+
+  var optionalName: String? = "John Appleseed"
+  var greeting = "Hello!"
+  if let name = optionalName {
+      greeting = "Hello, \(name)"
+  }
+</code></pre></li>
+<li><p><strong>switch</strong></p>
+
+<pre><code>  let vegetable = "red pepper"
+  switch vegetable {
+      case "celery":
+          let vegetableComment = "Add some raisins and make ants on a log."
+      case "cucumber", "watercress":
+          let vegetableComment = "That would make a good tea sandwich."
+      case let x where x.hasSuffix("pepper"):
+          let vegetableComment = "Is it a spicy \(x)?"
+      default:
+          let vegetableComment = "Everything tastes good in soup."
+  }
+</code></pre></li>
+<li><p><strong>for-in</strong> in <em>dictionary</em></p>
+
+<pre><code>  let interestingNumbers = [
+      "Prime": [2, 3, 5, 7, 11, 13],
+      "Fibonacci": [1, 1, 2, 3, 5, 8],
+      "Square": [1, 4, 9, 16, 25],
+  ]
+  var largest = 0
+  for (kind, numbers) in interestingNumbers {
+      for number in numbers {
+          if number &gt; largest {
+              largest = number
+          }
+      }
+  }
+  largest
+</code></pre></li>
+<li><p><strong>while</strong> and <strong>do-while</strong></p>
+
+<pre><code>  var n = 2
+  while n &lt; 100 {
+      n = n * 2
+  }
+  n
+
+  var m = 2
+  do {
+      m = m * 2
+  } while m &lt; 100
+  m
+</code></pre></li>
+<li><p>express index span with ..</p>
+
+<pre><code>  for i in 0..3 {
+      // do something, for 0, 1, 2
+  }
+
+  for i in 0...3 {
+      // do something, for 0, 1, 2, 3
+  }
+</code></pre></li>
+</ul>
+</li>
+<li><p><strong>Functions</strong> and <strong>Closures</strong></p>
+
+<ul>
+<li><p>A classic one</p>
+
+<pre><code>  func greet(name: String, day: String) -&gt; String {
+      return "Hello \(name), today is \(day)."
+  }
+  greet("Bob", "Tuesday")
+</code></pre></li>
+<li><p>Use a <strong>tuple</strong> as return value</p>
+
+<pre><code>  func getGasPrices() -&gt; (Double, Double, Double) {
+      return (3.59, 3.69, 3.79)
+  }
+  getGasPrices()
+</code></pre></li>
+<li><p>Variable Arguments (varargs)</p>
+
+<pre><code>  func sumOf(numbers: Int...) -&gt; Int {
+      var sum = 0
+      for number in numbers {
+              sum += number
+          }
+      return sum
+  }
+  sumOf()
+  sumOf(42, 597, 12)
+</code></pre></li>
+<li><p>Nested functions</p>
+
+<pre><code>  func returnFifteen() -&gt; Int { // Wrapper function
+      var y = 10
+      func add() { // Nested function
+          y += 5
+      }
+      add()
+      return y
+  }
+  returnFifteen()
+</code></pre></li>
+<li><p>Function as return value (like pointer of function)</p>
+
+<pre><code>  func makeIncrementer() -&gt; (Int -&gt; Int) {
+      func addOne(number: Int) -&gt; Int {
+              return 1 + number
+          }
+      return addOne
+  }
+  var increment = makeIncrementer()
+  increment(7)
+</code></pre></li>
+<li><p>Function as parameter (like Comparator)</p>
+
+<pre><code>  // Bubble sort with a custom comparator
+  func sort(inout list: [Int], sorter: ((Int, Int) -&gt; Bool)) {
+      var i : Int = 0
+      while i &lt; list.count {
+          var j : Int = i + 1
+          if j &lt; list.count &amp;&amp; !sorter(list[i], list[j]) {
+              var temp = list[i]
+              list[i] = list[j]
+              list[j] = temp
+          }
+          i++
+      }
+  }
+  var list = [3, 2, 1]
+  func sorter(a : Int, b : Int) -&gt; Bool {
+      return a &lt; b
+  }
+  sort(&amp;list, sorter)
+</code></pre></li>
+<li><p>Closure</p>
+
+<pre><code>  numbers.map({
+      (number: Int) -&gt; Int in
+      let result = 3 * number
+      return result
+  })
+  // can be simplied to
+  numbers.map({ number in 3 * number })
+  // sort a array
+  var list = [3, 2, 1]
+  sort(&amp;list) // NOT sort(list), this function only accept a reference
+  var listSorted = sorted(list) // This is OK
+</code></pre></li>
+</ul>
+</li>
+<li><p><strong>Objects</strong> and <strong>Classes</strong></p>
+
+<ul>
+<li><p>A simple class</p>
+
+<pre><code>  class Shape {
+      var numberOfSides = 0
+      func simpleDescription() -&gt; String {
+              return "A shape with \(numberOfSides) sides."
+          }
+  }
+
+  var shape = Shape()
+  shape.numberOfSides = 7
+  var shapeDescription = shape.simpleDescription()
+</code></pre></li>
+<li><p>Initializer and its opposite</p>
+
+<pre><code>  class NamedShape {
+      var numberOfSides: Int = 0
+      var name: String
+
+      init(name: String) {
+          self.name = name
+      }
+
+      deinit {
+
+      }
+
+      func simpleDescription() -&gt; String {
+          return "A shape with \(numberOfSides) sides."
+      }
+  }
+</code></pre></li>
+<li><p>Subclass</p>
+
+<pre><code>  class Square: NamedShape {
+      var sideLength: Double
+
+      init(sideLength: Double, name: String) {
+          self.sideLength = sideLength
+          super.init(name: name)
+          numberOfSides = 4
+      }
+
+      func area() -&gt;  Double {
+          return sideLength * sideLength
+      }
+
+      override func simpleDescription() -&gt; String {
+          return "A square with sides of length \(sideLength)."
+      }
+  }
+  let test = Square(sideLength: 5.2, name: "my test square")
+  test.area()
+  test.simpleDescription()
+</code></pre></li>
+<li><p>Setter and Getter on properties</p>
+
+<pre><code>  class EquilateralTriangle: NamedShape {
+      var sideLength: Double = 0.0
+
+      init(sideLength: Double, name: String) {
+          self.sideLength = sideLength
+          super.init(name: name)
+          numberOfSides = 3
+      }
+
+      var perimeter: Double {
+      get {
+              return 3.0 * sideLength
+          }
+      set {
+              sideLength = newValue / 3.0
+          }
+      }
+
+      override func simpleDescription() -&gt; String {
+          return "An equilateral triagle with sides of length \(sideLength)."
+      }
+  }
+  var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
+  triangle.perimeter
+  triangle.perimeter = 9.9
+  triangle.sideLength
+</code></pre></li>
+</ul>
+</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

@@ -9,7 +9,8 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Introduction This is an analysis of Codility &ndash; Prosphorus 2014 Challenge. This problem is, finding the minimal number of guards to set in a &hellip;">
+  <meta name="description" content="Just some notes of Apple&rsquo;s official guide book &ndash; &ldquo;The Swift Programming Language&#8221;
+Most code are from the book, with some &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -62,7 +63,8 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Introduction This is an analysis of Codility &ndash; Prosphorus 2014 Challenge. This problem is, finding the minimal number of guards to set in a &hellip;" />
+<meta property="og:description" content="Just some notes of Apple&rsquo;s official guide book &ndash; &ldquo;The Swift Programming Language&#8221;
+Most code are from the book, with some &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -106,6 +108,94 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/02/learning-swift-part-1/">Learning Swift Part 1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-02T18:28:36+09:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2014</time>
+        
+           | <a href="/blog/2014/09/02/learning-swift-part-1/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/09/02/learning-swift-part-1/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Just some notes of Apple&rsquo;s official guide book &ndash; &ldquo;The Swift Programming Language&#8221;<br/>
+Most code are from the book, with some modification by me.</p>
+
+<h2>A Swift Tour</h2>
+
+<p>Modified some code in the following parts. Some better example or fixing in new Xcode.</p>
+
+<ul>
+<li><p>Function as parameter (like Comparator)</p>
+
+<pre><code>  // Bubble sort with a custom comparator
+  func sort(inout list: [Int], sorter: ((Int, Int) -&gt; Bool)) {
+      var i : Int = 0
+      while i &lt; list.count {
+          var j : Int = i + 1
+          if j &lt; list.count &amp;&amp; !sorter(list[i], list[j]) {
+              var temp = list[i]
+              list[i] = list[j]
+              list[j] = temp
+          }
+          i++
+      }
+  }
+  var list = [3, 2, 1]
+  func sorter(a : Int, b : Int) -&gt; Bool {
+      return a &lt; b
+  }
+  sort(&amp;list, sorter)
+</code></pre></li>
+<li><p>Closure</p>
+
+<pre><code>  numbers.map({
+      (number: Int) -&gt; Int in
+      let result = 3 * number
+      return result
+  })
+  // can be simplied to
+  numbers.map({ number in 3 * number })
+  // sort a array
+  var list = [3, 2, 1]
+  sort(&amp;list) // NOT sort(list), this function only accept a reference
+  var listSorted = sorted(list) // This is OK
+</code></pre></li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/02/learning-swift-part-1/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -998,72 +1088,6 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/04/24/vcs-info-for-zsh/">Zshのpromptにvcsを表示する</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-24T10:38:49+09:00" pubdate data-updated="true">Apr 24<span>th</span>, 2014</time>
-        
-           | <a href="/blog/2014/04/24/vcs-info-for-zsh/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/04/24/vcs-info-for-zsh/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>What is vcs?</h2>
-
-<blockquote><p>バージョン管理システム(Version Control System)。</p></blockquote>
-
-<p>zshというshellを使い始めたので、便利なカスタマイズプラグインを紹介します。<br/>
-今回はこちらのプラグイン<a href="https://github.com/yonchu/zsh-vcs-prompt">zsh-vcs-prompt</a>を使って、zshのpromptにバージョン管理システム(git/svn/hg
-)の情報を表示ます。<br/>
-現在作業中branchは一目瞭然ですね。<br/>
-<img src="/images/2014_04_24_zsh_vcs_snapshot.png" title="zsh_vcs" alt="zsh_vcs_snapshot" /></p>
-
-<p>各図形の意味は</p>
-
-<blockquote><p>Remote status:<br/>
-  ↑ n : ahead<br/>
-  ↓ n : behind<br/>
-Local status:<br/>
-  ✔ : repository clean<br/>
-  ● n : there are n staged files<br/>
-  ✖ n : there are n unmerged files<br/>
-  ✚ n : there are n changed but unstaged files<br/>
-  … n : there are n untracked files<br/>
-  ⚑n : there are n stashed<br/>
-  branch(n) : there are n unmerged commits to master</p></blockquote>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/04/24/vcs-info-for-zsh/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -1077,6 +1101,10 @@ Local status:<br/>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/02/learning-swift-part-1/">Learning Swift Part 1</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/08/14/codility-phosphorus-2014/">Codility - Phosphorus - 2014</a>
@@ -1094,10 +1122,6 @@ Local status:<br/>
         <a href="/blog/2014/07/11/mozc-for-ios/">Mozc for iOS</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/06/27/import-mathjax-to-octopress/">Import MathJax to Octopress</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1106,11 +1130,11 @@ Local status:<br/>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>Codility (5)</a></li><li><a href='/blog/categories/ios/'>iOS (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>Codility (5)</a></li><li><a href='/blog/categories/ios/'>iOS (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (1)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 120.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 84.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 120.0%'>Codility(5)</a> <a href='/blog/categories/ios' style='font-size: 72.0%'>iOS(1)</a> <a href='/blog/categories/jni' style='font-size: 72.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 96.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 84.0%'>octopress(2)</a> <a href='/blog/categories/zsh' style='font-size: 72.0%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 120.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 84.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 120.0%'>Codility(5)</a> <a href='/blog/categories/ios' style='font-size: 72.0%'>iOS(1)</a> <a href='/blog/categories/jni' style='font-size: 72.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 96.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 84.0%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 72.0%'>swift(1)</a> <a href='/blog/categories/zsh' style='font-size: 72.0%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>
