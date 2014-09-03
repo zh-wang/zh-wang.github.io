@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-09-02T18:38:04+09:00</updated>
+  <updated>2014-09-03T17:28:25+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -26,86 +26,83 @@
 3. 先ダンロードしたファイルを解凍し、好きなフォントを/source/fontsに入れます。私の場合、日本語と英語を合わせて10個入れました。NotoSans系とNotoSerif系とNotoSansJP-Bold、NotoSansJP-Regular。<br/>
 4. ソースを修正。/sass/custom/_fonts.scssに、次のコードを追加します。完成。</p>
 
-<p>```</p>
+<pre><code>
+    $sans: "Noto Sans", sans-serif;
+    $serif: "Noto Serif", "Noto Sans" serif;
+    $heading-font-family: "Noto Serif", sans-serif;
+    $header-title-font-family: "Noto Sans JP", "Noto Serif", sans-serif;
+    $header-subtitle-font-family: "Noto Sans JP", "Noto Serif", sans-serif;
 
-<pre><code>$sans: "Noto Sans", sans-serif;
-$serif: "Noto Serif", "Noto Sans" serif;
-$heading-font-family: "Noto Serif", sans-serif;
-$header-title-font-family: "Noto Sans JP", "Noto Serif", sans-serif;
-$header-subtitle-font-family: "Noto Sans JP", "Noto Serif", sans-serif;
+    @font-face {
+        font-family: 'Noto Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: local('NotoSans-Regular') url(/fonts/NotoSans-Regular.ttf) format('truetype');
+    }
 
-@font-face {
-    font-family: 'Noto Sans';
-    font-style: normal;
-    font-weight: 400;
-    src: local('NotoSans-Regular') url(/fonts/NotoSans-Regular.ttf) format('truetype');
-}
+    @font-face {
+        font-family: 'Noto Sans';
+        font-style: normal;
+        font-weight: 700;
+        src: local('NotoSans-Bold') url(/fonts/NotoSans-Bold.ttf) format('truetype');
+    }
 
-@font-face {
-    font-family: 'Noto Sans';
-    font-style: normal;
-    font-weight: 700;
-    src: local('NotoSans-Bold') url(/fonts/NotoSans-Bold.ttf) format('truetype');
-}
+    @font-face {
+        font-family: 'Noto Sans';
+        font-style: italic;
+        font-weight: 400;
+        src: local('NotoSans-Italic') url(/fonts/NotoSans-Italic.ttf) format('truetype');
+    }
 
-@font-face {
-    font-family: 'Noto Sans';
-    font-style: italic;
-    font-weight: 400;
-    src: local('NotoSans-Italic') url(/fonts/NotoSans-Italic.ttf) format('truetype');
-}
+    @font-face {
+        font-family: 'Noto Sans';
+        font-style: italic;
+        font-weight: 700;
+        src: local('NotoSans-BoldItalic') url(/fonts/NotoSans-BoldItalic.ttf) format('truetype');
+    }
 
-@font-face {
-    font-family: 'Noto Sans';
-    font-style: italic;
-    font-weight: 700;
-    src: local('NotoSans-BoldItalic') url(/fonts/NotoSans-BoldItalic.ttf) format('truetype');
-}
+    @font-face {
+        font-family: 'Noto Sans JP';
+        font-style: normal;
+        font-weight: 400;
+        src: local('NotoSansJP-Regular') url(/fonts/NotoSansJP-Regular.otf) format('truetype');
+    }
 
-@font-face {
-    font-family: 'Noto Sans JP';
-    font-style: normal;
-    font-weight: 400;
-    src: local('NotoSansJP-Regular') url(/fonts/NotoSansJP-Regular.otf) format('truetype');
-}
+    @font-face {
+        font-family: 'Noto Sans JP';
+        font-style: normal;
+        font-weight: 700;
+        src: local('NotoSansJP-Regular') url(/fonts/NotoSansJP-Bold.otf) format('truetype');
+    }
 
-@font-face {
-    font-family: 'Noto Sans JP';
-    font-style: normal;
-    font-weight: 700;
-    src: local('NotoSansJP-Regular') url(/fonts/NotoSansJP-Bold.otf) format('truetype');
-}
+    @font-face {
+        font-family: 'Noto Serif';
+        font-style: normal;
+        font-weight: 400;
+        src: local('NotoSerif-Regular') url(/fonts/NotoSerif-Regular.ttf) format('truetype');
+    }
 
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 400;
-    src: local('NotoSerif-Regular') url(/fonts/NotoSerif-Regular.ttf) format('truetype');
-}
+    @font-face {
+        font-family: 'Noto Serif';
+        font-style: normal;
+        font-weight: 700;
+        src: local('NotoSerif-Bold') url(/fonts/NotoSerif-Bold.ttf) format('truetype');
+    }
 
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 700;
-    src: local('NotoSerif-Bold') url(/fonts/NotoSerif-Bold.ttf) format('truetype');
-}
+    @font-face {
+        font-family: 'Noto Serif';
+        font-style: italic;
+        font-weight: 400;
+        src: local('NotoSerif-Italic') url(/fonts/NotoSerif-Italic.ttf) format('truetype');
+    }
 
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 400;
-    src: local('NotoSerif-Italic') url(/fonts/NotoSerif-Italic.ttf) format('truetype');
-}
-
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 700;
-    src: local('NotoSerif-BoldItalic') url(/fonts/NotoSerif-BoldItalic.ttf) format('truetype');
-}
+    @font-face {
+        font-family: 'Noto Serif';
+        font-style: italic;
+        font-weight: 700;
+        src: local('NotoSerif-BoldItalic') url(/fonts/NotoSerif-BoldItalic.ttf) format('truetype');
+    }
 </code></pre>
-
-<p>```</p>
 ]]></content>
   </entry>
   
@@ -139,7 +136,7 @@ will become</p>
 <p><script type="math/tex; mode=display">
 e^{x+iy} = e<sup>x</sup>(\cos y + i\sin y)\</p>
 
-<p>x = \frac{-b \pm \sqrt{b<sup>2</sup> &ndash; 4ac}}{2a}
+<p>x = \frac{-b \pm \sqrt{b<sup>2</sup> - 4ac}}{2a}
 </script></p>
 
 <p>Enjoy it!</p>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Codility | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/codility/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-09-02T18:38:04+09:00</updated>
+  <updated>2014-09-03T17:28:25+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -20,7 +20,7 @@
     <id>http://zh-wang.github.io/blog/2014/08/14/codility-phosphorus-2014</id>
     <content type="html"><![CDATA[<h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Prosphorus 2014 Challenge</a>.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Prosphorus 2014 Challenge</a>.</p>
 
 <ul>
 <li>This problem is, finding the minimal number of guards to set in a tree which can prevent prisoners escaping to tree leaves.</li>
@@ -38,107 +38,104 @@
 </ul>
 
 
-<p>```java</p>
+<pre><code class="java">
+    static int N = 200003;
 
-<pre><code>static int N = 200003;
+    boolean[] visited = new boolean[N];
+    Node[] nodes = new Node[N];
+    int res = 0;
 
-boolean[] visited = new boolean[N];
-Node[] nodes = new Node[N];
-int res = 0;
-
-public int solution(int A[], int B[], int C[]) {
-    for (int i = 0; i &lt; A.length; i++) {
-        if (nodes[A[i]] == null) nodes[A[i]] = new Node();
-        if (nodes[B[i]] == null) nodes[B[i]] = new Node();
-        nodes[A[i]].tlist.add(B[i]);
-        nodes[B[i]].tlist.add(A[i]);
-    }
-
-    if (C.length == 0) return 0;
-
-    // if a prison is on leaf(exit), then we cannot stop them escaping
-    for (int i = 0; i &lt; C.length; i++) {
-        if (isLeaf(nodes[C[i]])) {
-            return -1;
+    public int solution(int A[], int B[], int C[]) {
+        for (int i = 0; i &lt; A.length; i++) {
+            if (nodes[A[i]] == null) nodes[A[i]] = new Node();
+            if (nodes[B[i]] == null) nodes[B[i]] = new Node();
+            nodes[A[i]].tlist.add(B[i]);
+            nodes[B[i]].tlist.add(A[i]);
         }
-        nodes[C[i]].isPrisoner = true;
-    }
 
-    dfs(0);
+        if (C.length == 0) return 0;
 
-    // if node 0 is has only one path, then it is an exit. 
-    // we should set a guard if node 0 is exit &amp;&amp; prisoners can escape to root
-    return nodes[0].hasEscapeRoot &amp;&amp; nodes[0].tlist.size() == 1 ? res + 1 : res;
-}
-
-void dfs(int nodeIndex) {
-    visited[nodeIndex] = true;
-    Node node = nodes[nodeIndex];
-
-    for (int i = 0; i &lt; node.tlist.size(); i++) {
-        int nextNodeIndex = node.tlist.get(i);
-        if (!visited[nextNodeIndex]) {
-            nodes[nextNodeIndex].parentIndex = nodeIndex;
-            dfs(nextNodeIndex);
-        }
-    }
-
-    if (nodeIndex != node.parentIndex &amp;&amp; (isLeaf(node)))  return;
-
-    int n = 0;
-    int escapesLeaf = 0;
-    int escapesRoot = 0;
-    for (int i = 0; i &lt; node.tlist.size(); ++i) {
-        int next = node.tlist.get(i);
-        if (node.parentIndex == next) continue;
-        n++;
-        if (nodes[next].hasEscapeLeaf) escapesLeaf++;
-        if (nodes[next].hasEscapeRoot) escapesRoot++;
-    }
-
-    if (node.isPrisoner) { // if root is PRISONER,
-        node.hasEscapeLeaf = false; // then it must not have escape paths to leaf
-        node.hasEscapeRoot = true; // but it can escape to root
-        res += escapesLeaf; // set guards on those leaves
-    } else { // if root is NOT PRISONER, 
-        if (escapesLeaf == n) { // all subtrees has escape to leaf
-            // it a empty subtree, do nothing
-        } else if (escapesLeaf == 0) { // no subtree has escape to leaf
-            // then we do NOT need a guard here
-            node.hasEscapeLeaf = false; // set no escape to leaf
-            if (escapesRoot &gt; 0) { // if at least one subtree has prisoner can escape to root
-                node.hasEscapeRoot = true;
+        // if a prison is on leaf(exit), then we cannot stop them escaping
+        for (int i = 0; i &lt; C.length; i++) {
+            if (isLeaf(nodes[C[i]])) {
+                return -1;
             }
-        } else { // has SOME escape path
-            if (escapesRoot == 0) { // if no prisoner can escape to root
+            nodes[C[i]].isPrisoner = true;
+        }
+
+        dfs(0);
+
+        // if node 0 is has only one path, then it is an exit. 
+        // we should set a guard if node 0 is exit &amp;&amp; prisoners can escape to root
+        return nodes[0].hasEscapeRoot &amp;&amp; nodes[0].tlist.size() == 1 ? res + 1 : res;
+    }
+
+    void dfs(int nodeIndex) {
+        visited[nodeIndex] = true;
+        Node node = nodes[nodeIndex];
+
+        for (int i = 0; i &lt; node.tlist.size(); i++) {
+            int nextNodeIndex = node.tlist.get(i);
+            if (!visited[nextNodeIndex]) {
+                nodes[nextNodeIndex].parentIndex = nodeIndex;
+                dfs(nextNodeIndex);
+            }
+        }
+
+        if (nodeIndex != node.parentIndex &amp;&amp; (isLeaf(node)))  return;
+
+        int n = 0;
+        int escapesLeaf = 0;
+        int escapesRoot = 0;
+        for (int i = 0; i &lt; node.tlist.size(); ++i) {
+            int next = node.tlist.get(i);
+            if (node.parentIndex == next) continue;
+            n++;
+            if (nodes[next].hasEscapeLeaf) escapesLeaf++;
+            if (nodes[next].hasEscapeRoot) escapesRoot++;
+        }
+
+        if (node.isPrisoner) { // if root is PRISONER,
+            node.hasEscapeLeaf = false; // then it must not have escape paths to leaf
+            node.hasEscapeRoot = true; // but it can escape to root
+            res += escapesLeaf; // set guards on those leaves
+        } else { // if root is NOT PRISONER, 
+            if (escapesLeaf == n) { // all subtrees has escape to leaf
+                // it a empty subtree, do nothing
+            } else if (escapesLeaf == 0) { // no subtree has escape to leaf
                 // then we do NOT need a guard here
-                node.hasEscapeLeaf = true; // because it has escape paths
-                node.hasEscapeRoot = false; // obviously
-            } else { // if some prisoner can escape to root
-                res++; // set guard here, prevent them escape to leaves through this node
-                node.hasEscapeLeaf = false; // we set the guard, so there is no escape path to leaves
-                node.hasEscapeRoot = false; // as above
+                node.hasEscapeLeaf = false; // set no escape to leaf
+                if (escapesRoot &gt; 0) { // if at least one subtree has prisoner can escape to root
+                    node.hasEscapeRoot = true;
+                }
+            } else { // has SOME escape path
+                if (escapesRoot == 0) { // if no prisoner can escape to root
+                    // then we do NOT need a guard here
+                    node.hasEscapeLeaf = true; // because it has escape paths
+                    node.hasEscapeRoot = false; // obviously
+                } else { // if some prisoner can escape to root
+                    res++; // set guard here, prevent them escape to leaves through this node
+                    node.hasEscapeLeaf = false; // we set the guard, so there is no escape path to leaves
+                    node.hasEscapeRoot = false; // as above
+                }
             }
         }
+
     }
 
-}
+    boolean isLeaf(Node node) {
+        if (node.tlist.size() == 1) return true;
+        else return false;
+    }
 
-boolean isLeaf(Node node) {
-    if (node.tlist.size() == 1) return true;
-    else return false;
-}
-
-class Node {
-    int parentIndex;
-    boolean isPrisoner = false;
-    boolean hasEscapeLeaf = true;
-    boolean hasEscapeRoot = false;
-    List&lt;Integer&gt; tlist = new ArrayList&lt;Integer&gt;();
-}
+    class Node {
+        int parentIndex;
+        boolean isPrisoner = false;
+        boolean hasEscapeLeaf = true;
+        boolean hasEscapeRoot = false;
+        List&lt;Integer&gt; tlist = new ArrayList&lt;Integer&gt;();
+    }
 </code></pre>
-
-<p>```</p>
 ]]></content>
   </entry>
   
@@ -149,7 +146,7 @@ class Node {
     <id>http://zh-wang.github.io/blog/2014/07/22/codility-silicium-2014</id>
     <content type="html"><![CDATA[<h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Silicium 2014 Challenge</a>.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Silicium 2014 Challenge</a>.</p>
 
 <ul>
 <li>The problem is, finding the k-th largest piece of cake after cutting a big cake with straight cuts.</li>
@@ -179,87 +176,83 @@ But in this problem, after we sort edges in <em>x</em> and <em>y</em>, we can do
 <!-- more -->
 
 
-<p>```java</p>
+<pre><code class="java">    int N;
+    int[] largerEqualList;
 
-<pre><code>int N;
-int[] largerEqualList;
+    private int fastPartition(int target, int[] x, int[] y) {
 
-private int fastPartition(int target, int[] x, int[] y) {
-
-    // find the element equal or larger than target in left-most column
-    int nx = 0, ny = 0;
-    int low = 0;
-    int high = N;
-    while (low &lt;= high &amp;&amp; low &lt; N) {
-        int mid = (low + high) / 2;
-        if (x[nx] * y[mid] &lt; target) {
-            low = mid + 1;
-        } else {
-            high = mid - 1;
+        // find the element equal or larger than target in left-most column
+        int nx = 0, ny = 0;
+        int low = 0;
+        int high = N;
+        while (low &lt;= high &amp;&amp; low &lt; N) {
+            int mid = (low + high) / 2;
+            if (x[nx] * y[mid] &lt; target) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
         }
-    }
-    ny = low;
+        ny = low;
 
-    largerEqualList[nx] = ny;
-
-    // search elements' index by red arrow mentioned above
-    while (++nx &lt; N) {
-        while (ny - 1 &gt;= 0 &amp;&amp; x[nx] * y[ny - 1] &gt;= target) {
-            --ny;
-        }
         largerEqualList[nx] = ny;
-    }
 
-    // get the rank of target
-    int rank = 0;
-    for (int i = 0; i &lt; N; i++) {
-        rank += N - largerEqualList[i];
-    }
-
-    return rank;
-}
-
-public int solution(int X, int Y, int K, int [] A, int [] B) {
-
-    int [] x = new int[A.length + 1];
-    int [] y = new int[A.length + 1];
-
-    for (int i = 0; i &lt; A.length + 1; i++) {
-        x[i] = (i &lt; A.length ? A[i] : X) - (i &gt; 0 ? A[i - 1] : 0);
-    }
-
-    for (int i = 0; i &lt; A.length + 1; i++) {
-        y[i] = (i &lt; A.length ? B[i] : Y) - (i &gt; 0 ? B[i - 1] : 0);
-    }
-
-    Arrays.sort(x);
-    Arrays.sort(y);
-
-    N = x.length; 
-
-    largerEqualList = new int[N];
-
-    int low = x[0] * y[0];
-    int high = x[N - 1] * y[N - 1];
-    int rank = K;
-
-    // binary search
-    while (low &lt;= high) {
-        int mid = (low + high) / 2;
-        int crank = fastPartition(mid, x, y);
-
-        if (crank &gt;= rank) {
-            low = mid + 1;
-        } else if (crank &lt; rank) {
-            high = mid - 1;
+        // search elements' index by red arrow mentioned above
+        while (++nx &lt; N) {
+            while (ny - 1 &gt;= 0 &amp;&amp; x[nx] * y[ny - 1] &gt;= target) {
+                --ny;
+            }
+            largerEqualList[nx] = ny;
         }
+
+        // get the rank of target
+        int rank = 0;
+        for (int i = 0; i &lt; N; i++) {
+            rank += N - largerEqualList[i];
+        }
+
+        return rank;
     }
 
-    return high;
-}
-</code></pre>
+    public int solution(int X, int Y, int K, int [] A, int [] B) {
 
-<p>```</p>
+        int [] x = new int[A.length + 1];
+        int [] y = new int[A.length + 1];
+
+        for (int i = 0; i &lt; A.length + 1; i++) {
+            x[i] = (i &lt; A.length ? A[i] : X) - (i &gt; 0 ? A[i - 1] : 0);
+        }
+
+        for (int i = 0; i &lt; A.length + 1; i++) {
+            y[i] = (i &lt; A.length ? B[i] : Y) - (i &gt; 0 ? B[i - 1] : 0);
+        }
+
+        Arrays.sort(x);
+        Arrays.sort(y);
+
+        N = x.length; 
+
+        largerEqualList = new int[N];
+
+        int low = x[0] * y[0];
+        int high = x[N - 1] * y[N - 1];
+        int rank = K;
+
+        // binary search
+        while (low &lt;= high) {
+            int mid = (low + high) / 2;
+            int crank = fastPartition(mid, x, y);
+
+            if (crank &gt;= rank) {
+                low = mid + 1;
+            } else if (crank &lt; rank) {
+                high = mid - 1;
+            }
+        }
+
+        return high;
+    }
+</code></pre>
 
 <p>Each <code>fastPartition</code> cost O(N) time, and we do log(10000 * 10000) times. So the total time is O(N * log(10000 * 10000). There is no X and Y occurs. <br/>
 Note that even a traditional O(N<sup>2</sup>) time partition could pass system test. :)</p>
@@ -273,7 +266,7 @@ Note that even a traditional O(N<sup>2</sup>) time partition could pass system t
     <id>http://zh-wang.github.io/blog/2014/06/20/codility-aluminium-2014-p2</id>
     <content type="html"><![CDATA[<h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Aluminium 2014 Challenge</a>, Part 2.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Aluminium 2014 Challenge</a>, Part 2.</p>
 
 <p>In <a href="http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014/">Part 1</a>, we introduced a solution for CLASSIC maximal subarray problem.<br/>
 Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> version.</p>
@@ -305,7 +298,7 @@ We will choose the smaller. Then save results in an array.</li>
 
 
 <p>Code
-```java</p>
+&#8220;`java</p>
 
 <pre><code>public int solution(int[] inputs) {
 
@@ -399,7 +392,7 @@ Comparator&lt;Integer&gt; compMin = new Comparator&lt;Integer&gt;() {
 };
 </code></pre>
 
-<p>```</p>
+<p>&#8220;`</p>
 
 <script language="javaScript">
 $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
@@ -415,7 +408,7 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
     <id>http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014</id>
     <content type="html"><![CDATA[<h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Aluminium 2014 Challenge</a>, Part 1.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Aluminium 2014 Challenge</a>, Part 1.</p>
 
 <ul>
 <li>The problem is, finding the maximum sum of a compact subsequence of array elements after performing a single swap operation. It&rsquo;s a little tricky <a href="http://en.wikipedia.org/wiki/Maximum_subarray_problem">maximal subarray</a> problem.</li>
@@ -440,7 +433,7 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 <p><p>
 The maximum sum of a compact subsequence can be expressed by the following formula.</p>
 
-<p>$$ \max \{ \sum_{k=i}^j a_k, 0 \leq i &lt; j \leq n &ndash; 1 \} $$
+<p>$$ \max \{ \sum_{k=i}^j a_k, 0 \leq i &lt; j \leq n - 1 \} $$
 </p></p>
 
 <p><p>
@@ -449,14 +442,14 @@ Because we want the maximal part from $i$ to $j$, by thinking reversely, we can 
 <p>let S to be the accumulation of the given array.</p>
 
 <p>let $$
-  f(x) = \min \{ \min \{ partial_sum(p), 0 \leq p \leq x &ndash; 1 \} , 0 \}
+  f(x) = \min \{ \min \{ partial_sum(p), 0 \leq p \leq x - 1 \} , 0 \}
 $$ to be the minimal partial sum of sub array $a_0, a_1, \cdots, a_x-1$.</p>
 
 <p>let $$
-g(x) = \min \{ \min \{ partial_sum(q), x + 1 \leq q \leq n &ndash; 1 \} , 0 \}
+g(x) = \min \{ \min \{ partial_sum(q), x + 1 \leq q \leq n - 1 \} , 0 \}
 $$ to be the minimal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-w$.</p>
 
-<p>then we calculate the following formula. $$ \max \{ S &ndash; f(x) &ndash; g(x), 0 \leq x \leq n &ndash; 1 \} $$
+<p>then we calculate the following formula. $$ \max \{ S - f(x) - g(x), 0 \leq x \leq n - 1 \} $$
 </p></p>
 
 <ul>
@@ -464,73 +457,70 @@ $$ to be the minimal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-w$.</p>
 </ul>
 
 
-<p>```java</p>
-
-<pre><code>public int solution(int[] inputs) {
-    List&lt;Integer&gt;data = new ArrayList&lt;Integer&gt;();
-    for (int i = 0; i &lt; inputs.length; i++) data.add(inputs[i]);
-    return cal(data);
-}
-
-private int cal(List&lt;Integer&gt; A) {
-    int n = A.size();
-    int S = 0;
-    for (Integer integer : A) S += integer;
-    List&lt;Integer&gt; B = partial_sum(A, compAdd);
-    List&lt;Integer&gt; F = partial_sum(B, compMin);
-
-    Collections.reverse(A);
-    List&lt;Integer&gt; D = partial_sum(A, compAdd);
-    List&lt;Integer&gt; G = partial_sum(D, compMin);
-    Collections.reverse(A);
-    Collections.reverse(G);
-
-    int res = 0;
-    for (int i = 0; i &lt; n; i++) {
-        int f = i - 1 &lt; 0 ? 0 : F.get(i - 1); 
-        int g = (i + 1 &gt;= n ? 0 : G.get(i + 1));
-        res = Math.max(res, S - (f &lt; 0 ? f : 0) - (g &lt; 0 ? g :0));
+<pre><code class="java">
+    public int solution(int[] inputs) {
+        List&lt;Integer&gt;data = new ArrayList&lt;Integer&gt;();
+        for (int i = 0; i &lt; inputs.length; i++) data.add(inputs[i]);
+        return cal(data);
     }
-    return res;
-}
 
-private List&lt;Integer&gt; partial_sum(List&lt;Integer&gt; data, Comparator&lt;Integer&gt; comparator) {
-    List&lt;Integer&gt; res = new ArrayList&lt;Integer&gt;();
-    if (data.size() == 0) {
+    private int cal(List&lt;Integer&gt; A) {
+        int n = A.size();
+        int S = 0;
+        for (Integer integer : A) S += integer;
+        List&lt;Integer&gt; B = partial_sum(A, compAdd);
+        List&lt;Integer&gt; F = partial_sum(B, compMin);
+
+        Collections.reverse(A);
+        List&lt;Integer&gt; D = partial_sum(A, compAdd);
+        List&lt;Integer&gt; G = partial_sum(D, compMin);
+        Collections.reverse(A);
+        Collections.reverse(G);
+
+        int res = 0;
+        for (int i = 0; i &lt; n; i++) {
+            int f = i - 1 &lt; 0 ? 0 : F.get(i - 1); 
+            int g = (i + 1 &gt;= n ? 0 : G.get(i + 1));
+            res = Math.max(res, S - (f &lt; 0 ? f : 0) - (g &lt; 0 ? g :0));
+        }
         return res;
     }
-    res.add(data.get(0));
-    for (int i = 1; i &lt; data.size(); i++) {
-        Integer lastValue = res.get(i - 1);
-        Integer currentValue = data.get(i);
-        res.add(comparator.compare(lastValue, currentValue));
-    }
-    return res;
-}
 
-Comparator&lt;Integer&gt; compAdd = new Comparator&lt;Integer&gt;() {
-    @Override
-    public int compare(Integer o1, Integer o2) {
-        return o1 + o2;
+    private List&lt;Integer&gt; partial_sum(List&lt;Integer&gt; data, Comparator&lt;Integer&gt; comparator) {
+        List&lt;Integer&gt; res = new ArrayList&lt;Integer&gt;();
+        if (data.size() == 0) {
+            return res;
+        }
+        res.add(data.get(0));
+        for (int i = 1; i &lt; data.size(); i++) {
+            Integer lastValue = res.get(i - 1);
+            Integer currentValue = data.get(i);
+            res.add(comparator.compare(lastValue, currentValue));
+        }
+        return res;
     }
-};
 
-Comparator&lt;Integer&gt; compMax = new Comparator&lt;Integer&gt;() {
-    @Override
-    public int compare(Integer o1, Integer o2) {
-        return Math.max(o1, o2);
-    }
-};
+    Comparator&lt;Integer&gt; compAdd = new Comparator&lt;Integer&gt;() {
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            return o1 + o2;
+        }
+    };
 
-Comparator&lt;Integer&gt; compMin = new Comparator&lt;Integer&gt;() {
-    @Override
-    public int compare(Integer o1, Integer o2) {
-        return Math.min(o1, o2);
-    }
-};
+    Comparator&lt;Integer&gt; compMax = new Comparator&lt;Integer&gt;() {
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            return Math.max(o1, o2);
+        }
+    };
+
+    Comparator&lt;Integer&gt; compMin = new Comparator&lt;Integer&gt;() {
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            return Math.min(o1, o2);
+        }
+    };
 </code></pre>
-
-<p>```</p>
 
 <p><script language="javaScript">
 $(document).ready( function () { $(&ldquo;a[href^=&lsquo;http&rsquo;]:not([href*=&lsquo;&rdquo; + location.hostname + &ldquo;&rsquo;])&rdquo;).attr(&lsquo;target&rsquo;, &lsquo;_blank&rsquo;); })
@@ -545,7 +535,7 @@ $(document).ready( function () { $(&ldquo;a[href^=&lsquo;http&rsquo;]:not([href*
     <id>http://zh-wang.github.io/blog/2014/05/27/codility-magnesium-2014-challenge-report</id>
     <content type="html"><![CDATA[<h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Magnesium 2014 Challenge</a>.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Magnesium 2014 Challenge</a>.</p>
 
 <ul>
 <li>The problem is that, finding the longest path in a weighted graph in which the weights are ascending. Vertices can be visited multiple times.</li>
@@ -579,92 +569,89 @@ $(document).ready( function () { $(&ldquo;a[href^=&lsquo;http&rsquo;]:not([href*
 
 <h2>Source</h2>
 
-<p>```java</p>
+<pre><code class="java">
+    int result = 0;
+    Node root;
+    Edge[] edges;
+    Node[] nodes;
 
-<pre><code>int result = 0;
-Node root;
-Edge[] edges;
-Node[] nodes;
-
-public int solution(int N, int[] A, int[] B, int[] C) {
-    edges = new Edge[A.length];
-    for (int i = 0; i &lt; A.length; i++) {
-        edges[i] = new Edge(A[i], B[i], C[i]);
-    }
-    Arrays.sort(edges, new Comparator&lt;Edge&gt;() {
-        @Override
-        public int compare(Edge o1, Edge o2) {
-            // TODO Auto-generated method stub
-            return o1.c - o2.c;
+    public int solution(int N, int[] A, int[] B, int[] C) {
+        edges = new Edge[A.length];
+        for (int i = 0; i &lt; A.length; i++) {
+            edges[i] = new Edge(A[i], B[i], C[i]);
         }
-    });
+        Arrays.sort(edges, new Comparator&lt;Edge&gt;() {
+            @Override
+            public int compare(Edge o1, Edge o2) {
+                // TODO Auto-generated method stub
+                return o1.c - o2.c;
+            }
+        });
 
-    int n = edges.length;
+        int n = edges.length;
 
-    nodes = new Node[200000];
-    for (int i = 0; i &lt; 200000; i++) {
-        nodes[i] = new Node(0, 0);
-    }
-
-    for (int i = 0; i &lt; n; i++) {
-        // get start node
-        int start = edges[i].a;
-        int end = edges[i].b;
-
-        Node cnodefront = nodes[start];
-        Node cnodeend = nodes[end];
-
-        Node nextEndNode = nodes[end];
-        Node nextStartNode = nodes[start];
-
-        if (cnodefront.value &lt; edges[i].c) {
-            nextEndNode = createNextNode(i, end, cnodefront.depth + 1); 
+        nodes = new Node[200000];
+        for (int i = 0; i &lt; 200000; i++) {
+            nodes[i] = new Node(0, 0);
         }
 
-        if (cnodeend.value &lt; edges[i].c) {
-            nextStartNode = createNextNode(i, start, cnodeend.depth + 1);
+        for (int i = 0; i &lt; n; i++) {
+            // get start node
+            int start = edges[i].a;
+            int end = edges[i].b;
+
+            Node cnodefront = nodes[start];
+            Node cnodeend = nodes[end];
+
+            Node nextEndNode = nodes[end];
+            Node nextStartNode = nodes[start];
+
+            if (cnodefront.value &lt; edges[i].c) {
+                nextEndNode = createNextNode(i, end, cnodefront.depth + 1); 
+            }
+
+            if (cnodeend.value &lt; edges[i].c) {
+                nextStartNode = createNextNode(i, start, cnodeend.depth + 1);
+            }
+
+            nodes[end] = nextEndNode;
+            nodes[start] = nextStartNode;
+
         }
 
-        nodes[end] = nextEndNode;
-        nodes[start] = nextStartNode;
-
+        return result;
     }
 
-    return result;
-}
+    private Node createNextNode(int i, int end, int depth) {
+        Node node = new Node(edges[i].c, depth);
+        Node cnode = nodes[end];
 
-private Node createNextNode(int i, int end, int depth) {
-    Node node = new Node(edges[i].c, depth);
-    Node cnode = nodes[end];
-
-    if (depth &gt; cnode.depth) {
-        result = Math.max(result, depth);
-        return node;
-    } else {
-        return cnode;
+        if (depth &gt; cnode.depth) {
+            result = Math.max(result, depth);
+            return node;
+        } else {
+            return cnode;
+        }
     }
-}
 
-private class Edge {
-    int a, b, c;
-    public Edge(int a, int b, int c) {
-        this.a = a;
-        this.b = b;
-        this.c = c;
+    private class Edge {
+        int a, b, c;
+        public Edge(int a, int b, int c) {
+            this.a = a;
+            this.b = b;
+            this.c = c;
+        }
     }
-}
 
-private class Node {
-    int value;
-    int depth;
-    public Node(int value, int depth) {
-        this.value = value;
-        this.depth = depth;
+    private class Node {
+        int value;
+        int depth;
+        public Node(int value, int depth) {
+            this.value = value;
+            this.depth = depth;
+        }
     }
-}
 </code></pre>
-
-<p>```</p>
 
 <script language="javaScript">
 $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })

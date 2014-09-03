@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-09-02T18:38:04+09:00</updated>
+  <updated>2014-09-03T17:28:25+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -18,50 +18,85 @@
     <link href="http://zh-wang.github.io/blog/2014/09/02/learning-swift-part-1/"/>
     <updated>2014-09-02T18:28:36+09:00</updated>
     <id>http://zh-wang.github.io/blog/2014/09/02/learning-swift-part-1</id>
-    <content type="html"><![CDATA[<p>Just some notes of Apple&rsquo;s official guide book &ndash; &ldquo;The Swift Programming Language&#8221;<br/>
-Most code are from the book, with some modification by me.</p>
+    <content type="html"><![CDATA[<p>Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me.</p>
 
 <h2>A Swift Tour</h2>
 
 <p>Modified some code in the following parts. Some better example or fixing in new Xcode.</p>
 
 <ul>
-<li><p>Function as parameter (like Comparator)</p>
-
-<pre><code>  // Bubble sort with a custom comparator
-  func sort(inout list: [Int], sorter: ((Int, Int) -&gt; Bool)) {
-      var i : Int = 0
-      while i &lt; list.count {
-          var j : Int = i + 1
-          if j &lt; list.count &amp;&amp; !sorter(list[i], list[j]) {
-              var temp = list[i]
-              list[i] = list[j]
-              list[j] = temp
-          }
-          i++
-      }
-  }
-  var list = [3, 2, 1]
-  func sorter(a : Int, b : Int) -&gt; Bool {
-      return a &lt; b
-  }
-  sort(&amp;list, sorter)
-</code></pre></li>
-<li><p>Closure</p>
-
-<pre><code>  numbers.map({
-      (number: Int) -&gt; Int in
-      let result = 3 * number
-      return result
-  })
-  // can be simplied to
-  numbers.map({ number in 3 * number })
-  // sort a array
-  var list = [3, 2, 1]
-  sort(&amp;list) // NOT sort(list), this function only accept a reference
-  var listSorted = sorted(list) // This is OK
-</code></pre></li>
+<li>Function as parameter (like Comparator)</li>
 </ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="c1">// Bubble sort with a custom comparator</span>
+</span><span class='line'><span class="n">func</span> <span class="nf">sort</span><span class="o">(</span><span class="n">inout</span> <span class="nl">list:</span> <span class="o">[</span><span class="n">Int</span><span class="o">],</span> <span class="nl">sorter:</span> <span class="o">((</span><span class="n">Int</span><span class="o">,</span> <span class="n">Int</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">var</span> <span class="n">i</span> <span class="o">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">list</span><span class="o">.</span><span class="na">count</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">var</span> <span class="n">j</span> <span class="o">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">list</span><span class="o">.</span><span class="na">count</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">sorter</span><span class="o">(</span><span class="n">list</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">list</span><span class="o">[</span><span class="n">j</span><span class="o">])</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">var</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">list</span><span class="o">[</span><span class="n">i</span><span class="o">]</span>
+</span><span class='line'>            <span class="n">list</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">list</span><span class="o">[</span><span class="n">j</span><span class="o">]</span>
+</span><span class='line'>            <span class="n">list</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">temp</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="n">i</span><span class="o">++</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="n">var</span> <span class="n">list</span> <span class="o">=</span> <span class="o">[</span><span class="mi">3</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">]</span>
+</span><span class='line'><span class="n">func</span> <span class="nf">sorter</span><span class="o">(</span><span class="n">a</span> <span class="o">:</span> <span class="n">Int</span><span class="o">,</span> <span class="n">b</span> <span class="o">:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="n">sort</span><span class="o">(&amp;</span><span class="n">list</span><span class="o">,</span> <span class="n">sorter</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Closure</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">numbers</span><span class="o">.</span><span class="na">map</span><span class="o">({</span>
+</span><span class='line'>    <span class="o">(</span><span class="nl">number:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="n">in</span>
+</span><span class='line'>    <span class="n">let</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">result</span>
+</span><span class='line'><span class="o">})</span>
+</span><span class='line'><span class="c1">// can be simplied to</span>
+</span><span class='line'><span class="n">numbers</span><span class="o">.</span><span class="na">map</span><span class="o">({</span> <span class="n">number</span> <span class="n">in</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span> <span class="o">})</span>
+</span><span class='line'><span class="c1">// sort a array</span>
+</span><span class='line'><span class="n">var</span> <span class="n">list</span> <span class="o">=</span> <span class="o">[</span><span class="mi">3</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">]</span>
+</span><span class='line'><span class="n">sort</span><span class="o">(&amp;</span><span class="n">list</span><span class="o">)</span> <span class="c1">// NOT sort(list), this function only accept a reference</span>
+</span><span class='line'><span class="n">var</span> <span class="n">listSorted</span> <span class="o">=</span> <span class="n">sorted</span><span class="o">(</span><span class="n">list</span><span class="o">)</span> <span class="c1">// This is OK</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <!-- more -->
@@ -178,9 +213,9 @@ Most code are from the book, with some modification by me.</p>
   } while m &lt; 100
   m
 </code></pre></li>
-<li><p>express index span with ..</p>
+<li><p>range operators</p>
 
-<pre><code>  for i in 0..3 {
+<pre><code>  for i in 0..&lt;3 {
       // do something, for 0, 1, 2
   }
 
@@ -366,6 +401,191 @@ Most code are from the book, with some modification by me.</p>
   triangle.perimeter = 9.9
   triangle.sideLength
 </code></pre></li>
+<li><p>Provide code after before or after setting properties</p>
+
+<pre><code>  class TriangleAndSquare {
+      var triangle: EquilateralTriangle {
+          willSet {                                    // Do something after before setting properties
+              square.sideLength = newValue.sideLength
+          }
+      }
+      var square: Square {
+          willSet {                                    // Do something after before setting properties
+              triangle.sideLength = newValue.sideLength
+          }
+      }
+      init(size: Double, name: String) {
+          square = Square(sideLength: size, name: name)
+          triangle = EquilateralTriangle(sideLength: size, name: name)
+      }
+  }
+  var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
+  triangleAndSquare.square.sideLength
+  triangleAndSquare.triangle.sideLength
+  triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
+  triangleAndSquare.triangle.sideLength
+</code></pre></li>
+</ul>
+</li>
+<li><p><strong>Enumerations</strong> and <strong>Structures</strong></p>
+
+<ul>
+<li><p><strong>Enumerations</strong> can have methods</p>
+
+<pre><code>  enum Rank: Int {
+      case Ace = 1
+      case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
+      case Jack, Queen, King
+      func simpleDescription() -&gt; String {
+          switch self {
+          case .Ace:
+              return "ace"
+          case .Jack:
+              return "jack"
+          case .Queen:
+              return "queen"
+          case .King:
+              return "king"
+          default:
+              return String(self.toRaw())
+          }
+      }
+  }
+  let ace = Rank.Ace
+  let aceRawValue = ace.toRaw()
+</code></pre></li>
+<li><p>Convert <em>enum</em> between raw values</p>
+
+<pre><code>  let ace = Rank.Ace
+  let aceRawValue = ace.toRaw()
+  let aceString = ace.simpleDescription()
+
+  if let convertedRank = Rank.fromRaw(3) {
+      let threeDescription = convertedRank.simpleDescription()
+  }
+</code></pre></li>
+<li><p><strong>Structure</strong> is similar to <strong>Class</strong>, but when structures are always copied when they are passed around, while classes are passed by reference.</p>
+
+<pre><code>  struct Card {
+      var rank: Rank
+      var suit: Suit
+      func simpleDescription() -&gt; String {
+          return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
+      }
+  }
+  let threeOfSpades = Card(rank: .Three, suit: .Spades)
+  let threeOfSpadesDescription = threeOfSpades.simpleDescription()
+</code></pre></li>
+<li><p><strong>Structure</strong> with associated values.</p>
+
+<pre><code>  enum ServerResponse {
+      case Result(String, String)
+      case Error(String)
+  }
+
+  let success = ServerResponse.Result("6:00 am", "8:09 pm")
+  let failure = ServerResponse.Error("Out of cheese.")
+
+  switch success {
+  case let .Result(sunrise, sunset):
+      let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
+  case let .Error(error):
+      let serverResponse = "Failure...  \(error)"
+  }
+</code></pre></li>
+</ul>
+</li>
+<li><p><strong>Protocols</strong> and <strong>Extendsions</strong></p>
+
+<ul>
+<li><p>A classic <strong>Protocol</strong>.</p>
+
+<pre><code>  protocol ExampleProtocol {
+      var simpleDescription: String { get }
+      mutating func adjust()  // "mutating" is needed when a protocol need to modify a structure
+  }
+</code></pre></li>
+<li><p><strong>Classes</strong>, enumerations and structures can all adopt protocols.</p>
+
+<pre><code>  class SimpleClass: ExampleProtocol {
+      var simpleDescription: String = "A very simple class."
+      var anotherProperty: Int = 69105
+      func adjust() {
+          simpleDescription += "  Now 100% adjusted."
+      }
+  }
+  var a = SimpleClass()
+  a.adjust()
+  let aDescription = a.simpleDescription
+
+  struct SimpleStructure: ExampleProtocol {
+      var simpleDescription: String = "A simple structure"
+      mutating func adjust() {
+          simpleDescription += " (adjusted)"
+      }
+  }
+  var b = SimpleStructure()
+  b.adjust()
+  let bDescription = b.simpleDescription
+</code></pre></li>
+<li><p><strong>Extension</strong> to add functionality to an existing type.</p>
+
+<pre><code>  extension Int: ExampleProtocol {
+      var simpleDescription: String {
+      return "The number \(self)"
+      }
+      mutating func adjust() {
+          self += 42
+      }
+  }
+  7.simpleDescription
+</code></pre></li>
+<li><p>Use <strong>Protocol</strong> as a variable. (Abstracting)</p>
+
+<pre><code>  let protocolValue: ExampleProtocol = a
+  protocolValue.simpleDescription
+  // protocolValue.anotherProperty  // Though a is an instance of 'SimpleClass', we cannot access its member not defined in 'ExampleProtocol'
+</code></pre></li>
+</ul>
+</li>
+<li><p><strong>Generics</strong></p>
+
+<ul>
+<li><p>A classic generic sample.</p>
+
+<pre><code>  func repeat&lt;ItemType&gt;(item: ItemType, times: Int) -&gt; [ItemType] {
+      var result = [ItemType]()
+      for i in 0..&lt;times {
+          result += [item]   // operands of Array need to be wrapped in []
+      }
+      return result
+  }
+  repeat("knock", 4)
+</code></pre></li>
+<li><p>Generic can also be used on functions and methods, as well as classes, enumerations, and structures.</p>
+
+<pre><code>  // Reimplement the Swift standard library's optional type
+  enum OptionalValue&lt;T&gt; {
+      case None
+      case Some(T)
+  }
+  var possibleInteger: OptionalValue&lt;Int&gt; = .None
+  possibleInteger = .Some(100)”
+</code></pre></li>
+<li><p>Add requirements in <strong>Generic</strong></p>
+
+<pre><code>  func anyCommonElements &lt;T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element&gt; (lhs: T, rhs: U) -&gt; Bool {
+      for lhsItem in lhs {
+          for rhsItem in rhs {
+              if lhsItem == rhsItem {
+                  return true
+              }
+          }
+      }
+      return false
+  }
+  anyCommonElements([1, 2, 3], [3])
+</code></pre></li>
 </ul>
 </li>
 </ul>
@@ -380,7 +600,7 @@ Most code are from the book, with some modification by me.</p>
     <id>http://zh-wang.github.io/blog/2014/08/14/codility-phosphorus-2014</id>
     <content type="html"><![CDATA[<h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Prosphorus 2014 Challenge</a>.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Prosphorus 2014 Challenge</a>.</p>
 
 <ul>
 <li>This problem is, finding the minimal number of guards to set in a tree which can prevent prisoners escaping to tree leaves.</li>
@@ -774,7 +994,7 @@ Most code are from the book, with some modification by me.</p>
     <id>http://zh-wang.github.io/blog/2014/07/22/codility-silicium-2014</id>
     <content type="html"><![CDATA[<h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Silicium 2014 Challenge</a>.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Silicium 2014 Challenge</a>.</p>
 
 <ul>
 <li>The problem is, finding the k-th largest piece of cake after cutting a big cake with straight cuts.</li>
@@ -1083,7 +1303,7 @@ x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
     <id>http://zh-wang.github.io/blog/2014/06/20/codility-aluminium-2014-p2</id>
     <content type="html"><![CDATA[<h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Aluminium 2014 Challenge</a>, Part 2.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Aluminium 2014 Challenge</a>, Part 2.</p>
 
 <p>In <a href="http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014/">Part 1</a>, we introduced a solution for CLASSIC maximal subarray problem.<br/>
 Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> version.</p>
@@ -1315,7 +1535,7 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
     <id>http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014</id>
     <content type="html"><![CDATA[<h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Aluminium 2014 Challenge</a>, Part 1.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Aluminium 2014 Challenge</a>, Part 1.</p>
 
 <ul>
 <li>The problem is, finding the maximum sum of a compact subsequence of array elements after performing a single swap operation. It&rsquo;s a little tricky <a href="http://en.wikipedia.org/wiki/Maximum_subarray_problem">maximal subarray</a> problem.</li>
@@ -1340,7 +1560,7 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 <p><p>
 The maximum sum of a compact subsequence can be expressed by the following formula.</p>
 
-<p>$$ \max \{ \sum_{k=i}^j a_k, 0 \leq i &lt; j \leq n &ndash; 1 \} $$
+<p>$$ \max \{ \sum_{k=i}^j a_k, 0 \leq i &lt; j \leq n - 1 \} $$
 </p></p>
 
 <p><p>
@@ -1349,14 +1569,14 @@ Because we want the maximal part from $i$ to $j$, by thinking reversely, we can 
 <p>let S to be the accumulation of the given array.</p>
 
 <p>let $$
-  f(x) = \min \{ \min \{ partial_sum(p), 0 \leq p \leq x &ndash; 1 \} , 0 \}
+  f(x) = \min \{ \min \{ partial_sum(p), 0 \leq p \leq x - 1 \} , 0 \}
 $$ to be the minimal partial sum of sub array $a_0, a_1, \cdots, a_x-1$.</p>
 
 <p>let $$
-g(x) = \min \{ \min \{ partial_sum(q), x + 1 \leq q \leq n &ndash; 1 \} , 0 \}
+g(x) = \min \{ \min \{ partial_sum(q), x + 1 \leq q \leq n - 1 \} , 0 \}
 $$ to be the minimal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-w$.</p>
 
-<p>then we calculate the following formula. $$ \max \{ S &ndash; f(x) &ndash; g(x), 0 \leq x \leq n &ndash; 1 \} $$
+<p>then we calculate the following formula. $$ \max \{ S - f(x) - g(x), 0 \leq x \leq n - 1 \} $$
 </p></p>
 
 <ul>
@@ -1447,9 +1667,9 @@ $$ to be the minimal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-w$.</p>
 </span><span class='line'>
 </span><span class='line'>        <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
 </span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="kt">int</span> <span class="n">f</span> <span class="o">=</span> <span class="n">i</span> <span class="o">&ndash;</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">F</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span> <span class="o">&ndash;</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>            <span class="kt">int</span> <span class="n">f</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">F</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
 </span><span class='line'>            <span class="kt">int</span> <span class="n">g</span> <span class="o">=</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="n">n</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">G</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">));</span>
-</span><span class='line'>            <span class="n">res</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">res</span><span class="o">,</span> <span class="n">S</span> <span class="o">&ndash;</span> <span class="o">(</span><span class="n">f</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">f</span> <span class="o">:</span> <span class="mi">0</span><span class="o">)</span> <span class="o">&ndash;</span> <span class="o">(</span><span class="n">g</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">g</span> <span class="o">:</span><span class="mi">0</span><span class="o">));</span>
+</span><span class='line'>            <span class="n">res</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">res</span><span class="o">,</span> <span class="n">S</span> <span class="o">-</span> <span class="o">(</span><span class="n">f</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">f</span> <span class="o">:</span> <span class="mi">0</span><span class="o">)</span> <span class="o">-</span> <span class="o">(</span><span class="n">g</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">g</span> <span class="o">:</span><span class="mi">0</span><span class="o">));</span>
 </span><span class='line'>        <span class="o">}</span>
 </span><span class='line'>        <span class="k">return</span> <span class="n">res</span><span class="o">;</span>
 </span><span class='line'>    <span class="o">}</span>
@@ -1461,7 +1681,7 @@ $$ to be the minimal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-w$.</p>
 </span><span class='line'>        <span class="o">}</span>
 </span><span class='line'>        <span class="n">res</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">data</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">));</span>
 </span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">data</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">Integer</span> <span class="n">lastValue</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span> <span class="o">&ndash;</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">Integer</span> <span class="n">lastValue</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
 </span><span class='line'>            <span class="n">Integer</span> <span class="n">currentValue</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
 </span><span class='line'>            <span class="n">res</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">comparator</span><span class="o">.</span><span class="na">compare</span><span class="o">(</span><span class="n">lastValue</span><span class="o">,</span> <span class="n">currentValue</span><span class="o">));</span>
 </span><span class='line'>        <span class="o">}</span>
@@ -1503,7 +1723,7 @@ $(document).ready( function () { $(&ldquo;a[href^=&lsquo;http&rsquo;]:not([href*
     <id>http://zh-wang.github.io/blog/2014/05/27/codility-magnesium-2014-challenge-report</id>
     <content type="html"><![CDATA[<h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Magnesium 2014 Challenge</a>.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Magnesium 2014 Challenge</a>.</p>
 
 <ul>
 <li>The problem is that, finding the longest path in a weighted graph in which the weights are ascending. Vertices can be visited multiple times.</li>

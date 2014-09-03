@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Jni | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/jni/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-09-02T18:38:04+09:00</updated>
+  <updated>2014-09-03T17:28:25+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -49,44 +49,42 @@
 <!-- more -->
 
 
-<p>```cpp
-// &mdash;&mdash;&mdash;> この矢印のあたりは、私の追加したコメントです
-jbyteArray JNICALL evalCommand(JNIEnv <em>env, jclass clazz, jbyteArray in_bytes_array) {
+<pre><code class="cpp">// ------&gt; この矢印のあたりは、私の追加したコメントです
+jbyteArray JNICALL evalCommand(JNIEnv *env, jclass clazz, jbyteArray in_bytes_array) {
   jboolean is_copy = false;
-  jbyte </em>in_bytes = env->GetByteArrayElements(in_bytes_array, &amp;is_copy);
-  const jsize in_size = env->GetArrayLength(in_bytes_array);</p>
+  jbyte *in_bytes = env-&gt;GetByteArrayElements(in_bytes_array, &amp;is_copy);
+  const jsize in_size = env-&gt;GetArrayLength(in_bytes_array);
 
-<p>  // &mdash;&mdash;&mdash;> commandにパースする。session/commands.protoにはcommandの定義が書かれいる。
-  // &mdash;&mdash;&mdash;> protobuf(Protocol Buffers)というライブラリを使っています。
+  // ------&gt; commandにパースする。session/commands.protoにはcommandの定義が書かれいる。
+  // ------&gt; protobuf(Protocol Buffers)というライブラリを使っています。
   mozc::commands::Command command;
-  command.ParseFromArray(in_bytes, in_size);</p>
+  command.ParseFromArray(in_bytes, in_size);
 
-<p>  // &mdash;&mdash;&mdash;> native側でcommandを処理する。結果はcommandの中に格納する。
-  mozc::Singleton<SessionHandlerSingletonAdapter>::get()&ndash;>getHandler()</p>
+  // ------&gt; native側でcommandを処理する。結果はcommandの中に格納する。
+  mozc::Singleton&lt;SessionHandlerSingletonAdapter&gt;::get()-&gt;getHandler()
+      -&gt;EvalCommand(&amp;command);
 
-<pre><code>  -&gt;EvalCommand(&amp;command);
-</code></pre>
+  // Use JNI_ABORT because in_bytes is read only.
+  // ------&gt; JNI_ABORT: 要素列をJava配列に反映させず、要素列バッファを解放する。
+  env-&gt;ReleaseByteArrayElements(in_bytes_array, in_bytes, JNI_ABORT);
 
-<p>  // Use JNI_ABORT because in_bytes is read only.
-  // &mdash;&mdash;&mdash;> JNI_ABORT: 要素列をJava配列に反映させず、要素列バッファを解放する。
-  env->ReleaseByteArrayElements(in_bytes_array, in_bytes, JNI_ABORT);</p>
-
-<p>  // 変換結果はjbyteArrayとしてjava側に返す
+  // 変換結果はjbyteArrayとしてjava側に返す
   const int out_size = command.ByteSize();
-  jbyteArray out_bytes_array = env->NewByteArray(out_size);</p>
+  jbyteArray out_bytes_array = env-&gt;NewByteArray(out_size);
 
-<p>  // &mdash;&mdash;&mdash;> is_copy: 0の場合、生成された配列(out_bytes)を変更すると、java側にも変更される。
+
+  // ------&gt; is_copy: 0の場合、生成された配列(out_bytes)を変更すると、java側にも変更される。
   //                  1の場合、変更してもjava側には変更されない。
-  jbyte *out_bytes = env->GetByteArrayElements(out_bytes_array, &amp;is_copy);
-  command.SerializeToArray(out_bytes, out_size);</p>
+  jbyte *out_bytes = env-&gt;GetByteArrayElements(out_bytes_array, &amp;is_copy);
+  command.SerializeToArray(out_bytes, out_size);
 
-<p>  // Use 0 to copy out_bytes to out_bytes_array.
-  // &mdash;&mdash;&mdash;> 0の場合、要素列をJava配列に反映させ、要素列バッファを解放する。
-  env->ReleaseByteArrayElements(out_bytes_array, out_bytes, 0);</p>
+  // Use 0 to copy out_bytes to out_bytes_array.
+  // ------&gt; 0の場合、要素列をJava配列に反映させ、要素列バッファを解放する。
+  env-&gt;ReleaseByteArrayElements(out_bytes_array, out_bytes, 0);
 
-<p>  return out_bytes_array;
+  return out_bytes_array;
 }
-```</p>
+</code></pre>
 
 <p><code>in_bytes_array</code>には、タッチされたキーの情報などが入っている。<br/>
 <code>out_bytes_array</code>には、変換候補などが入っている。<br/>

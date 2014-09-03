@@ -9,8 +9,8 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Just some notes of Apple&rsquo;s official guide book &ndash; &ldquo;The Swift Programming Language&#8221;
-Most code are from the book, with some &hellip;">
+  <meta name="description" content="Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me. A Swift Tour Modified &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -27,21 +27,10 @@ Most code are from the book, with some &hellip;">
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
   <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+  <!-- Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
-<!-- MathJax -->
-<!--<script type="text/x-mathjax-config">-->
-<!--MathJax.Hub.Config({-->
-    <!--tex2jax: {-->
-        <!--inlineMath: [ ['$','$'], ["\\(","\\)"] ],-->
-        <!--displayMath: [ ['$$','$$'], ["\\[","\\]"] ]-->
-    <!--}-->
-<!--});-->
-<!--</script>-->
-<!--<script type="text/javascript" src="/javascripts/MathJax.js?config=TeX-AMS_HTML-full"></script>-->
-<!--<script type="text/javascript" src="/javascripts/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"> </script> 
 
 <script language="javaScript">
@@ -63,8 +52,8 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Just some notes of Apple&rsquo;s official guide book &ndash; &ldquo;The Swift Programming Language&#8221;
-Most code are from the book, with some &hellip;" />
+<meta property="og:description" content="Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me. A Swift Tour Modified &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -99,8 +88,6 @@ Most code are from the book, with some &hellip;" />
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
-  <!--<li><a href="/blog/archives">Archives2</a></li>-->
-  <!--<li><a href="/blog/archives/zsh">zsh</li>-->
 </ul>
 
 </nav>
@@ -130,7 +117,7 @@ Most code are from the book, with some &hellip;" />
   
 
 
-<time datetime="2014-09-02T18:28:36+09:00" pubdate data-updated="true">Sep 2<span>nd</span>, 2014</time>
+<time datetime="2014-09-02T18:28:36+09:00" pubdate data-updated="true"></time>
         
            | <a href="/blog/2014/09/02/learning-swift-part-1/#disqus_thread"
              data-disqus-identifier="http://zh-wang.github.io/blog/2014/09/02/learning-swift-part-1/">Comments</a>
@@ -140,50 +127,85 @@ Most code are from the book, with some &hellip;" />
   </header>
 
 
-  <div class="entry-content"><p>Just some notes of Apple&rsquo;s official guide book &ndash; &ldquo;The Swift Programming Language&#8221;<br/>
-Most code are from the book, with some modification by me.</p>
+  <div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me.</p>
 
 <h2>A Swift Tour</h2>
 
 <p>Modified some code in the following parts. Some better example or fixing in new Xcode.</p>
 
 <ul>
-<li><p>Function as parameter (like Comparator)</p>
-
-<pre><code>  // Bubble sort with a custom comparator
-  func sort(inout list: [Int], sorter: ((Int, Int) -&gt; Bool)) {
-      var i : Int = 0
-      while i &lt; list.count {
-          var j : Int = i + 1
-          if j &lt; list.count &amp;&amp; !sorter(list[i], list[j]) {
-              var temp = list[i]
-              list[i] = list[j]
-              list[j] = temp
-          }
-          i++
-      }
-  }
-  var list = [3, 2, 1]
-  func sorter(a : Int, b : Int) -&gt; Bool {
-      return a &lt; b
-  }
-  sort(&amp;list, sorter)
-</code></pre></li>
-<li><p>Closure</p>
-
-<pre><code>  numbers.map({
-      (number: Int) -&gt; Int in
-      let result = 3 * number
-      return result
-  })
-  // can be simplied to
-  numbers.map({ number in 3 * number })
-  // sort a array
-  var list = [3, 2, 1]
-  sort(&amp;list) // NOT sort(list), this function only accept a reference
-  var listSorted = sorted(list) // This is OK
-</code></pre></li>
+<li>Function as parameter (like Comparator)</li>
 </ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="c1">// Bubble sort with a custom comparator</span>
+</span><span class='line'><span class="n">func</span> <span class="nf">sort</span><span class="o">(</span><span class="n">inout</span> <span class="nl">list:</span> <span class="o">[</span><span class="n">Int</span><span class="o">],</span> <span class="nl">sorter:</span> <span class="o">((</span><span class="n">Int</span><span class="o">,</span> <span class="n">Int</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">var</span> <span class="n">i</span> <span class="o">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">list</span><span class="o">.</span><span class="na">count</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">var</span> <span class="n">j</span> <span class="o">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">list</span><span class="o">.</span><span class="na">count</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">sorter</span><span class="o">(</span><span class="n">list</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">list</span><span class="o">[</span><span class="n">j</span><span class="o">])</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">var</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">list</span><span class="o">[</span><span class="n">i</span><span class="o">]</span>
+</span><span class='line'>            <span class="n">list</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">list</span><span class="o">[</span><span class="n">j</span><span class="o">]</span>
+</span><span class='line'>            <span class="n">list</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">temp</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="n">i</span><span class="o">++</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="n">var</span> <span class="n">list</span> <span class="o">=</span> <span class="o">[</span><span class="mi">3</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">]</span>
+</span><span class='line'><span class="n">func</span> <span class="nf">sorter</span><span class="o">(</span><span class="n">a</span> <span class="o">:</span> <span class="n">Int</span><span class="o">,</span> <span class="n">b</span> <span class="o">:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="n">sort</span><span class="o">(&amp;</span><span class="n">list</span><span class="o">,</span> <span class="n">sorter</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Closure</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">numbers</span><span class="o">.</span><span class="na">map</span><span class="o">({</span>
+</span><span class='line'>    <span class="o">(</span><span class="nl">number:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="n">in</span>
+</span><span class='line'>    <span class="n">let</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">result</span>
+</span><span class='line'><span class="o">})</span>
+</span><span class='line'><span class="c1">// can be simplied to</span>
+</span><span class='line'><span class="n">numbers</span><span class="o">.</span><span class="na">map</span><span class="o">({</span> <span class="n">number</span> <span class="n">in</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span> <span class="o">})</span>
+</span><span class='line'><span class="c1">// sort a array</span>
+</span><span class='line'><span class="n">var</span> <span class="n">list</span> <span class="o">=</span> <span class="o">[</span><span class="mi">3</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">]</span>
+</span><span class='line'><span class="n">sort</span><span class="o">(&amp;</span><span class="n">list</span><span class="o">)</span> <span class="c1">// NOT sort(list), this function only accept a reference</span>
+</span><span class='line'><span class="n">var</span> <span class="n">listSorted</span> <span class="o">=</span> <span class="n">sorted</span><span class="o">(</span><span class="n">list</span><span class="o">)</span> <span class="c1">// This is OK</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 </div>
@@ -218,7 +240,7 @@ Most code are from the book, with some modification by me.</p>
   
 
 
-<time datetime="2014-08-14T15:04:36+09:00" pubdate data-updated="true">Aug 14<span>th</span>, 2014</time>
+<time datetime="2014-08-14T15:04:36+09:00" pubdate data-updated="true"></time>
         
            | <a href="/blog/2014/08/14/codility-phosphorus-2014/#disqus_thread"
              data-disqus-identifier="http://zh-wang.github.io/blog/2014/08/14/codility-phosphorus-2014/">Comments</a>
@@ -230,7 +252,7 @@ Most code are from the book, with some modification by me.</p>
 
   <div class="entry-content"><h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Prosphorus 2014 Challenge</a>.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Prosphorus 2014 Challenge</a>.</p>
 
 <ul>
 <li>This problem is, finding the minimal number of guards to set in a tree which can prevent prisoners escaping to tree leaves.</li>
@@ -472,7 +494,7 @@ Most code are from the book, with some modification by me.</p>
   
 
 
-<time datetime="2014-07-23T18:25:58+09:00" pubdate data-updated="true">Jul 23<span>rd</span>, 2014</time>
+<time datetime="2014-07-23T18:25:58+09:00" pubdate data-updated="true"></time>
         
            | <a href="/blog/2014/07/23/noto-font/#disqus_thread"
              data-disqus-identifier="http://zh-wang.github.io/blog/2014/07/23/noto-font/">Comments</a>
@@ -672,7 +694,7 @@ Most code are from the book, with some modification by me.</p>
   
 
 
-<time datetime="2014-07-22T17:02:26+09:00" pubdate data-updated="true">Jul 22<span>nd</span>, 2014</time>
+<time datetime="2014-07-22T17:02:26+09:00" pubdate data-updated="true"></time>
         
            | <a href="/blog/2014/07/22/codility-silicium-2014/#disqus_thread"
              data-disqus-identifier="http://zh-wang.github.io/blog/2014/07/22/codility-silicium-2014/">Comments</a>
@@ -684,7 +706,7 @@ Most code are from the book, with some modification by me.</p>
 
   <div class="entry-content"><h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Silicium 2014 Challenge</a>.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Silicium 2014 Challenge</a>.</p>
 
 <ul>
 <li>The problem is, finding the k-th largest piece of cake after cutting a big cake with straight cuts.</li>
@@ -743,7 +765,7 @@ But in this problem, after we sort edges in <em>x</em> and <em>y</em>, we can do
   
 
 
-<time datetime="2014-07-11T18:10:34+09:00" pubdate data-updated="true">Jul 11<span>th</span>, 2014</time>
+<time datetime="2014-07-11T18:10:34+09:00" pubdate data-updated="true"></time>
         
            | <a href="/blog/2014/07/11/mozc-for-ios/#disqus_thread"
              data-disqus-identifier="http://zh-wang.github.io/blog/2014/07/11/mozc-for-ios/">Comments</a>
@@ -834,7 +856,7 @@ TEST=unittest
   
 
 
-<time datetime="2014-06-27T20:26:41+09:00" pubdate data-updated="true">Jun 27<span>th</span>, 2014</time>
+<time datetime="2014-06-27T20:26:41+09:00" pubdate data-updated="true"></time>
         
            | <a href="/blog/2014/06/27/import-mathjax-to-octopress/#disqus_thread"
              data-disqus-identifier="http://zh-wang.github.io/blog/2014/06/27/import-mathjax-to-octopress/">Comments</a>
@@ -882,7 +904,7 @@ TEST=unittest
   
 
 
-<time datetime="2014-06-20T11:17:21+09:00" pubdate data-updated="true">Jun 20<span>th</span>, 2014</time>
+<time datetime="2014-06-20T11:17:21+09:00" pubdate data-updated="true"></time>
         
            | <a href="/blog/2014/06/20/codility-aluminium-2014-p2/#disqus_thread"
              data-disqus-identifier="http://zh-wang.github.io/blog/2014/06/20/codility-aluminium-2014-p2/">Comments</a>
@@ -894,7 +916,7 @@ TEST=unittest
 
   <div class="entry-content"><h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Aluminium 2014 Challenge</a>, Part 2.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Aluminium 2014 Challenge</a>, Part 2.</p>
 
 <p>In <a href="http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014/">Part 1</a>, we introduced a solution for CLASSIC maximal subarray problem.<br/>
 Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> version.</p>
@@ -931,7 +953,7 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
   
 
 
-<time datetime="2014-06-18T15:54:12+09:00" pubdate data-updated="true">Jun 18<span>th</span>, 2014</time>
+<time datetime="2014-06-18T15:54:12+09:00" pubdate data-updated="true"></time>
         
            | <a href="/blog/2014/06/18/codility-aluminium-2014/#disqus_thread"
              data-disqus-identifier="http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014/">Comments</a>
@@ -943,7 +965,7 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
 
   <div class="entry-content"><h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Aluminium 2014 Challenge</a>, Part 1.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Aluminium 2014 Challenge</a>, Part 1.</p>
 
 <ul>
 <li>The problem is, finding the maximum sum of a compact subsequence of array elements after performing a single swap operation. It&rsquo;s a little tricky <a href="http://en.wikipedia.org/wiki/Maximum_subarray_problem">maximal subarray</a> problem.</li>
@@ -985,7 +1007,7 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
   
 
 
-<time datetime="2014-05-27T19:05:37+09:00" pubdate data-updated="true">May 27<span>th</span>, 2014</time>
+<time datetime="2014-05-27T19:05:37+09:00" pubdate data-updated="true"></time>
         
            | <a href="/blog/2014/05/27/codility-magnesium-2014-challenge-report/#disqus_thread"
              data-disqus-identifier="http://zh-wang.github.io/blog/2014/05/27/codility-magnesium-2014-challenge-report/">Comments</a>
@@ -997,7 +1019,7 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
 
   <div class="entry-content"><h2>Introduction</h2>
 
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility &ndash; Magnesium 2014 Challenge</a>.</p>
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Magnesium 2014 Challenge</a>.</p>
 
 <ul>
 <li>The problem is that, finding the longest path in a weighted graph in which the weights are ascending. Vertices can be visited multiple times.</li>
@@ -1039,7 +1061,7 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
   
 
 
-<time datetime="2014-05-01T15:18:39+09:00" pubdate data-updated="true">May 1<span>st</span>, 2014</time>
+<time datetime="2014-05-01T15:18:39+09:00" pubdate data-updated="true"></time>
         
            | <a href="/blog/2014/05/01/mozc-analysis-02/#disqus_thread"
              data-disqus-identifier="http://zh-wang.github.io/blog/2014/05/01/mozc-analysis-02/">Comments</a>
@@ -1090,7 +1112,7 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
   
   <div class="pagination">
     
-      <a class="prev" href="/blog/page/2/">&larr; Older</a>
+      <a class="prev" href="2">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -1130,11 +1152,11 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>Codility (5)</a></li><li><a href='/blog/categories/ios/'>iOS (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (1)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (1)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 120.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 84.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 120.0%'>Codility(5)</a> <a href='/blog/categories/ios' style='font-size: 72.0%'>iOS(1)</a> <a href='/blog/categories/jni' style='font-size: 72.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 96.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 84.0%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 72.0%'>swift(1)</a> <a href='/blog/categories/zsh' style='font-size: 72.0%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 120.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 84.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 120.0%'>codility(5)</a> <a href='/blog/categories/ios' style='font-size: 72.0%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 72.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 96.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 84.0%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 72.0%'>swift(1)</a> <a href='/blog/categories/zsh' style='font-size: 72.0%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>
