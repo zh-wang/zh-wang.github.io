@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Octopress - Welcome to FutureAppLaboratory</title>
+  <title>Learning-swift-part-3 - Welcome to FutureAppLaboratory</title>
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Category: octopress">
+  <meta name="description" content="Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me. ===== Full Notes &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://zh-wang.github.io/blog/categories/octopress">
+  <link rel="canonical" href="http://zh-wang.github.io/blog/2014/09/05/learning-swift-part-3">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Welcome to FutureAppLaboratory" type="application/atom+xml">
@@ -50,9 +51,10 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
   </script>
 
 
-  <meta property="og:title" content="Category: octopress - Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Category: octopress" />
-<meta property="og:url" content="http://zh-wang.github.io/blog/categories/octopress/" />
+  <meta property="og:title" content="Learning-swift-part-3 - Welcome to FutureAppLaboratory" />
+<meta property="og:description" content="Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me. ===== Full Notes &hellip;" />
+<meta property="og:url" content="http://zh-wang.github.io/blog/2014/09/05/learning-swift-part-3/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
 <meta property="og:site_name" content="Welcome to FutureAppLaboratory" />
@@ -92,50 +94,244 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Octopress</h1>
+    
+      <h1 class="entry-title">Learning-swift-part-3</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-05T17:59:28+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me.</p>
 
-  
-  <h2>2014</h2>
+<h2>===== Full Notes =====</h2>
 
-<article>
-  
-<h1><a href="/blog/2014/07/23/noto-font/">Noto - Fonts</a></h1>
-<time datetime="2014-07-23T18:25:58+09:00" pubdate><span class='month'>Jul</span> <span class='day'>23</span> <span class='year'>2014</span></time>
+<h3>Basic Operators</h3>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/octopress/'>octopress</a></span>
-</footer>
+<ul>
+<li><p>Terminology</p>
+
+<pre><code>  - Unary
+  - Binary
+  - Ternary (There is only one in a ? b :c)
+</code></pre></li>
+<li><p>Assignment Operator</p>
+
+<pre><code>  // Not a vaild assignment
+  if x = y {
+
+  }
+</code></pre></li>
+<li><p>Arithmetic Operators</p>
+
+<ul>
+<li>Not allow overflow.</li>
+<li>You can opt in to value overflow behavior by using Swift&rsquo;s overflow operators (such as a &amp;+ b).</li>
+<li><p>The addition operator is also supported for <strong>String</strong> concatenation.</p>
+
+<p>  let dog: Character = &ldquo;🐶&rdquo;
+  let cow: Character = &ldquo;🐮&rdquo;
+  let dogCow = dog + cow
+  // dogCow is equal to &ldquo;🐶🐮&rdquo;</p></li>
+</ul>
+</li>
+<li><p>Remainder Operator</p>
+
+<ul>
+<li><code>9 % 4 // equals 1</code></li>
+<li><code>-9 % 4 // equals -1</code></li>
+<li><code>-9 % 4 // equals -9 % -4</code></li>
+</ul>
+</li>
+</ul>
 
 
-</article>
+<!-- more -->
 
 
+<p></p>
 
-<article>
-  
-<h1><a href="/blog/2014/06/27/import-mathjax-to-octopress/">Import MathJax to Octopress</a></h1>
-<time datetime="2014-06-27T20:26:41+09:00" pubdate><span class='month'>Jun</span> <span class='day'>27</span> <span class='year'>2014</span></time>
+<ul>
+<li><p>Floating-Point Remainder Calculations</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/octopress/'>octopress</a></span>
-</footer>
+<ul>
+<li><code>8 % 2.5 // equals 0.5</code></li>
+</ul>
+</li>
+<li><p>Increment and Decrement Operators</p>
 
+<ul>
+<li><code>++</code> and <code>--</code> works the same as C</li>
+</ul>
+</li>
+<li><p>Unary Minus Operator and Unary Plus Operator</p>
 
-</article>
+<ul>
+<li><code>+</code> do <strong>NOT</strong> change the value</li>
+</ul>
+</li>
+<li><p>Compound Assignment Operators</p>
+
+<pre><code>  var a = 1
+  a += 2
+</code></pre></li>
+<li><p>Comparison Operators</p>
+
+<pre><code>  Equal to (a == b)
+  Not equal to (a != b)
+  Greater than (a &gt; b)
+  Less than (a &lt; b)
+  Greater than or equal to (a &gt;= b)
+  Less than or equal to (a &lt;= b)
+</code></pre></li>
+<li><p>Nil Coalescing Operator</p>
+
+<ul>
+<li><p>The nil coalescing operator (a ?? b) unwraps an optional a if it contains a value, or returns a default value b if a is nil.</p>
+
+<p>  let defaultColorName = &ldquo;red&rdquo;
+  var userDefinedColorName: String?   // defaults to nil</p>
+
+<p>  var colorNameToUse = userDefinedColorName ?? defaultColorName
+  // userDefinedColorName is nil, so colorNameToUse is set to the default of &ldquo;red&rdquo;</p></li>
+</ul>
+</li>
+<li><p>Range Operators</p>
+
+<pre><code>  for index in 1...5 {
+      println("\(index) times 5 is \(index * 5)")
+  }
+  // 1 times 5 is 5
+  // 2 times 5 is 10
+  // 3 times 5 is 15
+  // 4 times 5 is 20
+  // 5 times 5 is 25
+</code></pre></li>
+<li><p>Half-Open Range Operator</p>
+
+<pre><code>  let names = ["Anna", "Alex", "Brian", "Jack"]
+  let count = names.count
+  for i in 0..&lt;count {
+      println("Person \(i + 1) is called \(names[i])")
+  }
+  // Person 1 is called Anna
+  // Person 2 is called Alex
+  // Person 3 is called Brian
+  // Person 4 is called Jack&gt;
+</code></pre></li>
+<li><p>Logical Operators</p>
+
+<ul>
+<li>Logical NOT (!a)</li>
+<li>Logical AND (a &amp;&amp; b)</li>
+<li>Logical OR (a || b)</li>
+<li>Logical NOT (!a)</li>
+</ul>
+</li>
+<li><p>Combining Logical Operators</p>
+
+<pre><code>  if enteredDoorCode &amp;&amp; passedRetinaScan || hasDoorKey || knowsOverridePassword {
+      println("Welcome!")
+  } else {
+      println("ACCESS DENIED")
+  }
+  // prints "Welcome!"
+</code></pre></li>
+<li><p>Explicit Parentheses</p>
+
+<pre><code>  if (enteredDoorCode &amp;&amp; passedRetinaScan) || hasDoorKey || knowsOverridePassword {
+      println("Welcome!")
+  } else {
+      println("ACCESS DENIED")
+  }
+  // prints "Welcome!"
+</code></pre></li>
+</ul>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">viennakanon</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-05T17:59:28+09:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/swift/'>swift</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2014/09/05/learning-swift-part-3/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2014/09/05/learning-swift-part-3/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/09/05/learning-swift-part-2/" title="Previous Post: Learning Swift Part 2">&laquo; Learning Swift Part 2</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -274,7 +470,10 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
       var disqus_shortname = 'viennakanon';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://zh-wang.github.io/blog/2014/09/05/learning-swift-part-3/';
+        var disqus_url = 'http://zh-wang.github.io/blog/2014/09/05/learning-swift-part-3/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
