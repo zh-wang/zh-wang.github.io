@@ -10,7 +10,7 @@
 
   
   <meta name="description" content="Just some notes after reading Apple&rsquo;s official online guide.
-Most code are from the guide, with some modification by me. A Swift Tour Modified &hellip;">
+Most code are from the guide, with some modification by me. ===== Full Notes &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -53,7 +53,7 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
 <meta property="og:description" content="Just some notes after reading Apple&rsquo;s official online guide.
-Most code are from the guide, with some modification by me. A Swift Tour Modified &hellip;" />
+Most code are from the guide, with some modification by me. ===== Full Notes &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -101,6 +101,79 @@ Most code are from the guide, with some modification by me. A Swift Tour Modifie
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/09/05/learning-swift-part-2/">Learning Swift Part 2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-05T15:06:10+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/09/05/learning-swift-part-2/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/09/05/learning-swift-part-2/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me.</p>
+
+<h2>===== Full Notes =====</h2>
+
+<h3>Basics</h3>
+
+<ul>
+<li><p>Declaring Constant and Variables</p>
+
+<pre><code>  let maximumNumberOfLoginAttempts = 10
+  var currentLoginAttempt = 0
+
+  var x = 0.0, y = 0.0, z = 0.0
+</code></pre></li>
+<li><p>Type Annotations</p>
+
+<pre><code>  var welcomeMessgae: String
+  welcomeMessgae = "Hello"
+
+  var red, green, blue: Double // Multiple variables defined
+</code></pre></li>
+<li><p>Naming Constants and Variables</p>
+
+<pre><code>  let π = 3.14159
+  let 你好 = "你好世界"
+  let 🐶🐮 = "dogcow"
+</code></pre></li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/05/learning-swift-part-2/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/09/02/learning-swift-part-1/">Learning Swift Part 1</a></h1>
     
     
@@ -129,8 +202,6 @@ Most code are from the guide, with some modification by me. A Swift Tour Modifie
 
   <div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
 Most code are from the guide, with some modification by me.</p>
-
-<h2>A Swift Tour</h2>
 
 <p>Modified some code in the following parts. Some better example or fixing in new Xcode.</p>
 
@@ -1040,76 +1111,6 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/01/mozc-analysis-02/">Mozc完全解説02</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-01T15:18:39+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/05/01/mozc-analysis-02/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/05/01/mozc-analysis-02/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>はじめに</h2>
-
-<p><a href="/blog/2014/04/22/mozc-analysis-01/">前回</a>では、android側からタッチ反応を発生してから、jniを通して変換エンジンのnative側が候補を返すまでを説明した。<br/>
-今回ではjni部分のコードを少し説明する。</p>
-
-<h2>What is jni?</h2>
-
-<p>言わばjavaとc, cppとの間のインターフェイスですね。cやcppを使って、java側とデータのやり取りができる。<br/>
-<a href="http://ja.wikipedia.org/wiki/Java_Native_Interface">Java Native Interface</a></p>
-
-<h2>mozcに使われているjni</h2>
-
-<p>java側ではMozcJNI.javaというラッパーがある。メソッドはこの通り。</p>
-
-<ul>
-<li><code>load(String, Buffer, Buffer, String)</code><br/>
-  初期化用のメソッド、apkの中に入っている辞書データなどをnative側に渡す</li>
-<li><code>evalCommand(byte[])</code><br/>
-  native側と通信するメソッド、jniで実装</li>
-<li><code>onPostLoad(String, Buffer, Buffer)</code><br/>
-  loadメソッドに使われている、jniで実装</li>
-<li><code>getVersion()</code><br/>
-  native側のバージョン情報をjava側に渡す。loadメソッドに使われている、jniで実装</li>
-</ul>
-
-
-<p>jniの実装ファイルはjni/mozcjni.cc。では、<code>evalCommand(byte[])</code>を詳しく見てみよう。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/05/01/mozc-analysis-02/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -1123,6 +1124,10 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/05/learning-swift-part-2/">Learning Swift Part 2</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/09/02/learning-swift-part-1/">Learning Swift Part 1</a>
@@ -1140,10 +1145,6 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
         <a href="/blog/2014/07/22/codility-silicium-2014/">Codility - Silicium - 2014</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/07/11/mozc-for-ios/">Mozc for iOS</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1152,11 +1153,11 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (1)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 120.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 84.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 120.0%'>codility(5)</a> <a href='/blog/categories/ios' style='font-size: 72.0%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 72.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 96.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 84.0%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 72.0%'>swift(1)</a> <a href='/blog/categories/zsh' style='font-size: 72.0%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 120.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 84.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 120.0%'>codility(5)</a> <a href='/blog/categories/ios' style='font-size: 72.0%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 72.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 96.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 84.0%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 84.0%'>swift(2)</a> <a href='/blog/categories/zsh' style='font-size: 72.0%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>
