@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4/</loc>
+    <lastmod>2014-09-08T18:03:31+09:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://zh-wang.github.io/blog/2014/09/05/learning-swift-part-3/</loc>
     <lastmod>2014-09-05T17:59:28+09:00</lastmod>
     <priority>0.8</priority>
@@ -89,21 +95,21 @@
   
   <url>
     <loc>http://zh-wang.github.io/blog/archives/</loc>
-    <lastmod>2014-09-05T18:00:40+09:00</lastmod>
+    <lastmod>2014-09-08T18:06:33+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://zh-wang.github.io/</loc>
-    <lastmod>2014-09-05T18:00:40+09:00</lastmod>
+    <lastmod>2014-09-08T18:06:33+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://zh-wang.github.io/about/</loc>
-    <lastmod>2014-09-05T18:00:40+09:00</lastmod>
+    <lastmod>2014-09-08T18:06:33+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

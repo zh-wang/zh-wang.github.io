@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Android - Welcome to FutureAppLaboratory</title>
+  <title>Learning Swift Part 4 - Welcome to FutureAppLaboratory</title>
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Category: android">
+  <meta name="description" content="Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me. ===== Full Notes &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://zh-wang.github.io/blog/categories/android">
+  <link rel="canonical" href="http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Welcome to FutureAppLaboratory" type="application/atom+xml">
@@ -50,9 +51,10 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
   </script>
 
 
-  <meta property="og:title" content="Category: android - Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Category: android" />
-<meta property="og:url" content="http://zh-wang.github.io/blog/categories/android/" />
+  <meta property="og:title" content="Learning Swift Part 4 - Welcome to FutureAppLaboratory" />
+<meta property="og:description" content="Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me. ===== Full Notes &hellip;" />
+<meta property="og:url" content="http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
 <meta property="og:site_name" content="Welcome to FutureAppLaboratory" />
@@ -92,50 +94,325 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Android</h1>
+    
+      <h1 class="entry-title">Learning Swift Part 4</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-08T18:03:31+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me.</p>
 
-  
-  <h2>2014</h2>
+<h2>===== Full Notes =====</h2>
 
-<article>
-  
-<h1><a href="/blog/2014/05/01/mozc-analysis-02/">Mozc完全解説02</a></h1>
-<time datetime="2014-05-01T15:18:39+09:00" pubdate><span class='month'>May</span> <span class='day'>01</span> <span class='year'>2014</span></time>
+<h3>Strings and Characters</h3>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/android/'>android</a>, <a class='category' href='/blog/categories/jni/'>jni</a>, <a class='category' href='/blog/categories/mozc/'>mozc</a></span>
-</footer>
+<ul>
+<li><p>String Literals</p>
+
+<pre><code>  let someString = "..."
+</code></pre></li>
+<li><p>Initializing an Empty String</p>
+
+<pre><code>  var emptyString = ""               // empty string literal
+  var anotherEmptyString = String()  // initializer syntax
+  // these two strings are both empty, and are equivalent to each other
+
+  if emptyString.isEmpty {
+      println("Nothing to see here")
+  }
+</code></pre></li>
+<li><p>String Mutability</p>
+
+<pre><code>  var variableString = "Horse"
+  variableString += " and carriage"
+  // variableString is now "Horse and carriage"
+
+  let constantString = "Highlander"
+  constantString += " and another Highlander"
+  // this reports a compile-time error - a constant string cannot be modified
+</code></pre></li>
+<li><p>Strings Are Value Types</p>
+
+<ul>
+<li>Swift’s String type is a value type. If you create a new String value, that String value is copied when it is passed to a function or method, or when it is assigned to a constant or variable. In each case, a new copy of the existing String value is created, and the new copy is passed or assigned, not the original version.</li>
+<li>NSString in obj-c is NOT value type.</li>
+</ul>
+</li>
+</ul>
 
 
-</article>
+<!-- more -->
 
 
+<ul>
+<li><p>Working with Characters</p>
 
-<article>
-  
-<h1><a href="/blog/2014/04/22/mozc-analysis-01/">Mozc完全解説01</a></h1>
-<time datetime="2014-04-22T12:20:06+09:00" pubdate><span class='month'>Apr</span> <span class='day'>22</span> <span class='year'>2014</span></time>
+<pre><code>  for character in "Dog!🐶" {
+      println(character)
+  }
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/android/'>android</a>, <a class='category' href='/blog/categories/mozc/'>mozc</a></span>
-</footer>
+  // a single character
+  let yenSign: Character = "¥"
+</code></pre></li>
+<li><p>Concatenating Strings and Characters</p>
 
+<pre><code>  let string1 = "hello"
+  let string2 = " there"
+  var welcome = string1 + string2
+  // welcome now equals "hello there"
 
-</article>
+  var instruction = "look over"
+  instruction += string2
+  // instruction now equals "look over there"
+
+  let exclamationMark: Character = "!"
+  welcome.append(exclamationMark)
+  // welcome now equals "hello there!"
+</code></pre></li>
+<li><p>String Interpolation</p>
+
+<pre><code>  let multiplier = 3
+  let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
+  // message is "3 times 2.5 is 7.5"
+</code></pre></li>
+<li><p>Unicode Scalars</p></li>
+<li><p>Special Unicode Characters in String Literals</p>
+
+<pre><code>  let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
+  // "Imagination is more important than knowledge" - Einstein
+  let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
+  let blackHeart = "\u{2665}"      // ♥,  Unicode scalar U+2665
+  let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
+</code></pre></li>
+<li><p>Extended Grapheme Clusters</p>
+
+<pre><code>  let eAcute: Character = "\u{E9}"                         // é
+  let combinedEAcute: Character = "\u{65}\u{301}"          // e followed by ́
+  // eAcute is é, combinedEAcute is é
+
+  let precomposed: Character = "\u{D55C}"                  // 한
+  let decomposed: Character = "\u{1112}\u{1161}\u{11AB}"   // ᄒ, ᅡ, ᆫ
+  // precomposed is 한, decomposed is 한
+
+  let enclosedEAcute: Character = "\u{E9}\u{20DD}"
+  // enclosedEAcute is é⃝
+</code></pre></li>
+<li><p>Counting Characters</p>
+
+<pre><code>  let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
+  println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
+  // prints "unusualMenagerie has 40 characters"
+
+  var word = "cafe"
+  println("the number of characters in \(word) is \(countElements(word))
+  // prints "the number of characters in cafe is 4"
+
+  word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
+
+  println("the number of characters in \(word) is \(countElements(word))
+  // prints "the number of characters in café is 4"
+</code></pre></li>
+<li><p>Comparing Strings</p>
+
+<ul>
+<li><p>String and Character Equality</p>
+
+<pre><code>  let quotation = "We're a lot alike, you and I."
+  let sameQuotation = "We're a lot alike, you and I."
+  if quotation == sameQuotation {
+      println("These two strings are considered equal")
+  }
+  // prints "These two strings are considered equal"
+</code></pre></li>
+<li><p>Two String values (or two Character values) are considered equal if their extended grapheme clusters are canonically equivalent.</p>
+
+<pre><code>  // "Voulez-vous un café?" using LATIN SMALL LETTER E WITH ACUTE
+  let eAcuteQuestion = "Voulez-vous un caf\u{E9}?"
+
+  // "Voulez-vous un café?" using LATIN SMALL LETTER E and COMBINING ACUTE ACCENT
+  let combinedEAcuteQuestion = "Voulez-vous un caf\u{65}\u{301}?"
+
+  if eAcuteQuestion == combinedEAcuteQuestion {
+      println("These two strings are considered equal")
+  }
+  // prints "These two strings are considered equal"
+</code></pre></li>
+<li><p>Conversely, LATIN CAPITAL LETTER A (U+0041, or &ldquo;A&rdquo;), as used in English, is not equivalent to CYRILLIC CAPITAL LETTER A (U+0410, or &ldquo;А&rdquo;).</p>
+
+<pre><code>  let latinCapitalLetterA: Character = "\u{41}"
+
+  let cyrillicCapitalLetterA: Character = "\u{0410}"
+
+  if latinCapitalLetterA != cyrillicCapitalLetterA {
+      println("These two characters are not equivalent")
+  }
+  // prints "These two characters are not equivalent"
+</code></pre></li>
+<li><p>Prefix and Suffix Equality</p>
+
+<pre><code>  let romeoAndJuliet = [
+      "Act 1 Scene 1: Verona, A public place",
+      "Act 1 Scene 2: Capulet's mansion",
+      "Act 1 Scene 3: A room in Capulet's mansion",
+      "Act 1 Scene 4: A street outside Capulet's mansion",
+      "Act 1 Scene 5: The Great Hall in Capulet's mansion",
+      "Act 2 Scene 1: Outside Capulet's mansion",
+      "Act 2 Scene 2: Capulet's orchard",
+      "Act 2 Scene 3: Outside Friar Lawrence's cell",
+      "Act 2 Scene 4: A street in Verona",
+      "Act 2 Scene 5: Capulet's mansion",
+      "Act 2 Scene 6: Friar Lawrence's cell"
+  ]
+
+  var act1SceneCount = 0
+  for scene in romeoAndJuliet {
+      if scene.hasPrefix("Act 1 ") {
+          ++act1SceneCount
+      }
+  }
+  println("There are \(act1SceneCount) scenes in Act 1")
+  // prints "There are 5 scenes in Act 1"
+
+  var mansionCount = 0
+  var cellCount = 0
+  for scene in romeoAndJuliet {
+      if scene.hasSuffix("Capulet's mansion") {
+          ++mansionCount
+      } else if scene.hasSuffix("Friar Lawrence's cell") {
+          ++cellCount
+      }
+  }
+  println("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
+  // prints "6 mansion scenes; 2 cell scenes"
+</code></pre></li>
+<li><p>A collection of UTF-8 code units (accessed with the string’s utf8 property)</p></li>
+<li>A collection of UTF-16 code units (accessed with the string’s utf16 property)</li>
+<li>A collection of 21-bit Unicode scalar values, equivalent to the string’s UTF-32 encoding form (accessed with the string’s unicodeScalars property)</li>
+</ul>
+</li>
+<li><p>UTF-8 Representation</p>
+
+<pre><code>  let dogString = "Dog‼🐶"
+
+  for codeUnit in dogString.utf8 {
+      print("\(codeUnit) ")
+  }
+  print("\n")
+  // 68 111 103 226 128 188 240 159 144 182
+</code></pre></li>
+<li><p>UTF-16 Representation</p>
+
+<pre><code>  for codeUnit in dogString.utf16 {
+      print("\(codeUnit) ")
+  }
+  print("\n")
+  // 68 111 103 8252 55357 56374
+</code></pre></li>
+<li><p>Unicode Scalar Representation</p>
+
+<pre><code>  for scalar in dogString.unicodeScalars {
+      print("\(scalar.value) ")
+  }
+  print("\n")
+  // 68 111 103 8252 128054
+
+  for scalar in dogString.unicodeScalars {
+      println("\(scalar) ")
+  }
+  // D
+  // o
+  // g
+  // ‼
+  // 🐶
+</code></pre></li>
+</ul>
 
 </div>
 
+
+  <footer>
+    <p class="meta">
+      
   
+
+<span class="byline author vcard">Posted by <span class="fn">viennakanon</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-08T18:03:31+09:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/swift/'>swift</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/09/05/learning-swift-part-3/" title="Previous Post: Learning-swift-part-3">&laquo; Learning-swift-part-3</a>
+      
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -274,7 +551,10 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
       var disqus_shortname = 'viennakanon';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4/';
+        var disqus_url = 'http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

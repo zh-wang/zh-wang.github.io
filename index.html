@@ -101,6 +101,90 @@ Most code are from the guide, with some modification by me. ===== Full Notes &he
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/09/08/learning-swift-part-4/">Learning Swift Part 4</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-08T18:03:31+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/09/08/learning-swift-part-4/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me.</p>
+
+<h2>===== Full Notes =====</h2>
+
+<h3>Strings and Characters</h3>
+
+<ul>
+<li><p>String Literals</p>
+
+<pre><code>  let someString = "..."
+</code></pre></li>
+<li><p>Initializing an Empty String</p>
+
+<pre><code>  var emptyString = ""               // empty string literal
+  var anotherEmptyString = String()  // initializer syntax
+  // these two strings are both empty, and are equivalent to each other
+
+  if emptyString.isEmpty {
+      println("Nothing to see here")
+  }
+</code></pre></li>
+<li><p>String Mutability</p>
+
+<pre><code>  var variableString = "Horse"
+  variableString += " and carriage"
+  // variableString is now "Horse and carriage"
+
+  let constantString = "Highlander"
+  constantString += " and another Highlander"
+  // this reports a compile-time error - a constant string cannot be modified
+</code></pre></li>
+<li><p>Strings Are Value Types</p>
+
+<ul>
+<li>Swift’s String type is a value type. If you create a new String value, that String value is copied when it is passed to a function or method, or when it is assigned to a constant or variable. In each case, a new copy of the existing String value is created, and the new copy is passed or assigned, not the original version.</li>
+<li>NSString in obj-c is NOT value type.</li>
+</ul>
+</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/08/learning-swift-part-4/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/09/05/learning-swift-part-3/">Learning-swift-part-3</a></h1>
     
     
@@ -1090,60 +1174,6 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/18/codility-aluminium-2014/">Codility - Aluminium 2014 - Part 1</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-18T15:54:12+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/06/18/codility-aluminium-2014/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Introduction</h2>
-
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Aluminium 2014 Challenge</a>, Part 1.</p>
-
-<ul>
-<li>The problem is, finding the maximum sum of a compact subsequence of array elements after performing a single swap operation. It&rsquo;s a little tricky <a href="http://en.wikipedia.org/wiki/Maximum_subarray_problem">maximal subarray</a> problem.</li>
-<li>For example, given an array {3, -10, 4, 5}, we can swap 3 and -10 to get a compact subsequence {3, 4, 5}, which has the maximum sum 12</li>
-<li>Time bound and space bound are both O(n)</li>
-<li>There exists many algorithms to solve maximal subarray problems, but they cannot directly applied to this problem.</li>
-</ul>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/06/18/codility-aluminium-2014/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -1157,6 +1187,10 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/08/learning-swift-part-4/">Learning Swift Part 4</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/09/05/learning-swift-part-3/">Learning-swift-part-3</a>
@@ -1174,10 +1208,6 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
         <a href="/blog/2014/08/14/codility-phosphorus-2014/">Codility - Phosphorus - 2014</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/07/23/noto-font/">Noto - Fonts</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1186,11 +1216,11 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (3)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (4)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 120.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 84.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 120.0%'>codility(5)</a> <a href='/blog/categories/ios' style='font-size: 72.0%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 72.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 96.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 84.0%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 96.0%'>swift(3)</a> <a href='/blog/categories/zsh' style='font-size: 72.0%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 120.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 84.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 120.0%'>codility(5)</a> <a href='/blog/categories/ios' style='font-size: 72.0%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 72.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 96.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 84.0%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 108.0%'>swift(4)</a> <a href='/blog/categories/zsh' style='font-size: 72.0%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>
