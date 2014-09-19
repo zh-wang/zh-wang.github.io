@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-09-19T15:52:42+09:00</updated>
+  <updated>2014-09-19T17:34:24+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -28,7 +28,7 @@ Most code are from the guide, with some modification by me.</p>
 <h3>Control Flow</h3>
 
 <ul>
-<li><p>For-In</p>
+<li>For-In
 
 <ul>
 <li><p>Sample</p>
@@ -87,6 +87,13 @@ Most code are from the guide, with some modification by me.</p>
 </code></pre></li>
 </ul>
 </li>
+</ul>
+
+
+<!-- more -->
+
+
+<ul>
 <li><p>For</p>
 
 <ul>
