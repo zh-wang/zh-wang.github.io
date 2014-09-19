@@ -152,24 +152,24 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
 <span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="c1">// Bubble sort with a custom comparator</span>
-</span><span class='line'><span class="n">func</span> <span class="nf">sort</span><span class="o">(</span><span class="n">inout</span> <span class="nl">list:</span> <span class="o">[</span><span class="n">Int</span><span class="o">],</span> <span class="nl">sorter:</span> <span class="o">((</span><span class="n">Int</span><span class="o">,</span> <span class="n">Int</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span><span class="o">))</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">var</span> <span class="n">i</span> <span class="o">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">list</span><span class="o">.</span><span class="na">count</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">var</span> <span class="n">j</span> <span class="o">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
-</span><span class='line'>        <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">list</span><span class="o">.</span><span class="na">count</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">sorter</span><span class="o">(</span><span class="n">list</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">list</span><span class="o">[</span><span class="n">j</span><span class="o">])</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">var</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">list</span><span class="o">[</span><span class="n">i</span><span class="o">]</span>
-</span><span class='line'>            <span class="n">list</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">list</span><span class="o">[</span><span class="n">j</span><span class="o">]</span>
-</span><span class='line'>            <span class="n">list</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">=</span> <span class="n">temp</span>
-</span><span class='line'>        <span class="o">}</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// Bubble sort with a custom comparator</span>
+</span><span class='line'><span class="k">func</span> <span class="nf">sort</span><span class="p">(</span><span class="k">inout</span> <span class="nl">list</span><span class="p">:</span> <span class="p">[</span><span class="n">Int</span><span class="p">],</span> <span class="nl">sorter</span><span class="p">:</span> <span class="p">((</span><span class="n">Int</span><span class="p">,</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">i</span> <span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">list</span><span class="p">.</span><span class="n">count</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">j</span> <span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">list</span><span class="p">.</span><span class="n">count</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">sorter</span><span class="p">(</span><span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">var</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span><span class='line'>            <span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+</span><span class='line'>            <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
+</span><span class='line'>        <span class="p">}</span>
 </span><span class='line'>        <span class="n">i</span><span class="o">++</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="n">var</span> <span class="n">list</span> <span class="o">=</span> <span class="o">[</span><span class="mi">3</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">]</span>
-</span><span class='line'><span class="n">func</span> <span class="nf">sorter</span><span class="o">(</span><span class="n">a</span> <span class="o">:</span> <span class="n">Int</span><span class="o">,</span> <span class="n">b</span> <span class="o">:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="o">{</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">var</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class='line'><span class="k">func</span> <span class="n">sorter</span><span class="p">(</span><span class="nl">a</span> <span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">b</span> <span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'><span class="n">sort</span><span class="o">(&amp;</span><span class="n">list</span><span class="o">,</span> <span class="n">sorter</span><span class="o">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">sort</span><span class="p">(</span><span class="o">&amp;</span><span class="n">list</span><span class="p">,</span> <span class="n">sorter</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -189,17 +189,17 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">numbers</span><span class="o">.</span><span class="na">map</span><span class="o">({</span>
-</span><span class='line'>    <span class="o">(</span><span class="nl">number:</span> <span class="n">Int</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="n">in</span>
-</span><span class='line'>    <span class="n">let</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">numbers</span><span class="p">.</span><span class="n">map</span><span class="p">({</span>
+</span><span class='line'>    <span class="p">(</span><span class="nl">number</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="k">in</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">result</span>
-</span><span class='line'><span class="o">})</span>
+</span><span class='line'><span class="p">})</span>
 </span><span class='line'><span class="c1">// can be simplied to</span>
-</span><span class='line'><span class="n">numbers</span><span class="o">.</span><span class="na">map</span><span class="o">({</span> <span class="n">number</span> <span class="n">in</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span> <span class="o">})</span>
+</span><span class='line'><span class="n">numbers</span><span class="p">.</span><span class="n">map</span><span class="p">({</span> <span class="n">number</span> <span class="k">in</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span> <span class="p">})</span>
 </span><span class='line'><span class="c1">// sort a array</span>
-</span><span class='line'><span class="n">var</span> <span class="n">list</span> <span class="o">=</span> <span class="o">[</span><span class="mi">3</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">]</span>
-</span><span class='line'><span class="n">sort</span><span class="o">(&amp;</span><span class="n">list</span><span class="o">)</span> <span class="c1">// NOT sort(list), this function only accept a reference</span>
-</span><span class='line'><span class="n">var</span> <span class="n">listSorted</span> <span class="o">=</span> <span class="n">sorted</span><span class="o">(</span><span class="n">list</span><span class="o">)</span> <span class="c1">// This is OK</span>
+</span><span class='line'><span class="k">var</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class='line'><span class="n">sort</span><span class="p">(</span><span class="o">&amp;</span><span class="n">list</span><span class="p">)</span> <span class="c1">// NOT sort(list), this function only accept a reference</span>
+</span><span class='line'><span class="k">var</span> <span class="n">listSorted</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="c1">// This is OK</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -211,42 +211,88 @@ Most code are from the guide, with some modification by me.</p>
 <h3>A Swift Tour</h3>
 
 <ul>
-<li><p>variable.</p>
+<li>variable.</li>
+</ul>
 
-<pre><code>  var myVariable = 42   // variable
-  myVariable = 50       // variable
-  let myConstant = 42   // Constant
-</code></pre></li>
-<li><p><strong>implicit</strong> vs <strong>explicit</strong>.</p>
 
-<pre><code>  let implicitInteger = 70
-  let implicitDouble = 70.0
-  let explicitDouble: Double = 70  // Type is written right to variable
-</code></pre></li>
-<li><p>Values never implicitly converted.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">var</span> <span class="n">myVariable</span> <span class="o">=</span> <span class="mi">42</span>   <span class="c1">// variable</span>
+</span><span class='line'>    <span class="n">myVariable</span> <span class="o">=</span> <span class="mi">50</span>       <span class="c1">// variable</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">myConstant</span> <span class="o">=</span> <span class="mi">42</span>   <span class="c1">// Constant</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<pre><code>  let label = "The width is"
-  let width = 94
-  let withlabel = label + String(width)
-</code></pre></li>
-<li><p>Include values in strings.</p>
 
-<pre><code>  let apples = 3
-  let oranges = 5
-  let appleSummary = "I have \(apples) apples."
-  let fruitSummary = "I have \(apples + oranges) pieces of fruit."
-</code></pre></li>
-<li><p><strong>Arrays</strong> and <strong>Dictionaries</strong>.</p>
+<ul>
+<li><strong>implicit</strong> vs <strong>explicit</strong>.</li>
+</ul>
 
-<pre><code>  var shopppingList = ["catfish", "water", "tulips", "blue paint"] // [] for empty array
-  shoppingList[1] = "bottle of water"
 
-  var occupations = [
-      "Malcolm": "Captain",
-      "Kaylee": "Mechanic",
-  ] // [:] for empty dictionary
-  occupations["Jayne"] = "Public Relations"
-</code></pre></li>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">implicitInteger</span> <span class="o">=</span> <span class="mi">70</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">implicitDouble</span> <span class="o">=</span> <span class="mf">70.0</span>
+</span><span class='line'>    <span class="k">let</span> <span class="nl">explicitDouble</span><span class="p">:</span> <span class="n">Double</span> <span class="o">=</span> <span class="mi">70</span>  <span class="c1">// Type is written right to variable</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Values never implicitly converted.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">label</span> <span class="o">=</span> <span class="s">&quot;The width is&quot;</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">94</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">withlabel</span> <span class="o">=</span> <span class="n">label</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Include values in strings.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">apples</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">oranges</span> <span class="o">=</span> <span class="mi">5</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">appleSummary</span> <span class="o">=</span> <span class="s">&quot;I have \(apples) apples.&quot;</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">fruitSummary</span> <span class="o">=</span> <span class="s">&quot;I have \(apples + oranges) pieces of fruit.&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><strong>Arrays</strong> and <strong>Dictionaries</strong>.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">var</span> <span class="n">shopppingList</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;catfish&quot;</span><span class="p">,</span> <span class="s">&quot;water&quot;</span><span class="p">,</span> <span class="s">&quot;tulips&quot;</span><span class="p">,</span> <span class="s">&quot;blue paint&quot;</span><span class="p">]</span> <span class="c1">// [] for empty array</span>
+</span><span class='line'>    <span class="n">shoppingList</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;bottle of water&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">var</span> <span class="n">occupations</span> <span class="o">=</span> <span class="p">[</span>
+</span><span class='line'>        <span class="s">&quot;Malcolm&quot;</span><span class="o">:</span> <span class="s">&quot;Captain&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="s">&quot;Kaylee&quot;</span><span class="o">:</span> <span class="s">&quot;Mechanic&quot;</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">]</span> <span class="c1">// [:] for empty dictionary</span>
+</span><span class='line'>    <span class="n">occupations</span><span class="p">[</span><span class="s">&quot;Jayne&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&quot;Public Relations&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
 <li><p>Control Flows</p>
 
 <ul>
@@ -769,6 +815,10 @@ Most code are from the guide, with some modification by me.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/09/19/learning-swift-part-5/">Learning Swift Part 5</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/09/08/learning-swift-part-4/">Learning Swift Part 4</a>
       </li>
     
@@ -784,10 +834,6 @@ Most code are from the guide, with some modification by me.</p>
         <a href="/blog/2014/09/02/learning-swift-part-1/">Learning Swift Part 1</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/08/14/codility-phosphorus-2014/">Codility - Phosphorus - 2014</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -796,11 +842,11 @@ Most code are from the guide, with some modification by me.</p>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (4)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (5)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 120.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 84.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 120.0%'>codility(5)</a> <a href='/blog/categories/ios' style='font-size: 72.0%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 72.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 96.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 84.0%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 108.0%'>swift(4)</a> <a href='/blog/categories/zsh' style='font-size: 72.0%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 120.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 84.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 120.0%'>codility(5)</a> <a href='/blog/categories/ios' style='font-size: 72.0%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 72.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 96.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 84.0%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(5)</a> <a href='/blog/categories/zsh' style='font-size: 72.0%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

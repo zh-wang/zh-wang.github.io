@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Learning Swift Part 4 - Welcome to FutureAppLaboratory</title>
+  <title>Learning Swift Part 5 - Welcome to FutureAppLaboratory</title>
   <meta name="author" content="viennakanon">
 
   
   <meta name="description" content="Just some notes after reading Apple&rsquo;s official online guide.
-Most code are from the guide, with some modification by me. ===== Full Notes &hellip;">
+Most code are from the guide, with some modification by me. Tuple in switch &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@ Most code are from the guide, with some modification by me. ===== Full Notes &he
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4">
+  <link rel="canonical" href="http://zh-wang.github.io/blog/2014/09/19/learning-swift-part-5">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Welcome to FutureAppLaboratory" type="application/atom+xml">
@@ -51,10 +51,10 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
   </script>
 
 
-  <meta property="og:title" content="Learning Swift Part 4 - Welcome to FutureAppLaboratory" />
+  <meta property="og:title" content="Learning Swift Part 5 - Welcome to FutureAppLaboratory" />
 <meta property="og:description" content="Just some notes after reading Apple&rsquo;s official online guide.
-Most code are from the guide, with some modification by me. ===== Full Notes &hellip;" />
-<meta property="og:url" content="http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4/" />
+Most code are from the guide, with some modification by me. Tuple in switch &hellip;" />
+<meta property="og:url" content="http://zh-wang.github.io/blog/2014/09/19/learning-swift-part-5/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
 <meta property="og:site_name" content="Welcome to FutureAppLaboratory" />
@@ -98,7 +98,7 @@ Most code are from the guide, with some modification by me. ===== Full Notes &he
   
   <header>
     
-      <h1 class="entry-title">Learning Swift Part 4</h1>
+      <h1 class="entry-title">Learning Swift Part 5</h1>
     
     
       <p class="meta">
@@ -114,7 +114,7 @@ Most code are from the guide, with some modification by me. ===== Full Notes &he
   
 
 
-<time datetime="2014-09-08T18:03:31+09:00" pubdate data-updated="true"></time>
+<time datetime="2014-09-19T15:14:08+09:00" pubdate data-updated="true"></time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://zh-wang.github.io">Comments</a>
@@ -127,229 +127,379 @@ Most code are from the guide, with some modification by me. ===== Full Notes &he
 <div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
 Most code are from the guide, with some modification by me.</p>
 
+<p>Tuple in switch statement is interesting.</p>
+
 <h2>===== Full Notes =====</h2>
 
-<h3>Strings and Characters</h3>
+<h3>Control Flow</h3>
 
 <ul>
-<li><p>String Literals</p>
+<li><p>For-In</p>
 
-<pre><code>  let someString = "..."
-</code></pre></li>
-<li><p>Initializing an Empty String</p>
+<ul>
+<li><p>Sample</p>
 
-<pre><code>  var emptyString = ""               // empty string literal
-  var anotherEmptyString = String()  // initializer syntax
-  // these two strings are both empty, and are equivalent to each other
-
-  if emptyString.isEmpty {
-      println("Nothing to see here")
+<pre><code>  for index in 1...5 {
+      println("\(index) times 5 is \(index * 5)")
   }
+  // 1 times 5 is 5
+  // 2 times 5 is 10
+  // 3 times 5 is 15
+  // 4 times 5 is 20
+  // 5 times 5 is 25
 </code></pre></li>
-<li><p>String Mutability</p>
+<li><p>if no need of value from the range</p>
 
-<pre><code>  var variableString = "Horse"
-  variableString += " and carriage"
-  // variableString is now "Horse and carriage"
-
-  let constantString = "Highlander"
-  constantString += " and another Highlander"
-  // this reports a compile-time error - a constant string cannot be modified
+<pre><code>  let base = 3
+  let power = 10
+  var answer = 1
+  for _ in 1...power {
+      answer *= base
+  }
+  println("\(base) to the power of \(power) is \(answer)")
+  // prints "3 to the power of 10 is 59049"
 </code></pre></li>
-<li><p>Strings Are Value Types</p>
+<li><p>Use in array</p>
 
-<ul>
-<li>Swift’s String type is a value type. If you create a new String value, that String value is copied when it is passed to a function or method, or when it is assigned to a constant or variable. In each case, a new copy of the existing String value is created, and the new copy is passed or assigned, not the original version.</li>
-<li>NSString in obj-c is NOT value type.</li>
-</ul>
-</li>
-</ul>
+<pre><code>  let names = ["Anna", "Alex", "Brian", "Jack"]
+  for name in names {
+      println("Hello, \(name)!")
+  }
+  // Hello, Anna!
+  // Hello, Alex!
+  // Hello, Brian!
+  // Hello, Jack!
+</code></pre></li>
+<li><p>Use in dictionary</p>
 
+<pre><code>  let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
+  for (animalName, legCount) in numberOfLegs {
+      println("\(animalName)s have \(legCount) legs")
+  }
+  // spiders have 8 legs
+  // cats have 4 legs
+  // ants have 6 legs
+</code></pre></li>
+<li><p>Use in string</p>
 
-<!-- more -->
-
-
-<ul>
-<li><p>Working with Characters</p>
-
-<pre><code>  for character in "Dog!🐶" {
+<pre><code>  for character in "Hello" {
       println(character)
   }
-
-  // a single character
-  let yenSign: Character = "¥"
+  // H
+  // e
+  // l
+  // l
+  // o
 </code></pre></li>
-<li><p>Concatenating Strings and Characters</p>
-
-<pre><code>  let string1 = "hello"
-  let string2 = " there"
-  var welcome = string1 + string2
-  // welcome now equals "hello there"
-
-  var instruction = "look over"
-  instruction += string2
-  // instruction now equals "look over there"
-
-  let exclamationMark: Character = "!"
-  welcome.append(exclamationMark)
-  // welcome now equals "hello there!"
-</code></pre></li>
-<li><p>String Interpolation</p>
-
-<pre><code>  let multiplier = 3
-  let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
-  // message is "3 times 2.5 is 7.5"
-</code></pre></li>
-<li><p>Unicode Scalars</p></li>
-<li><p>Special Unicode Characters in String Literals</p>
-
-<pre><code>  let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
-  // "Imagination is more important than knowledge" - Einstein
-  let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
-  let blackHeart = "\u{2665}"      // ♥,  Unicode scalar U+2665
-  let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
-</code></pre></li>
-<li><p>Extended Grapheme Clusters</p>
-
-<pre><code>  let eAcute: Character = "\u{E9}"                         // é
-  let combinedEAcute: Character = "\u{65}\u{301}"          // e followed by ́
-  // eAcute is é, combinedEAcute is é
-
-  let precomposed: Character = "\u{D55C}"                  // 한
-  let decomposed: Character = "\u{1112}\u{1161}\u{11AB}"   // ᄒ, ᅡ, ᆫ
-  // precomposed is 한, decomposed is 한
-
-  let enclosedEAcute: Character = "\u{E9}\u{20DD}"
-  // enclosedEAcute is é⃝
-</code></pre></li>
-<li><p>Counting Characters</p>
-
-<pre><code>  let unusualMenagerie = "Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪"
-  println("unusualMenagerie has \(countElements(unusualMenagerie)) characters")
-  // prints "unusualMenagerie has 40 characters"
-
-  var word = "cafe"
-  println("the number of characters in \(word) is \(countElements(word))
-  // prints "the number of characters in cafe is 4"
-
-  word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
-
-  println("the number of characters in \(word) is \(countElements(word))
-  // prints "the number of characters in café is 4"
-</code></pre></li>
-<li><p>Comparing Strings</p>
-
-<ul>
-<li><p>String and Character Equality</p>
-
-<pre><code>  let quotation = "We're a lot alike, you and I."
-  let sameQuotation = "We're a lot alike, you and I."
-  if quotation == sameQuotation {
-      println("These two strings are considered equal")
-  }
-  // prints "These two strings are considered equal"
-</code></pre></li>
-<li><p>Two String values (or two Character values) are considered equal if their extended grapheme clusters are canonically equivalent.</p>
-
-<pre><code>  // "Voulez-vous un café?" using LATIN SMALL LETTER E WITH ACUTE
-  let eAcuteQuestion = "Voulez-vous un caf\u{E9}?"
-
-  // "Voulez-vous un café?" using LATIN SMALL LETTER E and COMBINING ACUTE ACCENT
-  let combinedEAcuteQuestion = "Voulez-vous un caf\u{65}\u{301}?"
-
-  if eAcuteQuestion == combinedEAcuteQuestion {
-      println("These two strings are considered equal")
-  }
-  // prints "These two strings are considered equal"
-</code></pre></li>
-<li><p>Conversely, LATIN CAPITAL LETTER A (U+0041, or &ldquo;A&rdquo;), as used in English, is not equivalent to CYRILLIC CAPITAL LETTER A (U+0410, or &ldquo;А&rdquo;).</p>
-
-<pre><code>  let latinCapitalLetterA: Character = "\u{41}"
-
-  let cyrillicCapitalLetterA: Character = "\u{0410}"
-
-  if latinCapitalLetterA != cyrillicCapitalLetterA {
-      println("These two characters are not equivalent")
-  }
-  // prints "These two characters are not equivalent"
-</code></pre></li>
-<li><p>Prefix and Suffix Equality</p>
-
-<pre><code>  let romeoAndJuliet = [
-      "Act 1 Scene 1: Verona, A public place",
-      "Act 1 Scene 2: Capulet's mansion",
-      "Act 1 Scene 3: A room in Capulet's mansion",
-      "Act 1 Scene 4: A street outside Capulet's mansion",
-      "Act 1 Scene 5: The Great Hall in Capulet's mansion",
-      "Act 2 Scene 1: Outside Capulet's mansion",
-      "Act 2 Scene 2: Capulet's orchard",
-      "Act 2 Scene 3: Outside Friar Lawrence's cell",
-      "Act 2 Scene 4: A street in Verona",
-      "Act 2 Scene 5: Capulet's mansion",
-      "Act 2 Scene 6: Friar Lawrence's cell"
-  ]
-
-  var act1SceneCount = 0
-  for scene in romeoAndJuliet {
-      if scene.hasPrefix("Act 1 ") {
-          ++act1SceneCount
-      }
-  }
-  println("There are \(act1SceneCount) scenes in Act 1")
-  // prints "There are 5 scenes in Act 1"
-
-  var mansionCount = 0
-  var cellCount = 0
-  for scene in romeoAndJuliet {
-      if scene.hasSuffix("Capulet's mansion") {
-          ++mansionCount
-      } else if scene.hasSuffix("Friar Lawrence's cell") {
-          ++cellCount
-      }
-  }
-  println("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
-  // prints "6 mansion scenes; 2 cell scenes"
-</code></pre></li>
-<li><p>A collection of UTF-8 code units (accessed with the string’s utf8 property)</p></li>
-<li>A collection of UTF-16 code units (accessed with the string’s utf16 property)</li>
-<li>A collection of 21-bit Unicode scalar values, equivalent to the string’s UTF-32 encoding form (accessed with the string’s unicodeScalars property)</li>
 </ul>
 </li>
-<li><p>UTF-8 Representation</p>
+<li><p>For</p>
 
-<pre><code>  let dogString = "Dog‼🐶"
+<ul>
+<li><p>Sample</p>
 
-  for codeUnit in dogString.utf8 {
-      print("\(codeUnit) ")
+<pre><code>  for var index = 0; index &lt; 3; ++index {
+      println("index is \(index)")
   }
-  print("\n")
-  // 68 111 103 226 128 188 240 159 144 182
+  // index is 0
+  // index is 1
+  // index is 2
 </code></pre></li>
-<li><p>UTF-16 Representation</p>
+<li><p>Index is only accessible in the loop</p>
 
-<pre><code>  for codeUnit in dogString.utf16 {
-      print("\(codeUnit) ")
+<pre><code>  var index: Int
+  for index = 0; index &lt; 3; ++index {
+      println("index is \(index)")
   }
-  print("\n")
-  // 68 111 103 8252 55357 56374
+  // index is 0
+  // index is 1
+  // index is 2
+  println("The loop statements were executed \(index) times")
+  // prints "The loop statements were executed 3 times"
 </code></pre></li>
-<li><p>Unicode Scalar Representation</p>
+</ul>
+</li>
+<li><p>While Loops</p>
 
-<pre><code>  for scalar in dogString.unicodeScalars {
-      print("\(scalar.value) ")
-  }
-  print("\n")
-  // 68 111 103 8252 128054
+<ul>
+<li><p>Snakes and Ladders</p>
 
-  for scalar in dogString.unicodeScalars {
-      println("\(scalar) ")
+<pre><code>  let finalSquare = 25
+  var board = [Int](count: finalSquare + 1, repeatedValue: 0)
+
+  board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+  board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+
+  var square = 0
+  var diceRoll = 0
+  while square &lt; finalSquare {
+      // roll the dice
+      if ++diceRoll == 7 { diceRoll = 1 }
+      // move by the rolled amount
+      square += diceRoll
+      if square &lt; board.count {
+          // if we're still on the board, move up or down for a snake or a ladder
+          square += board[square]
+      }
   }
-  // D
-  // o
-  // g
-  // ‼
-  // 🐶
+  println("Game over!")
 </code></pre></li>
+</ul>
+</li>
+<li><p>Do-While</p>
+
+<ul>
+<li><p>Snakes and Ladders</p>
+
+<pre><code>  let finalSquare = 25
+  var board = [Int](count: finalSquare + 1, repeatedValue: 0)
+  board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
+  board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
+  var square = 0
+  var diceRoll = 0
+
+  do {
+      // move up or down for a snake or ladder
+      square += board[square]
+      // roll the dice
+      if ++diceRoll == 7 { diceRoll = 1 }
+      // move by the rolled amount
+      square += diceRoll
+  } while square &lt; finalSquare
+  println("Game over!")
+</code></pre></li>
+</ul>
+</li>
+<li><p>If</p>
+
+<ul>
+<li><p>Sample
+      var temperatureInFahrenheit = 30
+      if temperatureInFahrenheit &lt;= 32 {
+          println(&ldquo;It&rsquo;s very cold. Consider wearing a scarf.&rdquo;)
+      }
+      // prints &ldquo;It&rsquo;s very cold. Consider wearing a scarf.&rdquo;</p>
+
+<pre><code>  temperatureInFahrenheit = 40
+  if temperatureInFahrenheit &lt;= 32 {
+      println("It's very cold. Consider wearing a scarf.")
+  } else {
+      println("It's not that cold. Wear a t-shirt.")
+  }
+  // prints "It's not that cold. Wear a t-shirt."
+
+  temperatureInFahrenheit = 90
+  if temperatureInFahrenheit &lt;= 32 {
+      println("It's very cold. Consider wearing a scarf.")
+  } else if temperatureInFahrenheit &gt;= 86 {
+      println("It's really warm. Don't forget to wear sunscreen.")
+  } else {
+      println("It's not that cold. Wear a t-shirt.")
+  }
+  // prints "It's really warm. Don't forget to wear sunscreen."
+
+  temperatureInFahrenheit = 72
+  if temperatureInFahrenheit &lt;= 32 {
+      println("It's very cold. Consider wearing a scarf.")
+  } else if temperatureInFahrenheit &gt;= 86 {
+      println("It's really warm. Don't forget to wear sunscreen.")
+  }
+</code></pre></li>
+</ul>
+</li>
+<li><p>Switch</p>
+
+<ul>
+<li><p>Sample</p>
+
+<pre><code>  switch some value to consider {
+  case value 1:
+      respond to value 1
+  case value 2,
+  value 3:
+      respond to value 2 or 3
+  default:
+      otherwise, do something else
+  }
+</code></pre></li>
+<li><p>Use with char</p>
+
+<pre><code>  let someCharacter: Character = "e"
+  switch someCharacter {
+  case "a", "e", "i", "o", "u":
+      println("\(someCharacter) is a vowel")
+  case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
+  "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
+      println("\(someCharacter) is a consonant")
+  default:
+      println("\(someCharacter) is not a vowel or a consonant")
+  }
+  // prints "e is a vowel"
+</code></pre></li>
+<li><p>No Implicit Fallthrough</p>
+
+<p>  In contrast with switch statements in C and Objective-C, switch statements in Swift do not fall through the bottom of each case and into the next one by default. Instead, the entire switch statement finishes its execution as soon as the first matching switch case is completed, without requiring an explicit break statement. This makes the switch statement safer and easier to use than in C, and avoids executing more than one switch case by mistake.</p></li>
+<li><p>Bad case</p>
+
+<pre><code>  let anotherCharacter: Character = "a"
+  switch anotherCharacter {
+  case "a":                       // Each case must contain at least one executable statement.
+  case "A":
+      println("The letter A")
+  default:
+      println("Not the letter A")
+  }
+  // this will report a compile-time error
+</code></pre></li>
+<li><p>Range Matching</p>
+
+<pre><code>  let count = 3_000_000_000_000
+  let countedThings = "stars in the Milky Way"
+  var naturalCount: String
+  switch count {
+  case 0:
+      naturalCount = "no"
+  case 1...3:
+      naturalCount = "a few"
+  case 4...9:
+      naturalCount = "several"
+  case 10...99:
+      naturalCount = "tens of"
+  case 100...999:
+      naturalCount = "hundreds of"
+  case 1000...999_999:
+      naturalCount = "thousands of"
+  default:
+      naturalCount = "millions and millions of"
+  }
+</code></pre></li>
+<li><p>Tuple</p>
+
+<pre><code>  let somePoint = (1, 1)
+  switch somePoint {
+  case (0, 0):
+      println("(0, 0) is at the origin")
+  case (_, 0):
+      println("(\(somePoint.0), 0) is on the x-axis")
+  case (0, _):
+      println("(0, \(somePoint.1)) is on the y-axis")
+  case (-2...2, -2...2):
+      println("(\(somePoint.0), \(somePoint.1)) is inside the box")
+  default:
+      println("(\(somePoint.0), \(somePoint.1)) is outside of the box")
+  }
+  // prints "(1, 1) is inside the box"
+</code></pre></li>
+<li><p>Value Bindings</p>
+
+<pre><code>  let anotherPoint = (2, 0)
+  switch anotherPoint {
+  case (let x, 0):
+      println("on the x-axis with an x value of \(x)")
+  case (0, let y):
+      println("on the y-axis with a y value of \(y)")
+  case let (x, y):
+      println("somewhere else at (\(x), \(y))")
+  }
+  // prints "on the x-axis with an x value of 2"
+</code></pre></li>
+<li><p>Where</p>
+
+<pre><code>  let yetAnotherPoint = (1, -1)
+  switch yetAnotherPoint {
+  case let (x, y) where x == y:
+      println("(\(x), \(y)) is on the line x == y")
+  case let (x, y) where x == -y:
+      println("(\(x), \(y)) is on the line x == -y")
+  case let (x, y):
+      println("(\(x), \(y)) is just some arbitrary point")
+  }
+  // prints "(1, -1) is on the line x == -y"
+</code></pre></li>
+</ul>
+</li>
+<li><p>Control Transfer Statements</p>
+
+<ul>
+<li><p>Continue<br/>
+The continue statement tells a loop to stop what it is doing and start again at the beginning of the next iteration through the loop. It says “I am done with the current loop iteration” without leaving the loop altogether.</p>
+
+<pre><code>    let puzzleInput = "great minds think alike"
+    var puzzleOutput = ""
+    for character in puzzleInput {
+        switch character {
+        case "a", "e", "i", "o", "u", " ":
+            continue
+        default:
+            puzzleOutput.append(character)
+        }
+    }
+    println(puzzleOutput)
+    // prints "grtmndsthnklk"
+</code></pre>
+
+<ul>
+<li><p>Break</p>
+
+<pre><code>  let numberSymbol: Character = "三"  // Simplified Chinese for the number 3
+  var possibleIntegerValue: Int?
+  switch numberSymbol {
+  case "1", "١", "一", "๑":
+      possibleIntegerValue = 1
+  case "2", "٢", "二", "๒":
+      possibleIntegerValue = 2
+  case "3", "٣", "三", "๓":
+      possibleIntegerValue = 3
+  case "4", "٤", "四", "๔":
+      possibleIntegerValue = 4
+  default:
+      break
+  }
+  if let integerValue = possibleIntegerValue {
+      println("The integer value of \(numberSymbol) is \(integerValue).")
+  } else {
+      println("An integer value could not be found for \(numberSymbol).")
+  }
+  // prints "The integer value of 三 is 3."
+</code></pre></li>
+<li><p>Explicit Fallthrough<br/>
+The fallthrough keyword does not check the case conditions for the switch case that it causes execution to fall into. The fallthrough keyword simply causes code execution to move directly to the statements inside the next case (or default case) block, as in C’s standard switch statement behavior.</p>
+
+<pre><code>  let integerToDescribe = 5
+  var description = "The number \(integerToDescribe) is"
+  switch integerToDescribe {
+  case 2, 3, 5, 7, 11, 13, 17, 19:
+      description += " a prime number, and also"
+      fallthrough
+  default:
+      description += " an integer."
+  }
+  println(description)
+  // prints "The number 5 is a prime number, and also an integer."
+</code></pre></li>
+<li><p>Labeled Statements</p>
+
+<pre><code>  gameLoop: while square != finalSquare {
+      if ++diceRoll == 7 { diceRoll = 1 }
+      switch square + diceRoll {
+      case finalSquare:
+          // diceRoll will move us to the final square, so the game is over
+          break gameLoop
+      case let newSquare where newSquare &gt; finalSquare:
+          // diceRoll will move us beyond the final square, so roll again
+          continue gameLoop
+      default:
+          // this is a valid move, so find out its effect
+          square += diceRoll
+          square += board[square]
+      }
+  }
+  println("Game over!")
+</code></pre></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -374,7 +524,7 @@ Most code are from the guide, with some modification by me.</p>
   
 
 
-<time datetime="2014-09-08T18:03:31+09:00" pubdate data-updated="true"></time>
+<time datetime="2014-09-19T15:14:08+09:00" pubdate data-updated="true"></time>
       
 
 <span class="categories">
@@ -388,7 +538,7 @@ Most code are from the guide, with some modification by me.</p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2014/09/19/learning-swift-part-5/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2014/09/19/learning-swift-part-5/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -401,10 +551,8 @@ Most code are from the guide, with some modification by me.</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2014/09/05/learning-swift-part-3/" title="Previous Post: Learning-swift-part-3">&laquo; Learning-swift-part-3</a>
+        <a class="basic-alignment left" href="/blog/2014/09/08/learning-swift-part-4/" title="Previous Post: Learning Swift Part 4">&laquo; Learning Swift Part 4</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2014/09/19/learning-swift-part-5/" title="Next Post: Learning Swift Part 5">Learning Swift Part 5 &raquo;</a>
       
     </p>
   </footer>
@@ -554,8 +702,8 @@ Most code are from the guide, with some modification by me.</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4/';
-        var disqus_url = 'http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4/';
+        var disqus_identifier = 'http://zh-wang.github.io/blog/2014/09/19/learning-swift-part-5/';
+        var disqus_url = 'http://zh-wang.github.io/blog/2014/09/19/learning-swift-part-5/';
         var disqus_script = 'embed.js';
       
     (function () {
