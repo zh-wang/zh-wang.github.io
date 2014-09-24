@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-09-19T17:34:24+09:00</updated>
+  <updated>2014-09-24T17:59:27+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -1107,214 +1107,273 @@ Most code are from the guide, with some modification by me.</p>
       let fruitSummary = "I have \(apples + oranges) pieces of fruit."
 </code></li>
 <li><p><strong>Arrays</strong> and <strong>Dictionaries</strong>.
-&#8220;`
-      var shopppingList = [&ldquo;catfish&rdquo;, &ldquo;water&rdquo;, &ldquo;tulips&rdquo;, &ldquo;blue paint&rdquo;] // [] for empty array
-      shoppingList[1] = &ldquo;bottle of water&rdquo;</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  var shopppingList = [&ldquo;catfish&rdquo;, &ldquo;water&rdquo;, &ldquo;tulips&rdquo;, &ldquo;blue paint&rdquo;] // [] for empty array
+</span><span class='line'>  shoppingList[1] = &ldquo;bottle of water&rdquo;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  var occupations = [
+</span><span class='line'>  "Malcolm": "Captain",
+</span><span class='line'>  "Kaylee": "Mechanic",
+</span><span class='line'>  ] // [:] for empty dictionary
+</span><span class='line'>  occupations["Jayne"] = "Public Relations"
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;Control Flows
+</span><span class='line'>
+</span><span class='line'>&lt;ul&gt;
+</span><span class='line'>&lt;li&gt;&lt;strong&gt;for-in&lt;/strong&gt;
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>  let individualScores = [75, 43, 103, 87, 12]
+</span><span class='line'>  var teamScore = 0
+</span><span class='line'>  for score in individualScores {
+</span><span class='line'>      if score &gt; 50 {
+</span><span class='line'>          teamScore += 3
+</span><span class='line'>      } else {
+</span><span class='line'>          teamScore += 1
+</span><span class='line'>      }
+</span><span class='line'>  }
+</span><span class='line'>  teamScore
+</span><span class='line'>&lt;/code&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;optional-value with &lt;strong&gt;if&lt;/strong&gt;</span></code></pre></td></tr></table></div></figure>
+      var optionalString: String? = &ldquo;Hello&rdquo;
+      optionalString == nil</p>
 
-<pre><code>  var occupations = [
-      "Malcolm": "Captain",
-      "Kaylee": "Mechanic",
-  ] // [:] for empty dictionary
-  occupations["Jayne"] = "Public Relations"
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Control Flows</p>
-
-<ul>
-<li><p><strong>for-in</strong></p>
-
-<pre><code>  let individualScores = [75, 43, 103, 87, 12]
-  var teamScore = 0
-  for score in individualScores {
-      if score &gt; 50 {
-          teamScore += 3
-      } else {
-          teamScore += 1
-      }
-  }
-  teamScore
-</code></pre></li>
-<li><p>optional-value with <strong>if</strong></p>
-
-<pre><code>  var optionalString: String? = "Hello"
-  optionalString == nil
-
-  var optionalName: String? = "John Appleseed"
+<pre><code>  var optionalName: String? = "John Appleseed"
   var greeting = "Hello!"
   if let name = optionalName {
       greeting = "Hello, \(name)"
   }
-</code></pre></li>
-<li><p><strong>switch</strong></p>
+</code></pre>
 
-<pre><code>  let vegetable = "red pepper"
-  switch vegetable {
-      case "celery":
-          let vegetableComment = "Add some raisins and make ants on a log."
-      case "cucumber", "watercress":
-          let vegetableComment = "That would make a good tea sandwich."
-      case let x where x.hasSuffix("pepper"):
-          let vegetableComment = "Is it a spicy \(x)?"
-      default:
-          let vegetableComment = "Everything tastes good in soup."
-  }
-</code></pre></li>
-<li><p><strong>for-in</strong> in <em>dictionary</em></p>
-
-<pre><code>  let interestingNumbers = [
-      "Prime": [2, 3, 5, 7, 11, 13],
-      "Fibonacci": [1, 1, 2, 3, 5, 8],
-      "Square": [1, 4, 9, 16, 25],
-  ]
-  var largest = 0
-  for (kind, numbers) in interestingNumbers {
-      for number in numbers {
-          if number &gt; largest {
-              largest = number
+<p>&#8220;`</p></li>
+<li><strong>switch</strong>
+<code>
+      let vegetable = "red pepper"
+      switch vegetable {
+          case "celery":
+              let vegetableComment = "Add some raisins and make ants on a log."
+          case "cucumber", "watercress":
+              let vegetableComment = "That would make a good tea sandwich."
+          case let x where x.hasSuffix("pepper"):
+              let vegetableComment = "Is it a spicy \(x)?"
+          default:
+              let vegetableComment = "Everything tastes good in soup."
+      }
+</code></li>
+<li><strong>for-in</strong> in <em>dictionary</em>
+<code>
+      let interestingNumbers = [
+          "Prime": [2, 3, 5, 7, 11, 13],
+          "Fibonacci": [1, 1, 2, 3, 5, 8],
+          "Square": [1, 4, 9, 16, 25],
+      ]
+      var largest = 0
+      for (kind, numbers) in interestingNumbers {
+          for number in numbers {
+              if number &gt; largest {
+                  largest = number
+              }
           }
       }
-  }
-  largest
-</code></pre></li>
-<li><p><strong>while</strong> and <strong>do-while</strong></p>
+      largest
+</code></li>
+<li><p><strong>while</strong> and <strong>do-while</strong>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  var n = 2
+</span><span class='line'>  while n &lt; 100 {
+</span><span class='line'>      n = n * 2
+</span><span class='line'>  }
+</span><span class='line'>  n&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  var m = 2
+</span><span class='line'>  do {
+</span><span class='line'>  m = m * 2
+</span><span class='line'>  } while m &lt; 100
+</span><span class='line'>  m
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;range operators</span></code></pre></td></tr></table></div></figure>
+      for i in 0..&lt;3 {
+          // do something, for 0, 1, 2
+      }</p>
 
-<pre><code>  var n = 2
-  while n &lt; 100 {
-      n = n * 2
-  }
-  n
-
-  var m = 2
-  do {
-      m = m * 2
-  } while m &lt; 100
-  m
-</code></pre></li>
-<li><p>range operators</p>
-
-<pre><code>  for i in 0..&lt;3 {
-      // do something, for 0, 1, 2
-  }
-
-  for i in 0...3 {
+<pre><code>  for i in 0...3 {
       // do something, for 0, 1, 2, 3
   }
-</code></pre></li>
+</code></pre>
+
+<p>&#8220;`</p></li>
 </ul>
 </li>
-<li><p><strong>Functions</strong> and <strong>Closures</strong></p>
+<li><strong>Functions</strong> and <strong>Closures</strong>
 
 <ul>
-<li><p>A classic one</p>
-
-<pre><code>  func greet(name: String, day: String) -&gt; String {
-      return "Hello \(name), today is \(day)."
-  }
-  greet("Bob", "Tuesday")
-</code></pre></li>
-<li><p>Use a <strong>tuple</strong> as return value</p>
-
-<pre><code>  func getGasPrices() -&gt; (Double, Double, Double) {
-      return (3.59, 3.69, 3.79)
-  }
-  getGasPrices()
-</code></pre></li>
-<li><p>Variable Arguments (varargs)</p>
-
-<pre><code>  func sumOf(numbers: Int...) -&gt; Int {
-      var sum = 0
-      for number in numbers {
-              sum += number
-          }
-      return sum
-  }
-  sumOf()
-  sumOf(42, 597, 12)
-</code></pre></li>
-<li><p>Nested functions</p>
-
-<pre><code>  func returnFifteen() -&gt; Int { // Wrapper function
-      var y = 10
-      func add() { // Nested function
-          y += 5
+<li>A classic one
+<code>
+      func greet(name: String, day: String) -&gt; String {
+          return "Hello \(name), today is \(day)."
       }
-      add()
-      return y
-  }
-  returnFifteen()
-</code></pre></li>
-<li><p>Function as return value (like pointer of function)</p>
-
-<pre><code>  func makeIncrementer() -&gt; (Int -&gt; Int) {
-      func addOne(number: Int) -&gt; Int {
-              return 1 + number
-          }
-      return addOne
-  }
-  var increment = makeIncrementer()
-  increment(7)
-</code></pre></li>
-<li><p>Function as parameter (like Comparator)</p>
-
-<pre><code>  // Bubble sort with a custom comparator
-  func sort(inout list: [Int], sorter: ((Int, Int) -&gt; Bool)) {
-      var i : Int = 0
-      while i &lt; list.count {
-          var j : Int = i + 1
-          if j &lt; list.count &amp;&amp; !sorter(list[i], list[j]) {
-              var temp = list[i]
-              list[i] = list[j]
-              list[j] = temp
-          }
-          i++
+      greet("Bob", "Tuesday")
+</code></li>
+<li>Use a <strong>tuple</strong> as return value
+<code>
+      func getGasPrices() -&gt; (Double, Double, Double) {
+          return (3.59, 3.69, 3.79)
       }
-  }
-  var list = [3, 2, 1]
-  func sorter(a : Int, b : Int) -&gt; Bool {
-      return a &lt; b
-  }
-  sort(&amp;list, sorter)
-</code></pre></li>
-<li><p>Closure</p>
-
-<pre><code>  numbers.map({
-      (number: Int) -&gt; Int in
-      let result = 3 * number
-      return result
-  })
-  // can be simplied to
-  numbers.map({ number in 3 * number })
-  // sort a array
-  var list = [3, 2, 1]
-  sort(&amp;list) // NOT sort(list), this function only accept a reference
-  var listSorted = sorted(list) // This is OK
-</code></pre></li>
+      getGasPrices()
+</code></li>
+<li>Variable Arguments (varargs)
+<code>
+      func sumOf(numbers: Int...) -&gt; Int {
+          var sum = 0
+          for number in numbers {
+                  sum += number
+              }
+          return sum
+      }
+      sumOf()
+      sumOf(42, 597, 12)
+</code></li>
+<li>Nested functions
+<code>
+      func returnFifteen() -&gt; Int { // Wrapper function
+          var y = 10
+          func add() { // Nested function
+              y += 5
+          }
+          add()
+          return y
+      }
+      returnFifteen()
+</code></li>
+<li>Function as return value (like pointer of function)
+<code>
+      func makeIncrementer() -&gt; (Int -&gt; Int) {
+          func addOne(number: Int) -&gt; Int {
+                  return 1 + number
+              }
+          return addOne
+      }
+      var increment = makeIncrementer()
+      increment(7)
+</code></li>
+<li>Function as parameter (like Comparator)
+<code>
+      // Bubble sort with a custom comparator
+      func sort(inout list: [Int], sorter: ((Int, Int) -&gt; Bool)) {
+          var i : Int = 0
+          while i &lt; list.count {
+              var j : Int = i + 1
+              if j &lt; list.count &amp;&amp; !sorter(list[i], list[j]) {
+                  var temp = list[i]
+                  list[i] = list[j]
+                  list[j] = temp
+              }
+              i++
+          }
+      }
+      var list = [3, 2, 1]
+      func sorter(a : Int, b : Int) -&gt; Bool {
+          return a &lt; b
+      }
+      sort(&amp;list, sorter)
+</code></li>
+<li>Closure
+<code>
+      numbers.map({
+          (number: Int) -&gt; Int in
+          let result = 3 * number
+          return result
+      })
+      // can be simplied to
+      numbers.map({ number in 3 * number })
+      // sort a array
+      var list = [3, 2, 1]
+      sort(&amp;list) // NOT sort(list), this function only accept a reference
+      var listSorted = sorted(list) // This is OK
+</code></li>
 </ul>
 </li>
-<li><p><strong>Objects</strong> and <strong>Classes</strong></p>
+<li><strong>Objects</strong> and <strong>Classes</strong>
 
 <ul>
-<li><p>A simple class</p>
+<li><p>A simple class
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  class Shape {
+</span><span class='line'>      var numberOfSides = 0
+</span><span class='line'>      func simpleDescription() -&gt; String {
+</span><span class='line'>              return &ldquo;A shape with (numberOfSides) sides.&rdquo;
+</span><span class='line'>          }
+</span><span class='line'>  }&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  var shape = Shape()
+</span><span class='line'>  shape.numberOfSides = 7
+</span><span class='line'>  var shapeDescription = shape.simpleDescription()
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Initializer and its opposite</span></code></pre></td></tr></table></div></figure>
+      class NamedShape {
+          var numberOfSides: Int = 0
+          var name: String</p>
 
-<pre><code>  class Shape {
-      var numberOfSides = 0
-      func simpleDescription() -&gt; String {
-              return "A shape with \(numberOfSides) sides."
-          }
-  }
-
-  var shape = Shape()
-  shape.numberOfSides = 7
-  var shapeDescription = shape.simpleDescription()
-</code></pre></li>
-<li><p>Initializer and its opposite</p>
-
-<pre><code>  class NamedShape {
-      var numberOfSides: Int = 0
-      var name: String
-
-      init(name: String) {
+<pre><code>      init(name: String) {
           self.name = name
       }
 
@@ -1326,36 +1385,62 @@ Most code are from the guide, with some modification by me.</p>
           return "A shape with \(numberOfSides) sides."
       }
   }
-</code></pre></li>
-<li><p>Subclass</p>
+</code></pre>
 
-<pre><code>  class Square: NamedShape {
-      var sideLength: Double
+<p>&#8220;`</p></li>
+<li><p>Subclass
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  class Square: NamedShape {
+</span><span class='line'>      var sideLength: Double&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;      init(sideLength: Double, name: String) {
+</span><span class='line'>      self.sideLength = sideLength
+</span><span class='line'>      super.init(name: name)
+</span><span class='line'>      numberOfSides = 4
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  func area() -&gt; Double {
+</span><span class='line'>      return sideLength * sideLength
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  override func simpleDescription() -&gt; String {
+</span><span class='line'>      return "A square with sides of length \(sideLength)."
+</span><span class='line'>  }
+</span><span class='line'>  }
+</span><span class='line'>  let test = Square(sideLength: 5.2, name: "my test square")
+</span><span class='line'>  test.area()
+</span><span class='line'>  test.simpleDescription()
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Setter and Getter on properties</span></code></pre></td></tr></table></div></figure>
+      class EquilateralTriangle: NamedShape {
+          var sideLength: Double = 0.0</p>
 
-      init(sideLength: Double, name: String) {
-          self.sideLength = sideLength
-          super.init(name: name)
-          numberOfSides = 4
-      }
-
-      func area() -&gt;  Double {
-          return sideLength * sideLength
-      }
-
-      override func simpleDescription() -&gt; String {
-          return "A square with sides of length \(sideLength)."
-      }
-  }
-  let test = Square(sideLength: 5.2, name: "my test square")
-  test.area()
-  test.simpleDescription()
-</code></pre></li>
-<li><p>Setter and Getter on properties</p>
-
-<pre><code>  class EquilateralTriangle: NamedShape {
-      var sideLength: Double = 0.0
-
-      init(sideLength: Double, name: String) {
+<pre><code>      init(sideLength: Double, name: String) {
           self.sideLength = sideLength
           super.init(name: name)
           numberOfSides = 3
@@ -1378,90 +1463,115 @@ Most code are from the guide, with some modification by me.</p>
   triangle.perimeter
   triangle.perimeter = 9.9
   triangle.sideLength
-</code></pre></li>
-<li><p>Provide code after before or after setting properties</p>
+</code></pre>
 
-<pre><code>  class TriangleAndSquare {
-      var triangle: EquilateralTriangle {
-          willSet {                                    // Do something after before setting properties
-              square.sideLength = newValue.sideLength
+<p>&#8220;`</p></li>
+<li>Provide code after before or after setting properties
+<code>
+      class TriangleAndSquare {
+          var triangle: EquilateralTriangle {
+              willSet {                                    // Do something after before setting properties
+                  square.sideLength = newValue.sideLength
+              }
+          }
+          var square: Square {
+              willSet {                                    // Do something after before setting properties
+                  triangle.sideLength = newValue.sideLength
+              }
+          }
+          init(size: Double, name: String) {
+              square = Square(sideLength: size, name: name)
+              triangle = EquilateralTriangle(sideLength: size, name: name)
           }
       }
-      var square: Square {
-          willSet {                                    // Do something after before setting properties
-              triangle.sideLength = newValue.sideLength
-          }
-      }
-      init(size: Double, name: String) {
-          square = Square(sideLength: size, name: name)
-          triangle = EquilateralTriangle(sideLength: size, name: name)
-      }
-  }
-  var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
-  triangleAndSquare.square.sideLength
-  triangleAndSquare.triangle.sideLength
-  triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
-  triangleAndSquare.triangle.sideLength
-</code></pre></li>
+      var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
+      triangleAndSquare.square.sideLength
+      triangleAndSquare.triangle.sideLength
+      triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
+      triangleAndSquare.triangle.sideLength
+</code></li>
 </ul>
 </li>
-<li><p><strong>Enumerations</strong> and <strong>Structures</strong></p>
+<li><strong>Enumerations</strong> and <strong>Structures</strong>
 
 <ul>
-<li><p><strong>Enumerations</strong> can have methods</p>
-
-<pre><code>  enum Rank: Int {
-      case Ace = 1
-      case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
-      case Jack, Queen, King
-      func simpleDescription() -&gt; String {
-          switch self {
-          case .Ace:
-              return "ace"
-          case .Jack:
-              return "jack"
-          case .Queen:
-              return "queen"
-          case .King:
-              return "king"
-          default:
-              return String(self.toRaw())
+<li><strong>Enumerations</strong> can have methods
+<code>
+      enum Rank: Int {
+          case Ace = 1
+          case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
+          case Jack, Queen, King
+          func simpleDescription() -&gt; String {
+              switch self {
+              case .Ace:
+                  return "ace"
+              case .Jack:
+                  return "jack"
+              case .Queen:
+                  return "queen"
+              case .King:
+                  return "king"
+              default:
+                  return String(self.toRaw())
+              }
           }
       }
-  }
-  let ace = Rank.Ace
-  let aceRawValue = ace.toRaw()
-</code></pre></li>
-<li><p>Convert <em>enum</em> between raw values</p>
+      let ace = Rank.Ace
+      let aceRawValue = ace.toRaw()
+</code></li>
+<li><p>Convert <em>enum</em> between raw values
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  let ace = Rank.Ace
+</span><span class='line'>  let aceRawValue = ace.toRaw()
+</span><span class='line'>  let aceString = ace.simpleDescription()&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  if let convertedRank = Rank.fromRaw(3) {
+</span><span class='line'>  let threeDescription = convertedRank.simpleDescription()
+</span><span class='line'>  }
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;strong&gt;Structure&lt;/strong&gt; is similar to &lt;strong&gt;Class&lt;/strong&gt;, but when structures are always copied when they are passed around, while classes are passed by reference.
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>  struct Card {
+</span><span class='line'>      var rank: Rank
+</span><span class='line'>      var suit: Suit
+</span><span class='line'>      func simpleDescription() -&gt; String {
+</span><span class='line'>          return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
+</span><span class='line'>      }
+</span><span class='line'>  }
+</span><span class='line'>  let threeOfSpades = Card(rank: .Three, suit: .Spades)
+</span><span class='line'>  let threeOfSpadesDescription = threeOfSpades.simpleDescription()
+</span><span class='line'>&lt;/code&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;&lt;strong&gt;Structure&lt;/strong&gt; with associated values.</span></code></pre></td></tr></table></div></figure>
+      enum ServerResponse {
+          case Result(String, String)
+          case Error(String)
+      }</p>
 
-<pre><code>  let ace = Rank.Ace
-  let aceRawValue = ace.toRaw()
-  let aceString = ace.simpleDescription()
-
-  if let convertedRank = Rank.fromRaw(3) {
-      let threeDescription = convertedRank.simpleDescription()
-  }
-</code></pre></li>
-<li><p><strong>Structure</strong> is similar to <strong>Class</strong>, but when structures are always copied when they are passed around, while classes are passed by reference.</p>
-
-<pre><code>  struct Card {
-      var rank: Rank
-      var suit: Suit
-      func simpleDescription() -&gt; String {
-          return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
-      }
-  }
-  let threeOfSpades = Card(rank: .Three, suit: .Spades)
-  let threeOfSpadesDescription = threeOfSpades.simpleDescription()
-</code></pre></li>
-<li><p><strong>Structure</strong> with associated values.</p>
-
-<pre><code>  enum ServerResponse {
-      case Result(String, String)
-      case Error(String)
-  }
-
-  let success = ServerResponse.Result("6:00 am", "8:09 pm")
+<pre><code>  let success = ServerResponse.Result("6:00 am", "8:09 pm")
   let failure = ServerResponse.Error("Out of cheese.")
 
   switch success {
@@ -1470,33 +1580,35 @@ Most code are from the guide, with some modification by me.</p>
   case let .Error(error):
       let serverResponse = "Failure...  \(error)"
   }
-</code></pre></li>
+</code></pre>
+
+<p>&#8220;`</p></li>
 </ul>
 </li>
-<li><p><strong>Protocols</strong> and <strong>Extendsions</strong></p>
+<li><strong>Protocols</strong> and <strong>Extendsions</strong>
 
 <ul>
-<li><p>A classic <strong>Protocol</strong>.</p>
-
-<pre><code>  protocol ExampleProtocol {
-      var simpleDescription: String { get }
-      mutating func adjust()  // "mutating" is needed when a protocol need to modify a structure
-  }
-</code></pre></li>
-<li><p><strong>Classes</strong>, enumerations and structures can all adopt protocols.</p>
-
-<pre><code>  class SimpleClass: ExampleProtocol {
-      var simpleDescription: String = "A very simple class."
-      var anotherProperty: Int = 69105
-      func adjust() {
-          simpleDescription += "  Now 100% adjusted."
+<li>A classic <strong>Protocol</strong>.
+<code>
+      protocol ExampleProtocol {
+          var simpleDescription: String { get }
+          mutating func adjust()  // "mutating" is needed when a protocol need to modify a structure
       }
-  }
-  var a = SimpleClass()
-  a.adjust()
-  let aDescription = a.simpleDescription
+</code></li>
+<li><p><strong>Classes</strong>, enumerations and structures can all adopt protocols.
+&#8220;`
+      class SimpleClass: ExampleProtocol {
+          var simpleDescription: String = &ldquo;A very simple class.&rdquo;
+          var anotherProperty: Int = 69105
+          func adjust() {
+              simpleDescription += &ldquo;  Now 100% adjusted.&rdquo;
+          }
+      }
+      var a = SimpleClass()
+      a.adjust()
+      let aDescription = a.simpleDescription</p>
 
-  struct SimpleStructure: ExampleProtocol {
+<pre><code>  struct SimpleStructure: ExampleProtocol {
       var simpleDescription: String = "A simple structure"
       mutating func adjust() {
           simpleDescription += " (adjusted)"
@@ -1505,65 +1617,68 @@ Most code are from the guide, with some modification by me.</p>
   var b = SimpleStructure()
   b.adjust()
   let bDescription = b.simpleDescription
-</code></pre></li>
-<li><p><strong>Extension</strong> to add functionality to an existing type.</p>
+</code></pre>
 
-<pre><code>  extension Int: ExampleProtocol {
-      var simpleDescription: String {
-      return "The number \(self)"
-      }
-      mutating func adjust() {
-          self += 42
-      }
-  }
-  7.simpleDescription
-</code></pre></li>
-<li><p>Use <strong>Protocol</strong> as a variable. (Abstracting)</p>
-
-<pre><code>  let protocolValue: ExampleProtocol = a
-  protocolValue.simpleDescription
-  // protocolValue.anotherProperty  // Though a is an instance of 'SimpleClass', we cannot access its member not defined in 'ExampleProtocol'
-</code></pre></li>
-</ul>
-</li>
-<li><p><strong>Generics</strong></p>
-
-<ul>
-<li><p>A classic generic sample.</p>
-
-<pre><code>  func repeat&lt;ItemType&gt;(item: ItemType, times: Int) -&gt; [ItemType] {
-      var result = [ItemType]()
-      for i in 0..&lt;times {
-          result += [item]   // operands of Array need to be wrapped in []
-      }
-      return result
-  }
-  repeat("knock", 4)
-</code></pre></li>
-<li><p>Generic can also be used on functions and methods, as well as classes, enumerations, and structures.</p>
-
-<pre><code>  // Reimplement the Swift standard library's optional type
-  enum OptionalValue&lt;T&gt; {
-      case None
-      case Some(T)
-  }
-  var possibleInteger: OptionalValue&lt;Int&gt; = .None
-  possibleInteger = .Some(100)”
-</code></pre></li>
-<li><p>Add requirements in <strong>Generic</strong></p>
-
-<pre><code>  func anyCommonElements &lt;T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element&gt; (lhs: T, rhs: U) -&gt; Bool {
-      for lhsItem in lhs {
-          for rhsItem in rhs {
-              if lhsItem == rhsItem {
-                  return true
-              }
+<p>&#8220;`</p></li>
+<li><strong>Extension</strong> to add functionality to an existing type.
+<code>
+      extension Int: ExampleProtocol {
+          var simpleDescription: String {
+          return "The number \(self)"
+          }
+          mutating func adjust() {
+              self += 42
           }
       }
-      return false
-  }
-  anyCommonElements([1, 2, 3], [3])
-</code></pre></li>
+      7.simpleDescription
+</code></li>
+<li>Use <strong>Protocol</strong> as a variable. (Abstracting)
+<code>
+      let protocolValue: ExampleProtocol = a
+      protocolValue.simpleDescription
+      // protocolValue.anotherProperty  // Even this is an instance of 'SimpleClass', we cannot access its member not defined in 'ExampleProtocol'
+</code></li>
+</ul>
+</li>
+<li><strong>Generics</strong>
+
+<ul>
+<li>A classic generic sample.
+<code>
+      func repeat&lt;ItemType&gt;(item: ItemType, times: Int) -&gt; [ItemType] {
+          var result = [ItemType]()
+          for i in 0..&lt;times {
+              result += [item]   // operator += , which are used against Array operands need to be wrapped in []
+                                 // means that expand the list by one element
+          }
+          return result
+      }
+      repeat("knock", 4)
+</code></li>
+<li>Generic can also be used on functions and methods, as well as classes, enumerations, and structures.
+<code>
+      // Reimplement the Swift standard library's optional type
+      enum OptionalValue&lt;T&gt; {
+          case None
+          case Some(T)
+      }
+      var possibleInteger: OptionalValue&lt;Int&gt; = .None
+      possibleInteger = .Some(100)”
+</code></li>
+<li>Add requirements in <strong>Generic</strong>
+<code>
+      func anyCommonElements &lt;T, U where T: SequenceType, U: SequenceType, T.Generator.Element: Equatable, T.Generator.Element == U.Generator.Element&gt; (lhs: T, rhs: U) -&gt; Bool {
+          for lhsItem in lhs {
+              for rhsItem in rhs {
+                  if lhsItem == rhsItem {
+                      return true
+                  }
+              }
+          }
+          return false
+      }
+      anyCommonElements([1, 2, 3], [3])
+</code></li>
 </ul>
 </li>
 </ul>
