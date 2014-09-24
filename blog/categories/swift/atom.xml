@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-09-24T18:10:05+09:00</updated>
+  <updated>2014-09-24T18:42:51+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -810,53 +810,63 @@ Most code are from the guide, with some modification by me.</p>
 <h3>Basics</h3>
 
 <ul>
-<li><p>Declaring Constant and Variables</p>
+<li><p>Declaring Constant and Variables
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">let</span> <span class="n">maximumNumberOfLoginAttempts</span> <span class="o">=</span> <span class="mi">10</span>
+</span><span class='line'>  <span class="k">var</span> <span class="n">currentLoginAttempt</span> <span class="o">=</span> <span class="mi">0</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kt">Type</span> <span class="n">Annotations</span>
+</span></code></pre></td></tr></table></div></figure>
+      var welcomeMessgae: String
+      welcomeMessgae = &ldquo;Hello&rdquo;</p>
 
-<pre><code>  let maximumNumberOfLoginAttempts = 10
-  var currentLoginAttempt = 0
+<pre><code>  var red, green, blue: Double // Multiple variables defined
+</code></pre>
 
-  var x = 0.0, y = 0.0, z = 0.0
-</code></pre></li>
-<li><p>Type Annotations</p>
-
-<pre><code>  var welcomeMessgae: String
-  welcomeMessgae = "Hello"
-
-  var red, green, blue: Double // Multiple variables defined
-</code></pre></li>
-<li><p>Naming Constants and Variables</p>
-
-<pre><code>  let π = 3.14159
-  let 你好 = "你好世界"
-  let 🐶🐮 = "dogcow"
-</code></pre></li>
+<p>&#8220;`</p></li>
+<li>Naming Constants and Variables
+<code>
+      let π = 3.14159
+      let 你好 = "你好世界"
+      let 🐶🐮 = "dogcow"
+</code></li>
 </ul>
 
 
 <!-- more -->
 
 
-<ul>
-<li><p>Integers</p>
+<h3>Integers</h3>
 
 <ul>
-<li><p>Integer Bounds</p>
-
-<pre><code>  let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
-  let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
-</code></pre></li>
+<li>Integer Bounds
+<code>
+      let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
+      let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
+</code></li>
 <li><p>Int</p>
 
 <ul>
-<li>On a 32-bit platform, Int is the same size as Int32.</li>
-<li>On a 64-bit platform, Int is the same size as Int64.</li>
+<li><p>On a 32-bit platform, Int is the same size as Int32.</p></li>
+<li><p>On a 64-bit platform, Int is the same size as Int64.</p></li>
 </ul>
 </li>
 <li><p>UInt</p>
 
 <ul>
-<li>On a 32-bit platform, UInt is the same size as UInt32.</li>
-<li>On a 64-bit platform, UInt is the same size as UInt64.</li>
+<li><p>On a 32-bit platform, UInt is the same size as UInt32.</p></li>
+<li><p>On a 64-bit platform, UInt is the same size as UInt64.</p></li>
 </ul>
 </li>
 <li><p>Floating-Point Numbers</p>
@@ -866,248 +876,8 @@ Most code are from the guide, with some modification by me.</p>
 </ul>
 </li>
 <li><p>Type Safety and Type Inference</p></li>
-<li><p>Numeric Literals</p>
-
-<pre><code>  let decimalInteger = 17
-  let binaryInteger = 0b10001       // 17 in binary notation
-  let octalInteger = 0o21           // 17 in octal notation
-  let hexadecimalInteger = 0x11     // 17 in hexadecimal notation
-
-  1.25e2          // 125.0
-  1.25e-2         // 0.0125
-  0xFp2           // 60.0 = 15 x 2 x 2
-  0xFp-2          // 3.75 = 15 x 0.5 x 0.5
-
-  // Can have additional formatting literal (like Ruby)
-
-  let paddedDouble = 000123.456
-  let oneMillion = 1_000_000
-  let justOverOneMillion = 1_000_000.000_000_1
-</code></pre></li>
-<li><p>Integer Conversion</p>
-
-<pre><code>  let cannotBeNegative: UInt8 = -1
-  // UInt8 cannot store negative numbers, and so this will report an error
-  let tooBig: Int8 = Int8.max + 1
-  // Int8 cannot store a number larger than its maximum value,
-  // and so this will also report an error
-
-  // conversion must be explicit
-
-  let twoThousand: UInt16 = 2_000
-  let one: UInt8 = 1
-  let twoThousandAndOne = twoThousand + UInt16(one)
-</code></pre></li>
-<li><p>Integer and Floating-Point Conversion</p>
-
-<pre><code>  let three = 3
-  let pointOneFourOneFiveNine = 0.14159
-  let pi = Double(three) + pointOneFourOneFiveNine
-  // pi equals 3.14159, and is inferred to be of type Double
-
-  let integerPi = Int(pi)
-  // integerPi equals 3, and is inferred to be of type Int
-</code></pre></li>
-<li><p>Type Aliases</p>
-
-<pre><code>  typealias AudioSample = UInt16
-  var maxAmplitudeFound = AudioSample.min
-  // maxAmplitudeFound is now 0
-</code></pre></li>
-</ul>
-</li>
-<li><p>Boolean</p>
-
-<pre><code>  let orangesAreOrange = true
-  let turnipsAreDelicious = false
-
-  if turnipsAreDelicious {
-      println("Mmm, tasty turnips!")
-  } else {
-      println("Eww, turnips are horrible.")
-  }
-  // prints "Eww, turnips are horrible."
-</code></pre></li>
-<li><p>Tuples</p>
-
-<pre><code>  let http404Error = (404, "Not Found")
-  // http404Error is of type (Int, String), and equals (404, "Not Found")
-</code></pre>
-
-<ul>
-<li><p>Decompose a tuple</p>
-
-<pre><code>  let (statusCode, statusMessage) = http404Error
-  println("The status code is \(statusCode)")
-  // prints "The status code is 404"
-  println("The status message is \(statusMessage)")
-  // prints "The status message is Not Found"
-</code></pre></li>
-<li><p>Ignore some value when decomposing</p>
-
-<pre><code>  let (justTheStatusCode, _) = http404Error
-  println("The status code is \(justTheStatusCode)")
-  // prints "The status code is 404"
-</code></pre></li>
-<li><p>Access by index</p>
-
-<pre><code>  println("The status code is \(http404Error.0)")
-  // prints "The status code is 404"
-  println("The status message is \(http404Error.1)")
-  // prints "The status message is Not Found"
-</code></pre></li>
-</ul>
-</li>
-<li><p>Optionals</p>
-
-<pre><code>  let possibleNumber = "123"
-  let convertedNumber = possibleNumber.toInt()
-  // convertedNumber is inferred to be of type "Int?", or "optional Int"
-</code></pre></li>
-<li><p>nil</p>
-
-<pre><code>  var serverResponseCode: Int? = 404
-  // serverResponseCode contains an actual Int value of 404
-  serverResponseCode = nil
-  // serverResponseCode now contains no value
-
-  var surveyAnswer: String?
-  // surveyAnswer is automatically set to nil
-</code></pre></li>
-<li><p>If Statements and Forced Unwrapping</p>
-
-<pre><code>  if convertedNumber != nil {
-      println("convertedNumber has an integer value of \(convertedNumber!).")
-  }
-  // prints "convertedNumber has an integer value of 123."
-</code></pre></li>
-<li><p>Optional Binding</p>
-
-<pre><code>  if let constantName = someOptional {
-      statements
-  }
-
-  if let actualNumber = possibleNumber.toInt() {
-      println("\(possibleNumber) has an integer value of \(actualNumber)")
-  } else {
-      println("\(possibleNumber) could not be converted to an integer")
-  }
-  // prints "123 has an integer value of 123"
-</code></pre></li>
-<li><p>Implicitly Unwrapping Optionals (Accessing an implicitly unwrapped optional when it does not contain a value will trigger a RTE)</p>
-
-<pre><code>  let possibleString: String? = "An optional string."
-  let forcedString: String = possibleString! // requires an exclamation mark
-
-  let assumedString: String! = "An implicitly unwrapped optional string."
-  let implicitString: String = assumedString // no need for an exclamation mark
-
-  if assumedString != nil {
-      println(assumedString)
-  }
-  // prints "An implicitly unwrapped optional string."
-
-  if let definiteString = assumedString {
-      println(definiteString)
-  }
-  // prints "An implicitly unwrapped optional string."
-</code></pre></li>
-<li><p>Assertions</p></li>
-<li><p>Debugging with Assertions</p>
-
-<pre><code>  let age = -3
-  assert(age &gt;= 0, "A person's age cannot be less than zero")
-  // this causes the assertion to trigger, because age is not &gt;= 0
-</code></pre></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Swift Part 1]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/09/02/learning-swift-part-1/"/>
-    <updated>2014-09-02T18:28:36+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/09/02/learning-swift-part-1</id>
-    <content type="html"><![CDATA[<p>Just some notes after reading Apple&rsquo;s official online guide.
-Most code are from the guide, with some modification by me.</p>
-
-<p>Modified some code in the following parts. Some better example or fixing in new Xcode.</p>
-
-<ul>
-<li><p>Function as parameter (like Comparator)
-<code>swift
-  // Bubble sort with a custom comparator
-  func sort(inout list: [Int], sorter: ((Int, Int) -&gt; Bool)) {
-      var i : Int = 0
-      while i &lt; list.count {
-          var j : Int = i + 1
-          if j &lt; list.count &amp;&amp; !sorter(list[i], list[j]) {
-              var temp = list[i]
-              list[i] = list[j]
-              list[j] = temp
-          }
-          i++
-      }
-  }
-  var list = [3, 2, 1]
-  func sorter(a : Int, b : Int) -&gt; Bool {
-      return a &lt; b
-  }
-  sort(&amp;list, sorter)
-</code></p></li>
-<li><p>Closure
-<code>swift
-  numbers.map({
-      (number: Int) -&gt; Int in
-      let result = 3 * number
-      return result
-  })
-  // can be simplied to
-  numbers.map({ number in 3 * number })
-  // sort a array
-  var list = [3, 2, 1]
-  sort(&amp;list) // NOT sort(list), this function only accept a reference
-  var listSorted = sorted(list) // This is OK
-</code></p></li>
-</ul>
-
-
-<!-- more -->
-
-
-<h2>===== Full Notes =====</h2>
-
-<h3>A Swift Tour</h3>
-
-<ul>
-<li>variable.
-<code>
-      var myVariable = 42   // variable
-      myVariable = 50       // variable
-      let myConstant = 42   // Constant
-</code></li>
-<li><strong>implicit</strong> vs <strong>explicit</strong>.
-<code>
-      let implicitInteger = 70
-      let implicitDouble = 70.0
-      let explicitDouble: Double = 70  // Type is written right to variable
-</code></li>
-<li>Values never implicitly converted.
-<code>
-      let label = "The width is"
-      let width = 94
-      let withlabel = label + String(width)
-</code></li>
-<li>Include values in strings.
-<code>
-      let apples = 3
-      let oranges = 5
-      let appleSummary = "I have \(apples) apples."
-      let fruitSummary = "I have \(apples + oranges) pieces of fruit."
-</code></li>
-<li><p><strong>Arrays</strong> and <strong>Dictionaries</strong>.
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<li><p>Numeric Literals
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1116,33 +886,191 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  var shopppingList = [&ldquo;catfish&rdquo;, &ldquo;water&rdquo;, &ldquo;tulips&rdquo;, &ldquo;blue paint&rdquo;] // [] for empty array
-</span><span class='line'>  shoppingList[1] = &ldquo;bottle of water&rdquo;&lt;/p&gt;
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">let</span> <span class="n">decimalInteger</span> <span class="o">=</span> <span class="mi">17</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">binaryInteger</span> <span class="o">=</span> <span class="mi">0</span><span class="n">b10001</span>       <span class="c1">// 17 in binary notation</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">octalInteger</span> <span class="o">=</span> <span class="mi">0</span><span class="n">o21</span>           <span class="c1">// 17 in octal notation</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">hexadecimalInteger</span> <span class="o">=</span> <span class="mh">0x11</span>     <span class="c1">// 17 in hexadecimal notation&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  var occupations = [
-</span><span class='line'>  "Malcolm": "Captain",
-</span><span class='line'>  "Kaylee": "Mechanic",
-</span><span class='line'>  ] // [:] for empty dictionary
-</span><span class='line'>  occupations["Jayne"] = "Public Relations"
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="mf">1.25e2</span>          <span class="c1">// 125.0</span>
+</span><span class='line'>  <span class="mf">1.25e-2</span>         <span class="c1">// 0.0125</span>
+</span><span class='line'>  <span class="mh">0xF</span><span class="n">p2</span>           <span class="c1">// 60.0 = 15 x 2 x 2</span>
+</span><span class='line'>  <span class="mh">0xF</span><span class="n">p</span><span class="o">-</span><span class="mi">2</span>          <span class="c1">// 3.75 = 15 x 0.5 x 0.5</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Can have additional formatting literal (like Ruby)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">let</span> <span class="n">paddedDouble</span> <span class="o">=</span> <span class="mf">000123.456</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">oneMillion</span> <span class="o">=</span> <span class="mi">1</span><span class="n">_000_000</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">justOverOneMillion</span> <span class="o">=</span> <span class="mi">1</span><span class="n">_000_000</span><span class="mf">.000</span><span class="n">_000_1</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Integer</span> <span class="n">Conversion</span>
 </span></code></pre></td></tr></table></div></figure>
+      let cannotBeNegative: UInt8 = -1
+      // UInt8 cannot store negative numbers, and so this will report an error
+      let tooBig: Int8 = Int8.max + 1
+      // Int8 cannot store a number larger than its maximum value,
+      // and so this will also report an error</p>
 
-<h2>Control Flows</h2></li>
-<li><p><strong>for-in</strong>
+<pre><code>  // conversion must be explicit
+
+  let twoThousand: UInt16 = 2_000
+  let one: UInt8 = 1
+  let twoThousandAndOne = twoThousand + UInt16(one)
+</code></pre>
+
+<p>&#8220;`</p></li>
+<li><p>Integer and Floating-Point Conversion
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">let</span> <span class="n">three</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">pointOneFourOneFiveNine</span> <span class="o">=</span> <span class="mf">0.14159</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">pi</span> <span class="o">=</span> <span class="n">Double</span><span class="p">(</span><span class="n">three</span><span class="p">)</span> <span class="o">+</span> <span class="n">pointOneFourOneFiveNine</span>
+</span><span class='line'>  <span class="c1">// pi equals 3.14159, and is inferred to be of type Double&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">let</span> <span class="n">integerPi</span> <span class="o">=</span> <span class="n">Int</span><span class="p">(</span><span class="n">pi</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">// integerPi equals 3, and is inferred to be of type Int</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="kt">Type</span> <span class="n">Aliases</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">typealias</span> <span class="n">AudioSample</span> <span class="o">=</span> <span class="kt">UInt16</span>
+</span><span class='line'>  <span class="k">var</span> <span class="n">maxAmplitudeFound</span> <span class="o">=</span> <span class="n">AudioSample</span><span class="p">.</span><span class="n">min</span>
+</span><span class='line'>  <span class="c1">// maxAmplitudeFound is now 0</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kt">Boolean</span>
+</span></code></pre></td></tr></table></div></figure>
+      let orangesAreOrange = true
+      let turnipsAreDelicious = false</p>
+
+<pre><code>  if turnipsAreDelicious {
+      println("Mmm, tasty turnips!")
+  } else {
+      println("Eww, turnips are horrible.")
+  }
+  // prints "Eww, turnips are horrible."
+</code></pre>
+
+<p>&#8220;`</p></li>
+</ul>
+
+
+<h3>Tuples</h3>
+
+<ul>
+<li>Sample
 <code>
-      let individualScores = [75, 43, 103, 87, 12]
-      var teamScore = 0
-      for score in individualScores {
-          if score &gt; 50 {
-              teamScore += 3
-          } else {
-              teamScore += 1
-          }
-      }
-      teamScore
-</code></p></li>
-<li><p>optional-value with <strong>if</strong>
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+      let http404Error = (404, "Not Found")
+      // http404Error is of type (Int, String), and equals (404, "Not Found")
+</code></li>
+<li>Decompose a tuple
+<code>
+      let (statusCode, statusMessage) = http404Error
+      println("The status code is \(statusCode)")
+      // prints "The status code is 404"
+      println("The status message is \(statusMessage)")
+      // prints "The status message is Not Found"
+</code></li>
+<li>Ignore some value when decomposing
+<code>
+      let (justTheStatusCode, _) = http404Error
+      println("The status code is \(justTheStatusCode)")
+      // prints "The status code is 404"
+</code></li>
+<li>Access by index
+<code>
+      println("The status code is \(http404Error.0)")
+      // prints "The status code is 404"
+      println("The status message is \(http404Error.1)")
+      // prints "The status message is Not Found"
+</code>
+
+<h3>Optionals</h3></li>
+<li>Sample
+<code>
+      let possibleNumber = "123"
+      let convertedNumber = possibleNumber.toInt()
+      // convertedNumber is inferred to be of type "Int?", or "optional Int"
+</code></li>
+<li><p>nil
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">var</span> <span class="nl">serverResponseCode</span><span class="p">:</span> <span class="n">Int</span><span class="o">?</span> <span class="o">=</span> <span class="mi">404</span>
+</span><span class='line'>  <span class="c1">// serverResponseCode contains an actual Int value of 404</span>
+</span><span class='line'>  <span class="n">serverResponseCode</span> <span class="o">=</span> <span class="nb">nil</span>
+</span><span class='line'>  <span class="c1">// serverResponseCode now contains no value&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">var</span> <span class="nl">surveyAnswer</span><span class="p">:</span> <span class="n">String</span><span class="o">?</span>
+</span><span class='line'>  <span class="c1">// surveyAnswer is automatically set to nil</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">If</span> <span class="n">Statements</span> <span class="n">and</span> <span class="n">Forced</span> <span class="n">Unwrapping</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">convertedNumber</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="s">&quot;convertedNumber has an integer value of \(convertedNumber!).&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="c1">// prints &quot;convertedNumber has an integer value of 123.&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Optional</span> <span class="n">Binding</span>
+</span></code></pre></td></tr></table></div></figure>
+      if let constantName = someOptional {
+          statements
+      }</p>
+
+<pre><code>  if let actualNumber = possibleNumber.toInt() {
+      println("\(possibleNumber) has an integer value of \(actualNumber)")
+  } else {
+      println("\(possibleNumber) could not be converted to an integer")
+  }
+  // prints "123 has an integer value of 123"
+</code></pre>
+
+<p>&#8220;`</p></li>
+<li><p>Implicitly Unwrapping Optionals (Accessing an implicitly unwrapped optional when it does not contain a value will trigger a RTE)
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1185,175 +1113,201 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>41</span>
 <span class='line-number'>42</span>
 <span class='line-number'>43</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  var optionalString: String? = &ldquo;Hello&rdquo;
-</span><span class='line'>  optionalString == nil&lt;/p&gt;
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">let</span> <span class="nl">possibleString</span><span class="p">:</span> <span class="n">String</span><span class="o">?</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">An</span> <span class="n">optional</span> <span class="n">string</span><span class="p">.</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="nl">forcedString</span><span class="p">:</span> <span class="n">String</span> <span class="o">=</span> <span class="n">possibleString</span><span class="o">!</span> <span class="c1">// requires an exclamation mark&lt;/p&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  var optionalName: String? = "John Appleseed"
-</span><span class='line'>  var greeting = "Hello!"
-</span><span class='line'>  if let name = optionalName {
-</span><span class='line'>  greeting = "Hello, \(name)"
-</span><span class='line'>  }
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">let</span> <span class="nl">assumedString</span><span class="p">:</span> <span class="n">String</span><span class="o">!</span> <span class="o">=</span> <span class="s">&quot;An implicitly unwrapped optional string.&quot;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="nl">implicitString</span><span class="p">:</span> <span class="n">String</span> <span class="o">=</span> <span class="n">assumedString</span> <span class="c1">// no need for an exclamation mark</span>
 </span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;strong&gt;switch&lt;/strong&gt;
-</span><span class='line'>&lt;code&gt;
-</span><span class='line'>  let vegetable = "red pepper"
-</span><span class='line'>  switch vegetable {
-</span><span class='line'>      case "celery":
-</span><span class='line'>          let vegetableComment = "Add some raisins and make ants on a log."
-</span><span class='line'>      case "cucumber", "watercress":
-</span><span class='line'>          let vegetableComment = "That would make a good tea sandwich."
-</span><span class='line'>      case let x where x.hasSuffix("pepper"):
-</span><span class='line'>          let vegetableComment = "Is it a spicy \(x)?"
-</span><span class='line'>      default:
-</span><span class='line'>          let vegetableComment = "Everything tastes good in soup."
-</span><span class='line'>  }
-</span><span class='line'>&lt;/code&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;strong&gt;for-in&lt;/strong&gt; in &lt;em&gt;dictionary&lt;/em&gt;
-</span><span class='line'>&lt;code&gt;
-</span><span class='line'>  let interestingNumbers = [
-</span><span class='line'>      "Prime": [2, 3, 5, 7, 11, 13],
-</span><span class='line'>      "Fibonacci": [1, 1, 2, 3, 5, 8],
-</span><span class='line'>      "Square": [1, 4, 9, 16, 25],
-</span><span class='line'>  ]
-</span><span class='line'>  var largest = 0
-</span><span class='line'>  for (kind, numbers) in interestingNumbers {
-</span><span class='line'>      for number in numbers {
-</span><span class='line'>          if number &gt; largest {
-</span><span class='line'>              largest = number
-</span><span class='line'>          }
-</span><span class='line'>      }
-</span><span class='line'>  }
-</span><span class='line'>  largest
-</span><span class='line'>&lt;/code&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;&lt;strong&gt;while&lt;/strong&gt; and &lt;strong&gt;do-while&lt;/strong&gt;</span></code></pre></td></tr></table></div></figure>
-      var n = 2
-      while n &lt; 100 {
-          n = n * 2
-      }
-      n</p>
+</span><span class='line'>  <span class="k">if</span> <span class="n">assumedString</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="n">assumedString</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="c1">// prints &quot;An implicitly unwrapped optional string.&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="k">let</span> <span class="n">definiteString</span> <span class="o">=</span> <span class="n">assumedString</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="n">definiteString</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="c1">// prints &quot;An implicitly unwrapped optional string.&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Assertions</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Debugging</span> <span class="n">with</span> <span class="n">Assertions</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">age</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span>
+</span><span class='line'>  <span class="n">assert</span><span class="p">(</span><span class="n">age</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;A person&#39;s age cannot be less than zero&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">// this causes the assertion to trigger, because age is not &amp;gt;= 0</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">]]</span><span class="o">&gt;&lt;/</span><span class="n">content</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;/</span><span class="n">entry</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">entry</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">title</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;html&quot;</span><span class="o">&gt;&lt;!</span><span class="p">[</span><span class="n">CDATA</span><span class="p">[</span><span class="n">Learning</span> <span class="n">Swift</span> <span class="n">Part</span> <span class="mi">1</span><span class="p">]]</span><span class="o">&gt;&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;http://zh-wang.github.io/blog/2014/09/02/learning-swift-part-1/&quot;</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">updated</span><span class="o">&gt;</span><span class="mi">2014</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mo">02</span><span class="nl">T18</span><span class="p">:</span><span class="mi">28</span><span class="o">:</span><span class="mi">36</span><span class="o">+</span><span class="mi">09</span><span class="o">:</span><span class="mo">00</span><span class="o">&lt;/</span><span class="n">updated</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="kt">id</span><span class="o">&gt;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//zh-wang.github.io/blog/2014/09/02/learning-swift-part-1&lt;/id&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">content</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;html&quot;</span><span class="o">&gt;&lt;!</span><span class="p">[</span><span class="n">CDATA</span><span class="p">[</span><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Just</span> <span class="n">some</span> <span class="n">notes</span> <span class="n">after</span> <span class="n">reading</span> <span class="n">Apple</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">s</span> <span class="n">official</span> <span class="n">online</span> <span class="n">guide</span><span class="p">.</span>
+</span><span class='line'><span class="n">Most</span> <span class="n">code</span> <span class="n">are</span> <span class="n">from</span> <span class="n">the</span> <span class="n">guide</span><span class="p">,</span> <span class="n">with</span> <span class="n">some</span> <span class="n">modification</span> <span class="n">by</span> <span class="n">me</span><span class="p">.</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Modified</span> <span class="n">some</span> <span class="n">code</span> <span class="k">in</span> <span class="n">the</span> <span class="n">following</span> <span class="n">parts</span><span class="p">.</span> <span class="n">Some</span> <span class="n">better</span> <span class="n">example</span> <span class="n">or</span> <span class="n">fixing</span> <span class="k">in</span> <span class="kt">new</span> <span class="n">Xcode</span><span class="p">.</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Function</span> <span class="kt">as</span> <span class="n">parameter</span> <span class="p">(</span><span class="n">like</span> <span class="n">Comparator</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">swift</span>
+</span><span class='line'>  <span class="c1">// Bubble sort with a custom comparator</span>
+</span><span class='line'>  <span class="k">func</span> <span class="n">sort</span><span class="p">(</span><span class="k">inout</span> <span class="nl">list</span><span class="p">:</span> <span class="p">[</span><span class="n">Int</span><span class="p">],</span> <span class="nl">sorter</span><span class="p">:</span> <span class="p">((</span><span class="n">Int</span><span class="p">,</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Bool</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">var</span> <span class="nl">i</span> <span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="k">while</span> <span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">list</span><span class="p">.</span><span class="n">count</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">var</span> <span class="nl">j</span> <span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">j</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">list</span><span class="p">.</span><span class="n">count</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> <span class="o">!</span><span class="n">sorter</span><span class="p">(</span><span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">var</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span><span class='line'>          <span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+</span><span class='line'>          <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="n">i</span><span class="o">++</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">var</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class='line'>  <span class="k">func</span> <span class="n">sorter</span><span class="p">(</span><span class="nl">a</span> <span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">b</span> <span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Bool</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">a</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">b</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">sort</span><span class="p">(</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="n">list</span><span class="p">,</span> <span class="n">sorter</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Closure</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">swift</span>
+</span><span class='line'>  <span class="n">numbers</span><span class="p">.</span><span class="n">map</span><span class="p">({</span>
+</span><span class='line'>  <span class="p">(</span><span class="nl">number</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Int</span> <span class="k">in</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">result</span>
+</span><span class='line'>  <span class="p">})</span>
+</span><span class='line'>  <span class="c1">// can be simplied to</span>
+</span><span class='line'>  <span class="n">numbers</span><span class="p">.</span><span class="n">map</span><span class="p">({</span> <span class="n">number</span> <span class="k">in</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span> <span class="p">})</span>
+</span><span class='line'>  <span class="c1">// sort a array</span>
+</span><span class='line'>  <span class="k">var</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class='line'>  <span class="n">sort</span><span class="p">(</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="n">list</span><span class="p">)</span> <span class="c1">// NOT sort(list), this function only accept a reference</span>
+</span><span class='line'>  <span class="k">var</span> <span class="n">listSorted</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="c1">// This is OK</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;!--</span> <span class="n">more</span> <span class="o">--&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h2</span><span class="o">&gt;=====</span> <span class="n">Full</span> <span class="n">Notes</span> <span class="o">=====&lt;/</span><span class="n">h2</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h3</span><span class="o">&gt;</span><span class="n">A</span> <span class="n">Swift</span> <span class="n">Tour</span><span class="o">&lt;/</span><span class="n">h3</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">variable</span><span class="p">.</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">var</span> <span class="n">myVariable</span> <span class="o">=</span> <span class="mi">42</span>   <span class="c1">// variable</span>
+</span><span class='line'>  <span class="n">myVariable</span> <span class="o">=</span> <span class="mi">50</span>       <span class="c1">// variable</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">myConstant</span> <span class="o">=</span> <span class="mi">42</span>   <span class="c1">// Constant</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="n">implicit</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;</span> <span class="n">vs</span> <span class="o">&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="n">explicit</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;</span><span class="p">.</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">implicitInteger</span> <span class="o">=</span> <span class="mi">70</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">implicitDouble</span> <span class="o">=</span> <span class="mf">70.0</span>
+</span><span class='line'>  <span class="k">let</span> <span class="nl">explicitDouble</span><span class="p">:</span> <span class="n">Double</span> <span class="o">=</span> <span class="mi">70</span>  <span class="c1">// Type is written right to variable</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Values</span> <span class="n">never</span> <span class="n">implicitly</span> <span class="n">converted</span><span class="p">.</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">label</span> <span class="o">=</span> <span class="s">&quot;The width is&quot;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">94</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">withlabel</span> <span class="o">=</span> <span class="n">label</span> <span class="o">+</span> <span class="n">String</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Include</span> <span class="n">values</span> <span class="k">in</span> <span class="n">strings</span><span class="p">.</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">apples</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">oranges</span> <span class="o">=</span> <span class="mi">5</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">appleSummary</span> <span class="o">=</span> <span class="s">&quot;I have \(apples) apples.&quot;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">fruitSummary</span> <span class="o">=</span> <span class="s">&quot;I have \(apples + oranges) pieces of fruit.&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="n">Arrays</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;</span> <span class="n">and</span> <span class="o">&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="n">Dictionaries</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;</span><span class="p">.</span>
+</span></code></pre></td></tr></table></div></figure>
+      var shopppingList = [&ldquo;catfish&rdquo;, &ldquo;water&rdquo;, &ldquo;tulips&rdquo;, &ldquo;blue paint&rdquo;] // [] for empty array
+      shoppingList[1] = &ldquo;bottle of water&rdquo;</p>
 
-<pre><code>  var m = 2
-  do {
-      m = m * 2
-  } while m &lt; 100
-  m
+<pre><code>  var occupations = [
+      "Malcolm": "Captain",
+      "Kaylee": "Mechanic",
+  ] // [:] for empty dictionary
+  occupations["Jayne"] = "Public Relations"
 </code></pre>
 
-<p>&#8220;`</p></li>
-<li><p>range operators
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  for i in 0..&lt;3 {
-</span><span class='line'>      // do something, for 0, 1, 2
-</span><span class='line'>  }&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  for i in 0...3 {
-</span><span class='line'>  // do something, for 0, 1, 2, 3
-</span><span class='line'>  }
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-<h2><strong>Functions</strong> and <strong>Closures</strong></h2></li>
-<li><p>A classic one
-<code>
-      func greet(name: String, day: String) -&gt; String {
-          return "Hello \(name), today is \(day)."
-      }
-      greet("Bob", "Tuesday")
-</code></p></li>
-<li>Use a <strong>tuple</strong> as return value
-<code>
-      func getGasPrices() -&gt; (Double, Double, Double) {
-          return (3.59, 3.69, 3.79)
-      }
-      getGasPrices()
-</code></li>
-<li>Variable Arguments (varargs)
-<code>
-      func sumOf(numbers: Int...) -&gt; Int {
-          var sum = 0
-          for number in numbers {
-                  sum += number
-              }
-          return sum
-      }
-      sumOf()
-      sumOf(42, 597, 12)
-</code></li>
-<li>Nested functions
-<code>
-      func returnFifteen() -&gt; Int { // Wrapper function
-          var y = 10
-          func add() { // Nested function
-              y += 5
-          }
-          add()
-          return y
-      }
-      returnFifteen()
-</code></li>
-<li>Function as return value (like pointer of function)
-<code>
-      func makeIncrementer() -&gt; (Int -&gt; Int) {
-          func addOne(number: Int) -&gt; Int {
-                  return 1 + number
-              }
-          return addOne
-      }
-      var increment = makeIncrementer()
-      increment(7)
-</code></li>
-<li>Function as parameter (like Comparator)
-<code>
-      // Bubble sort with a custom comparator
-      func sort(inout list: [Int], sorter: ((Int, Int) -&gt; Bool)) {
-          var i : Int = 0
-          while i &lt; list.count {
-              var j : Int = i + 1
-              if j &lt; list.count &amp;&amp; !sorter(list[i], list[j]) {
-                  var temp = list[i]
-                  list[i] = list[j]
-                  list[j] = temp
-              }
-              i++
-          }
-      }
-      var list = [3, 2, 1]
-      func sorter(a : Int, b : Int) -&gt; Bool {
-          return a &lt; b
-      }
-      sort(&amp;list, sorter)
-</code></li>
-<li>Closure
-<code>
-      numbers.map({
-          (number: Int) -&gt; Int in
-          let result = 3 * number
-          return result
-      })
-      // can be simplied to
-      numbers.map({ number in 3 * number })
-      // sort a array
-      var list = [3, 2, 1]
-      sort(&amp;list) // NOT sort(list), this function only accept a reference
-      var listSorted = sorted(list) // This is OK
-</code></li>
-</ul>
-
-
-<h2><strong>Objects</strong> and <strong>Classes</strong></h2>
-
-<ul>
-<li><p>A simple class
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1367,41 +1321,107 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  class Shape {
-</span><span class='line'>      var numberOfSides = 0
-</span><span class='line'>      func simpleDescription() -&gt; String {
-</span><span class='line'>              return &ldquo;A shape with (numberOfSides) sides.&rdquo;
-</span><span class='line'>          }
-</span><span class='line'>  }&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  var shape = Shape()
-</span><span class='line'>  shape.numberOfSides = 7
-</span><span class='line'>  var shapeDescription = shape.simpleDescription()
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Initializer and its opposite</span></code></pre></td></tr></table></div></figure>
-      class NamedShape {
-          var numberOfSides: Int = 0
-          var name: String</p>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="o">&lt;</span><span class="n">h2</span><span class="o">&gt;</span><span class="n">Control</span> <span class="n">Flows</span><span class="o">&lt;/</span><span class="n">h2</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="k">for</span><span class="o">-</span><span class="k">in</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="k">let</span> <span class="n">individualScores</span> <span class="o">=</span> <span class="p">[</span><span class="mi">75</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+</span><span class='line'>      <span class="k">var</span> <span class="n">teamScore</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>      <span class="k">for</span> <span class="n">score</span> <span class="k">in</span> <span class="n">individualScores</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="n">score</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="mi">50</span> <span class="p">{</span>
+</span><span class='line'>              <span class="n">teamScore</span> <span class="o">+=</span> <span class="mi">3</span>
+</span><span class='line'>          <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>              <span class="n">teamScore</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="n">teamScore</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">optional</span><span class="o">-</span><span class="n">value</span> <span class="n">with</span> <span class="o">&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="k">if</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+      var optionalString: String? = &ldquo;Hello&rdquo;
+      optionalString == nil</p>
 
-<pre><code>      init(name: String) {
-          self.name = name
-      }
-
-      deinit {
-
-      }
-
-      func simpleDescription() -&gt; String {
-          return "A shape with \(numberOfSides) sides."
-      }
+<pre><code>  var optionalName: String? = "John Appleseed"
+  var greeting = "Hello!"
+  if let name = optionalName {
+      greeting = "Hello, \(name)"
   }
 </code></pre>
 
 <p>&#8220;`</p></li>
-<li><p>Subclass
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<li><strong>switch</strong>
+<code>
+      let vegetable = "red pepper"
+      switch vegetable {
+          case "celery":
+              let vegetableComment = "Add some raisins and make ants on a log."
+          case "cucumber", "watercress":
+              let vegetableComment = "That would make a good tea sandwich."
+          case let x where x.hasSuffix("pepper"):
+              let vegetableComment = "Is it a spicy \(x)?"
+          default:
+              let vegetableComment = "Everything tastes good in soup."
+      }
+</code></li>
+<li><strong>for-in</strong> in <em>dictionary</em>
+<code>
+      let interestingNumbers = [
+          "Prime": [2, 3, 5, 7, 11, 13],
+          "Fibonacci": [1, 1, 2, 3, 5, 8],
+          "Square": [1, 4, 9, 16, 25],
+      ]
+      var largest = 0
+      for (kind, numbers) in interestingNumbers {
+          for number in numbers {
+              if number &gt; largest {
+                  largest = number
+              }
+          }
+      }
+      largest
+</code></li>
+<li><p><strong>while</strong> and <strong>do-while</strong>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">var</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class='line'>  <span class="k">while</span> <span class="n">n</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="mi">100</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="mi">2</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">n</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">var</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class='line'>  <span class="k">do</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">m</span> <span class="o">=</span> <span class="n">m</span> <span class="o">*</span> <span class="mi">2</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">while</span> <span class="n">m</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="mi">100</span>
+</span><span class='line'>  <span class="n">m</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">range</span> <span class="n">operators</span>
+</span></code></pre></td></tr></table></div></figure>
+      for i in 0..&lt;3 {
+          // do something, for 0, 1, 2
+      }</p>
+
+<pre><code>  for i in 0...3 {
+      // do something, for 0, 1, 2, 3
+  }
+</code></pre>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1425,115 +1445,247 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>22</span>
 <span class='line-number'>23</span>
 <span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  class Square: NamedShape {
-</span><span class='line'>      var sideLength: Double&lt;/p&gt;
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="o">&lt;</span><span class="n">h2</span><span class="o">&gt;&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="n">Functions</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;</span> <span class="n">and</span> <span class="o">&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="n">Closures</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;&lt;/</span><span class="n">h2</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">A</span> <span class="n">classic</span> <span class="n">one</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="k">func</span> <span class="n">greet</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">day</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="s">&quot;Hello \(name), today is \(day).&quot;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="n">greet</span><span class="p">(</span><span class="s">&quot;Bob&quot;</span><span class="p">,</span> <span class="s">&quot;Tuesday&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Use</span> <span class="n">a</span> <span class="o">&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="n">tuple</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;</span> <span class="kt">as</span> <span class="k">return</span> <span class="n">value</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="k">func</span> <span class="n">getGasPrices</span><span class="p">()</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="p">(</span><span class="n">Double</span><span class="p">,</span> <span class="n">Double</span><span class="p">,</span> <span class="n">Double</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="p">(</span><span class="mf">3.59</span><span class="p">,</span> <span class="mf">3.69</span><span class="p">,</span> <span class="mf">3.79</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="n">getGasPrices</span><span class="p">()</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Variable</span> <span class="n">Arguments</span> <span class="p">(</span><span class="n">varargs</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="k">func</span> <span class="n">sumOf</span><span class="p">(</span><span class="nl">numbers</span><span class="p">:</span> <span class="n">Int</span><span class="p">...)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">var</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>          <span class="k">for</span> <span class="n">number</span> <span class="k">in</span> <span class="n">numbers</span> <span class="p">{</span>
+</span><span class='line'>                  <span class="n">sum</span> <span class="o">+=</span> <span class="n">number</span>
+</span><span class='line'>              <span class="p">}</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">sum</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="n">sumOf</span><span class="p">()</span>
+</span><span class='line'>      <span class="n">sumOf</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="mi">597</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Nested</span> <span class="n">functions</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="k">func</span> <span class="n">returnFifteen</span><span class="p">()</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Int</span> <span class="p">{</span> <span class="c1">// Wrapper function</span>
+</span><span class='line'>          <span class="k">var</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">10</span>
+</span><span class='line'>          <span class="k">func</span> <span class="n">add</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// Nested function</span>
+</span><span class='line'>              <span class="n">y</span> <span class="o">+=</span> <span class="mi">5</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>          <span class="n">add</span><span class="p">()</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">y</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="n">returnFifteen</span><span class="p">()</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Function</span> <span class="kt">as</span> <span class="k">return</span> <span class="n">value</span> <span class="p">(</span><span class="n">like</span> <span class="n">pointer</span> <span class="n">of</span> <span class="n">function</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="k">func</span> <span class="n">makeIncrementer</span><span class="p">()</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="p">(</span><span class="n">Int</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">func</span> <span class="n">addOne</span><span class="p">(</span><span class="nl">number</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>                  <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">number</span>
+</span><span class='line'>              <span class="p">}</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">addOne</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">var</span> <span class="n">increment</span> <span class="o">=</span> <span class="n">makeIncrementer</span><span class="p">()</span>
+</span><span class='line'>      <span class="n">increment</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Function</span> <span class="kt">as</span> <span class="n">parameter</span> <span class="p">(</span><span class="n">like</span> <span class="n">Comparator</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="c1">// Bubble sort with a custom comparator</span>
+</span><span class='line'>      <span class="k">func</span> <span class="n">sort</span><span class="p">(</span><span class="k">inout</span> <span class="nl">list</span><span class="p">:</span> <span class="p">[</span><span class="n">Int</span><span class="p">],</span> <span class="nl">sorter</span><span class="p">:</span> <span class="p">((</span><span class="n">Int</span><span class="p">,</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Bool</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">var</span> <span class="nl">i</span> <span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>          <span class="k">while</span> <span class="n">i</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">list</span><span class="p">.</span><span class="n">count</span> <span class="p">{</span>
+</span><span class='line'>              <span class="k">var</span> <span class="nl">j</span> <span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>              <span class="k">if</span> <span class="n">j</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">list</span><span class="p">.</span><span class="n">count</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> <span class="o">!</span><span class="n">sorter</span><span class="p">(</span><span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>                  <span class="k">var</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span><span class='line'>                  <span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+</span><span class='line'>                  <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
+</span><span class='line'>              <span class="p">}</span>
+</span><span class='line'>              <span class="n">i</span><span class="o">++</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">var</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class='line'>      <span class="k">func</span> <span class="n">sorter</span><span class="p">(</span><span class="nl">a</span> <span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">b</span> <span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Bool</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">a</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">b</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="n">sort</span><span class="p">(</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="n">list</span><span class="p">,</span> <span class="n">sorter</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Closure</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="n">numbers</span><span class="p">.</span><span class="n">map</span><span class="p">({</span>
+</span><span class='line'>          <span class="p">(</span><span class="nl">number</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Int</span> <span class="k">in</span>
+</span><span class='line'>          <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">result</span>
+</span><span class='line'>      <span class="p">})</span>
+</span><span class='line'>      <span class="c1">// can be simplied to</span>
+</span><span class='line'>      <span class="n">numbers</span><span class="p">.</span><span class="n">map</span><span class="p">({</span> <span class="n">number</span> <span class="k">in</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span> <span class="p">})</span>
+</span><span class='line'>      <span class="c1">// sort a array</span>
+</span><span class='line'>      <span class="k">var</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class='line'>      <span class="n">sort</span><span class="p">(</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="n">list</span><span class="p">)</span> <span class="c1">// NOT sort(list), this function only accept a reference</span>
+</span><span class='line'>      <span class="k">var</span> <span class="n">listSorted</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="c1">// This is OK</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;      init(sideLength: Double, name: String) {
-</span><span class='line'>      self.sideLength = sideLength
-</span><span class='line'>      super.init(name: name)
-</span><span class='line'>      numberOfSides = 4
-</span><span class='line'>  }
 </span><span class='line'>
-</span><span class='line'>  func area() -&gt; Double {
-</span><span class='line'>      return sideLength * sideLength
-</span><span class='line'>  }
+</span><span class='line'><span class="o">&lt;</span><span class="n">h2</span><span class="o">&gt;&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="n">Objects</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;</span> <span class="n">and</span> <span class="o">&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="n">Classes</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;&lt;/</span><span class="n">h2</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>  override func simpleDescription() -&gt; String {
-</span><span class='line'>      return "A square with sides of length \(sideLength)."
-</span><span class='line'>  }
-</span><span class='line'>  }
-</span><span class='line'>  let test = Square(sideLength: 5.2, name: "my test square")
-</span><span class='line'>  test.area()
-</span><span class='line'>  test.simpleDescription()
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">A</span> <span class="n">simple</span> <span class="k">class</span>
+</span></code></pre></td></tr></table></div></figure>
+      class Shape {
+          var numberOfSides = 0
+          func simpleDescription() -> String {
+                  return &ldquo;A shape with (numberOfSides) sides.&rdquo;
+              }
+      }</p>
+
+<pre><code>  var shape = Shape()
+  shape.numberOfSides = 7
+  var shapeDescription = shape.simpleDescription()
+</code></pre>
+
+<p>&#8220;`</p></li>
+<li><p>Initializer and its opposite
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">class</span> <span class="n">NamedShape</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">var</span> <span class="nl">numberOfSides</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>      <span class="k">var</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Setter and Getter on properties</span></code></pre></td></tr></table></div></figure>
-      class EquilateralTriangle: NamedShape {
-          var sideLength: Double = 0.0</p>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>      <span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nb">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">deinit</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">func</span> <span class="n">simpleDescription</span><span class="p">()</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="s">&quot;A shape with \(numberOfSides) sides.&quot;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Subclass</span>
+</span></code></pre></td></tr></table></div></figure>
+      class Square: NamedShape {
+          var sideLength: Double</p>
 
 <pre><code>      init(sideLength: Double, name: String) {
           self.sideLength = sideLength
           super.init(name: name)
-          numberOfSides = 3
+          numberOfSides = 4
       }
 
-      var perimeter: Double {
-      get {
-              return 3.0 * sideLength
-          }
-      set {
-              sideLength = newValue / 3.0
-          }
+      func area() -&gt; Double {
+          return sideLength * sideLength
       }
 
       override func simpleDescription() -&gt; String {
-          return "An equilateral triagle with sides of length \(sideLength)."
+          return "A square with sides of length \(sideLength)."
       }
   }
-  var triangle = EquilateralTriangle(sideLength: 3.1, name: "a triangle")
-  triangle.perimeter
-  triangle.perimeter = 9.9
-  triangle.sideLength
+  let test = Square(sideLength: 5.2, name: "my test square")
+  test.area()
+  test.simpleDescription()
 </code></pre>
 
 <p>&#8220;`</p></li>
-<li>Provide code after before or after setting properties
-<code>
-      class TriangleAndSquare {
-          var triangle: EquilateralTriangle {
-              willSet {                                    // Do something after before setting properties
-                  square.sideLength = newValue.sideLength
-              }
-          }
-          var square: Square {
-              willSet {                                    // Do something after before setting properties
-                  triangle.sideLength = newValue.sideLength
-              }
-          }
-          init(size: Double, name: String) {
-              square = Square(sideLength: size, name: name)
-              triangle = EquilateralTriangle(sideLength: size, name: name)
-          }
-      }
-      var triangleAndSquare = TriangleAndSquare(size: 10, name: "another test shape")
-      triangleAndSquare.square.sideLength
-      triangleAndSquare.triangle.sideLength
-      triangleAndSquare.square = Square(sideLength: 50, name: "larger square")
-      triangleAndSquare.triangle.sideLength
-</code></li>
-</ul>
-
-
-<h2><strong>Enumerations</strong> and <strong>Structures</strong></h2>
-
-<ul>
-<li><strong>Enumerations</strong> can have methods
-<code>
-      enum Rank: Int {
-          case Ace = 1
-          case Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten
-          case Jack, Queen, King
-          func simpleDescription() -&gt; String {
-              switch self {
-              case .Ace:
-                  return "ace"
-              case .Jack:
-                  return "jack"
-              case .Queen:
-                  return "queen"
-              case .King:
-                  return "king"
-              default:
-                  return String(self.toRaw())
-              }
-          }
-      }
-      let ace = Rank.Ace
-      let aceRawValue = ace.toRaw()
-</code></li>
-<li><p>Convert <em>enum</em> between raw values
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<li><p>Setter and Getter on properties
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1556,61 +1708,238 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>21</span>
 <span class='line-number'>22</span>
 <span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  let ace = Rank.Ace
-</span><span class='line'>  let aceRawValue = ace.toRaw()
-</span><span class='line'>  let aceString = ace.simpleDescription()&lt;/p&gt;
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">class</span> <span class="nl">EquilateralTriangle</span><span class="p">:</span> <span class="n">NamedShape</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">var</span> <span class="nl">sideLength</span><span class="p">:</span> <span class="n">Double</span> <span class="o">=</span> <span class="mf">0.0</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
 </span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  if let convertedRank = Rank.fromRaw(3) {
-</span><span class='line'>  let threeDescription = convertedRank.simpleDescription()
-</span><span class='line'>  }
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>      <span class="k">init</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nb">self</span><span class="p">.</span><span class="n">sideLength</span> <span class="o">=</span> <span class="n">sideLength</span>
+</span><span class='line'>      <span class="nb">super</span><span class="p">.</span><span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">numberOfSides</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'>  <span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;strong&gt;Structure&lt;/strong&gt; is similar to &lt;strong&gt;Class&lt;/strong&gt;, but when structures are always copied when they are passed around, while classes are passed by reference.
-</span><span class='line'>&lt;code&gt;
-</span><span class='line'>  struct Card {
-</span><span class='line'>      var rank: Rank
-</span><span class='line'>      var suit: Suit
-</span><span class='line'>      func simpleDescription() -&gt; String {
-</span><span class='line'>          return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
-</span><span class='line'>      }
-</span><span class='line'>  }
-</span><span class='line'>  let threeOfSpades = Card(rank: .Three, suit: .Spades)
-</span><span class='line'>  let threeOfSpadesDescription = threeOfSpades.simpleDescription()
-</span><span class='line'>&lt;/code&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;&lt;strong&gt;Structure&lt;/strong&gt; with associated values.</span></code></pre></td></tr></table></div></figure>
-      enum ServerResponse {
-          case Result(String, String)
-          case Error(String)
-      }</p>
+</span><span class='line'>  <span class="k">var</span> <span class="nl">perimeter</span><span class="p">:</span> <span class="n">Double</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kr">get</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">sideLength</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="kr">set</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">sideLength</span> <span class="o">=</span> <span class="n">newValue</span> <span class="o">/</span> <span class="mf">3.0</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kr">override</span> <span class="k">func</span> <span class="n">simpleDescription</span><span class="p">()</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="s">&quot;An equilateral triagle with sides of length \(sideLength).&quot;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">var</span> <span class="n">triangle</span> <span class="o">=</span> <span class="n">EquilateralTriangle</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="mf">3.1</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="s">&quot;a triangle&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">triangle</span><span class="p">.</span><span class="n">perimeter</span>
+</span><span class='line'>  <span class="n">triangle</span><span class="p">.</span><span class="n">perimeter</span> <span class="o">=</span> <span class="mf">9.9</span>
+</span><span class='line'>  <span class="n">triangle</span><span class="p">.</span><span class="n">sideLength</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Provide</span> <span class="n">code</span> <span class="n">after</span> <span class="n">before</span> <span class="n">or</span> <span class="n">after</span> <span class="n">setting</span> <span class="n">properties</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">class</span> <span class="n">TriangleAndSquare</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">var</span> <span class="nl">triangle</span><span class="p">:</span> <span class="n">EquilateralTriangle</span> <span class="p">{</span>
+</span><span class='line'>          <span class="kr">willSet</span> <span class="p">{</span>                                    <span class="c1">// Do something after before setting properties</span>
+</span><span class='line'>              <span class="n">square</span><span class="p">.</span><span class="n">sideLength</span> <span class="o">=</span> <span class="n">newValue</span><span class="p">.</span><span class="n">sideLength</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">var</span> <span class="nl">square</span><span class="p">:</span> <span class="n">Square</span> <span class="p">{</span>
+</span><span class='line'>          <span class="kr">willSet</span> <span class="p">{</span>                                    <span class="c1">// Do something after before setting properties</span>
+</span><span class='line'>              <span class="n">triangle</span><span class="p">.</span><span class="n">sideLength</span> <span class="o">=</span> <span class="n">newValue</span><span class="p">.</span><span class="n">sideLength</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">init</span><span class="p">(</span><span class="nl">size</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">square</span> <span class="o">=</span> <span class="n">Square</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="n">size</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>
+</span><span class='line'>          <span class="n">triangle</span> <span class="o">=</span> <span class="n">EquilateralTriangle</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="n">size</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">var</span> <span class="n">triangleAndSquare</span> <span class="o">=</span> <span class="n">TriangleAndSquare</span><span class="p">(</span><span class="nl">size</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="s">&quot;another test shape&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">triangleAndSquare</span><span class="p">.</span><span class="n">square</span><span class="p">.</span><span class="n">sideLength</span>
+</span><span class='line'>  <span class="n">triangleAndSquare</span><span class="p">.</span><span class="n">triangle</span><span class="p">.</span><span class="n">sideLength</span>
+</span><span class='line'>  <span class="n">triangleAndSquare</span><span class="p">.</span><span class="n">square</span> <span class="o">=</span> <span class="n">Square</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="s">&quot;larger square&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">triangleAndSquare</span><span class="p">.</span><span class="n">triangle</span><span class="p">.</span><span class="n">sideLength</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h2</span><span class="o">&gt;&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="n">Enumerations</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;</span> <span class="n">and</span> <span class="o">&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="n">Structures</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;&lt;/</span><span class="n">h2</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="n">Enumerations</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;</span> <span class="n">can</span> <span class="n">have</span> <span class="n">methods</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">enum</span> <span class="nl">Rank</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">case</span> <span class="n">Ace</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>      <span class="k">case</span> <span class="n">Two</span><span class="p">,</span> <span class="n">Three</span><span class="p">,</span> <span class="n">Four</span><span class="p">,</span> <span class="n">Five</span><span class="p">,</span> <span class="n">Six</span><span class="p">,</span> <span class="n">Seven</span><span class="p">,</span> <span class="n">Eight</span><span class="p">,</span> <span class="n">Nine</span><span class="p">,</span> <span class="n">Ten</span>
+</span><span class='line'>      <span class="k">case</span> <span class="n">Jack</span><span class="p">,</span> <span class="n">Queen</span><span class="p">,</span> <span class="n">King</span>
+</span><span class='line'>      <span class="k">func</span> <span class="n">simpleDescription</span><span class="p">()</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">switch</span> <span class="nb">self</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">case</span> <span class="p">.</span><span class="nl">Ace</span><span class="p">:</span>
+</span><span class='line'>              <span class="k">return</span> <span class="s">&quot;ace&quot;</span>
+</span><span class='line'>          <span class="k">case</span> <span class="p">.</span><span class="nl">Jack</span><span class="p">:</span>
+</span><span class='line'>              <span class="k">return</span> <span class="s">&quot;jack&quot;</span>
+</span><span class='line'>          <span class="k">case</span> <span class="p">.</span><span class="nl">Queen</span><span class="p">:</span>
+</span><span class='line'>              <span class="k">return</span> <span class="s">&quot;queen&quot;</span>
+</span><span class='line'>          <span class="k">case</span> <span class="p">.</span><span class="nl">King</span><span class="p">:</span>
+</span><span class='line'>              <span class="k">return</span> <span class="s">&quot;king&quot;</span>
+</span><span class='line'>          <span class="k">default</span><span class="o">:</span>
+</span><span class='line'>              <span class="k">return</span> <span class="n">String</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="n">toRaw</span><span class="p">())</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">ace</span> <span class="o">=</span> <span class="n">Rank</span><span class="p">.</span><span class="n">Ace</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">aceRawValue</span> <span class="o">=</span> <span class="n">ace</span><span class="p">.</span><span class="n">toRaw</span><span class="p">()</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Convert</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="k">enum</span><span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span> <span class="n">between</span> <span class="n">raw</span> <span class="n">values</span>
+</span></code></pre></td></tr></table></div></figure>
+      let ace = Rank.Ace
+      let aceRawValue = ace.toRaw()
+      let aceString = ace.simpleDescription()</p>
 
-<pre><code>  let success = ServerResponse.Result("6:00 am", "8:09 pm")
-  let failure = ServerResponse.Error("Out of cheese.")
-
-  switch success {
-  case let .Result(sunrise, sunset):
-      let serverResponse = "Sunrise is at \(sunrise) and sunset is at \(sunset)."
-  case let .Error(error):
-      let serverResponse = "Failure...  \(error)"
+<pre><code>  if let convertedRank = Rank.fromRaw(3) {
+      let threeDescription = convertedRank.simpleDescription()
   }
 </code></pre>
 
 <p>&#8220;`</p></li>
-</ul>
-
-
-<h2><strong>Protocols</strong> and <strong>Extendsions</strong></h2>
-
-<ul>
-<li>A classic <strong>Protocol</strong>.
+<li><strong>Structure</strong> is similar to <strong>Class</strong>, but when structures are always copied when they are passed around, while classes are passed by reference.
 <code>
-      protocol ExampleProtocol {
-          var simpleDescription: String { get }
-          mutating func adjust()  // "mutating" is needed when a protocol need to modify a structure
+      struct Card {
+          var rank: Rank
+          var suit: Suit
+          func simpleDescription() -&gt; String {
+              return "The \(rank.simpleDescription()) of \(suit.simpleDescription())"
+          }
       }
+      let threeOfSpades = Card(rank: .Three, suit: .Spades)
+      let threeOfSpadesDescription = threeOfSpades.simpleDescription()
 </code></li>
-<li><p><strong>Classes</strong>, enumerations and structures can all adopt protocols.
-&#8220;`
+<li><p><strong>Structure</strong> with associated values.
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">enum</span> <span class="n">ServerResponse</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">case</span> <span class="n">Result</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">case</span> <span class="n">Error</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">let</span> <span class="n">success</span> <span class="o">=</span> <span class="n">ServerResponse</span><span class="p">.</span><span class="n">Result</span><span class="p">(</span><span class="s">&quot;6:00 am&quot;</span><span class="p">,</span> <span class="s">&quot;8:09 pm&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">failure</span> <span class="o">=</span> <span class="n">ServerResponse</span><span class="p">.</span><span class="n">Error</span><span class="p">(</span><span class="s">&quot;Out of cheese.&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">switch</span> <span class="n">success</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">case</span> <span class="k">let</span> <span class="p">.</span><span class="n">Result</span><span class="p">(</span><span class="n">sunrise</span><span class="p">,</span> <span class="n">sunset</span><span class="p">)</span><span class="o">:</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">serverResponse</span> <span class="o">=</span> <span class="s">&quot;Sunrise is at \(sunrise) and sunset is at \(sunset).&quot;</span>
+</span><span class='line'>  <span class="k">case</span> <span class="k">let</span> <span class="p">.</span><span class="n">Error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span><span class="o">:</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">serverResponse</span> <span class="o">=</span> <span class="s">&quot;Failure...  \(error)&quot;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h2</span><span class="o">&gt;&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="n">Protocols</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;</span> <span class="n">and</span> <span class="o">&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="n">Extendsions</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;&lt;/</span><span class="n">h2</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">A</span> <span class="n">classic</span> <span class="o">&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="n">Protocol</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;</span><span class="p">.</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">protocol</span> <span class="n">ExampleProtocol</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">var</span> <span class="nl">simpleDescription</span><span class="p">:</span> <span class="n">String</span> <span class="p">{</span> <span class="kr">get</span> <span class="p">}</span>
+</span><span class='line'>      <span class="kr">mutating</span> <span class="k">func</span> <span class="n">adjust</span><span class="p">()</span>  <span class="c1">// &quot;mutating&quot; is needed when a protocol need to modify a structure</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;&lt;</span><span class="k">strong</span><span class="o">&gt;</span><span class="n">Classes</span><span class="o">&lt;/</span><span class="k">strong</span><span class="o">&gt;</span><span class="p">,</span> <span class="n">enumerations</span> <span class="n">and</span> <span class="n">structures</span> <span class="n">can</span> <span class="n">all</span> <span class="n">adopt</span> <span class="n">protocols</span><span class="p">.</span>
+</span></code></pre></td></tr></table></div></figure>
       class SimpleClass: ExampleProtocol {
           var simpleDescription: String = &ldquo;A very simple class.&rdquo;
           var anotherProperty: Int = 69105
