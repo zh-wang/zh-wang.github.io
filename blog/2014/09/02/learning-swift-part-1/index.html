@@ -292,13 +292,10 @@ Most code are from the guide, with some modification by me.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<ul>
-<li>Control Flows
+<h2>Control Flows</h2>
 
 <ul>
 <li><strong>for-in</strong></li>
-</ul>
-</li>
 </ul>
 
 
@@ -312,21 +309,23 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">let</span> <span class="n">individualScores</span> <span class="o">=</span> <span class="p">[</span><span class="mi">75</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">teamScore</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>        <span class="k">for</span> <span class="n">score</span> <span class="k">in</span> <span class="n">individualScores</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="mi">50</span> <span class="p">{</span>
-</span><span class='line'>                <span class="n">teamScore</span> <span class="o">+=</span> <span class="mi">3</span>
-</span><span class='line'>            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>                <span class="n">teamScore</span> <span class="o">+=</span> <span class="mi">1</span>
-</span><span class='line'>            <span class="p">}</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">individualScores</span> <span class="o">=</span> <span class="p">[</span><span class="mi">75</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">103</span><span class="p">,</span> <span class="mi">87</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">teamScore</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">score</span> <span class="k">in</span> <span class="n">individualScores</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">score</span> <span class="o">&gt;</span> <span class="mi">50</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">teamScore</span> <span class="o">+=</span> <span class="mi">3</span>
+</span><span class='line'>        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">teamScore</span> <span class="o">+=</span> <span class="mi">1</span>
 </span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="n">teamScore</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">teamScore</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ optional-value with __if__
-</code></pre>
+<ul>
+<li>optional-value with <strong>if</strong></li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -336,19 +335,21 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">var</span> <span class="nl">optionalString</span><span class="p">:</span> <span class="n">String</span><span class="o">?</span> <span class="o">=</span> <span class="s">&quot;Hello&quot;</span>
-</span><span class='line'>        <span class="n">optionalString</span> <span class="o">==</span> <span class="nb">nil</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">var</span> <span class="nl">optionalString</span><span class="p">:</span> <span class="n">String</span><span class="o">?</span> <span class="o">=</span> <span class="s">&quot;Hello&quot;</span>
+</span><span class='line'>    <span class="n">optionalString</span> <span class="o">==</span> <span class="nb">nil</span>
 </span><span class='line'>
-</span><span class='line'>        <span class="k">var</span> <span class="nl">optionalName</span><span class="p">:</span> <span class="n">String</span><span class="o">?</span> <span class="o">=</span> <span class="s">&quot;John Appleseed&quot;</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">greeting</span> <span class="o">=</span> <span class="s">&quot;Hello!&quot;</span>
-</span><span class='line'>        <span class="k">if</span> <span class="k">let</span> <span class="n">name</span> <span class="o">=</span> <span class="n">optionalName</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">greeting</span> <span class="o">=</span> <span class="s">&quot;Hello, \(name)&quot;</span>
-</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">optionalName</span><span class="p">:</span> <span class="n">String</span><span class="o">?</span> <span class="o">=</span> <span class="s">&quot;John Appleseed&quot;</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">greeting</span> <span class="o">=</span> <span class="s">&quot;Hello!&quot;</span>
+</span><span class='line'>    <span class="k">if</span> <span class="k">let</span> <span class="n">name</span> <span class="o">=</span> <span class="n">optionalName</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">greeting</span> <span class="o">=</span> <span class="s">&quot;Hello, \(name)&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ __switch__
-</code></pre>
+<ul>
+<li><strong>switch</strong></li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -361,22 +362,24 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">let</span> <span class="n">vegetable</span> <span class="o">=</span> <span class="s">&quot;red pepper&quot;</span>
-</span><span class='line'>        <span class="k">switch</span> <span class="n">vegetable</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">case</span> <span class="s">&quot;celery&quot;</span><span class="o">:</span>
-</span><span class='line'>                <span class="k">let</span> <span class="n">vegetableComment</span> <span class="o">=</span> <span class="s">&quot;Add some raisins and make ants on a log.&quot;</span>
-</span><span class='line'>            <span class="k">case</span> <span class="s">&quot;cucumber&quot;</span><span class="p">,</span> <span class="s">&quot;watercress&quot;</span><span class="o">:</span>
-</span><span class='line'>                <span class="k">let</span> <span class="n">vegetableComment</span> <span class="o">=</span> <span class="s">&quot;That would make a good tea sandwich.&quot;</span>
-</span><span class='line'>            <span class="k">case</span> <span class="k">let</span> <span class="n">x</span> <span class="k">where</span> <span class="n">x</span><span class="p">.</span><span class="n">hasSuffix</span><span class="p">(</span><span class="s">&quot;pepper&quot;</span><span class="p">)</span><span class="o">:</span>
-</span><span class='line'>                <span class="k">let</span> <span class="n">vegetableComment</span> <span class="o">=</span> <span class="s">&quot;Is it a spicy \(x)?&quot;</span>
-</span><span class='line'>            <span class="k">default</span><span class="o">:</span>
-</span><span class='line'>                <span class="k">let</span> <span class="n">vegetableComment</span> <span class="o">=</span> <span class="s">&quot;Everything tastes good in soup.&quot;</span>
-</span><span class='line'>        <span class="p">}</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">vegetable</span> <span class="o">=</span> <span class="s">&quot;red pepper&quot;</span>
+</span><span class='line'>    <span class="k">switch</span> <span class="n">vegetable</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">case</span> <span class="s">&quot;celery&quot;</span><span class="o">:</span>
+</span><span class='line'>            <span class="k">let</span> <span class="n">vegetableComment</span> <span class="o">=</span> <span class="s">&quot;Add some raisins and make ants on a log.&quot;</span>
+</span><span class='line'>        <span class="k">case</span> <span class="s">&quot;cucumber&quot;</span><span class="p">,</span> <span class="s">&quot;watercress&quot;</span><span class="o">:</span>
+</span><span class='line'>            <span class="k">let</span> <span class="n">vegetableComment</span> <span class="o">=</span> <span class="s">&quot;That would make a good tea sandwich.&quot;</span>
+</span><span class='line'>        <span class="k">case</span> <span class="k">let</span> <span class="n">x</span> <span class="k">where</span> <span class="n">x</span><span class="p">.</span><span class="n">hasSuffix</span><span class="p">(</span><span class="s">&quot;pepper&quot;</span><span class="p">)</span><span class="o">:</span>
+</span><span class='line'>            <span class="k">let</span> <span class="n">vegetableComment</span> <span class="o">=</span> <span class="s">&quot;Is it a spicy \(x)?&quot;</span>
+</span><span class='line'>        <span class="k">default</span><span class="o">:</span>
+</span><span class='line'>            <span class="k">let</span> <span class="n">vegetableComment</span> <span class="o">=</span> <span class="s">&quot;Everything tastes good in soup.&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ __for-in__ in _dictionary_
-</code></pre>
+<ul>
+<li><strong>for-in</strong> in <em>dictionary</em></li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -392,25 +395,27 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">let</span> <span class="n">interestingNumbers</span> <span class="o">=</span> <span class="p">[</span>
-</span><span class='line'>            <span class="s">&quot;Prime&quot;</span><span class="o">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">],</span>
-</span><span class='line'>            <span class="s">&quot;Fibonacci&quot;</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
-</span><span class='line'>            <span class="s">&quot;Square&quot;</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">],</span>
-</span><span class='line'>        <span class="p">]</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">largest</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>        <span class="k">for</span> <span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span> <span class="k">in</span> <span class="n">interestingNumbers</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">for</span> <span class="n">number</span> <span class="k">in</span> <span class="n">numbers</span> <span class="p">{</span>
-</span><span class='line'>                <span class="k">if</span> <span class="n">number</span> <span class="o">&gt;</span> <span class="n">largest</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="n">largest</span> <span class="o">=</span> <span class="n">number</span>
-</span><span class='line'>                <span class="p">}</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">interestingNumbers</span> <span class="o">=</span> <span class="p">[</span>
+</span><span class='line'>        <span class="s">&quot;Prime&quot;</span><span class="o">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">],</span>
+</span><span class='line'>        <span class="s">&quot;Fibonacci&quot;</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span>
+</span><span class='line'>        <span class="s">&quot;Square&quot;</span><span class="o">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">25</span><span class="p">],</span>
+</span><span class='line'>    <span class="p">]</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">largest</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">kind</span><span class="p">,</span> <span class="n">numbers</span><span class="p">)</span> <span class="k">in</span> <span class="n">interestingNumbers</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">number</span> <span class="k">in</span> <span class="n">numbers</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">number</span> <span class="o">&gt;</span> <span class="n">largest</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">largest</span> <span class="o">=</span> <span class="n">number</span>
 </span><span class='line'>            <span class="p">}</span>
 </span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="n">largest</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">largest</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ __while__ and __do-while__
-</code></pre>
+<ul>
+<li><strong>while</strong> and <strong>do-while</strong></li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -423,22 +428,24 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">var</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>
-</span><span class='line'>        <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">100</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="mi">2</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="n">n</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">var</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class='line'>    <span class="k">while</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">100</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="mi">2</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">n</span>
 </span><span class='line'>
-</span><span class='line'>        <span class="k">var</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">2</span>
-</span><span class='line'>        <span class="k">do</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">m</span> <span class="o">=</span> <span class="n">m</span> <span class="o">*</span> <span class="mi">2</span>
-</span><span class='line'>        <span class="p">}</span> <span class="k">while</span> <span class="n">m</span> <span class="o">&lt;</span> <span class="mi">100</span>
-</span><span class='line'>        <span class="n">m</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">m</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span class='line'>    <span class="k">do</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">m</span> <span class="o">=</span> <span class="n">m</span> <span class="o">*</span> <span class="mi">2</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">while</span> <span class="n">m</span> <span class="o">&lt;</span> <span class="mi">100</span>
+</span><span class='line'>    <span class="n">m</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ range operators
-</code></pre>
+<ul>
+<li>range operators</li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -447,23 +454,36 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mf">0.</span><span class="p">.</span><span class="o">&lt;</span><span class="mi">3</span> <span class="p">{</span>
-</span><span class='line'>            <span class="c1">// do something, for 0, 1, 2</span>
-</span><span class='line'>        <span class="p">}</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mf">0.</span><span class="p">.</span><span class="o">&lt;</span><span class="mi">3</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// do something, for 0, 1, 2</span>
+</span><span class='line'>    <span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>        <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mf">0.</span><span class="p">.</span><span class="mf">.3</span> <span class="p">{</span>
-</span><span class='line'>            <span class="c1">// do something, for 0, 1, 2, 3</span>
-</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mf">0.</span><span class="p">.</span><span class="mf">.3</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// do something, for 0, 1, 2, 3</span>
+</span><span class='line'>    <span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<ul>
-<li><strong>Functions</strong> and <strong>Closures</strong>
+<h2><strong>Functions</strong> and <strong>Closures</strong></h2>
 
 <ul>
 <li>A classic one</li>
 </ul>
-</li>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">greet</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">day</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="s">&quot;Hello \(name), today is \(day).&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">greet</span><span class="p">(</span><span class="s">&quot;Bob&quot;</span><span class="p">,</span> <span class="s">&quot;Tuesday&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Use a <strong>tuple</strong> as return value</li>
 </ul>
 
 
@@ -471,29 +491,17 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">func</span> <span class="n">greet</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">day</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="s">&quot;Hello \(name), today is \(day).&quot;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="n">greet</span><span class="p">(</span><span class="s">&quot;Bob&quot;</span><span class="p">,</span> <span class="s">&quot;Tuesday&quot;</span><span class="p">)</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="nf">getGasPrices</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">Double</span><span class="p">,</span> <span class="n">Double</span><span class="p">,</span> <span class="n">Double</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="p">(</span><span class="mf">3.59</span><span class="p">,</span> <span class="mf">3.69</span><span class="p">,</span> <span class="mf">3.79</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">getGasPrices</span><span class="p">()</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ Use a __tuple__ as return value
-</code></pre>
+<ul>
+<li>Variable Arguments (varargs)</li>
+</ul>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">func</span> <span class="nf">getGasPrices</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">Double</span><span class="p">,</span> <span class="n">Double</span><span class="p">,</span> <span class="n">Double</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="p">(</span><span class="mf">3.59</span><span class="p">,</span> <span class="mf">3.69</span><span class="p">,</span> <span class="mf">3.79</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="n">getGasPrices</span><span class="p">()</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<pre><code>+ Variable Arguments (varargs)
-</code></pre>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -504,44 +512,22 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">func</span> <span class="n">sumOf</span><span class="p">(</span><span class="nl">numbers</span><span class="p">:</span> <span class="n">Int</span><span class="p">...)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">var</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>            <span class="k">for</span> <span class="n">number</span> <span class="k">in</span> <span class="n">numbers</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="n">sum</span> <span class="o">+=</span> <span class="n">number</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="k">return</span> <span class="n">sum</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="n">sumOf</span><span class="p">()</span>
-</span><span class='line'>        <span class="n">sumOf</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="mi">597</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<pre><code>+ Nested functions
-</code></pre>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">func</span> <span class="nf">returnFifteen</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span> <span class="c1">// Wrapper function</span>
-</span><span class='line'>            <span class="k">var</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">10</span>
-</span><span class='line'>            <span class="k">func</span> <span class="n">add</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// Nested function</span>
-</span><span class='line'>                <span class="n">y</span> <span class="o">+=</span> <span class="mi">5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">sumOf</span><span class="p">(</span><span class="nl">numbers</span><span class="p">:</span> <span class="n">Int</span><span class="p">...)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">number</span> <span class="k">in</span> <span class="n">numbers</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">sum</span> <span class="o">+=</span> <span class="n">number</span>
 </span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>            <span class="n">add</span><span class="p">()</span>
-</span><span class='line'>            <span class="k">return</span> <span class="n">y</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="n">returnFifteen</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">sum</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">sumOf</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">sumOf</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="mi">597</span><span class="p">,</span> <span class="mi">12</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ Function as return value (like pointer of function)
-</code></pre>
+<ul>
+<li>Nested functions</li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -551,19 +537,47 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">func</span> <span class="nf">makeIncrementer</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">Int</span> <span class="o">-&gt;</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">func</span> <span class="n">addOne</span><span class="p">(</span><span class="nl">number</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">number</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="k">return</span> <span class="n">addOne</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="nf">returnFifteen</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span> <span class="c1">// Wrapper function</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">10</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">add</span><span class="p">()</span> <span class="p">{</span> <span class="c1">// Nested function</span>
+</span><span class='line'>            <span class="n">y</span> <span class="o">+=</span> <span class="mi">5</span>
 </span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">increment</span> <span class="o">=</span> <span class="n">makeIncrementer</span><span class="p">()</span>
-</span><span class='line'>        <span class="n">increment</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">add</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">y</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">returnFifteen</span><span class="p">()</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ Function as parameter (like Comparator)
-</code></pre>
+<ul>
+<li>Function as return value (like pointer of function)</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="nf">makeIncrementer</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">Int</span> <span class="o">-&gt;</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">addOne</span><span class="p">(</span><span class="nl">number</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">return</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">number</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">addOne</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">increment</span> <span class="o">=</span> <span class="n">makeIncrementer</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">increment</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Function as parameter (like Comparator)</li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -583,29 +597,31 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
 <span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="c1">// Bubble sort with a custom comparator</span>
-</span><span class='line'>        <span class="k">func</span> <span class="nf">sort</span><span class="p">(</span><span class="k">inout</span> <span class="nl">list</span><span class="p">:</span> <span class="p">[</span><span class="n">Int</span><span class="p">],</span> <span class="nl">sorter</span><span class="p">:</span> <span class="p">((</span><span class="n">Int</span><span class="p">,</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">var</span> <span class="nl">i</span> <span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>            <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">list</span><span class="p">.</span><span class="n">count</span> <span class="p">{</span>
-</span><span class='line'>                <span class="k">var</span> <span class="nl">j</span> <span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
-</span><span class='line'>                <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">list</span><span class="p">.</span><span class="n">count</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">sorter</span><span class="p">(</span><span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="k">var</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-</span><span class='line'>                    <span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
-</span><span class='line'>                    <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>                <span class="n">i</span><span class="o">++</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="c1">// Bubble sort with a custom comparator</span>
+</span><span class='line'>    <span class="k">func</span> <span class="nf">sort</span><span class="p">(</span><span class="k">inout</span> <span class="nl">list</span><span class="p">:</span> <span class="p">[</span><span class="n">Int</span><span class="p">],</span> <span class="nl">sorter</span><span class="p">:</span> <span class="p">((</span><span class="n">Int</span><span class="p">,</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">i</span> <span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">list</span><span class="p">.</span><span class="n">count</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">var</span> <span class="nl">j</span> <span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">list</span><span class="p">.</span><span class="n">count</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">sorter</span><span class="p">(</span><span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">var</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span><span class='line'>                <span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+</span><span class='line'>                <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
 </span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="n">i</span><span class="o">++</span>
 </span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-</span><span class='line'>        <span class="k">func</span> <span class="n">sorter</span><span class="p">(</span><span class="nl">a</span> <span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">b</span> <span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="n">sort</span><span class="p">(</span><span class="o">&amp;</span><span class="n">list</span><span class="p">,</span> <span class="n">sorter</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class='line'>    <span class="k">func</span> <span class="n">sorter</span><span class="p">(</span><span class="nl">a</span> <span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">b</span> <span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">sort</span><span class="p">(</span><span class="o">&amp;</span><span class="n">list</span><span class="p">,</span> <span class="n">sorter</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ Closure
-</code></pre>
+<ul>
+<li>Closure</li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -618,27 +634,24 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="n">numbers</span><span class="p">.</span><span class="n">map</span><span class="p">({</span>
-</span><span class='line'>            <span class="p">(</span><span class="nl">number</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="k">in</span>
-</span><span class='line'>            <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span>
-</span><span class='line'>            <span class="k">return</span> <span class="n">result</span>
-</span><span class='line'>        <span class="p">})</span>
-</span><span class='line'>        <span class="c1">// can be simplied to</span>
-</span><span class='line'>        <span class="n">numbers</span><span class="p">.</span><span class="n">map</span><span class="p">({</span> <span class="n">number</span> <span class="k">in</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span> <span class="p">})</span>
-</span><span class='line'>        <span class="c1">// sort a array</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-</span><span class='line'>        <span class="n">sort</span><span class="p">(</span><span class="o">&amp;</span><span class="n">list</span><span class="p">)</span> <span class="c1">// NOT sort(list), this function only accept a reference</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">listSorted</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="c1">// This is OK</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="n">numbers</span><span class="p">.</span><span class="n">map</span><span class="p">({</span>
+</span><span class='line'>        <span class="p">(</span><span class="nl">number</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="k">in</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">result</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'>    <span class="c1">// can be simplied to</span>
+</span><span class='line'>    <span class="n">numbers</span><span class="p">.</span><span class="n">map</span><span class="p">({</span> <span class="n">number</span> <span class="k">in</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span> <span class="p">})</span>
+</span><span class='line'>    <span class="c1">// sort a array</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class='line'>    <span class="n">sort</span><span class="p">(</span><span class="o">&amp;</span><span class="n">list</span><span class="p">)</span> <span class="c1">// NOT sort(list), this function only accept a reference</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">listSorted</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="c1">// This is OK</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<ul>
-<li><strong>Objects</strong> and <strong>Classes</strong>
+<h2><strong>Objects</strong> and <strong>Classes</strong></h2>
 
 <ul>
 <li>A simple class</li>
-</ul>
-</li>
 </ul>
 
 
@@ -652,21 +665,23 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">class</span> <span class="n">Shape</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">var</span> <span class="n">numberOfSides</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>            <span class="k">func</span> <span class="n">simpleDescription</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="k">return</span> <span class="s">&quot;A shape with \(numberOfSides) sides.&quot;</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>        <span class="p">}</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">class</span> <span class="n">Shape</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">numberOfSides</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">simpleDescription</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">return</span> <span class="s">&quot;A shape with \(numberOfSides) sides.&quot;</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>        <span class="k">var</span> <span class="n">shape</span> <span class="o">=</span> <span class="n">Shape</span><span class="p">()</span>
-</span><span class='line'>        <span class="n">shape</span><span class="p">.</span><span class="n">numberOfSides</span> <span class="o">=</span> <span class="mi">7</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">shapeDescription</span> <span class="o">=</span> <span class="n">shape</span><span class="p">.</span><span class="n">simpleDescription</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">shape</span> <span class="o">=</span> <span class="n">Shape</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">shape</span><span class="p">.</span><span class="n">numberOfSides</span> <span class="o">=</span> <span class="mi">7</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">shapeDescription</span> <span class="o">=</span> <span class="n">shape</span><span class="p">.</span><span class="n">simpleDescription</span><span class="p">()</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ Initializer and its opposite
-</code></pre>
+<ul>
+<li>Initializer and its opposite</li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -684,27 +699,29 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>14</span>
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">class</span> <span class="n">NamedShape</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">var</span> <span class="nl">numberOfSides</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>            <span class="k">var</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">class</span> <span class="n">NamedShape</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">numberOfSides</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span>
 </span><span class='line'>
-</span><span class='line'>            <span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nb">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="k">deinit</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="k">func</span> <span class="n">simpleDescription</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
-</span><span class='line'>                <span class="k">return</span> <span class="s">&quot;A shape with \(numberOfSides) sides.&quot;</span>
-</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nb">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
 </span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">deinit</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">func</span> <span class="n">simpleDescription</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="s">&quot;A shape with \(numberOfSides) sides.&quot;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ Subclass
-</code></pre>
+<ul>
+<li>Subclass</li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -726,31 +743,33 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
 <span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">class</span> <span class="nl">Square</span><span class="p">:</span> <span class="n">NamedShape</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">var</span> <span class="nl">sideLength</span><span class="p">:</span> <span class="n">Double</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">class</span> <span class="nl">Square</span><span class="p">:</span> <span class="n">NamedShape</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">sideLength</span><span class="p">:</span> <span class="n">Double</span>
 </span><span class='line'>
-</span><span class='line'>            <span class="k">init</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nb">self</span><span class="p">.</span><span class="n">sideLength</span> <span class="o">=</span> <span class="n">sideLength</span>
-</span><span class='line'>                <span class="nb">super</span><span class="p">.</span><span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>
-</span><span class='line'>                <span class="n">numberOfSides</span> <span class="o">=</span> <span class="mi">4</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="k">func</span> <span class="n">area</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Double</span> <span class="p">{</span>
-</span><span class='line'>                <span class="k">return</span> <span class="n">sideLength</span> <span class="o">*</span> <span class="n">sideLength</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="kr">override</span> <span class="k">func</span> <span class="n">simpleDescription</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
-</span><span class='line'>                <span class="k">return</span> <span class="s">&quot;A square with sides of length \(sideLength).&quot;</span>
-</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="k">init</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nb">self</span><span class="p">.</span><span class="n">sideLength</span> <span class="o">=</span> <span class="n">sideLength</span>
+</span><span class='line'>            <span class="nb">super</span><span class="p">.</span><span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">numberOfSides</span> <span class="o">=</span> <span class="mi">4</span>
 </span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">let</span> <span class="n">test</span> <span class="o">=</span> <span class="n">Square</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="s">&quot;my test square&quot;</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">test</span><span class="p">.</span><span class="n">area</span><span class="p">()</span>
-</span><span class='line'>        <span class="n">test</span><span class="p">.</span><span class="n">simpleDescription</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">func</span> <span class="n">area</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Double</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">sideLength</span> <span class="o">*</span> <span class="n">sideLength</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kr">override</span> <span class="k">func</span> <span class="n">simpleDescription</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="s">&quot;A square with sides of length \(sideLength).&quot;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">test</span> <span class="o">=</span> <span class="n">Square</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="mf">5.2</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="s">&quot;my test square&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">test</span><span class="p">.</span><span class="n">area</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">test</span><span class="p">.</span><span class="n">simpleDescription</span><span class="p">()</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ Setter and Getter on properties
-</code></pre>
+<ul>
+<li>Setter and Getter on properties</li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -778,37 +797,39 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>24</span>
 <span class='line-number'>25</span>
 <span class='line-number'>26</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">class</span> <span class="nl">EquilateralTriangle</span><span class="p">:</span> <span class="n">NamedShape</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">var</span> <span class="nl">sideLength</span><span class="p">:</span> <span class="n">Double</span> <span class="o">=</span> <span class="mf">0.0</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">class</span> <span class="nl">EquilateralTriangle</span><span class="p">:</span> <span class="n">NamedShape</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">sideLength</span><span class="p">:</span> <span class="n">Double</span> <span class="o">=</span> <span class="mf">0.0</span>
 </span><span class='line'>
-</span><span class='line'>            <span class="k">init</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nb">self</span><span class="p">.</span><span class="n">sideLength</span> <span class="o">=</span> <span class="n">sideLength</span>
-</span><span class='line'>                <span class="nb">super</span><span class="p">.</span><span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>
-</span><span class='line'>                <span class="n">numberOfSides</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'>        <span class="k">init</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nb">self</span><span class="p">.</span><span class="n">sideLength</span> <span class="o">=</span> <span class="n">sideLength</span>
+</span><span class='line'>            <span class="nb">super</span><span class="p">.</span><span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">numberOfSides</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">perimeter</span><span class="p">:</span> <span class="n">Double</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kr">get</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">return</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">sideLength</span>
 </span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="k">var</span> <span class="nl">perimeter</span><span class="p">:</span> <span class="n">Double</span> <span class="p">{</span>
-</span><span class='line'>            <span class="kr">get</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="k">return</span> <span class="mf">3.0</span> <span class="o">*</span> <span class="n">sideLength</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="kr">set</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="n">sideLength</span> <span class="o">=</span> <span class="n">newValue</span> <span class="o">/</span> <span class="mf">3.0</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>            <span class="kr">override</span> <span class="k">func</span> <span class="n">simpleDescription</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
-</span><span class='line'>                <span class="k">return</span> <span class="s">&quot;An equilateral triagle with sides of length \(sideLength).&quot;</span>
+</span><span class='line'>        <span class="kr">set</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">sideLength</span> <span class="o">=</span> <span class="n">newValue</span> <span class="o">/</span> <span class="mf">3.0</span>
 </span><span class='line'>            <span class="p">}</span>
 </span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">triangle</span> <span class="o">=</span> <span class="n">EquilateralTriangle</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="mf">3.1</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="s">&quot;a triangle&quot;</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">triangle</span><span class="p">.</span><span class="n">perimeter</span>
-</span><span class='line'>        <span class="n">triangle</span><span class="p">.</span><span class="n">perimeter</span> <span class="o">=</span> <span class="mf">9.9</span>
-</span><span class='line'>        <span class="n">triangle</span><span class="p">.</span><span class="n">sideLength</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="kr">override</span> <span class="k">func</span> <span class="n">simpleDescription</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="s">&quot;An equilateral triagle with sides of length \(sideLength).&quot;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">triangle</span> <span class="o">=</span> <span class="n">EquilateralTriangle</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="mf">3.1</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="s">&quot;a triangle&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">triangle</span><span class="p">.</span><span class="n">perimeter</span>
+</span><span class='line'>    <span class="n">triangle</span><span class="p">.</span><span class="n">perimeter</span> <span class="o">=</span> <span class="mf">9.9</span>
+</span><span class='line'>    <span class="n">triangle</span><span class="p">.</span><span class="n">sideLength</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ Provide code after before or after setting properties
-</code></pre>
+<ul>
+<li>Provide code after before or after setting properties</li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -831,38 +852,35 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>19</span>
 <span class='line-number'>20</span>
 <span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">class</span> <span class="n">TriangleAndSquare</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">var</span> <span class="nl">triangle</span><span class="p">:</span> <span class="n">EquilateralTriangle</span> <span class="p">{</span>
-</span><span class='line'>                <span class="kr">willSet</span> <span class="p">{</span>                                    <span class="c1">// Do something after before setting properties</span>
-</span><span class='line'>                    <span class="n">square</span><span class="p">.</span><span class="n">sideLength</span> <span class="o">=</span> <span class="n">newValue</span><span class="p">.</span><span class="n">sideLength</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>            <span class="k">var</span> <span class="nl">square</span><span class="p">:</span> <span class="n">Square</span> <span class="p">{</span>
-</span><span class='line'>                <span class="kr">willSet</span> <span class="p">{</span>                                    <span class="c1">// Do something after before setting properties</span>
-</span><span class='line'>                    <span class="n">triangle</span><span class="p">.</span><span class="n">sideLength</span> <span class="o">=</span> <span class="n">newValue</span><span class="p">.</span><span class="n">sideLength</span>
-</span><span class='line'>                <span class="p">}</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>            <span class="k">init</span><span class="p">(</span><span class="nl">size</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                <span class="n">square</span> <span class="o">=</span> <span class="n">Square</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="n">size</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>
-</span><span class='line'>                <span class="n">triangle</span> <span class="o">=</span> <span class="n">EquilateralTriangle</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="n">size</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">class</span> <span class="n">TriangleAndSquare</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">triangle</span><span class="p">:</span> <span class="n">EquilateralTriangle</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kr">willSet</span> <span class="p">{</span>                                    <span class="c1">// Do something after before setting properties</span>
+</span><span class='line'>                <span class="n">square</span><span class="p">.</span><span class="n">sideLength</span> <span class="o">=</span> <span class="n">newValue</span><span class="p">.</span><span class="n">sideLength</span>
 </span><span class='line'>            <span class="p">}</span>
 </span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">triangleAndSquare</span> <span class="o">=</span> <span class="n">TriangleAndSquare</span><span class="p">(</span><span class="nl">size</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="s">&quot;another test shape&quot;</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">triangleAndSquare</span><span class="p">.</span><span class="n">square</span><span class="p">.</span><span class="n">sideLength</span>
-</span><span class='line'>        <span class="n">triangleAndSquare</span><span class="p">.</span><span class="n">triangle</span><span class="p">.</span><span class="n">sideLength</span>
-</span><span class='line'>        <span class="n">triangleAndSquare</span><span class="p">.</span><span class="n">square</span> <span class="o">=</span> <span class="n">Square</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="s">&quot;larger square&quot;</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">triangleAndSquare</span><span class="p">.</span><span class="n">triangle</span><span class="p">.</span><span class="n">sideLength</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">square</span><span class="p">:</span> <span class="n">Square</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kr">willSet</span> <span class="p">{</span>                                    <span class="c1">// Do something after before setting properties</span>
+</span><span class='line'>                <span class="n">triangle</span><span class="p">.</span><span class="n">sideLength</span> <span class="o">=</span> <span class="n">newValue</span><span class="p">.</span><span class="n">sideLength</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">init</span><span class="p">(</span><span class="nl">size</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">square</span> <span class="o">=</span> <span class="n">Square</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="n">size</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">triangle</span> <span class="o">=</span> <span class="n">EquilateralTriangle</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="n">size</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">triangleAndSquare</span> <span class="o">=</span> <span class="n">TriangleAndSquare</span><span class="p">(</span><span class="nl">size</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="s">&quot;another test shape&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">triangleAndSquare</span><span class="p">.</span><span class="n">square</span><span class="p">.</span><span class="n">sideLength</span>
+</span><span class='line'>    <span class="n">triangleAndSquare</span><span class="p">.</span><span class="n">triangle</span><span class="p">.</span><span class="n">sideLength</span>
+</span><span class='line'>    <span class="n">triangleAndSquare</span><span class="p">.</span><span class="n">square</span> <span class="o">=</span> <span class="n">Square</span><span class="p">(</span><span class="nl">sideLength</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="nl">name</span><span class="p">:</span> <span class="s">&quot;larger square&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">triangleAndSquare</span><span class="p">.</span><span class="n">triangle</span><span class="p">.</span><span class="n">sideLength</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<ul>
-<li><strong>Enumerations</strong> and <strong>Structures</strong>
+<h2><strong>Enumerations</strong> and <strong>Structures</strong></h2>
 
 <ul>
 <li><strong>Enumerations</strong> can have methods</li>
 </ul>
-</li>
-</ul>
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -886,32 +904,34 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>19</span>
 <span class='line-number'>20</span>
 <span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">enum</span> <span class="nl">Rank</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">case</span> <span class="n">Ace</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span class='line'>            <span class="k">case</span> <span class="n">Two</span><span class="p">,</span> <span class="n">Three</span><span class="p">,</span> <span class="n">Four</span><span class="p">,</span> <span class="n">Five</span><span class="p">,</span> <span class="n">Six</span><span class="p">,</span> <span class="n">Seven</span><span class="p">,</span> <span class="n">Eight</span><span class="p">,</span> <span class="n">Nine</span><span class="p">,</span> <span class="n">Ten</span>
-</span><span class='line'>            <span class="k">case</span> <span class="n">Jack</span><span class="p">,</span> <span class="n">Queen</span><span class="p">,</span> <span class="n">King</span>
-</span><span class='line'>            <span class="k">func</span> <span class="n">simpleDescription</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
-</span><span class='line'>                <span class="k">switch</span> <span class="nb">self</span> <span class="p">{</span>
-</span><span class='line'>                <span class="k">case</span> <span class="p">.</span><span class="nl">Ace</span><span class="p">:</span>
-</span><span class='line'>                    <span class="k">return</span> <span class="s">&quot;ace&quot;</span>
-</span><span class='line'>                <span class="k">case</span> <span class="p">.</span><span class="nl">Jack</span><span class="p">:</span>
-</span><span class='line'>                    <span class="k">return</span> <span class="s">&quot;jack&quot;</span>
-</span><span class='line'>                <span class="k">case</span> <span class="p">.</span><span class="nl">Queen</span><span class="p">:</span>
-</span><span class='line'>                    <span class="k">return</span> <span class="s">&quot;queen&quot;</span>
-</span><span class='line'>                <span class="k">case</span> <span class="p">.</span><span class="nl">King</span><span class="p">:</span>
-</span><span class='line'>                    <span class="k">return</span> <span class="s">&quot;king&quot;</span>
-</span><span class='line'>                <span class="k">default</span><span class="o">:</span>
-</span><span class='line'>                    <span class="k">return</span> <span class="n">String</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="n">toRaw</span><span class="p">())</span>
-</span><span class='line'>                <span class="p">}</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">enum</span> <span class="nl">Rank</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">Ace</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">Two</span><span class="p">,</span> <span class="n">Three</span><span class="p">,</span> <span class="n">Four</span><span class="p">,</span> <span class="n">Five</span><span class="p">,</span> <span class="n">Six</span><span class="p">,</span> <span class="n">Seven</span><span class="p">,</span> <span class="n">Eight</span><span class="p">,</span> <span class="n">Nine</span><span class="p">,</span> <span class="n">Ten</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">Jack</span><span class="p">,</span> <span class="n">Queen</span><span class="p">,</span> <span class="n">King</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">simpleDescription</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">switch</span> <span class="nb">self</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">case</span> <span class="p">.</span><span class="nl">Ace</span><span class="p">:</span>
+</span><span class='line'>                <span class="k">return</span> <span class="s">&quot;ace&quot;</span>
+</span><span class='line'>            <span class="k">case</span> <span class="p">.</span><span class="nl">Jack</span><span class="p">:</span>
+</span><span class='line'>                <span class="k">return</span> <span class="s">&quot;jack&quot;</span>
+</span><span class='line'>            <span class="k">case</span> <span class="p">.</span><span class="nl">Queen</span><span class="p">:</span>
+</span><span class='line'>                <span class="k">return</span> <span class="s">&quot;queen&quot;</span>
+</span><span class='line'>            <span class="k">case</span> <span class="p">.</span><span class="nl">King</span><span class="p">:</span>
+</span><span class='line'>                <span class="k">return</span> <span class="s">&quot;king&quot;</span>
+</span><span class='line'>            <span class="k">default</span><span class="o">:</span>
+</span><span class='line'>                <span class="k">return</span> <span class="n">String</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="n">toRaw</span><span class="p">())</span>
 </span><span class='line'>            <span class="p">}</span>
 </span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">let</span> <span class="n">ace</span> <span class="o">=</span> <span class="n">Rank</span><span class="p">.</span><span class="n">Ace</span>
-</span><span class='line'>        <span class="k">let</span> <span class="n">aceRawValue</span> <span class="o">=</span> <span class="n">ace</span><span class="p">.</span><span class="n">toRaw</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">ace</span> <span class="o">=</span> <span class="n">Rank</span><span class="p">.</span><span class="n">Ace</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">aceRawValue</span> <span class="o">=</span> <span class="n">ace</span><span class="p">.</span><span class="n">toRaw</span><span class="p">()</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ Convert _enum_ between raw values
-</code></pre>
+<ul>
+<li>Convert <em>enum</em> between raw values</li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -920,18 +940,20 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">let</span> <span class="n">ace</span> <span class="o">=</span> <span class="n">Rank</span><span class="p">.</span><span class="n">Ace</span>
-</span><span class='line'>        <span class="k">let</span> <span class="n">aceRawValue</span> <span class="o">=</span> <span class="n">ace</span><span class="p">.</span><span class="n">toRaw</span><span class="p">()</span>
-</span><span class='line'>        <span class="k">let</span> <span class="n">aceString</span> <span class="o">=</span> <span class="n">ace</span><span class="p">.</span><span class="n">simpleDescription</span><span class="p">()</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">ace</span> <span class="o">=</span> <span class="n">Rank</span><span class="p">.</span><span class="n">Ace</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">aceRawValue</span> <span class="o">=</span> <span class="n">ace</span><span class="p">.</span><span class="n">toRaw</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">aceString</span> <span class="o">=</span> <span class="n">ace</span><span class="p">.</span><span class="n">simpleDescription</span><span class="p">()</span>
 </span><span class='line'>
-</span><span class='line'>        <span class="k">if</span> <span class="k">let</span> <span class="n">convertedRank</span> <span class="o">=</span> <span class="n">Rank</span><span class="p">.</span><span class="n">fromRaw</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">let</span> <span class="n">threeDescription</span> <span class="o">=</span> <span class="n">convertedRank</span><span class="p">.</span><span class="n">simpleDescription</span><span class="p">()</span>
-</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="k">let</span> <span class="n">convertedRank</span> <span class="o">=</span> <span class="n">Rank</span><span class="p">.</span><span class="n">fromRaw</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">threeDescription</span> <span class="o">=</span> <span class="n">convertedRank</span><span class="p">.</span><span class="n">simpleDescription</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ __Structure__ is similar to __Class__, but when structures are always copied when they are passed around, while classes are passed by reference.
-</code></pre>
+<ul>
+<li><strong>Structure</strong> is similar to <strong>Class</strong>, but when structures are always copied when they are passed around, while classes are passed by reference.</li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -942,20 +964,22 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">struct</span> <span class="n">Card</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">var</span> <span class="nl">rank</span><span class="p">:</span> <span class="n">Rank</span>
-</span><span class='line'>            <span class="k">var</span> <span class="nl">suit</span><span class="p">:</span> <span class="n">Suit</span>
-</span><span class='line'>            <span class="k">func</span> <span class="n">simpleDescription</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
-</span><span class='line'>                <span class="k">return</span> <span class="s">&quot;The \(rank.simpleDescription()) of \(suit.simpleDescription())&quot;</span>
-</span><span class='line'>            <span class="p">}</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">struct</span> <span class="n">Card</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">rank</span><span class="p">:</span> <span class="n">Rank</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">suit</span><span class="p">:</span> <span class="n">Suit</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">simpleDescription</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="s">&quot;The \(rank.simpleDescription()) of \(suit.simpleDescription())&quot;</span>
 </span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">let</span> <span class="n">threeOfSpades</span> <span class="o">=</span> <span class="n">Card</span><span class="p">(</span><span class="nl">rank</span><span class="p">:</span> <span class="p">.</span><span class="n">Three</span><span class="p">,</span> <span class="nl">suit</span><span class="p">:</span> <span class="p">.</span><span class="n">Spades</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">let</span> <span class="n">threeOfSpadesDescription</span> <span class="o">=</span> <span class="n">threeOfSpades</span><span class="p">.</span><span class="n">simpleDescription</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">threeOfSpades</span> <span class="o">=</span> <span class="n">Card</span><span class="p">(</span><span class="nl">rank</span><span class="p">:</span> <span class="p">.</span><span class="n">Three</span><span class="p">,</span> <span class="nl">suit</span><span class="p">:</span> <span class="p">.</span><span class="n">Spades</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">threeOfSpadesDescription</span> <span class="o">=</span> <span class="n">threeOfSpades</span><span class="p">.</span><span class="n">simpleDescription</span><span class="p">()</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ __Structure__ with associated values.
-</code></pre>
+<ul>
+<li><strong>Structure</strong> with associated values.</li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -971,30 +995,27 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">enum</span> <span class="n">ServerResponse</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">case</span> <span class="n">Result</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="p">)</span>
-</span><span class='line'>            <span class="k">case</span> <span class="n">Error</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">}</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">enum</span> <span class="n">ServerResponse</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">Result</span><span class="p">(</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">Error</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>        <span class="k">let</span> <span class="n">success</span> <span class="o">=</span> <span class="n">ServerResponse</span><span class="p">.</span><span class="n">Result</span><span class="p">(</span><span class="s">&quot;6:00 am&quot;</span><span class="p">,</span> <span class="s">&quot;8:09 pm&quot;</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">let</span> <span class="n">failure</span> <span class="o">=</span> <span class="n">ServerResponse</span><span class="p">.</span><span class="n">Error</span><span class="p">(</span><span class="s">&quot;Out of cheese.&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">success</span> <span class="o">=</span> <span class="n">ServerResponse</span><span class="p">.</span><span class="n">Result</span><span class="p">(</span><span class="s">&quot;6:00 am&quot;</span><span class="p">,</span> <span class="s">&quot;8:09 pm&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">failure</span> <span class="o">=</span> <span class="n">ServerResponse</span><span class="p">.</span><span class="n">Error</span><span class="p">(</span><span class="s">&quot;Out of cheese.&quot;</span><span class="p">)</span>
 </span><span class='line'>
-</span><span class='line'>        <span class="k">switch</span> <span class="n">success</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">case</span> <span class="k">let</span> <span class="p">.</span><span class="n">Result</span><span class="p">(</span><span class="n">sunrise</span><span class="p">,</span> <span class="n">sunset</span><span class="p">)</span><span class="o">:</span>
-</span><span class='line'>            <span class="k">let</span> <span class="n">serverResponse</span> <span class="o">=</span> <span class="s">&quot;Sunrise is at \(sunrise) and sunset is at \(sunset).&quot;</span>
-</span><span class='line'>        <span class="k">case</span> <span class="k">let</span> <span class="p">.</span><span class="n">Error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span><span class="o">:</span>
-</span><span class='line'>            <span class="k">let</span> <span class="n">serverResponse</span> <span class="o">=</span> <span class="s">&quot;Failure...  \(error)&quot;</span>
-</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="k">switch</span> <span class="n">success</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="k">let</span> <span class="p">.</span><span class="n">Result</span><span class="p">(</span><span class="n">sunrise</span><span class="p">,</span> <span class="n">sunset</span><span class="p">)</span><span class="o">:</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">serverResponse</span> <span class="o">=</span> <span class="s">&quot;Sunrise is at \(sunrise) and sunset is at \(sunset).&quot;</span>
+</span><span class='line'>    <span class="k">case</span> <span class="k">let</span> <span class="p">.</span><span class="n">Error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span><span class="o">:</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">serverResponse</span> <span class="o">=</span> <span class="s">&quot;Failure...  \(error)&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<ul>
-<li><strong>Protocols</strong> and <strong>Extendsions</strong>
+<h2><strong>Protocols</strong> and <strong>Extendsions</strong></h2>
 
 <ul>
 <li>A classic <strong>Protocol</strong>.</li>
-</ul>
-</li>
 </ul>
 
 
@@ -1002,15 +1023,17 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">protocol</span> <span class="n">ExampleProtocol</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">var</span> <span class="nl">simpleDescription</span><span class="p">:</span> <span class="n">String</span> <span class="p">{</span> <span class="kr">get</span> <span class="p">}</span>
-</span><span class='line'>            <span class="kr">mutating</span> <span class="k">func</span> <span class="n">adjust</span><span class="p">()</span>  <span class="c1">// &quot;mutating&quot; is needed when a protocol need to modify a structure</span>
-</span><span class='line'>        <span class="p">}</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">protocol</span> <span class="n">ExampleProtocol</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">simpleDescription</span><span class="p">:</span> <span class="n">String</span> <span class="p">{</span> <span class="kr">get</span> <span class="p">}</span>
+</span><span class='line'>        <span class="kr">mutating</span> <span class="k">func</span> <span class="n">adjust</span><span class="p">()</span>  <span class="c1">// &quot;mutating&quot; is needed when a protocol need to modify a structure</span>
+</span><span class='line'>    <span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ __Classes__, enumerations and structures can all adopt protocols.
-</code></pre>
+<ul>
+<li><strong>Classes</strong>, enumerations and structures can all adopt protocols.</li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1032,31 +1055,33 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
 <span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">class</span> <span class="nl">SimpleClass</span><span class="p">:</span> <span class="n">ExampleProtocol</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">var</span> <span class="nl">simpleDescription</span><span class="p">:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">&quot;A very simple class.&quot;</span>
-</span><span class='line'>            <span class="k">var</span> <span class="nl">anotherProperty</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">69105</span>
-</span><span class='line'>            <span class="k">func</span> <span class="n">adjust</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>                <span class="n">simpleDescription</span> <span class="o">+=</span> <span class="s">&quot;  Now 100% adjusted.&quot;</span>
-</span><span class='line'>            <span class="p">}</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">class</span> <span class="nl">SimpleClass</span><span class="p">:</span> <span class="n">ExampleProtocol</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">simpleDescription</span><span class="p">:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">&quot;A very simple class.&quot;</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">anotherProperty</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">69105</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">adjust</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">simpleDescription</span> <span class="o">+=</span> <span class="s">&quot;  Now 100% adjusted.&quot;</span>
 </span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">a</span> <span class="o">=</span> <span class="n">SimpleClass</span><span class="p">()</span>
-</span><span class='line'>        <span class="n">a</span><span class="p">.</span><span class="n">adjust</span><span class="p">()</span>
-</span><span class='line'>        <span class="k">let</span> <span class="n">aDescription</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">simpleDescription</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">a</span> <span class="o">=</span> <span class="n">SimpleClass</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">a</span><span class="p">.</span><span class="n">adjust</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">aDescription</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">simpleDescription</span>
 </span><span class='line'>
-</span><span class='line'>        <span class="k">struct</span> <span class="nl">SimpleStructure</span><span class="p">:</span> <span class="n">ExampleProtocol</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">var</span> <span class="nl">simpleDescription</span><span class="p">:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">&quot;A simple structure&quot;</span>
-</span><span class='line'>            <span class="kr">mutating</span> <span class="k">func</span> <span class="n">adjust</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>                <span class="n">simpleDescription</span> <span class="o">+=</span> <span class="s">&quot; (adjusted)&quot;</span>
-</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>    <span class="k">struct</span> <span class="nl">SimpleStructure</span><span class="p">:</span> <span class="n">ExampleProtocol</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">simpleDescription</span><span class="p">:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">&quot;A simple structure&quot;</span>
+</span><span class='line'>        <span class="kr">mutating</span> <span class="k">func</span> <span class="n">adjust</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">simpleDescription</span> <span class="o">+=</span> <span class="s">&quot; (adjusted)&quot;</span>
 </span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">b</span> <span class="o">=</span> <span class="n">SimpleStructure</span><span class="p">()</span>
-</span><span class='line'>        <span class="n">b</span><span class="p">.</span><span class="n">adjust</span><span class="p">()</span>
-</span><span class='line'>        <span class="k">let</span> <span class="n">bDescription</span> <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">simpleDescription</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">b</span> <span class="o">=</span> <span class="n">SimpleStructure</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">b</span><span class="p">.</span><span class="n">adjust</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">bDescription</span> <span class="o">=</span> <span class="n">b</span><span class="p">.</span><span class="n">simpleDescription</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ __Extension__ to add functionality to an existing type.
-</code></pre>
+<ul>
+<li><strong>Extension</strong> to add functionality to an existing type.</li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1067,38 +1092,37 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">extension</span> <span class="nl">Int</span><span class="p">:</span> <span class="n">ExampleProtocol</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">var</span> <span class="nl">simpleDescription</span><span class="p">:</span> <span class="n">String</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="s">&quot;The number \(self)&quot;</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>            <span class="kr">mutating</span> <span class="k">func</span> <span class="n">adjust</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>                <span class="nb">self</span> <span class="o">+=</span> <span class="mi">42</span>
-</span><span class='line'>            <span class="p">}</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">extension</span> <span class="nl">Int</span><span class="p">:</span> <span class="n">ExampleProtocol</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">simpleDescription</span><span class="p">:</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="s">&quot;The number \(self)&quot;</span>
 </span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="mf">7.</span><span class="n">simpleDescription</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<pre><code>+ Use __Protocol__ as a variable. (Abstracting)
-</code></pre>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">let</span> <span class="nl">protocolValue</span><span class="p">:</span> <span class="n">ExampleProtocol</span> <span class="o">=</span> <span class="n">a</span>
-</span><span class='line'>        <span class="n">protocolValue</span><span class="p">.</span><span class="n">simpleDescription</span>
-</span><span class='line'>        <span class="c1">// protocolValue.anotherProperty  // Even this is an instance of &#39;SimpleClass&#39;, we cannot access its member not defined in &#39;ExampleProtocol&#39;</span>
+</span><span class='line'>        <span class="kr">mutating</span> <span class="k">func</span> <span class="n">adjust</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nb">self</span> <span class="o">+=</span> <span class="mi">42</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="mf">7.</span><span class="n">simpleDescription</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <ul>
-<li><strong>Generics</strong>
+<li>Use <strong>Protocol</strong> as a variable. (Abstracting)</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="nl">protocolValue</span><span class="p">:</span> <span class="n">ExampleProtocol</span> <span class="o">=</span> <span class="n">a</span>
+</span><span class='line'>    <span class="n">protocolValue</span><span class="p">.</span><span class="n">simpleDescription</span>
+</span><span class='line'>    <span class="c1">// protocolValue.anotherProperty  // Even this is an instance of &#39;SimpleClass&#39;, we cannot access its member not defined in &#39;ExampleProtocol&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2><strong>Generics</strong></h2>
 
 <ul>
 <li>A classic generic sample.</li>
 </ul>
-</li>
-</ul>
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -1110,20 +1134,22 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">func</span> <span class="n">repeat</span><span class="o">&lt;</span><span class="n">ItemType</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">item</span><span class="p">:</span> <span class="n">ItemType</span><span class="p">,</span> <span class="nl">times</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">ItemType</span><span class="p">]</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">var</span> <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">ItemType</span><span class="p">]()</span>
-</span><span class='line'>            <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mf">0.</span><span class="p">.</span><span class="o">&lt;</span><span class="n">times</span> <span class="p">{</span>
-</span><span class='line'>                <span class="n">result</span> <span class="o">+=</span> <span class="p">[</span><span class="n">item</span><span class="p">]</span>   <span class="c1">// operator += , which are used against Array operands need to be wrapped in []</span>
-</span><span class='line'>                                   <span class="c1">// means that expand the list by one element</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>            <span class="k">return</span> <span class="n">result</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">repeat</span><span class="o">&lt;</span><span class="n">ItemType</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">item</span><span class="p">:</span> <span class="n">ItemType</span><span class="p">,</span> <span class="nl">times</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">ItemType</span><span class="p">]</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">ItemType</span><span class="p">]()</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mf">0.</span><span class="p">.</span><span class="o">&lt;</span><span class="n">times</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">result</span> <span class="o">+=</span> <span class="p">[</span><span class="n">item</span><span class="p">]</span>   <span class="c1">// operator += , which are used against Array operands need to be wrapped in []</span>
+</span><span class='line'>                               <span class="c1">// means that expand the list by one element</span>
 </span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="n">repeat</span><span class="p">(</span><span class="s">&quot;knock&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">result</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">repeat</span><span class="p">(</span><span class="s">&quot;knock&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ Generic can also be used on functions and methods, as well as classes, enumerations, and structures.
-</code></pre>
+<ul>
+<li>Generic can also be used on functions and methods, as well as classes, enumerations, and structures.</li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1132,18 +1158,20 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="c1">// Reimplement the Swift standard library&#39;s optional type</span>
-</span><span class='line'>        <span class="k">enum</span> <span class="n">OptionalValue</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">case</span> <span class="n">None</span>
-</span><span class='line'>            <span class="k">case</span> <span class="n">Some</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">var</span> <span class="nl">possibleInteger</span><span class="p">:</span> <span class="n">OptionalValue</span><span class="o">&lt;</span><span class="n">Int</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">.</span><span class="n">None</span>
-</span><span class='line'>        <span class="n">possibleInteger</span> <span class="o">=</span> <span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="err">”</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="c1">// Reimplement the Swift standard library&#39;s optional type</span>
+</span><span class='line'>    <span class="k">enum</span> <span class="n">OptionalValue</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">None</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">Some</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">possibleInteger</span><span class="p">:</span> <span class="n">OptionalValue</span><span class="o">&lt;</span><span class="n">Int</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">.</span><span class="n">None</span>
+</span><span class='line'>    <span class="n">possibleInteger</span> <span class="o">=</span> <span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span><span class="err">”</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>+ Add requirements in __Generic__
-</code></pre>
+<ul>
+<li>Add requirements in <strong>Generic</strong></li>
+</ul>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1156,17 +1184,17 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">func</span> <span class="n">anyCommonElements</span> <span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span> <span class="k">where</span> <span class="nl">T</span><span class="p">:</span> <span class="n">SequenceType</span><span class="p">,</span> <span class="nl">U</span><span class="p">:</span> <span class="n">SequenceType</span><span class="p">,</span> <span class="n">T</span><span class="p">.</span><span class="n">Generator</span><span class="p">.</span><span class="nl">Element</span><span class="p">:</span> <span class="n">Equatable</span><span class="p">,</span> <span class="n">T</span><span class="p">.</span><span class="n">Generator</span><span class="p">.</span><span class="n">Element</span> <span class="o">==</span> <span class="n">U</span><span class="p">.</span><span class="n">Generator</span><span class="p">.</span><span class="n">Element</span><span class="o">&gt;</span> <span class="p">(</span><span class="nl">lhs</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="nl">rhs</span><span class="p">:</span> <span class="n">U</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">for</span> <span class="n">lhsItem</span> <span class="k">in</span> <span class="n">lhs</span> <span class="p">{</span>
-</span><span class='line'>                <span class="k">for</span> <span class="n">rhsItem</span> <span class="k">in</span> <span class="n">rhs</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="k">if</span> <span class="n">lhsItem</span> <span class="o">==</span> <span class="n">rhsItem</span> <span class="p">{</span>
-</span><span class='line'>                        <span class="k">return</span> <span class="nb">true</span>
-</span><span class='line'>                    <span class="p">}</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">anyCommonElements</span> <span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span> <span class="k">where</span> <span class="nl">T</span><span class="p">:</span> <span class="n">SequenceType</span><span class="p">,</span> <span class="nl">U</span><span class="p">:</span> <span class="n">SequenceType</span><span class="p">,</span> <span class="n">T</span><span class="p">.</span><span class="n">Generator</span><span class="p">.</span><span class="nl">Element</span><span class="p">:</span> <span class="n">Equatable</span><span class="p">,</span> <span class="n">T</span><span class="p">.</span><span class="n">Generator</span><span class="p">.</span><span class="n">Element</span> <span class="o">==</span> <span class="n">U</span><span class="p">.</span><span class="n">Generator</span><span class="p">.</span><span class="n">Element</span><span class="o">&gt;</span> <span class="p">(</span><span class="nl">lhs</span><span class="p">:</span> <span class="n">T</span><span class="p">,</span> <span class="nl">rhs</span><span class="p">:</span> <span class="n">U</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">lhsItem</span> <span class="k">in</span> <span class="n">lhs</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">for</span> <span class="n">rhsItem</span> <span class="k">in</span> <span class="n">rhs</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">if</span> <span class="n">lhsItem</span> <span class="o">==</span> <span class="n">rhsItem</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="k">return</span> <span class="nb">true</span>
 </span><span class='line'>                <span class="p">}</span>
 </span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>            <span class="k">return</span> <span class="nb">false</span>
 </span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="n">anyCommonElements</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">false</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">anyCommonElements</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 </span></code></pre></td></tr></table></div></figure>
 
 </div>

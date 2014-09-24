@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-09-24T17:59:27+09:00</updated>
+  <updated>2014-09-24T18:10:05+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -1116,6 +1116,41 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  var shopppingList = [&ldquo;catfish&rdquo;, &ldquo;water&rdquo;, &ldquo;tulips&rdquo;, &ldquo;blue paint&rdquo;] // [] for empty array
+</span><span class='line'>  shoppingList[1] = &ldquo;bottle of water&rdquo;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  var occupations = [
+</span><span class='line'>  "Malcolm": "Captain",
+</span><span class='line'>  "Kaylee": "Mechanic",
+</span><span class='line'>  ] // [:] for empty dictionary
+</span><span class='line'>  occupations["Jayne"] = "Public Relations"
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+<h2>Control Flows</h2></li>
+<li><p><strong>for-in</strong>
+<code>
+      let individualScores = [75, 43, 103, 87, 12]
+      var teamScore = 0
+      for score in individualScores {
+          if score &gt; 50 {
+              teamScore += 3
+          } else {
+              teamScore += 1
+          }
+      }
+      teamScore
+</code></p></li>
+<li><p>optional-value with <strong>if</strong>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
@@ -1135,77 +1170,79 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>26</span>
 <span class='line-number'>27</span>
 <span class='line-number'>28</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  var shopppingList = [&ldquo;catfish&rdquo;, &ldquo;water&rdquo;, &ldquo;tulips&rdquo;, &ldquo;blue paint&rdquo;] // [] for empty array
-</span><span class='line'>  shoppingList[1] = &ldquo;bottle of water&rdquo;&lt;/p&gt;
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  var optionalString: String? = &ldquo;Hello&rdquo;
+</span><span class='line'>  optionalString == nil&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  var occupations = [
-</span><span class='line'>  "Malcolm": "Captain",
-</span><span class='line'>  "Kaylee": "Mechanic",
-</span><span class='line'>  ] // [:] for empty dictionary
-</span><span class='line'>  occupations["Jayne"] = "Public Relations"
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  var optionalName: String? = "John Appleseed"
+</span><span class='line'>  var greeting = "Hello!"
+</span><span class='line'>  if let name = optionalName {
+</span><span class='line'>  greeting = "Hello, \(name)"
+</span><span class='line'>  }
 </span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
 </span><span class='line'>
 </span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;Control Flows
-</span><span class='line'>
-</span><span class='line'>&lt;ul&gt;
-</span><span class='line'>&lt;li&gt;&lt;strong&gt;for-in&lt;/strong&gt;
+</span><span class='line'>&lt;li&gt;&lt;strong&gt;switch&lt;/strong&gt;
 </span><span class='line'>&lt;code&gt;
-</span><span class='line'>  let individualScores = [75, 43, 103, 87, 12]
-</span><span class='line'>  var teamScore = 0
-</span><span class='line'>  for score in individualScores {
-</span><span class='line'>      if score &gt; 50 {
-</span><span class='line'>          teamScore += 3
-</span><span class='line'>      } else {
-</span><span class='line'>          teamScore += 1
+</span><span class='line'>  let vegetable = "red pepper"
+</span><span class='line'>  switch vegetable {
+</span><span class='line'>      case "celery":
+</span><span class='line'>          let vegetableComment = "Add some raisins and make ants on a log."
+</span><span class='line'>      case "cucumber", "watercress":
+</span><span class='line'>          let vegetableComment = "That would make a good tea sandwich."
+</span><span class='line'>      case let x where x.hasSuffix("pepper"):
+</span><span class='line'>          let vegetableComment = "Is it a spicy \(x)?"
+</span><span class='line'>      default:
+</span><span class='line'>          let vegetableComment = "Everything tastes good in soup."
+</span><span class='line'>  }
+</span><span class='line'>&lt;/code&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;strong&gt;for-in&lt;/strong&gt; in &lt;em&gt;dictionary&lt;/em&gt;
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>  let interestingNumbers = [
+</span><span class='line'>      "Prime": [2, 3, 5, 7, 11, 13],
+</span><span class='line'>      "Fibonacci": [1, 1, 2, 3, 5, 8],
+</span><span class='line'>      "Square": [1, 4, 9, 16, 25],
+</span><span class='line'>  ]
+</span><span class='line'>  var largest = 0
+</span><span class='line'>  for (kind, numbers) in interestingNumbers {
+</span><span class='line'>      for number in numbers {
+</span><span class='line'>          if number &gt; largest {
+</span><span class='line'>              largest = number
+</span><span class='line'>          }
 </span><span class='line'>      }
 </span><span class='line'>  }
-</span><span class='line'>  teamScore
+</span><span class='line'>  largest
 </span><span class='line'>&lt;/code&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;optional-value with &lt;strong&gt;if&lt;/strong&gt;</span></code></pre></td></tr></table></div></figure>
-      var optionalString: String? = &ldquo;Hello&rdquo;
-      optionalString == nil</p>
+</span><span class='line'>&lt;li&gt;&lt;p&gt;&lt;strong&gt;while&lt;/strong&gt; and &lt;strong&gt;do-while&lt;/strong&gt;</span></code></pre></td></tr></table></div></figure>
+      var n = 2
+      while n &lt; 100 {
+          n = n * 2
+      }
+      n</p>
 
-<pre><code>  var optionalName: String? = "John Appleseed"
-  var greeting = "Hello!"
-  if let name = optionalName {
-      greeting = "Hello, \(name)"
-  }
+<pre><code>  var m = 2
+  do {
+      m = m * 2
+  } while m &lt; 100
+  m
 </code></pre>
 
 <p>&#8220;`</p></li>
-<li><strong>switch</strong>
-<code>
-      let vegetable = "red pepper"
-      switch vegetable {
-          case "celery":
-              let vegetableComment = "Add some raisins and make ants on a log."
-          case "cucumber", "watercress":
-              let vegetableComment = "That would make a good tea sandwich."
-          case let x where x.hasSuffix("pepper"):
-              let vegetableComment = "Is it a spicy \(x)?"
-          default:
-              let vegetableComment = "Everything tastes good in soup."
-      }
-</code></li>
-<li><strong>for-in</strong> in <em>dictionary</em>
-<code>
-      let interestingNumbers = [
-          "Prime": [2, 3, 5, 7, 11, 13],
-          "Fibonacci": [1, 1, 2, 3, 5, 8],
-          "Square": [1, 4, 9, 16, 25],
-      ]
-      var largest = 0
-      for (kind, numbers) in interestingNumbers {
-          for number in numbers {
-              if number &gt; largest {
-                  largest = number
-              }
-          }
-      }
-      largest
-</code></li>
-<li><p><strong>while</strong> and <strong>do-while</strong>
+<li><p>range operators
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
@@ -1214,50 +1251,24 @@ Most code are from the guide, with some modification by me.</p>
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  var n = 2
-</span><span class='line'>  while n &lt; 100 {
-</span><span class='line'>      n = n * 2
+</pre></td><td class='code'><pre><code class=''><span class='line'>  for i in 0..&lt;3 {
+</span><span class='line'>      // do something, for 0, 1, 2
+</span><span class='line'>  }&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  for i in 0...3 {
+</span><span class='line'>  // do something, for 0, 1, 2, 3
 </span><span class='line'>  }
-</span><span class='line'>  n&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  var m = 2
-</span><span class='line'>  do {
-</span><span class='line'>  m = m * 2
-</span><span class='line'>  } while m &lt; 100
-</span><span class='line'>  m
 </span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;range operators</span></code></pre></td></tr></table></div></figure>
-      for i in 0..&lt;3 {
-          // do something, for 0, 1, 2
-      }</p>
+</span></code></pre></td></tr></table></div></figure>
 
-<pre><code>  for i in 0...3 {
-      // do something, for 0, 1, 2, 3
-  }
-</code></pre>
-
-<p>&#8220;`</p></li>
-</ul>
-</li>
-<li><strong>Functions</strong> and <strong>Closures</strong>
-
-<ul>
-<li>A classic one
+<h2><strong>Functions</strong> and <strong>Closures</strong></h2></li>
+<li><p>A classic one
 <code>
       func greet(name: String, day: String) -&gt; String {
           return "Hello \(name), today is \(day)."
       }
       greet("Bob", "Tuesday")
-</code></li>
+</code></p></li>
 <li>Use a <strong>tuple</strong> as return value
 <code>
       func getGasPrices() -&gt; (Double, Double, Double) {
@@ -1336,8 +1347,9 @@ Most code are from the guide, with some modification by me.</p>
       var listSorted = sorted(list) // This is OK
 </code></li>
 </ul>
-</li>
-<li><strong>Objects</strong> and <strong>Classes</strong>
+
+
+<h2><strong>Objects</strong> and <strong>Classes</strong></h2>
 
 <ul>
 <li><p>A simple class
@@ -1491,8 +1503,9 @@ Most code are from the guide, with some modification by me.</p>
       triangleAndSquare.triangle.sideLength
 </code></li>
 </ul>
-</li>
-<li><strong>Enumerations</strong> and <strong>Structures</strong>
+
+
+<h2><strong>Enumerations</strong> and <strong>Structures</strong></h2>
 
 <ul>
 <li><strong>Enumerations</strong> can have methods
@@ -1584,8 +1597,9 @@ Most code are from the guide, with some modification by me.</p>
 
 <p>&#8220;`</p></li>
 </ul>
-</li>
-<li><strong>Protocols</strong> and <strong>Extendsions</strong>
+
+
+<h2><strong>Protocols</strong> and <strong>Extendsions</strong></h2>
 
 <ul>
 <li>A classic <strong>Protocol</strong>.
@@ -1639,8 +1653,9 @@ Most code are from the guide, with some modification by me.</p>
       // protocolValue.anotherProperty  // Even this is an instance of 'SimpleClass', we cannot access its member not defined in 'ExampleProtocol'
 </code></li>
 </ul>
-</li>
-<li><strong>Generics</strong>
+
+
+<h2><strong>Generics</strong></h2>
 
 <ul>
 <li>A classic generic sample.
@@ -1679,8 +1694,6 @@ Most code are from the guide, with some modification by me.</p>
       }
       anyCommonElements([1, 2, 3], [3])
 </code></li>
-</ul>
-</li>
 </ul>
 
 ]]></content>
