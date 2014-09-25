@@ -1,0 +1,914 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Learning Swift Part 6 - Functions - Welcome to FutureAppLaboratory</title>
+  <meta name="author" content="viennakanon">
+
+  
+  <meta name="description" content="Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me. Tuple in switch &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://zh-wang.github.io/blog/2014/09/25/learning-swift-part-6">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Welcome to FutureAppLaboratory" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!-- Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"> </script> 
+
+<script language="javaScript">
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50285032-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+  <meta property="og:title" content="Learning Swift Part 6 - Functions - Welcome to FutureAppLaboratory" />
+<meta property="og:description" content="Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me. Tuple in switch &hellip;" />
+<meta property="og:url" content="http://zh-wang.github.io/blog/2014/09/25/learning-swift-part-6/" />
+<meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
+<meta property="og:author" content="viennakanon" />
+<meta property="og:site_name" content="Welcome to FutureAppLaboratory" />
+<meta property="og:locale" content="ja_JP" />
+<meta property="og:type" content="article" />
+<meta property="fb:app_id" content="749935801705374" />
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Welcome to FutureAppLaboratory</a></h1>
+  
+    <h2>v=（*＾ワ＾*）=v</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:zh-wang.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/blog/categories/swift">Swift</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Learning Swift Part 6 - Functions</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-25T18:54:45+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me.</p>
+
+<p>Tuple in switch statement is interesting.</p>
+
+<h3>Functions</h3>
+
+<ul>
+<li>Defining and Calling Functions</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">sayHello</span><span class="p">(</span><span class="nl">personName</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">greeting</span> <span class="o">=</span> <span class="s">&quot;Hello, &quot;</span> <span class="o">+</span> <span class="n">personName</span> <span class="o">+</span> <span class="s">&quot;!&quot;</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">greeting</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Function Parameters and Return Values</li>
+<li>Multiple Input Parameters</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">halfOpenRangeLength</span><span class="p">(</span><span class="nl">start</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">end</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="n">halfOpenRangeLength</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+</span><span class='line'>    <span class="c1">// prints &quot;9&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Functions Without Parameters</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">sayHelloWorld</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="s">&quot;hello, world&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="n">sayHelloWorld</span><span class="p">())</span>
+</span><span class='line'>    <span class="c1">// prints &quot;hello, world&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Function Without Return Values</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="nf">sayGoodbye</span><span class="p">(</span><span class="nl">personName</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Goodbye, \(personName)!&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">sayGoodbye</span><span class="p">(</span><span class="s">&quot;Dave&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;Goodbye, Dave!&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Functions with Multiple Return Values</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="nf">minMax</span><span class="p">(</span><span class="nl">array</span><span class="p">:</span> <span class="p">[</span><span class="n">Int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nl">min</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">max</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">currentMin</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">currentMax</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">value</span> <span class="k">in</span> <span class="n">array</span><span class="p">[</span><span class="mf">1.</span><span class="p">.</span><span class="o">&lt;</span><span class="n">array</span><span class="p">.</span><span class="n">count</span><span class="p">]</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">currentMin</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">currentMin</span> <span class="o">=</span> <span class="n">value</span>
+</span><span class='line'>            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">currentMax</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">currentMax</span> <span class="o">=</span> <span class="n">value</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="p">(</span><span class="n">currentMin</span><span class="p">,</span> <span class="n">currentMax</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">bounds</span> <span class="o">=</span> <span class="n">minMax</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">71</span><span class="p">])</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;min is \(bounds.min) and max is \(bounds.max)&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;min is -6 and max is 109&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Optional Tuple Return Types</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="nf">minMax</span><span class="p">(</span><span class="nl">array</span><span class="p">:</span> <span class="p">[</span><span class="n">Int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nl">min</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">max</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span><span class="o">?</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">array</span><span class="p">.</span><span class="n">isEmpty</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">nil</span> <span class="p">}</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">currentMin</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">currentMax</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">value</span> <span class="k">in</span> <span class="n">array</span><span class="p">[</span><span class="mf">1.</span><span class="p">.</span><span class="o">&lt;</span><span class="n">array</span><span class="p">.</span><span class="n">count</span><span class="p">]</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">currentMin</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">currentMin</span> <span class="o">=</span> <span class="n">value</span>
+</span><span class='line'>            <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">currentMax</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">currentMax</span> <span class="o">=</span> <span class="n">value</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="p">(</span><span class="n">currentMin</span><span class="p">,</span> <span class="n">currentMax</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="k">let</span> <span class="n">bounds</span> <span class="o">=</span> <span class="n">minMax</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">71</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;min is \(bounds.min) and max is \(bounds.max)&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// prints &quot;min is -6 and max is 109&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>External parameter Names</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="nf">someFunction</span><span class="p">(</span><span class="n">externalParameterName</span> <span class="nl">localParameterName</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// function body goes here, and can use localParameterName</span>
+</span><span class='line'>        <span class="c1">// to refer to the argument value for that parameter</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">func</span> <span class="n">join</span><span class="p">(</span><span class="n">string</span> <span class="nl">s1</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="n">toString</span> <span class="nl">s2</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="n">withJoiner</span> <span class="nl">joiner</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span>
+</span><span class='line'>        <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">s1</span> <span class="o">+</span> <span class="n">joiner</span> <span class="o">+</span> <span class="n">s2</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">join</span><span class="p">(</span><span class="nl">string</span><span class="p">:</span> <span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="nl">toString</span><span class="p">:</span> <span class="s">&quot;world&quot;</span><span class="p">,</span> <span class="nl">withJoiner</span><span class="p">:</span> <span class="s">&quot;, &quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// returns &quot;hello, world&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Shorthand External Parameter Names</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">containsCharacter</span><span class="p">(</span><span class="err">#</span><span class="nl">string</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="err">#</span><span class="nl">characterToFind</span><span class="p">:</span> <span class="n">Character</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">character</span> <span class="k">in</span> <span class="n">string</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">character</span> <span class="o">==</span> <span class="n">characterToFind</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">return</span> <span class="nb">true</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">false</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">containsAVee</span> <span class="o">=</span> <span class="n">containsCharacter</span><span class="p">(</span><span class="nl">string</span><span class="p">:</span> <span class="s">&quot;aardvark&quot;</span><span class="p">,</span> <span class="nl">characterToFind</span><span class="p">:</span> <span class="s">&quot;v&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// containsAVee equals true, because &quot;aardvark&quot; contains a &quot;v&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Default Parameter Values</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">join</span><span class="p">(</span><span class="n">string</span> <span class="nl">s1</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="n">toString</span> <span class="nl">s2</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">withJoiner</span> <span class="nl">joiner</span><span class="p">:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">s1</span> <span class="o">+</span> <span class="n">joiner</span> <span class="o">+</span> <span class="n">s2</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">join</span><span class="p">(</span><span class="nl">string</span><span class="p">:</span> <span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="nl">toString</span><span class="p">:</span> <span class="s">&quot;world&quot;</span><span class="p">,</span> <span class="nl">withJoiner</span><span class="p">:</span> <span class="s">&quot;-&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// returns &quot;hello-world&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">join</span><span class="p">(</span><span class="nl">string</span><span class="p">:</span> <span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="nl">toString</span><span class="p">:</span> <span class="s">&quot;world&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// returns &quot;hello world&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>External Names for Parameters with Default Values (automatically generated)</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">join</span><span class="p">(</span><span class="nl">s1</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">s2</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">joiner</span><span class="p">:</span> <span class="n">String</span> <span class="o">=</span> <span class="s">&quot; &quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">s1</span> <span class="o">+</span> <span class="n">joiner</span> <span class="o">+</span> <span class="n">s2</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">join</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="s">&quot;world&quot;</span><span class="p">,</span> <span class="nl">joiner</span><span class="p">:</span> <span class="s">&quot;-&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// returns &quot;hello-world&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Variadic Parameters (varargs)</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="c1">// Note that Double... is different from [Double]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">func</span> <span class="n">arithmeticMean</span><span class="p">(</span><span class="nl">numbers</span><span class="p">:</span> <span class="n">Double</span><span class="p">...)</span> <span class="o">-&gt;</span> <span class="n">Double</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">total</span><span class="p">:</span> <span class="n">Double</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">number</span> <span class="k">in</span> <span class="n">numbers</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">total</span> <span class="o">+=</span> <span class="n">number</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">total</span> <span class="o">/</span> <span class="n">Double</span><span class="p">(</span><span class="n">numbers</span><span class="p">.</span><span class="n">count</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">arithmeticMean</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// returns 3.0, which is the arithmetic mean of these five numbers</span>
+</span><span class='line'>    <span class="n">arithmeticMean</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">8.25</span><span class="p">,</span> <span class="mf">18.75</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// returns 10.0, which is the arithmetic mean of these three numbers</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Constant and Variable Parameters</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">alignRight</span><span class="p">(</span><span class="k">var</span> <span class="nl">string</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">count</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">pad</span><span class="p">:</span> <span class="n">Character</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">amountToPad</span> <span class="o">=</span> <span class="n">count</span> <span class="o">-</span> <span class="n">countElements</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">amountToPad</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">string</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">padString</span> <span class="o">=</span> <span class="n">String</span><span class="p">(</span><span class="n">pad</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">_</span> <span class="k">in</span> <span class="mf">1.</span><span class="p">..</span><span class="n">amountToPad</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">string</span> <span class="o">=</span> <span class="n">padString</span> <span class="o">+</span> <span class="n">string</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">string</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">originalString</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">paddedString</span> <span class="o">=</span> <span class="n">alignRight</span><span class="p">(</span><span class="n">originalString</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="s">&quot;-&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// paddedString is equal to &quot;-----hello&quot;</span>
+</span><span class='line'>    <span class="c1">// originalString is still equal to &quot;hello&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>In-Out Parameters</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="c1">// Variable parameters, as described above, can only be changed within the function itself. If you want a function to modify a parameter’s value, and you want those changes to persist after the function call has ended, define that parameter as an in-out parameter instead.</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">func</span> <span class="nf">swapTwoInts</span><span class="p">(</span><span class="k">inout</span> <span class="nl">a</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="k">inout</span> <span class="nl">b</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">temporaryA</span> <span class="o">=</span> <span class="n">a</span>
+</span><span class='line'>        <span class="n">a</span> <span class="o">=</span> <span class="n">b</span>
+</span><span class='line'>        <span class="n">b</span> <span class="o">=</span> <span class="n">temporaryA</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">var</span> <span class="n">someInt</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">anotherInt</span> <span class="o">=</span> <span class="mi">107</span>
+</span><span class='line'>    <span class="n">swapTwoInts</span><span class="p">(</span><span class="o">&amp;</span><span class="n">someInt</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">anotherInt</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;someInt is now \(someInt), and anotherInt is now \(anotherInt)&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;someInt is now 107, and anotherInt is now 3&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Function Type</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">addTwoInts</span><span class="p">(</span><span class="nl">a</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">b</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">func</span> <span class="n">multiplyTwoInts</span><span class="p">(</span><span class="nl">a</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">b</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">mathFunction</span><span class="p">:</span> <span class="p">(</span><span class="n">Int</span><span class="p">,</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="o">=</span> <span class="n">addTwoInts</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;Result: \(mathFunction(2, 3))&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;Result: 5&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">mathFunction</span> <span class="o">=</span> <span class="n">multiplyTwoInts</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;Result: \(mathFunction(2, 3))&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;Result: 6&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Function Types as Parameter Types</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="nf">printMathResult</span><span class="p">(</span><span class="nl">mathFunction</span><span class="p">:</span> <span class="p">(</span><span class="n">Int</span><span class="p">,</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">a</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">b</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Result: \(mathFunction(a, b))&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">printMathResult</span><span class="p">(</span><span class="n">addTwoInts</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;Result: 8&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Function Type as Return Types</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">stepForward</span><span class="p">(</span><span class="nl">input</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">input</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">func</span> <span class="n">stepBackward</span><span class="p">(</span><span class="nl">input</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">input</span> <span class="o">-</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">func</span> <span class="n">chooseStepFunction</span><span class="p">(</span><span class="nl">backwards</span><span class="p">:</span> <span class="n">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">backwards</span> <span class="o">?</span> <span class="nl">stepBackward</span> <span class="p">:</span> <span class="n">stepForward</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">var</span> <span class="n">currentValue</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">moveNearerToZero</span> <span class="o">=</span> <span class="n">chooseStepFunction</span><span class="p">(</span><span class="n">currentValue</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// moveNearerToZero now refers to the stepBackward() function</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;Counting to zero:&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// Counting to zero:</span>
+</span><span class='line'>    <span class="k">while</span> <span class="n">currentValue</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(currentValue)... &quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">currentValue</span> <span class="o">=</span> <span class="n">moveNearerToZero</span><span class="p">(</span><span class="n">currentValue</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;zero!&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// 3...</span>
+</span><span class='line'>    <span class="c1">// 2...</span>
+</span><span class='line'>    <span class="c1">// 1...</span>
+</span><span class='line'>    <span class="c1">// zero!</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Nested Functions</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">chooseStepFunction</span><span class="p">(</span><span class="nl">backwards</span><span class="p">:</span> <span class="n">Bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">stepForward</span><span class="p">(</span><span class="nl">input</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span> <span class="k">return</span> <span class="n">input</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">}</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">stepBackward</span><span class="p">(</span><span class="nl">input</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span> <span class="k">return</span> <span class="n">input</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">backwards</span> <span class="o">?</span> <span class="nl">stepBackward</span> <span class="p">:</span> <span class="n">stepForward</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">currentValue</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">moveNearerToZero</span> <span class="o">=</span> <span class="n">chooseStepFunction</span><span class="p">(</span><span class="n">currentValue</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// moveNearerToZero now refers to the nested stepForward() function</span>
+</span><span class='line'>    <span class="k">while</span> <span class="n">currentValue</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(currentValue)... &quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">currentValue</span> <span class="o">=</span> <span class="n">moveNearerToZero</span><span class="p">(</span><span class="n">currentValue</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;zero!&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// -4...</span>
+</span><span class='line'>    <span class="c1">// -3...</span>
+</span><span class='line'>    <span class="c1">// -2...</span>
+</span><span class='line'>    <span class="c1">// -1...</span>
+</span><span class='line'>    <span class="c1">// zero!</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">viennakanon</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-25T18:54:45+09:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/swift/'>swift</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2014/09/25/learning-swift-part-6/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2014/09/25/learning-swift-part-6/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/09/19/learning-swift-part-5/" title="Previous Post: Learning Swift Part 5 - Control Flow">&laquo; Learning Swift Part 5 - Control Flow</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/09/25/learning-swift-part-6/">Learning Swift Part 6 - Functions</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/19/learning-swift-part-5/">Learning Swift Part 5 - Control Flow</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/08/learning-swift-part-4/">Learning Swift Part 4 - Strings and Characters</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/05/learning-swift-part-3/">Learning Swift Part 3 - Basic Operators</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/05/learning-swift-part-2/">Learning Swift Part 2 - Basics</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (6)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+</section>
+<section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 110.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 80.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 110.0%'>codility(5)</a> <a href='/blog/categories/ios' style='font-size: 70.0%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 70.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 90.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 80.0%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(6)</a> <a href='/blog/categories/zsh' style='font-size: 70.0%'>zsh(1)</a> </span>
+</section>
+<section>
+      <h1>Latest Tweets</h1>
+      <div id="latest_tweets_seperator" style="clear: both; padding-top: 5px;"></div>
+      <a class="twitter-timeline" href="https://twitter.com/viennakanon" data-widget-id="458542348645830656">Tweets by @viennakanon</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+<section>
+  <h1>About Me</h1>
+  <div id="gravatar-aside-profile" style="clear: both; padding-top: 5px;"></div>
+  <div style="clear:both"></div>
+  <script type="text/javascript">
+    $(function(){
+      var url = "http://www.gravatar.com/23650956f68b532003138fb2bec1bbe6.json?callback=?";
+      var $box = $("#gravatar-aside-profile")
+      var $msg = $box.children().children()
+
+      var blink = function(a){a.fadeOut(400).fadeIn(400)};
+      var intervalID = window.setInterval(blink, 1500, $msg)
+
+      var setupProfile = function(data) {
+        var entry = data.entry[0]
+        $box
+          .empty()
+          .css("padding-top", 5)
+          .append($("<img>")
+            .attr("src", entry.thumbnailUrl)
+            .attr("alt", "thumbnail from Gravatar")
+            .css("float", "left")
+            .css("margin-right", 5)
+          )
+          .append($("<div>")
+            .css("padding", "5px 0px")
+            .append($("<h2>")
+              .css("margin-bottom", 5)
+              .append("(<a href='" + entry.profileUrl + "'>@" +
+                  entry.preferredUsername + "<\/a>)")
+            )
+            .append($("<p>")
+              .css("padding-left",90)
+              .css("margin", 0)
+              .css("font-size", "90%")
+              .html(entry.aboutMe.replace(/\n/g, "<br/>"))
+            )
+          )
+      }
+
+      var clearInterval = function(){window.clearInterval(intervalID)}
+      var updateMessageToError = function(){$msg.stop().fadeOut().text("profile load failed.").fadeIn()}
+
+      jQuery.getJSON(url)
+        .always(clearInterval)
+        .done(setupProfile)
+        .fail(updateMessageToError)
+    })
+  
+  </script>
+</section>
+<section>
+    <h1>License</h1>
+    <div id="license_seperator" style="clear: both; padding-top: 5px;"></div>
+    <div class="widget-content" style="font-size: 100%">
+        <img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png">
+        <br>
+        <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type"> The contents in this blog </span>
+        by 
+        <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName"> viennakanon </span>
+        is licensed under a 
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"> Creative Commons 表示 - 非営利 - 改変禁止 3.0 Unported License </a>
+        .
+    </div>
+</section>
+<section>
+  <h1>Find me on Github</h1>
+  <div id="github_profile_seperator" style="clear: both; padding-top: 5px;"></div>
+  <iframe src="http://lab.lepture.com/github-cards/card.html?user=zh-wang" frameborder="0" scrolling="1" width="300" height="200" allowtransparency></iframe>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - viennakanon -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'viennakanon';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://zh-wang.github.io/blog/2014/09/25/learning-swift-part-6/';
+        var disqus_url = 'http://zh-wang.github.io/blog/2014/09/25/learning-swift-part-6/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/ja_JP/all.js#appId=749935801705374&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
