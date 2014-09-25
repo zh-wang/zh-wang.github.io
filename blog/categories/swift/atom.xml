@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-09-25T19:09:07+09:00</updated>
+  <updated>2014-09-25T19:11:23+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -22,6 +22,8 @@
 Most code are from the guide, with some modification by me.</p>
 
 <p>Tuple in switch statement is interesting.</p>
+
+<h2>===== Full Notes =====</h2>
 
 <h3>Functions</h3>
 
@@ -58,6 +60,13 @@ Most code are from the guide, with some modification by me.</p>
       sayGoodbye("Dave")
       // prints "Goodbye, Dave!"
 </code></li>
+</ul>
+
+
+<!-- more -->
+
+
+<ul>
 <li><p>Functions with Multiple Return Values
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
