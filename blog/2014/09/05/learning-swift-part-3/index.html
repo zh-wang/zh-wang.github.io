@@ -133,41 +133,70 @@ Most code are from the guide, with some modification by me.</p>
 <h3>Basic Operators</h3>
 
 <ul>
-<li><p>Terminology</p>
+<li>Terminology</li>
+</ul>
 
-<pre><code>  - Unary
-  - Binary
-  - Ternary (There is only one in a ? b :c)
-</code></pre></li>
-<li><p>Assignment Operator</p>
 
-<pre><code>  // Not a vaild assignment
-  if x = y {
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="o">-</span> <span class="n">Unary</span>
+</span><span class='line'>    <span class="o">-</span> <span class="n">Binary</span>
+</span><span class='line'>    <span class="o">-</span> <span class="n">Ternary</span> <span class="p">(</span><span class="n">There</span> <span class="kt">is</span> <span class="n">only</span> <span class="n">one</span> <span class="k">in</span> <span class="n">a</span> <span class="o">?</span> <span class="nl">b</span> <span class="p">:</span><span class="n">c</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
 
-  }
-</code></pre></li>
-<li><p>Arithmetic Operators</p>
+
+<ul>
+<li>Assignment Operator</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="c1">// Not a vaild assignment</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">x</span> <span class="o">=</span> <span class="n">y</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Arithmetic Operators
 
 <ul>
 <li>Not allow overflow.</li>
 <li>You can opt in to value overflow behavior by using Swift&rsquo;s overflow operators (such as a &amp;+ b).</li>
-<li><p>The addition operator is also supported for <strong>String</strong> concatenation.</p>
-
-<p>  let dog: Character = &ldquo;🐶&rdquo;
-  let cow: Character = &ldquo;🐮&rdquo;
-  let dogCow = dog + cow
-  // dogCow is equal to &ldquo;🐶🐮&rdquo;</p></li>
+<li>The addition operator is also supported for <strong>String</strong> concatenation.</li>
 </ul>
 </li>
-<li><p>Remainder Operator</p>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">let</span> <span class="nl">dog</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;🐶&quot;</span>
+</span><span class='line'>        <span class="k">let</span> <span class="nl">cow</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;🐮&quot;</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">dogCow</span> <span class="o">=</span> <span class="n">dog</span> <span class="o">+</span> <span class="n">cow</span>
+</span><span class='line'>        <span class="c1">// dogCow is equal to &quot;🐶🐮&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <ul>
-<li><code>9 % 4 // equals 1</code></li>
-<li><code>-9 % 4 // equals -1</code></li>
-<li><code>-9 % 4 // equals -9 % -4</code></li>
+<li>Remainder Operator</li>
 </ul>
-</li>
-</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="mi">9</span> <span class="o">%</span> <span class="mi">4</span> <span class="c1">// equals 1</span>
+</span><span class='line'>    <span class="o">-</span><span class="mi">9</span> <span class="o">%</span> <span class="mi">4</span> <span class="c1">// equals -1</span>
+</span><span class='line'>    <span class="o">-</span><span class="mi">9</span> <span class="o">%</span> <span class="mi">4</span> <span class="c1">// equals -9 % -4</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 <!-- more -->
@@ -176,101 +205,209 @@ Most code are from the guide, with some modification by me.</p>
 <p></p>
 
 <ul>
-<li><p>Floating-Point Remainder Calculations</p>
+<li>Floating-Point Remainder Calculations</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="mi">8</span> <span class="o">%</span> <span class="mf">2.5</span> <span class="c1">// equals 0.5</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <ul>
-<li><code>8 % 2.5 // equals 0.5</code></li>
+<li>Increment and Decrement Operators</li>
 </ul>
-</li>
-<li><p>Increment and Decrement Operators</p>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">var</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="o">++</span><span class="n">a</span>
+</span><span class='line'>    <span class="c1">// a and b are now both equal to 1</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="o">++</span>
+</span><span class='line'>    <span class="c1">// a is now equal to 2, but c has been set to the pre-increment value of 1</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <ul>
-<li><code>++</code> and <code>--</code> works the same as C</li>
+<li>Unary Minus Operator and Unary Plus Operator</li>
 </ul>
-</li>
-<li><p>Unary Minus Operator and Unary Plus Operator</p>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">three</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">minusThree</span> <span class="o">=</span> <span class="o">-</span><span class="n">three</span>       <span class="c1">// minusThree equals -3</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">plusThree</span> <span class="o">=</span> <span class="o">-</span><span class="n">minusThree</span>   <span class="c1">// plusThree equals 3, or &quot;minus minus three&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">minusSix</span> <span class="o">=</span> <span class="o">-</span><span class="mi">6</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">alsoMinusSix</span> <span class="o">=</span> <span class="o">+</span><span class="n">minusSix</span>  <span class="c1">// alsoMinusSix equals -6</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <ul>
-<li><code>+</code> do <strong>NOT</strong> change the value</li>
+<li>Compound Assignment Operators</li>
 </ul>
-</li>
-<li><p>Compound Assignment Operators</p>
 
-<pre><code>  var a = 1
-  a += 2
-</code></pre></li>
-<li><p>Comparison Operators</p>
 
-<pre><code>  Equal to (a == b)
-  Not equal to (a != b)
-  Greater than (a &gt; b)
-  Less than (a &lt; b)
-  Greater than or equal to (a &gt;= b)
-  Less than or equal to (a &lt;= b)
-</code></pre></li>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">var</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="n">a</span> <span class="o">+=</span> <span class="mi">2</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Comparison Operators</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="n">Equal</span> <span class="n">to</span> <span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">Not</span> <span class="n">equal</span> <span class="n">to</span> <span class="p">(</span><span class="n">a</span> <span class="o">!=</span> <span class="n">b</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">Greater</span> <span class="n">than</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">Less</span> <span class="n">than</span> <span class="p">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">Greater</span> <span class="n">than</span> <span class="n">or</span> <span class="n">equal</span> <span class="n">to</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;=</span> <span class="n">b</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">Less</span> <span class="n">than</span> <span class="n">or</span> <span class="n">equal</span> <span class="n">to</span> <span class="p">(</span><span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
 <li><p>Nil Coalescing Operator</p>
 
-<ul>
-<li><p>The nil coalescing operator (a ?? b) unwraps an optional a if it contains a value, or returns a default value b if a is nil.</p>
-
-<p>  let defaultColorName = &ldquo;red&rdquo;
-  var userDefinedColorName: String?   // defaults to nil</p>
-
-<p>  var colorNameToUse = userDefinedColorName ?? defaultColorName
-  // userDefinedColorName is nil, so colorNameToUse is set to the default of &ldquo;red&rdquo;</p></li>
+<p>  The nil coalescing operator (a ?? b) unwraps an optional a if it contains a value, or returns a default value b if a is nil.</p></li>
 </ul>
-</li>
-<li><p>Range Operators</p>
 
-<pre><code>  for index in 1...5 {
-      println("\(index) times 5 is \(index * 5)")
-  }
-  // 1 times 5 is 5
-  // 2 times 5 is 10
-  // 3 times 5 is 15
-  // 4 times 5 is 20
-  // 5 times 5 is 25
-</code></pre></li>
-<li><p>Half-Open Range Operator</p>
 
-<pre><code>  let names = ["Anna", "Alex", "Brian", "Jack"]
-  let count = names.count
-  for i in 0..&lt;count {
-      println("Person \(i + 1) is called \(names[i])")
-  }
-  // Person 1 is called Anna
-  // Person 2 is called Alex
-  // Person 3 is called Brian
-  // Person 4 is called Jack&gt;
-</code></pre></li>
-<li><p>Logical Operators</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">defaultColorName</span> <span class="o">=</span> <span class="s">&quot;red&quot;</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">userDefinedColorName</span><span class="p">:</span> <span class="n">String</span><span class="o">?</span>   <span class="c1">// defaults to nil</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">var</span> <span class="n">colorNameToUse</span> <span class="o">=</span> <span class="n">userDefinedColorName</span> <span class="o">??</span> <span class="n">defaultColorName</span>
+</span><span class='line'>    <span class="c1">// userDefinedColorName is nil, so colorNameToUse is set to the default of &quot;red&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <ul>
-<li>Logical NOT (!a)</li>
-<li>Logical AND (a &amp;&amp; b)</li>
-<li>Logical OR (a || b)</li>
-<li>Logical NOT (!a)</li>
+<li>Range Operators</li>
 </ul>
-</li>
-<li><p>Combining Logical Operators</p>
 
-<pre><code>  if enteredDoorCode &amp;&amp; passedRetinaScan || hasDoorKey || knowsOverridePassword {
-      println("Welcome!")
-  } else {
-      println("ACCESS DENIED")
-  }
-  // prints "Welcome!"
-</code></pre></li>
-<li><p>Explicit Parentheses</p>
 
-<pre><code>  if (enteredDoorCode &amp;&amp; passedRetinaScan) || hasDoorKey || knowsOverridePassword {
-      println("Welcome!")
-  } else {
-      println("ACCESS DENIED")
-  }
-  // prints "Welcome!"
-</code></pre></li>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">for</span> <span class="n">index</span> <span class="k">in</span> <span class="mf">1.</span><span class="p">.</span><span class="mf">.5</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(index) times 5 is \(index * 5)&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// 1 times 5 is 5</span>
+</span><span class='line'>    <span class="c1">// 2 times 5 is 10</span>
+</span><span class='line'>    <span class="c1">// 3 times 5 is 15</span>
+</span><span class='line'>    <span class="c1">// 4 times 5 is 20</span>
+</span><span class='line'>    <span class="c1">// 5 times 5 is 25</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Half-Open Range Operator</li>
 </ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Anna&quot;</span><span class="p">,</span> <span class="s">&quot;Alex&quot;</span><span class="p">,</span> <span class="s">&quot;Brian&quot;</span><span class="p">,</span> <span class="s">&quot;Jack&quot;</span><span class="p">]</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">count</span> <span class="o">=</span> <span class="n">names</span><span class="p">.</span><span class="n">count</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mf">0.</span><span class="p">.</span><span class="o">&lt;</span><span class="n">count</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Person \(i + 1) is called \(names[i])&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// Person 1 is called Anna</span>
+</span><span class='line'>    <span class="c1">// Person 2 is called Alex</span>
+</span><span class='line'>    <span class="c1">// Person 3 is called Brian</span>
+</span><span class='line'>    <span class="c1">// Person 4 is called Jack&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Logical Operators</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="n">Logical</span> <span class="n">NOT</span> <span class="p">(</span><span class="o">!</span><span class="n">a</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">Logical</span> <span class="n">AND</span> <span class="p">(</span><span class="n">a</span> <span class="o">&amp;&amp;</span> <span class="n">b</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">Logical</span> <span class="n">OR</span> <span class="p">(</span><span class="n">a</span> <span class="o">||</span> <span class="n">b</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">Logical</span> <span class="n">NOT</span> <span class="p">(</span><span class="o">!</span><span class="n">a</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Combining Logical Operators</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">if</span> <span class="n">enteredDoorCode</span> <span class="o">&amp;&amp;</span> <span class="n">passedRetinaScan</span> <span class="o">||</span> <span class="n">hasDoorKey</span> <span class="o">||</span> <span class="n">knowsOverridePassword</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Welcome!&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;ACCESS DENIED&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// prints &quot;Welcome!&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Explicit Parentheses</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">enteredDoorCode</span> <span class="o">&amp;&amp;</span> <span class="n">passedRetinaScan</span><span class="p">)</span> <span class="o">||</span> <span class="n">hasDoorKey</span> <span class="o">||</span> <span class="n">knowsOverridePassword</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Welcome!&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;ACCESS DENIED&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// prints &quot;Welcome!&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 </div>
 

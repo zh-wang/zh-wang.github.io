@@ -456,41 +456,70 @@ Most code are from the guide, with some modification by me.</p>
 <h3>Basic Operators</h3>
 
 <ul>
-<li><p>Terminology</p>
+<li>Terminology</li>
+</ul>
 
-<pre><code>  - Unary
-  - Binary
-  - Ternary (There is only one in a ? b :c)
-</code></pre></li>
-<li><p>Assignment Operator</p>
 
-<pre><code>  // Not a vaild assignment
-  if x = y {
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="o">-</span> <span class="n">Unary</span>
+</span><span class='line'>    <span class="o">-</span> <span class="n">Binary</span>
+</span><span class='line'>    <span class="o">-</span> <span class="n">Ternary</span> <span class="p">(</span><span class="n">There</span> <span class="kt">is</span> <span class="n">only</span> <span class="n">one</span> <span class="k">in</span> <span class="n">a</span> <span class="o">?</span> <span class="nl">b</span> <span class="p">:</span><span class="n">c</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
 
-  }
-</code></pre></li>
-<li><p>Arithmetic Operators</p>
+
+<ul>
+<li>Assignment Operator</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="c1">// Not a vaild assignment</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">x</span> <span class="o">=</span> <span class="n">y</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Arithmetic Operators
 
 <ul>
 <li>Not allow overflow.</li>
 <li>You can opt in to value overflow behavior by using Swift&rsquo;s overflow operators (such as a &amp;+ b).</li>
-<li><p>The addition operator is also supported for <strong>String</strong> concatenation.</p>
-
-<p>  let dog: Character = &ldquo;🐶&rdquo;
-  let cow: Character = &ldquo;🐮&rdquo;
-  let dogCow = dog + cow
-  // dogCow is equal to &ldquo;🐶🐮&rdquo;</p></li>
+<li>The addition operator is also supported for <strong>String</strong> concatenation.</li>
 </ul>
 </li>
-<li><p>Remainder Operator</p>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">let</span> <span class="nl">dog</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;🐶&quot;</span>
+</span><span class='line'>        <span class="k">let</span> <span class="nl">cow</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;🐮&quot;</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">dogCow</span> <span class="o">=</span> <span class="n">dog</span> <span class="o">+</span> <span class="n">cow</span>
+</span><span class='line'>        <span class="c1">// dogCow is equal to &quot;🐶🐮&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <ul>
-<li><code>9 % 4 // equals 1</code></li>
-<li><code>-9 % 4 // equals -1</code></li>
-<li><code>-9 % 4 // equals -9 % -4</code></li>
+<li>Remainder Operator</li>
 </ul>
-</li>
-</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="mi">9</span> <span class="o">%</span> <span class="mi">4</span> <span class="c1">// equals 1</span>
+</span><span class='line'>    <span class="o">-</span><span class="mi">9</span> <span class="o">%</span> <span class="mi">4</span> <span class="c1">// equals -1</span>
+</span><span class='line'>    <span class="o">-</span><span class="mi">9</span> <span class="o">%</span> <span class="mi">4</span> <span class="c1">// equals -9 % -4</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 </div>

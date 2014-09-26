@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-09-26T12:36:02+09:00</updated>
+  <updated>2014-09-26T12:39:16+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -68,28 +68,46 @@ Most code are from the guide, with some modification by me.</p>
 
 <ul>
 <li><p>Functions with Multiple Return Values
-&#8220;`
-      func minMax(array: [Int]) -> (min: Int, max: Int) {
-          var currentMin = array[0]
-          var currentMax = array[0]
-          for value in array[1..&lt;array.count] {
-              if value &lt; currentMin {
-                  currentMin = value
-              } else if value > currentMax {
-                  currentMax = value
-              }
-          }
-          return (currentMin, currentMax)
-      }</p>
-
-<pre><code>  let bounds = minMax([8, -6, 2, 109, 3, 71])
-  println("min is \(bounds.min) and max is \(bounds.max)")
-  // prints "min is -6 and max is 109"
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Optional Tuple Return Types
-&#8220;`
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  func minMax(array: [Int]) -&gt; (min: Int, max: Int) {
+</span><span class='line'>      var currentMin = array[0]
+</span><span class='line'>      var currentMax = array[0]
+</span><span class='line'>      for value in array[1..&lt;array.count] {
+</span><span class='line'>          if value &lt; currentMin {
+</span><span class='line'>              currentMin = value
+</span><span class='line'>          } else if value &gt; currentMax {
+</span><span class='line'>              currentMax = value
+</span><span class='line'>          }
+</span><span class='line'>      }
+</span><span class='line'>      return (currentMin, currentMax)
+</span><span class='line'>  }&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  let bounds = minMax([8, -6, 2, 109, 3, 71])
+</span><span class='line'>  println("min is \(bounds.min) and max is \(bounds.max)")
+</span><span class='line'>  // prints "min is -6 and max is 109"
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Optional Tuple Return Types</span></code></pre></td></tr></table></div></figure>
       func minMax(array: [Int]) -> (min: Int, max: Int)? {
           if array.isEmpty { return nil }
           var currentMin = array[0]
@@ -112,24 +130,38 @@ Most code are from the guide, with some modification by me.</p>
 
 <p>&#8220;`</p></li>
 <li><p>External parameter Names
-&#8220;`
-      func someFunction(externalParameterName localParameterName: Int) {
-          // function body goes here, and can use localParameterName
-          // to refer to the argument value for that parameter
-      }</p>
-
-<pre><code>  func join(string s1: String, toString s2: String, withJoiner joiner: String)
-      -&gt; String {
-          return s1 + joiner + s2
-  }
-
-  join(string: "hello", toString: "world", withJoiner: ", ")
-  // returns "hello, world"
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Shorthand External Parameter Names
-&#8220;`
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  func someFunction(externalParameterName localParameterName: Int) {
+</span><span class='line'>      // function body goes here, and can use localParameterName
+</span><span class='line'>      // to refer to the argument value for that parameter
+</span><span class='line'>  }&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  func join(string s1: String, toString s2: String, withJoiner joiner: String)
+</span><span class='line'>  -&gt; String {
+</span><span class='line'>      return s1 + joiner + s2
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  join(string: "hello", toString: "world", withJoiner: ", ")
+</span><span class='line'>  // returns "hello, world"
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Shorthand External Parameter Names</span></code></pre></td></tr></table></div></figure>
       func containsCharacter(#string: String, #characterToFind: Character) -> Bool {
           for character in string {
               if character == characterToFind {
@@ -145,22 +177,34 @@ Most code are from the guide, with some modification by me.</p>
 
 <p>&#8220;`</p></li>
 <li><p>Default Parameter Values
-&#8220;`
-      func join(string s1: String, toString s2: String,
-          withJoiner joiner: String = &ldquo; &rdquo;) -> String {
-              return s1 + joiner + s2
-      }</p>
-
-<pre><code>  join(string: "hello", toString: "world", withJoiner: "-")
-  // returns "hello-world"
-
-  join(string: "hello", toString: "world")
-  // returns "hello world"
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>External Names for Parameters with Default Values (automatically generated)
-&#8220;`
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  func join(string s1: String, toString s2: String,
+</span><span class='line'>      withJoiner joiner: String = &ldquo; &rdquo;) -&gt; String {
+</span><span class='line'>          return s1 + joiner + s2
+</span><span class='line'>  }&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  join(string: "hello", toString: "world", withJoiner: "-")
+</span><span class='line'>  // returns "hello-world"
+</span><span class='line'>
+</span><span class='line'>  join(string: "hello", toString: "world")
+</span><span class='line'>  // returns "hello world"
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;External Names for Parameters with Default Values (automatically generated)</span></code></pre></td></tr></table></div></figure>
       func join(s1: String, s2: String, joiner: String = &ldquo; &rdquo;) -> String {
           return s1 + joiner + s2
       }</p>
@@ -171,43 +215,76 @@ Most code are from the guide, with some modification by me.</p>
 
 <p>&#8220;`</p></li>
 <li><p>Variadic Parameters (varargs)
-&#8220;`
-      // Note that Double&hellip; is different from [Double]</p>
-
-<pre><code>  func arithmeticMean(numbers: Double...) -&gt; Double {
-      var total: Double = 0
-      for number in numbers {
-          total += number
-      }
-      return total / Double(numbers.count)
-  }
-  arithmeticMean(1, 2, 3, 4, 5)
-  // returns 3.0, which is the arithmetic mean of these five numbers
-  arithmeticMean(3, 8.25, 18.75)
-  // returns 10.0, which is the arithmetic mean of these three numbers
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li>Constant and Variable Parameters
-<code>
-      func alignRight(var string: String, count: Int, pad: Character) -&gt; String {
-          let amountToPad = count - countElements(string)
-          if amountToPad &lt; 1 {
-              return string
-          }
-          let padString = String(pad)
-          for _ in 1...amountToPad {
-              string = padString + string
-          }
-          return string
-      }
-      let originalString = "hello"
-      let paddedString = alignRight(originalString, 10, "-")
-      // paddedString is equal to "-----hello"
-      // originalString is still equal to "hello"
-</code></li>
-<li><p>In-Out Parameters
-&#8220;`
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  // Note that Double&hellip; is different from [Double]&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  func arithmeticMean(numbers: Double...) -&gt; Double {
+</span><span class='line'>  var total: Double = 0
+</span><span class='line'>  for number in numbers {
+</span><span class='line'>      total += number
+</span><span class='line'>  }
+</span><span class='line'>  return total / Double(numbers.count)
+</span><span class='line'>  }
+</span><span class='line'>  arithmeticMean(1, 2, 3, 4, 5)
+</span><span class='line'>  // returns 3.0, which is the arithmetic mean of these five numbers
+</span><span class='line'>  arithmeticMean(3, 8.25, 18.75)
+</span><span class='line'>  // returns 10.0, which is the arithmetic mean of these three numbers
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;Constant and Variable Parameters
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>  func alignRight(var string: String, count: Int, pad: Character) -&gt; String {
+</span><span class='line'>      let amountToPad = count - countElements(string)
+</span><span class='line'>      if amountToPad &lt; 1 {
+</span><span class='line'>          return string
+</span><span class='line'>      }
+</span><span class='line'>      let padString = String(pad)
+</span><span class='line'>      for _ in 1...amountToPad {
+</span><span class='line'>          string = padString + string
+</span><span class='line'>      }
+</span><span class='line'>      return string
+</span><span class='line'>  }
+</span><span class='line'>  let originalString = "hello"
+</span><span class='line'>  let paddedString = alignRight(originalString, 10, "-")
+</span><span class='line'>  // paddedString is equal to "-----hello"
+</span><span class='line'>  // originalString is still equal to "hello"
+</span><span class='line'>&lt;/code&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;In-Out Parameters</span></code></pre></td></tr></table></div></figure>
       // Variable parameters, as described above, can only be changed within the function itself. If you want a function to modify a parameter’s value, and you want those changes to persist after the function call has ended, define that parameter as an in-out parameter instead.</p>
 
 <pre><code>  func swapTwoInts(inout a: Int, inout b: Int) {
@@ -225,35 +302,60 @@ Most code are from the guide, with some modification by me.</p>
 
 <p>&#8220;`</p></li>
 <li><p>Function Type
-&#8220;`
-      func addTwoInts(a: Int, b: Int) -> Int {
-          return a + b
-      }
-      func multiplyTwoInts(a: Int, b: Int) -> Int {
-          return a * b
-      }</p>
-
-<pre><code>  var mathFunction: (Int, Int) -&gt; Int = addTwoInts
-
-  println("Result: \(mathFunction(2, 3))")
-  // prints "Result: 5"
-
-  mathFunction = multiplyTwoInts
-  println("Result: \(mathFunction(2, 3))")
-  // prints "Result: 6"
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li>Function Types as Parameter Types
-<code>
-      func printMathResult(mathFunction: (Int, Int) -&gt; Int, a: Int, b: Int) {
-          println("Result: \(mathFunction(a, b))")
-      }
-      printMathResult(addTwoInts, 3, 5)
-      // prints "Result: 8"
-</code></li>
-<li><p>Function Type as Return Types
-&#8220;`
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  func addTwoInts(a: Int, b: Int) -&gt; Int {
+</span><span class='line'>      return a + b
+</span><span class='line'>  }
+</span><span class='line'>  func multiplyTwoInts(a: Int, b: Int) -&gt; Int {
+</span><span class='line'>      return a * b
+</span><span class='line'>  }&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  var mathFunction: (Int, Int) -&gt; Int = addTwoInts
+</span><span class='line'>
+</span><span class='line'>  println("Result: \(mathFunction(2, 3))")
+</span><span class='line'>  // prints "Result: 5"
+</span><span class='line'>
+</span><span class='line'>  mathFunction = multiplyTwoInts
+</span><span class='line'>  println("Result: \(mathFunction(2, 3))")
+</span><span class='line'>  // prints "Result: 6"
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;Function Types as Parameter Types
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>  func printMathResult(mathFunction: (Int, Int) -&gt; Int, a: Int, b: Int) {
+</span><span class='line'>      println("Result: \(mathFunction(a, b))")
+</span><span class='line'>  }
+</span><span class='line'>  printMathResult(addTwoInts, 3, 5)
+</span><span class='line'>  // prints "Result: 8"
+</span><span class='line'>&lt;/code&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Function Type as Return Types</span></code></pre></td></tr></table></div></figure>
       func stepForward(input: Int) -> Int {
           return input + 1
       }
@@ -952,16 +1054,21 @@ Most code are from the guide, with some modification by me.</p>
 
 <ul>
 <li>Terminology
-&#8220;`swift
-
-<pre><code>  - Unary
-  - Binary
-  - Ternary (There is only one in a ? b :c)
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Assignment Operator
-&#8220;`
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="o">-</span> <span class="n">Unary</span>
+</span><span class='line'>  <span class="o">-</span> <span class="n">Binary</span>
+</span><span class='line'>  <span class="o">-</span> <span class="n">Ternary</span> <span class="p">(</span><span class="n">There</span> <span class="kt">is</span> <span class="n">only</span> <span class="n">one</span> <span class="k">in</span> <span class="n">a</span> <span class="o">?</span> <span class="nl">b</span> <span class="p">:</span><span class="n">c</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Assignment</span> <span class="n">Operator</span>
+</span></code></pre></td></tr></table></div></figure>swift
       // Not a vaild assignment
       if x = y {</p>
 
@@ -976,10 +1083,10 @@ Most code are from the guide, with some modification by me.</p>
 <li>You can opt in to value overflow behavior by using Swift&rsquo;s overflow operators (such as a &amp;+ b).</li>
 <li>The addition operator is also supported for <strong>String</strong> concatenation.
 <code>
-  let dog: Character = "🐶"
-  let cow: Character = "🐮"
-  let dogCow = dog + cow
-  // dogCow is equal to "🐶🐮"
+      let dog: Character = "🐶"
+      let cow: Character = "🐮"
+      let dogCow = dog + cow
+      // dogCow is equal to "🐶🐮"
 </code></li>
 </ul>
 </li>
@@ -1011,111 +1118,215 @@ Most code are from the guide, with some modification by me.</p>
       // a is now equal to 2, but c has been set to the pre-increment value of 1
 </code></li>
 <li><p>Unary Minus Operator and Unary Plus Operator
-&#8220;`
-      let three = 3
-      let minusThree = -three       // minusThree equals -3
-      let plusThree = -minusThree   // plusThree equals 3, or &ldquo;minus minus three&rdquo;</p>
-
-<pre><code>  let minusSix = -6
-  let alsoMinusSix = +minusSix  // alsoMinusSix equals -6
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li>Compound Assignment Operators
-<code>
-      var a = 1
-      a += 2
-</code></li>
-<li>Comparison Operators
-<code>
-      Equal to (a == b)
-      Not equal to (a != b)
-      Greater than (a &gt; b)
-      Less than (a &lt; b)
-      Greater than or equal to (a &gt;= b)
-      Less than or equal to (a &lt;= b)
-</code></li>
-<li>Nil Coalescing Operator
-
-<ul>
-<li><p>The nil coalescing operator (a ?? b) unwraps an optional a if it contains a value, or returns a default value b if a is nil.
-&#8220;`
-  let defaultColorName = &ldquo;red&rdquo;
-  var userDefinedColorName: String?   // defaults to nil</p>
-
-<p>  var colorNameToUse = userDefinedColorName ?? defaultColorName
-  // userDefinedColorName is nil, so colorNameToUse is set to the default of &ldquo;red&rdquo;
-&#8220;`</p></li>
-</ul>
-</li>
-<li>Range Operators
-<code>
-      for index in 1...5 {
-          println("\(index) times 5 is \(index * 5)")
-      }
-      // 1 times 5 is 5
-      // 2 times 5 is 10
-      // 3 times 5 is 15
-      // 4 times 5 is 20
-      // 5 times 5 is 25
-</code></li>
-<li>Half-Open Range Operator
-<code>
-      let names = ["Anna", "Alex", "Brian", "Jack"]
-      let count = names.count
-      for i in 0..&lt;count {
-          println("Person \(i + 1) is called \(names[i])")
-      }
-      // Person 1 is called Anna
-      // Person 2 is called Alex
-      // Person 3 is called Brian
-      // Person 4 is called Jack&gt;
-</code></li>
-<li>Logical Operators
-<code>
-      Logical NOT (!a)
-      Logical AND (a &amp;&amp; b)
-      Logical OR (a || b)
-      Logical NOT (!a)
-</code></li>
-<li>Combining Logical Operators
-<code>
-      if enteredDoorCode &amp;&amp; passedRetinaScan || hasDoorKey || knowsOverridePassword {
-          println("Welcome!")
-      } else {
-          println("ACCESS DENIED")
-      }
-      // prints "Welcome!"
-</code></li>
-<li>Explicit Parentheses
-<code>
-      if (enteredDoorCode &amp;&amp; passedRetinaScan) || hasDoorKey || knowsOverridePassword {
-          println("Welcome!")
-      } else {
-          println("ACCESS DENIED")
-      }
-      // prints "Welcome!"
-</code></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Swift Part 2 - Basics]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/09/05/learning-swift-part-2/"/>
-    <updated>2014-09-05T15:06:10+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/09/05/learning-swift-part-2</id>
-    <content type="html"><![CDATA[<p>Just some notes after reading Apple&rsquo;s official online guide.
-Most code are from the guide, with some modification by me.</p>
-
-<h2>===== Full Notes =====</h2>
-
-<h3>Basics</h3>
-
-<ul>
-<li><p>Declaring Constant and Variables
-&#8220;`swift
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">let</span> <span class="n">three</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">minusThree</span> <span class="o">=</span> <span class="o">-</span><span class="n">three</span>       <span class="c1">// minusThree equals -3</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">plusThree</span> <span class="o">=</span> <span class="o">-</span><span class="n">minusThree</span>   <span class="c1">// plusThree equals 3, or &amp;ldquo;minus minus three&amp;rdquo;&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">let</span> <span class="n">minusSix</span> <span class="o">=</span> <span class="o">-</span><span class="mi">6</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">alsoMinusSix</span> <span class="o">=</span> <span class="o">+</span><span class="n">minusSix</span>  <span class="c1">// alsoMinusSix equals -6</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Compound</span> <span class="n">Assignment</span> <span class="n">Operators</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">var</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>  <span class="n">a</span> <span class="o">+=</span> <span class="mi">2</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Comparison</span> <span class="n">Operators</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="n">Equal</span> <span class="n">to</span> <span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">Not</span> <span class="n">equal</span> <span class="n">to</span> <span class="p">(</span><span class="n">a</span> <span class="o">!=</span> <span class="n">b</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">Greater</span> <span class="n">than</span> <span class="p">(</span><span class="n">a</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">b</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">Less</span> <span class="n">than</span> <span class="p">(</span><span class="n">a</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">b</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">Greater</span> <span class="n">than</span> <span class="n">or</span> <span class="n">equal</span> <span class="n">to</span> <span class="p">(</span><span class="n">a</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span><span class="o">=</span> <span class="n">b</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">Less</span> <span class="n">than</span> <span class="n">or</span> <span class="n">equal</span> <span class="n">to</span> <span class="p">(</span><span class="n">a</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="o">=</span> <span class="n">b</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Nil</span> <span class="n">Coalescing</span> <span class="n">Operator</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="n">The</span> <span class="nb">nil</span> <span class="n">coalescing</span> <span class="kr">operator</span> <span class="p">(</span><span class="n">a</span> <span class="o">??</span> <span class="n">b</span><span class="p">)</span> <span class="n">unwraps</span> <span class="n">an</span> <span class="n">optional</span> <span class="n">a</span> <span class="k">if</span> <span class="n">it</span> <span class="n">contains</span> <span class="n">a</span> <span class="n">value</span><span class="p">,</span> <span class="n">or</span> <span class="n">returns</span> <span class="n">a</span> <span class="k">default</span> <span class="n">value</span> <span class="n">b</span> <span class="k">if</span> <span class="n">a</span> <span class="kt">is</span> <span class="nb">nil</span><span class="p">.</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>        <span class="k">let</span> <span class="n">defaultColorName</span> <span class="o">=</span> <span class="s">&quot;red&quot;</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">userDefinedColorName</span><span class="p">:</span> <span class="n">String</span><span class="o">?</span>   <span class="c1">// defaults to nil</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">var</span> <span class="n">colorNameToUse</span> <span class="o">=</span> <span class="n">userDefinedColorName</span> <span class="o">??</span> <span class="n">defaultColorName</span>
+</span><span class='line'>    <span class="c1">// userDefinedColorName is nil, so colorNameToUse is set to the default of &quot;red&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Range</span> <span class="n">Operators</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="n">index</span> <span class="k">in</span> <span class="mf">1.</span><span class="p">.</span><span class="mf">.5</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(index) times 5 is \(index * 5)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="c1">// 1 times 5 is 5</span>
+</span><span class='line'>  <span class="c1">// 2 times 5 is 10</span>
+</span><span class='line'>  <span class="c1">// 3 times 5 is 15</span>
+</span><span class='line'>  <span class="c1">// 4 times 5 is 20</span>
+</span><span class='line'>  <span class="c1">// 5 times 5 is 25</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Half</span><span class="o">-</span><span class="n">Open</span> <span class="n">Range</span> <span class="n">Operator</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Anna&quot;</span><span class="p">,</span> <span class="s">&quot;Alex&quot;</span><span class="p">,</span> <span class="s">&quot;Brian&quot;</span><span class="p">,</span> <span class="s">&quot;Jack&quot;</span><span class="p">]</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">count</span> <span class="o">=</span> <span class="n">names</span><span class="p">.</span><span class="n">count</span>
+</span><span class='line'>  <span class="k">for</span> <span class="n">i</span> <span class="k">in</span> <span class="mf">0.</span><span class="p">.</span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">count</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="s">&quot;Person \(i + 1) is called \(names[i])&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="c1">// Person 1 is called Anna</span>
+</span><span class='line'>  <span class="c1">// Person 2 is called Alex</span>
+</span><span class='line'>  <span class="c1">// Person 3 is called Brian</span>
+</span><span class='line'>  <span class="c1">// Person 4 is called Jack&amp;gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Logical</span> <span class="n">Operators</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="n">Logical</span> <span class="n">NOT</span> <span class="p">(</span><span class="o">!</span><span class="n">a</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">Logical</span> <span class="n">AND</span> <span class="p">(</span><span class="n">a</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> <span class="n">b</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">Logical</span> <span class="n">OR</span> <span class="p">(</span><span class="n">a</span> <span class="o">||</span> <span class="n">b</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">Logical</span> <span class="n">NOT</span> <span class="p">(</span><span class="o">!</span><span class="n">a</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Combining</span> <span class="n">Logical</span> <span class="n">Operators</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">enteredDoorCode</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> <span class="n">passedRetinaScan</span> <span class="o">||</span> <span class="n">hasDoorKey</span> <span class="o">||</span> <span class="n">knowsOverridePassword</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="s">&quot;Welcome!&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="s">&quot;ACCESS DENIED&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="c1">// prints &quot;Welcome!&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Explicit</span> <span class="n">Parentheses</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">enteredDoorCode</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span> <span class="n">passedRetinaScan</span><span class="p">)</span> <span class="o">||</span> <span class="n">hasDoorKey</span> <span class="o">||</span> <span class="n">knowsOverridePassword</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="s">&quot;Welcome!&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="s">&quot;ACCESS DENIED&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="c1">// prints &quot;Welcome!&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">]]</span><span class="o">&gt;&lt;/</span><span class="n">content</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;/</span><span class="n">entry</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">entry</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">title</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;html&quot;</span><span class="o">&gt;&lt;!</span><span class="p">[</span><span class="n">CDATA</span><span class="p">[</span><span class="n">Learning</span> <span class="n">Swift</span> <span class="n">Part</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">Basics</span><span class="p">]]</span><span class="o">&gt;&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;http://zh-wang.github.io/blog/2014/09/05/learning-swift-part-2/&quot;</span><span class="o">/&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">updated</span><span class="o">&gt;</span><span class="mi">2014</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mo">05</span><span class="nl">T15</span><span class="p">:</span><span class="mo">06</span><span class="o">:</span><span class="mi">10</span><span class="o">+</span><span class="mi">09</span><span class="o">:</span><span class="mo">00</span><span class="o">&lt;/</span><span class="n">updated</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="kt">id</span><span class="o">&gt;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//zh-wang.github.io/blog/2014/09/05/learning-swift-part-2&lt;/id&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">content</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;html&quot;</span><span class="o">&gt;&lt;!</span><span class="p">[</span><span class="n">CDATA</span><span class="p">[</span><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Just</span> <span class="n">some</span> <span class="n">notes</span> <span class="n">after</span> <span class="n">reading</span> <span class="n">Apple</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">s</span> <span class="n">official</span> <span class="n">online</span> <span class="n">guide</span><span class="p">.</span>
+</span><span class='line'><span class="n">Most</span> <span class="n">code</span> <span class="n">are</span> <span class="n">from</span> <span class="n">the</span> <span class="n">guide</span><span class="p">,</span> <span class="n">with</span> <span class="n">some</span> <span class="n">modification</span> <span class="n">by</span> <span class="n">me</span><span class="p">.</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h2</span><span class="o">&gt;=====</span> <span class="n">Full</span> <span class="n">Notes</span> <span class="o">=====&lt;/</span><span class="n">h2</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h3</span><span class="o">&gt;</span><span class="n">Basics</span><span class="o">&lt;/</span><span class="n">h3</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Declaring</span> <span class="n">Constant</span> <span class="n">and</span> <span class="n">Variables</span>
+</span></code></pre></td></tr></table></div></figure>swift
       let maximumNumberOfLoginAttempts = 10
       var currentLoginAttempt = 0</p>
 
@@ -1124,57 +1335,105 @@ Most code are from the guide, with some modification by me.</p>
 
 <p>&#8220;`</p></li>
 <li><p>Type Annotations
-&#8220;`
-      var welcomeMessgae: String
-      welcomeMessgae = &ldquo;Hello&rdquo;</p>
-
-<pre><code>  var red, green, blue: Double // Multiple variables defined
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li>Naming Constants and Variables
-<code>
-      let π = 3.14159
-      let 你好 = "你好世界"
-      let 🐶🐮 = "dogcow"
-</code></li>
-</ul>
-
-
-<!-- more -->
-
-
-<h3>Integers</h3>
-
-<ul>
-<li>Integer Bounds
-<code>
-      let minValue = UInt8.min  // minValue is equal to 0, and is of type UInt8
-      let maxValue = UInt8.max  // maxValue is equal to 255, and is of type UInt8
-</code></li>
-<li><p>Int</p>
-
-<ul>
-<li><p>On a 32-bit platform, Int is the same size as Int32.</p></li>
-<li><p>On a 64-bit platform, Int is the same size as Int64.</p></li>
-</ul>
-</li>
-<li><p>UInt</p>
-
-<ul>
-<li><p>On a 32-bit platform, UInt is the same size as UInt32.</p></li>
-<li><p>On a 64-bit platform, UInt is the same size as UInt64.</p></li>
-</ul>
-</li>
-<li><p>Floating-Point Numbers</p>
-
-<ul>
-<li>Double has a precision of at least 15 decimal digits, whereas the precision of Float can be as little as 6 decimal digits. T</li>
-</ul>
-</li>
-<li><p>Type Safety and Type Inference</p></li>
-<li><p>Numeric Literals
-&#8220;`
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">var</span> <span class="nl">welcomeMessgae</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>  <span class="n">welcomeMessgae</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Hello</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">var</span> <span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="nl">blue</span><span class="p">:</span> <span class="n">Double</span> <span class="c1">// Multiple variables defined</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Naming</span> <span class="n">Constants</span> <span class="n">and</span> <span class="n">Variables</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="err">π</span> <span class="o">=</span> <span class="mf">3.14159</span>
+</span><span class='line'>  <span class="k">let</span> <span class="err">你好</span> <span class="o">=</span> <span class="s">&quot;你好世界&quot;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="err">🐶🐮</span> <span class="o">=</span> <span class="s">&quot;dogcow&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;!--</span> <span class="n">more</span> <span class="o">--&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h3</span><span class="o">&gt;</span><span class="n">Integers</span><span class="o">&lt;/</span><span class="n">h3</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Integer</span> <span class="n">Bounds</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">minValue</span> <span class="o">=</span> <span class="kt">UInt8</span><span class="p">.</span><span class="n">min</span>  <span class="c1">// minValue is equal to 0, and is of type UInt8</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">maxValue</span> <span class="o">=</span> <span class="kt">UInt8</span><span class="p">.</span><span class="n">max</span>  <span class="c1">// maxValue is equal to 255, and is of type UInt8</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Int</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">On</span> <span class="n">a</span> <span class="mi">32</span><span class="o">-</span><span class="n">bit</span> <span class="n">platform</span><span class="p">,</span> <span class="n">Int</span> <span class="kt">is</span> <span class="n">the</span> <span class="n">same</span> <span class="n">size</span> <span class="kt">as</span> <span class="n">Int32</span><span class="p">.</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">On</span> <span class="n">a</span> <span class="mi">64</span><span class="o">-</span><span class="n">bit</span> <span class="n">platform</span><span class="p">,</span> <span class="n">Int</span> <span class="kt">is</span> <span class="n">the</span> <span class="n">same</span> <span class="n">size</span> <span class="kt">as</span> <span class="n">Int64</span><span class="p">.</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">UInt</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">On</span> <span class="n">a</span> <span class="mi">32</span><span class="o">-</span><span class="n">bit</span> <span class="n">platform</span><span class="p">,</span> <span class="n">UInt</span> <span class="kt">is</span> <span class="n">the</span> <span class="n">same</span> <span class="n">size</span> <span class="kt">as</span> <span class="kt">UInt32</span><span class="p">.</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">On</span> <span class="n">a</span> <span class="mi">64</span><span class="o">-</span><span class="n">bit</span> <span class="n">platform</span><span class="p">,</span> <span class="n">UInt</span> <span class="kt">is</span> <span class="n">the</span> <span class="n">same</span> <span class="n">size</span> <span class="kt">as</span> <span class="n">UInt64</span><span class="p">.</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Floating</span><span class="o">-</span><span class="n">Point</span> <span class="n">Numbers</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Double</span> <span class="n">has</span> <span class="n">a</span> <span class="n">precision</span> <span class="n">of</span> <span class="n">at</span> <span class="n">least</span> <span class="mi">15</span> <span class="n">decimal</span> <span class="n">digits</span><span class="p">,</span> <span class="n">whereas</span> <span class="n">the</span> <span class="n">precision</span> <span class="n">of</span> <span class="n">Float</span> <span class="n">can</span> <span class="n">be</span> <span class="kt">as</span> <span class="n">little</span> <span class="kt">as</span> <span class="mi">6</span> <span class="n">decimal</span> <span class="n">digits</span><span class="p">.</span> <span class="n">T</span><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kt">Type</span> <span class="n">Safety</span> <span class="n">and</span> <span class="kt">Type</span> <span class="n">Inference</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Numeric</span> <span class="n">Literals</span>
+</span></code></pre></td></tr></table></div></figure>
       let decimalInteger = 17
       let binaryInteger = 0b10001       // 17 in binary notation
       let octalInteger = 0o21           // 17 in octal notation
@@ -1194,23 +1453,37 @@ Most code are from the guide, with some modification by me.</p>
 
 <p>&#8220;`</p></li>
 <li><p>Integer Conversion
-&#8220;`
-      let cannotBeNegative: UInt8 = -1
-      // UInt8 cannot store negative numbers, and so this will report an error
-      let tooBig: Int8 = Int8.max + 1
-      // Int8 cannot store a number larger than its maximum value,
-      // and so this will also report an error</p>
-
-<pre><code>  // conversion must be explicit
-
-  let twoThousand: UInt16 = 2_000
-  let one: UInt8 = 1
-  let twoThousandAndOne = twoThousand + UInt16(one)
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Integer and Floating-Point Conversion
-&#8220;`
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">let</span> <span class="nl">cannotBeNegative</span><span class="p">:</span> <span class="kt">UInt8</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>  <span class="c1">// UInt8 cannot store negative numbers, and so this will report an error</span>
+</span><span class='line'>  <span class="k">let</span> <span class="nl">tooBig</span><span class="p">:</span> <span class="n">Int8</span> <span class="o">=</span> <span class="n">Int8</span><span class="p">.</span><span class="n">max</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>  <span class="c1">// Int8 cannot store a number larger than its maximum value,</span>
+</span><span class='line'>  <span class="c1">// and so this will also report an error&lt;/p&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="c1">// conversion must be explicit</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">let</span> <span class="nl">twoThousand</span><span class="p">:</span> <span class="kt">UInt16</span> <span class="o">=</span> <span class="mi">2</span><span class="n">_000</span>
+</span><span class='line'>  <span class="k">let</span> <span class="nl">one</span><span class="p">:</span> <span class="kt">UInt8</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">twoThousandAndOne</span> <span class="o">=</span> <span class="n">twoThousand</span> <span class="o">+</span> <span class="kt">UInt16</span><span class="p">(</span><span class="n">one</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Integer</span> <span class="n">and</span> <span class="n">Floating</span><span class="o">-</span><span class="n">Point</span> <span class="n">Conversion</span>
+</span></code></pre></td></tr></table></div></figure>
       let three = 3
       let pointOneFourOneFiveNine = 0.14159
       let pi = Double(three) + pointOneFourOneFiveNine
@@ -1228,61 +1501,113 @@ Most code are from the guide, with some modification by me.</p>
       // maxAmplitudeFound is now 0
 </code></li>
 <li><p>Boolean
-&#8220;`
-      let orangesAreOrange = true
-      let turnipsAreDelicious = false</p>
-
-<pre><code>  if turnipsAreDelicious {
-      println("Mmm, tasty turnips!")
-  } else {
-      println("Eww, turnips are horrible.")
-  }
-  // prints "Eww, turnips are horrible."
-</code></pre>
-
-<p>&#8220;`</p></li>
-</ul>
-
-
-<h3>Tuples</h3>
-
-<ul>
-<li>Sample
-<code>
-      let http404Error = (404, "Not Found")
-      // http404Error is of type (Int, String), and equals (404, "Not Found")
-</code></li>
-<li>Decompose a tuple
-<code>
-      let (statusCode, statusMessage) = http404Error
-      println("The status code is \(statusCode)")
-      // prints "The status code is 404"
-      println("The status message is \(statusMessage)")
-      // prints "The status message is Not Found"
-</code></li>
-<li>Ignore some value when decomposing
-<code>
-      let (justTheStatusCode, _) = http404Error
-      println("The status code is \(justTheStatusCode)")
-      // prints "The status code is 404"
-</code></li>
-<li>Access by index
-<code>
-      println("The status code is \(http404Error.0)")
-      // prints "The status code is 404"
-      println("The status message is \(http404Error.1)")
-      // prints "The status message is Not Found"
-</code>
-
-<h3>Optionals</h3></li>
-<li>Sample
-<code>
-      let possibleNumber = "123"
-      let convertedNumber = possibleNumber.toInt()
-      // convertedNumber is inferred to be of type "Int?", or "optional Int"
-</code></li>
-<li><p>nil
-&#8220;`
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">let</span> <span class="n">orangesAreOrange</span> <span class="o">=</span> <span class="nb">true</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">turnipsAreDelicious</span> <span class="o">=</span> <span class="nb">false</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">if</span> <span class="n">turnipsAreDelicious</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;Mmm, tasty turnips!&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;Eww, turnips are horrible.&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="c1">// prints &quot;Eww, turnips are horrible.&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h3</span><span class="o">&gt;</span><span class="n">Tuples</span><span class="o">&lt;/</span><span class="n">h3</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Sample</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">http404Error</span> <span class="o">=</span> <span class="p">(</span><span class="mi">404</span><span class="p">,</span> <span class="s">&quot;Not Found&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">// http404Error is of type (Int, String), and equals (404, &quot;Not Found&quot;)</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Decompose</span> <span class="n">a</span> <span class="n">tuple</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="p">(</span><span class="n">statusCode</span><span class="p">,</span> <span class="n">statusMessage</span><span class="p">)</span> <span class="o">=</span> <span class="n">http404Error</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;The status code is \(statusCode)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">// prints &quot;The status code is 404&quot;</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;The status message is \(statusMessage)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">// prints &quot;The status message is Not Found&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Ignore</span> <span class="n">some</span> <span class="n">value</span> <span class="n">when</span> <span class="n">decomposing</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="p">(</span><span class="n">justTheStatusCode</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span> <span class="o">=</span> <span class="n">http404Error</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;The status code is \(justTheStatusCode)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">// prints &quot;The status code is 404&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Access</span> <span class="n">by</span> <span class="n">index</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;The status code is \(http404Error.0)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">// prints &quot;The status code is 404&quot;</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;The status message is \(http404Error.1)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">// prints &quot;The status message is Not Found&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h3</span><span class="o">&gt;</span><span class="n">Optionals</span><span class="o">&lt;/</span><span class="n">h3</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Sample</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">possibleNumber</span> <span class="o">=</span> <span class="s">&quot;123&quot;</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">convertedNumber</span> <span class="o">=</span> <span class="n">possibleNumber</span><span class="p">.</span><span class="n">toInt</span><span class="p">()</span>
+</span><span class='line'>  <span class="c1">// convertedNumber is inferred to be of type &quot;Int?&quot;, or &quot;optional Int&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="nb">nil</span>
+</span></code></pre></td></tr></table></div></figure>
       var serverResponseCode: Int? = 404
       // serverResponseCode contains an actual Int value of 404
       serverResponseCode = nil
@@ -1301,22 +1626,35 @@ Most code are from the guide, with some modification by me.</p>
       // prints "convertedNumber has an integer value of 123."
 </code></li>
 <li><p>Optional Binding
-&#8220;`
-      if let constantName = someOptional {
-          statements
-      }</p>
-
-<pre><code>  if let actualNumber = possibleNumber.toInt() {
-      println("\(possibleNumber) has an integer value of \(actualNumber)")
-  } else {
-      println("\(possibleNumber) could not be converted to an integer")
-  }
-  // prints "123 has an integer value of 123"
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Implicitly Unwrapping Optionals (Accessing an implicitly unwrapped optional when it does not contain a value will trigger a RTE)
-&#8220;`
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">if</span> <span class="k">let</span> <span class="n">constantName</span> <span class="o">=</span> <span class="n">someOptional</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">statements</span>
+</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">if</span> <span class="k">let</span> <span class="n">actualNumber</span> <span class="o">=</span> <span class="n">possibleNumber</span><span class="p">.</span><span class="n">toInt</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(possibleNumber) has an integer value of \(actualNumber)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(possibleNumber) could not be converted to an integer&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="c1">// prints &quot;123 has an integer value of 123&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Implicitly</span> <span class="n">Unwrapping</span> <span class="n">Optionals</span> <span class="p">(</span><span class="n">Accessing</span> <span class="n">an</span> <span class="n">implicitly</span> <span class="n">unwrapped</span> <span class="n">optional</span> <span class="n">when</span> <span class="n">it</span> <span class="n">does</span> <span class="n">not</span> <span class="n">contain</span> <span class="n">a</span> <span class="n">value</span> <span class="n">will</span> <span class="n">trigger</span> <span class="n">a</span> <span class="n">RTE</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
       let possibleString: String? = &ldquo;An optional string.&rdquo;
       let forcedString: String = possibleString! // requires an exclamation mark</p>
 
