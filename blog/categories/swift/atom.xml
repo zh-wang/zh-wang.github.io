@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-09-26T12:33:56+09:00</updated>
+  <updated>2014-09-26T12:36:02+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -952,7 +952,7 @@ Most code are from the guide, with some modification by me.</p>
 
 <ul>
 <li>Terminology
-&#8220;`
+&#8220;`swift
 
 <pre><code>  - Unary
   - Binary
