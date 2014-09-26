@@ -372,35 +372,65 @@ Most code are from the guide, with some modification by me.</p>
 <h3>Strings and Characters</h3>
 
 <ul>
-<li><p>String Literals</p>
+<li>String Literals</li>
+</ul>
 
-<pre><code>  let someString = "..."
-</code></pre></li>
-<li><p>Initializing an Empty String</p>
 
-<pre><code>  var emptyString = ""               // empty string literal
-  var anotherEmptyString = String()  // initializer syntax
-  // these two strings are both empty, and are equivalent to each other
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">someString</span> <span class="o">=</span> <span class="s">&quot;...&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
-  if emptyString.isEmpty {
-      println("Nothing to see here")
-  }
-</code></pre></li>
-<li><p>String Mutability</p>
 
-<pre><code>  var variableString = "Horse"
-  variableString += " and carriage"
-  // variableString is now "Horse and carriage"
+<ul>
+<li>Initializing an Empty String</li>
+</ul>
 
-  let constantString = "Highlander"
-  constantString += " and another Highlander"
-  // this reports a compile-time error - a constant string cannot be modified
-</code></pre></li>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">var</span> <span class="n">emptyString</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>               <span class="c1">// empty string literal</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">anotherEmptyString</span> <span class="o">=</span> <span class="n">String</span><span class="p">()</span>  <span class="c1">// initializer syntax</span>
+</span><span class='line'>    <span class="c1">// these two strings are both empty, and are equivalent to each other</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">emptyString</span><span class="p">.</span><span class="n">isEmpty</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Nothing to see here&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>String Mutability</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">var</span> <span class="n">variableString</span> <span class="o">=</span> <span class="s">&quot;Horse&quot;</span>
+</span><span class='line'>    <span class="n">variableString</span> <span class="o">+=</span> <span class="s">&quot; and carriage&quot;</span>
+</span><span class='line'>    <span class="c1">// variableString is now &quot;Horse and carriage&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">constantString</span> <span class="o">=</span> <span class="s">&quot;Highlander&quot;</span>
+</span><span class='line'>    <span class="n">constantString</span> <span class="o">+=</span> <span class="s">&quot; and another Highlander&quot;</span>
+</span><span class='line'>    <span class="c1">// this reports a compile-time error - a constant string cannot be modified</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
 <li><p>Strings Are Value Types</p>
 
 <ul>
-<li>Swift’s String type is a value type. If you create a new String value, that String value is copied when it is passed to a function or method, or when it is assigned to a constant or variable. In each case, a new copy of the existing String value is created, and the new copy is passed or assigned, not the original version.</li>
-<li>NSString in obj-c is NOT value type.</li>
+<li><p>Swift’s String type is a value type. If you create a new String value, that String value is copied when it is passed to a function or method, or when it is assigned to a constant or variable. In each case, a new copy of the existing String value is created, and the new copy is passed or assigned, not the original version.</p></li>
+<li><p>NSString in obj-c is NOT value type.</p></li>
 </ul>
 </li>
 </ul>
