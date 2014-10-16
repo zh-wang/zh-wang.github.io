@@ -259,67 +259,130 @@ Most code are from the guide, with some modification by me.</p>
 
 <h3>Control Flow</h3>
 
-<ul>
-<li>For-In
+<figure class='code'><figcaption><span>Time to be Awesome - awesome.rb </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='rb'><span class='line'><span class="nb">puts</span> <span class="s2">&quot;Awesome!&quot;</span> <span class="k">unless</span> <span class="n">lame</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>For-In</h3>
 
 <ul>
-<li><p>Sample</p>
-
-<pre><code>  for index in 1...5 {
-      println("\(index) times 5 is \(index * 5)")
-  }
-  // 1 times 5 is 5
-  // 2 times 5 is 10
-  // 3 times 5 is 15
-  // 4 times 5 is 20
-  // 5 times 5 is 25
-</code></pre></li>
-<li><p>if no need of value from the range</p>
-
-<pre><code>  let base = 3
-  let power = 10
-  var answer = 1
-  for _ in 1...power {
-      answer *= base
-  }
-  println("\(base) to the power of \(power) is \(answer)")
-  // prints "3 to the power of 10 is 59049"
-</code></pre></li>
-<li><p>Use in array</p>
-
-<pre><code>  let names = ["Anna", "Alex", "Brian", "Jack"]
-  for name in names {
-      println("Hello, \(name)!")
-  }
-  // Hello, Anna!
-  // Hello, Alex!
-  // Hello, Brian!
-  // Hello, Jack!
-</code></pre></li>
-<li><p>Use in dictionary</p>
-
-<pre><code>  let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-  for (animalName, legCount) in numberOfLegs {
-      println("\(animalName)s have \(legCount) legs")
-  }
-  // spiders have 8 legs
-  // cats have 4 legs
-  // ants have 6 legs
-</code></pre></li>
-<li><p>Use in string</p>
-
-<pre><code>  for character in "Hello" {
-      println(character)
-  }
-  // H
-  // e
-  // l
-  // l
-  // o
-</code></pre></li>
+<li>Sample</li>
 </ul>
-</li>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">for</span> <span class="n">index</span> <span class="k">in</span> <span class="mf">1.</span><span class="p">.</span><span class="mf">.5</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(index) times 5 is \(index * 5)&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// 1 times 5 is 5</span>
+</span><span class='line'>    <span class="c1">// 2 times 5 is 10</span>
+</span><span class='line'>    <span class="c1">// 3 times 5 is 15</span>
+</span><span class='line'>    <span class="c1">// 4 times 5 is 20</span>
+</span><span class='line'>    <span class="c1">// 5 times 5 is 25</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>if no need of value from the range</li>
 </ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">base</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">power</span> <span class="o">=</span> <span class="mi">10</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">_</span> <span class="k">in</span> <span class="mf">1.</span><span class="p">..</span><span class="n">power</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">answer</span> <span class="o">*=</span> <span class="n">base</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(base) to the power of \(power) is \(answer)&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;3 to the power of 10 is 59049&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Use in array</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Anna&quot;</span><span class="p">,</span> <span class="s">&quot;Alex&quot;</span><span class="p">,</span> <span class="s">&quot;Brian&quot;</span><span class="p">,</span> <span class="s">&quot;Jack&quot;</span><span class="p">]</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">name</span> <span class="k">in</span> <span class="n">names</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Hello, \(name)!&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// Hello, Anna!</span>
+</span><span class='line'>    <span class="c1">// Hello, Alex!</span>
+</span><span class='line'>    <span class="c1">// Hello, Brian!</span>
+</span><span class='line'>    <span class="c1">// Hello, Jack!</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Use in dictionary</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">numberOfLegs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;spider&quot;</span><span class="o">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s">&quot;ant&quot;</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s">&quot;cat&quot;</span><span class="o">:</span> <span class="mi">4</span><span class="p">]</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">animalName</span><span class="p">,</span> <span class="n">legCount</span><span class="p">)</span> <span class="k">in</span> <span class="n">numberOfLegs</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(animalName)s have \(legCount) legs&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// spiders have 8 legs</span>
+</span><span class='line'>    <span class="c1">// cats have 4 legs</span>
+</span><span class='line'>    <span class="c1">// ants have 6 legs</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Use in string</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">for</span> <span class="n">character</span> <span class="k">in</span> <span class="s">&quot;Hello&quot;</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="n">character</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// H</span>
+</span><span class='line'>    <span class="c1">// e</span>
+</span><span class='line'>    <span class="c1">// l</span>
+</span><span class='line'>    <span class="c1">// l</span>
+</span><span class='line'>    <span class="c1">// o</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
 </div>

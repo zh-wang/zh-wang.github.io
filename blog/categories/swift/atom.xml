@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-09-26T15:52:15+09:00</updated>
+  <updated>2014-10-16T18:44:25+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -425,66 +425,68 @@ Most code are from the guide, with some modification by me.</p>
 
 <h3>Control Flow</h3>
 
-<ul>
-<li>For-In
+<p><figure class='code'><figcaption><span>Time to be Awesome - awesome.rb </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='rb'><span class='line'><span class="nb">puts</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="no">Awesome</span><span class="o">!&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="k">unless</span> <span class="n">lame</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h3>For-In</h3>
 
 <ul>
-<li><p>Sample</p>
-
-<pre><code>  for index in 1...5 {
-      println("\(index) times 5 is \(index * 5)")
-  }
-  // 1 times 5 is 5
-  // 2 times 5 is 10
-  // 3 times 5 is 15
-  // 4 times 5 is 20
-  // 5 times 5 is 25
-</code></pre></li>
-<li><p>if no need of value from the range</p>
-
-<pre><code>  let base = 3
-  let power = 10
-  var answer = 1
-  for _ in 1...power {
-      answer *= base
-  }
-  println("\(base) to the power of \(power) is \(answer)")
-  // prints "3 to the power of 10 is 59049"
-</code></pre></li>
-<li><p>Use in array</p>
-
-<pre><code>  let names = ["Anna", "Alex", "Brian", "Jack"]
-  for name in names {
-      println("Hello, \(name)!")
-  }
-  // Hello, Anna!
-  // Hello, Alex!
-  // Hello, Brian!
-  // Hello, Jack!
-</code></pre></li>
-<li><p>Use in dictionary</p>
-
-<pre><code>  let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
-  for (animalName, legCount) in numberOfLegs {
-      println("\(animalName)s have \(legCount) legs")
-  }
-  // spiders have 8 legs
-  // cats have 4 legs
-  // ants have 6 legs
-</code></pre></li>
-<li><p>Use in string</p>
-
-<pre><code>  for character in "Hello" {
-      println(character)
-  }
-  // H
-  // e
-  // l
-  // l
-  // o
-</code></pre></li>
-</ul>
-</li>
+<li>Sample
+<code>swift
+      for index in 1...5 {
+          println("\(index) times 5 is \(index * 5)")
+      }
+      // 1 times 5 is 5
+      // 2 times 5 is 10
+      // 3 times 5 is 15
+      // 4 times 5 is 20
+      // 5 times 5 is 25
+</code></li>
+<li>if no need of value from the range
+<code>
+      let base = 3
+      let power = 10
+      var answer = 1
+      for _ in 1...power {
+          answer *= base
+      }
+      println("\(base) to the power of \(power) is \(answer)")
+      // prints "3 to the power of 10 is 59049"
+</code></li>
+<li>Use in array
+<code>
+      let names = ["Anna", "Alex", "Brian", "Jack"]
+      for name in names {
+          println("Hello, \(name)!")
+      }
+      // Hello, Anna!
+      // Hello, Alex!
+      // Hello, Brian!
+      // Hello, Jack!
+</code></li>
+<li>Use in dictionary
+<code>
+      let numberOfLegs = ["spider": 8, "ant": 6, "cat": 4]
+      for (animalName, legCount) in numberOfLegs {
+          println("\(animalName)s have \(legCount) legs")
+      }
+      // spiders have 8 legs
+      // cats have 4 legs
+      // ants have 6 legs
+</code></li>
+<li>Use in string
+<code>
+      for character in "Hello" {
+          println(character)
+      }
+      // H
+      // e
+      // l
+      // l
+      // o
+</code></li>
 </ul>
 
 
