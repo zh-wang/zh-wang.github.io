@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-10-24T18:45:39+09:00</updated>
+  <updated>2014-10-24T19:52:57+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,614 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Learning Swift Part 10 - Methods]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10/"/>
+    <updated>2014-10-24T18:51:55+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10</id>
+    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
+
+<h3>Methods</h3>
+
+<ul>
+<li><p>Instance Methods
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">class</span> <span class="n">Counter</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">var</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>      <span class="k">func</span> <span class="n">increment</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">count</span><span class="o">++</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">func</span> <span class="n">reset</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">let</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+</span><span class='line'>  <span class="c1">// the initial counter value is 0</span>
+</span><span class='line'>  <span class="n">counter</span><span class="p">.</span><span class="n">increment</span><span class="p">()</span>
+</span><span class='line'>  <span class="c1">// the counter&#39;s value is now 1</span>
+</span><span class='line'>  <span class="n">counter</span><span class="p">.</span><span class="n">incrementBy</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">// the counter&#39;s value is now 6</span>
+</span><span class='line'>  <span class="n">counter</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
+</span><span class='line'>  <span class="c1">// the counter&#39;s value is now 0</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Local</span> <span class="n">and</span> <span class="n">External</span> <span class="n">Parameter</span> <span class="n">Names</span> <span class="k">for</span> <span class="n">Methods</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+      // Specifically, Swift gives the first parameter name in a method a local parameter name by default, and gives the second and subsequent parameter names both local and external parameter names by default.</p>
+
+<pre><code>  class Counter {
+      var count: Int = 0
+      func incrementBy(amount: Int, numberOfTimes: Int) {
+          count += amount * numberOfTimes
+      }
+  }
+
+  let counter = Counter()
+  counter.incrementBy(5, numberOfTimes: 3)
+  // counter value is now 15
+
+  // It is behaved as the same as putting a '#' symbol before the name
+
+  func incrementBy(amount: Int, #numberOfTimes: Int) {
+      count += amount * numberOfTimes
+  }
+
+  // This will not allow external name
+
+  func incrementBy(amount: Int, _ : Int) {
+      count += amount * numberOfTimes
+  }
+</code></pre>
+
+<p>&#8220;`</p></li>
+</ul>
+
+
+<!-- more -->
+
+
+<ul>
+<li><p>The self Property
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">func</span> <span class="nf">increment</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nb">self</span><span class="p">.</span><span class="n">count</span><span class="o">++</span>
+</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span class='line'>  <span class="k">func</span> <span class="n">isToTheRightOfX</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="n">Double</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Bool</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nb">self</span><span class="p">.</span><span class="n">x</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">x</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">somePoint</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mf">4.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">somePoint</span><span class="p">.</span><span class="n">isToTheRightOfX</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;This point is to the right of the line where x == 1.0&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="c1">// prints &quot;This point is to the right of the line where x == 1.0&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Modifying</span> <span class="n">Value</span> <span class="n">Types</span> <span class="n">from</span> <span class="n">Within</span> <span class="n">Instance</span> <span class="n">Methods</span>
+</span></code></pre></td></tr></table></div></figure>
+      struct Point {
+          var x = 0.0, y = 0.0
+          mutating func moveByX(deltaX: Double, y deltaY: Double) {
+              x += deltaX
+              y += deltaY
+          }
+      }
+      var somePoint = Point(x: 1.0, y: 1.0)
+      somePoint.moveByX(2.0, y: 3.0)
+      println(&ldquo;The point is now at ((somePoint.x), (somePoint.y))&rdquo;)
+      // prints &ldquo;The point is now at (3.0, 4.0)&rdquo;</p>
+
+<pre><code>  // constant instance's properties cannot be modified
+
+  let fixedPoint = Point(x: 3.0, y: 3.0)
+  fixedPoint.moveByX(2.0, y: 3.0)
+  // this will report an error
+</code></pre>
+
+<p>&#8220;`</p></li>
+<li><p>Assigning to self Within a Mutating Method
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span class='line'>      <span class="kr">mutating</span> <span class="k">func</span> <span class="n">moveByX</span><span class="p">(</span><span class="nl">deltaX</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="n">y</span> <span class="nl">deltaY</span><span class="p">:</span> <span class="n">Double</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nb">self</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">deltaX</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="n">y</span> <span class="o">+</span> <span class="n">deltaY</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">enum</span> <span class="n">TriStateSwitch</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">case</span> <span class="n">Off</span><span class="p">,</span> <span class="n">Low</span><span class="p">,</span> <span class="n">High</span>
+</span><span class='line'>  <span class="kr">mutating</span> <span class="k">func</span> <span class="n">next</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">switch</span> <span class="nb">self</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">case</span> <span class="nl">Off</span><span class="p">:</span>
+</span><span class='line'>          <span class="nb">self</span> <span class="o">=</span> <span class="n">Low</span>
+</span><span class='line'>      <span class="k">case</span> <span class="nl">Low</span><span class="p">:</span>
+</span><span class='line'>          <span class="nb">self</span> <span class="o">=</span> <span class="n">High</span>
+</span><span class='line'>      <span class="k">case</span> <span class="nl">High</span><span class="p">:</span>
+</span><span class='line'>          <span class="nb">self</span> <span class="o">=</span> <span class="n">Off</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">var</span> <span class="n">ovenLight</span> <span class="o">=</span> <span class="n">TriStateSwitch</span><span class="p">.</span><span class="n">Low</span>
+</span><span class='line'>  <span class="n">ovenLight</span><span class="p">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class='line'>  <span class="c1">// ovenLight is now equal to .High</span>
+</span><span class='line'>  <span class="n">ovenLight</span><span class="p">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class='line'>  <span class="c1">// ovenLight is now equal to .Off</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kt">Type</span> <span class="n">Methods</span>
+</span></code></pre></td></tr></table></div></figure>
+      class SomeClass {
+          class func someTypeMethod() {
+              // type method implementation goes here
+          }
+      }
+      SomeClass.someTypeMethod()</p>
+
+<pre><code>  // Within the body of a type method, the implicit self property refers to the type itself, rather than an instance of that type. For structures and enumerations, this means that you can use self to disambiguate between static properties and static method parameters, just as you do for instance properties and instance method parameters.
+
+  struct LevelTracker {
+      static var highestUnlockedLevel = 1
+      static func unlockLevel(level: Int) {
+          if level &gt; highestUnlockedLevel { highestUnlockedLevel = level }
+      }
+      static func levelIsUnlocked(level: Int) -&gt; Bool {
+          return level &lt;= highestUnlockedLevel
+      }
+      var currentLevel = 1
+      mutating func advanceToLevel(level: Int) -&gt; Bool {
+          if LevelTracker.levelIsUnlocked(level) {
+              currentLevel = level
+              return true
+          } else {
+              return false
+          }
+      }
+  }
+
+  class Player {
+      var tracker = LevelTracker()
+      let playerName: String
+      func completedLevel(level: Int) {
+          LevelTracker.unlockLevel(level + 1)
+          tracker.advanceToLevel(level + 1)
+      }
+      init(name: String) {
+          playerName = name
+      }
+  }
+
+  var player = Player(name: "Argyrios")
+  player.completedLevel(1)
+  println("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
+  // prints "highest unlocked level is now 2"
+
+  player = Player(name: "Beto")
+  if player.tracker.advanceToLevel(6) {
+      println("player is now on level 6")
+  } else {
+      println("level 6 has not yet been unlocked")
+  }
+  // prints "level 6 has not yet been unlocked"
+</code></pre>
+
+<p>&#8220;`</p></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Learning Swift Part 9 - Properties]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-9/"/>
+    <updated>2014-10-24T18:46:57+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-9</id>
+    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
+
+<h3>Properties</h3>
+
+<ul>
+<li>Stored Properties
+<code>swift
+      struct FixedLengthRange {
+          var firstValue: Int
+          let length: Int
+      }
+      var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
+      // the range represents integer values 0, 1, and 2
+      rangeOfThreeItems.firstValue = 6
+      // the range now represents integer values 6, 7, and 8
+</code></li>
+<li>Stored Properties of Constant Structure Instances
+<code>
+      let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
+      // this range represents integer values 0, 1, 2, and 3
+      rangeOfFourItems.firstValue = 6
+      // this will report an error, even though firstValue is a variable property
+      // This behavior is due to structures being value types. When an instance of a value type is marked as a constant, so are all of its properties.
+      // The same is not true for classes, which are reference types. If you assign an instance of a reference type to a constant, you can still change that instance’s variable properties.
+</code></li>
+<li><p>Lazy Stored Properties</p>
+
+<p>  A lazy stored property is a property whose initial value is not calculated until the first time it is used. You indicate a lazy stored property by writing the lazy modifier before its declaration.
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">class</span> <span class="n">DataImporter</span> <span class="p">{</span>
+</span><span class='line'>      <span class="o">/&lt;</span><span class="n">em</span><span class="o">&gt;</span>
+</span><span class='line'>      <span class="n">DataImporter</span> <span class="kt">is</span> <span class="n">a</span> <span class="k">class</span> <span class="n">to</span> <span class="k">import</span> <span class="n">data</span> <span class="n">from</span> <span class="n">an</span> <span class="n">external</span> <span class="n">file</span><span class="p">.</span>
+</span><span class='line'>      <span class="n">The</span> <span class="k">class</span> <span class="kt">is</span> <span class="n">assumed</span> <span class="n">to</span> <span class="n">take</span> <span class="n">a</span> <span class="n">non</span><span class="o">-</span><span class="n">trivial</span> <span class="n">amount</span> <span class="n">of</span> <span class="n">time</span> <span class="n">to</span> <span class="n">initialize</span><span class="p">.</span>
+</span><span class='line'>      <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
+</span><span class='line'>      <span class="k">var</span> <span class="n">fileName</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">data</span><span class="p">.</span><span class="n">txt</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
+</span><span class='line'>      <span class="c1">// the DataImporter class would provide data importing functionality here</span>
+</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">class</span> <span class="n">DataManager</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">lazy</span> <span class="k">var</span> <span class="n">importer</span> <span class="o">=</span> <span class="n">DataImporter</span><span class="p">()</span>
+</span><span class='line'>  <span class="k">var</span> <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">String</span><span class="p">]()</span>
+</span><span class='line'>  <span class="c1">// the DataManager class would provide data management functionality here</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">let</span> <span class="n">manager</span> <span class="o">=</span> <span class="n">DataManager</span><span class="p">()</span>
+</span><span class='line'>  <span class="n">manager</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Some data&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">manager</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Some more data&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">// the DataImporter instance for the importer property has not yet been created</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="n">manager</span><span class="p">.</span><span class="n">importer</span><span class="p">.</span><span class="n">fileName</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">// the DataImporter instance for the importer property has now been created</span>
+</span><span class='line'>  <span class="c1">// prints &quot;data.txt&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;!--</span> <span class="n">more</span> <span class="o">--&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Stored</span> <span class="n">Properties</span> <span class="n">and</span> <span class="n">Instance</span> <span class="n">Variables</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Computed</span> <span class="n">Properties</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">struct</span> <span class="n">Size</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">var</span> <span class="n">width</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">struct</span> <span class="n">Rect</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">var</span> <span class="n">origin</span> <span class="o">=</span> <span class="n">Point</span><span class="p">()</span>
+</span><span class='line'>      <span class="k">var</span> <span class="n">size</span> <span class="o">=</span> <span class="n">Size</span><span class="p">()</span>
+</span><span class='line'>      <span class="k">var</span> <span class="nl">center</span><span class="p">:</span> <span class="n">Point</span> <span class="p">{</span>
+</span><span class='line'>          <span class="kr">get</span> <span class="p">{</span>
+</span><span class='line'>              <span class="k">let</span> <span class="n">centerX</span> <span class="o">=</span> <span class="n">origin</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>              <span class="k">let</span> <span class="n">centerY</span> <span class="o">=</span> <span class="n">origin</span><span class="p">.</span><span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>              <span class="k">return</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="n">centerX</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="n">centerY</span><span class="p">)</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>          <span class="kr">set</span><span class="p">(</span><span class="n">newCenter</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>              <span class="n">origin</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>              <span class="n">origin</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">y</span> <span class="o">-</span> <span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">var</span> <span class="n">square</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">(</span><span class="nl">origin</span><span class="p">:</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">),</span>
+</span><span class='line'>      <span class="nl">size</span><span class="p">:</span> <span class="n">Size</span><span class="p">(</span><span class="nl">width</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span> <span class="nl">height</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">))</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">initialSquareCenter</span> <span class="o">=</span> <span class="n">square</span><span class="p">.</span><span class="n">center</span>
+</span><span class='line'>  <span class="n">square</span><span class="p">.</span><span class="n">center</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mf">15.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">15.0</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;square.origin is now at (\(square.origin.x), \(square.origin.y))&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">// prints &quot;square.origin is now at (10.0, 10.0)&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Read</span><span class="o">-</span><span class="n">Only</span> <span class="n">Computed</span> <span class="n">Properties</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="n">A</span> <span class="n">computed</span> <span class="n">property</span> <span class="n">with</span> <span class="n">a</span> <span class="k">getter</span> <span class="n">but</span> <span class="n">no</span> <span class="k">setter</span> <span class="kt">is</span> <span class="n">known</span> <span class="kt">as</span> <span class="n">a</span> <span class="n">read</span><span class="o">-</span><span class="n">only</span> <span class="n">computed</span> <span class="n">property</span><span class="p">.</span> <span class="n">A</span> <span class="n">read</span><span class="o">-</span><span class="n">only</span> <span class="n">computed</span> <span class="n">property</span> <span class="n">always</span> <span class="n">returns</span> <span class="n">a</span> <span class="n">value</span><span class="p">,</span> <span class="n">and</span> <span class="n">can</span> <span class="n">be</span> <span class="n">accessed</span> <span class="n">through</span> <span class="n">dot</span> <span class="n">syntax</span><span class="p">,</span> <span class="n">but</span> <span class="n">cannot</span> <span class="n">be</span> <span class="kr">set</span> <span class="n">to</span> <span class="n">a</span> <span class="n">different</span> <span class="n">value</span><span class="p">.</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">struct</span> <span class="n">Cuboid</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">var</span> <span class="n">width</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">depth</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span class='line'>      <span class="k">var</span> <span class="nl">volume</span><span class="p">:</span> <span class="n">Double</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="n">width</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="n">depth</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">fourByFiveByTwo</span> <span class="o">=</span> <span class="n">Cuboid</span><span class="p">(</span><span class="nl">width</span><span class="p">:</span> <span class="mf">4.0</span><span class="p">,</span> <span class="nl">height</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">,</span> <span class="nl">depth</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">// prints &quot;the volume of fourByFiveByTwo is 40.0&quot;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Property</span> <span class="n">Observers</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">class</span> <span class="n">StepCounter</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">var</span> <span class="nl">totalSteps</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>          <span class="kr">willSet</span><span class="p">(</span><span class="n">newTotalSteps</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>              <span class="n">println</span><span class="p">(</span><span class="s">&quot;About to set totalSteps to \(newTotalSteps)&quot;</span><span class="p">)</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>          <span class="kr">didSet</span> <span class="p">{</span>
+</span><span class='line'>              <span class="k">if</span> <span class="n">totalSteps</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">oldValue</span>  <span class="p">{</span>
+</span><span class='line'>                  <span class="n">println</span><span class="p">(</span><span class="s">&quot;Added \(totalSteps - oldValue) steps&quot;</span><span class="p">)</span>
+</span><span class='line'>              <span class="p">}</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">stepCounter</span> <span class="o">=</span> <span class="n">StepCounter</span><span class="p">()</span>
+</span><span class='line'>  <span class="n">stepCounter</span><span class="p">.</span><span class="n">totalSteps</span> <span class="o">=</span> <span class="mi">200</span>
+</span><span class='line'>  <span class="c1">// About to set totalSteps to 200</span>
+</span><span class='line'>  <span class="c1">// Added 200 steps</span>
+</span><span class='line'>  <span class="n">stepCounter</span><span class="p">.</span><span class="n">totalSteps</span> <span class="o">=</span> <span class="mi">360</span>
+</span><span class='line'>  <span class="c1">// About to set totalSteps to 360</span>
+</span><span class='line'>  <span class="c1">// Added 160 steps</span>
+</span><span class='line'>  <span class="n">stepCounter</span><span class="p">.</span><span class="n">totalSteps</span> <span class="o">=</span> <span class="mi">896</span>
+</span><span class='line'>  <span class="c1">// About to set totalSteps to 896</span>
+</span><span class='line'>  <span class="c1">// Added 536 steps</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Global</span> <span class="n">and</span> <span class="n">Local</span> <span class="n">Variables</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kt">Type</span> <span class="n">Properties</span> <span class="p">(</span><span class="n">Like</span> <span class="n">C</span> <span class="k">static</span> <span class="n">variables</span><span class="p">)</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="k">struct</span> <span class="n">SomeStructure</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">static</span> <span class="k">var</span> <span class="n">storedTypeProperty</span> <span class="o">=</span> <span class="s">&quot;Some value.&quot;</span>
+</span><span class='line'>      <span class="k">static</span> <span class="k">var</span> <span class="nl">computedTypeProperty</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>          <span class="c1">// return an Int value here</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">enum</span> <span class="n">SomeEnumeration</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">static</span> <span class="k">var</span> <span class="n">storedTypeProperty</span> <span class="o">=</span> <span class="s">&quot;Some value.&quot;</span>
+</span><span class='line'>      <span class="k">static</span> <span class="k">var</span> <span class="nl">computedTypeProperty</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>          <span class="c1">// return an Int value here</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">class</span> <span class="n">SomeClass</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">class</span> <span class="k">var</span> <span class="nl">computedTypeProperty</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>          <span class="c1">// return an Int value here</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Querying</span> <span class="n">and</span> <span class="n">Setting</span> <span class="kt">Type</span> <span class="n">Properties</span>
+</span></code></pre></td></tr></table></div></figure>
+      println(SomeClass.computedTypeProperty)
+      // prints &ldquo;42&rdquo;</p>
+
+<pre><code>  println(SomeStructure.storedTypeProperty)
+  // prints "Some value."
+  SomeStructure.storedTypeProperty = "Another value."
+  println(SomeStructure.storedTypeProperty)
+  // prints "Another value."
+
+  struct AudioChannel {
+      static let thresholdLevel = 10
+      static var maxInputLevelForAllChannels = 0
+      var currentLevel: Int = 0 {
+          didSet {
+              if currentLevel &gt; AudioChannel.thresholdLevel {
+                  // cap the new audio level to the threshold level
+                  currentLevel = AudioChannel.thresholdLevel
+              }
+              if currentLevel &gt; AudioChannel.maxInputLevelForAllChannels {
+                  // store this as the new overall maximum input level
+                  AudioChannel.maxInputLevelForAllChannels = currentLevel
+              }
+          }
+      }
+  }
+
+  var leftChannel = AudioChannel()
+  var rightChannel = AudioChannel()
+
+  leftChannel.currentLevel = 7
+  println(leftChannel.currentLevel)
+  // prints "7"
+  println(AudioChannel.maxInputLevelForAllChannels)
+  // prints "7"
+
+  rightChannel.currentLevel = 11
+  println(rightChannel.currentLevel)
+  // prints "10"
+  println(AudioChannel.maxInputLevelForAllChannels)
+  // prints "10"
+</code></pre>
+
+<p>&#8220;`</p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Learning Swift Part 8 - Classes & Structures]]></title>
@@ -934,964 +1542,57 @@
       // prints "Result: 8"
 </code></li>
 <li><p>Function Type as Return Types
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-<span class='line-number'>115</span>
-<span class='line-number'>116</span>
-<span class='line-number'>117</span>
-<span class='line-number'>118</span>
-<span class='line-number'>119</span>
-<span class='line-number'>120</span>
-<span class='line-number'>121</span>
-<span class='line-number'>122</span>
-<span class='line-number'>123</span>
-<span class='line-number'>124</span>
-<span class='line-number'>125</span>
-<span class='line-number'>126</span>
-<span class='line-number'>127</span>
-<span class='line-number'>128</span>
-<span class='line-number'>129</span>
-<span class='line-number'>130</span>
-<span class='line-number'>131</span>
-<span class='line-number'>132</span>
-<span class='line-number'>133</span>
-<span class='line-number'>134</span>
-<span class='line-number'>135</span>
-<span class='line-number'>136</span>
-<span class='line-number'>137</span>
-<span class='line-number'>138</span>
-<span class='line-number'>139</span>
-<span class='line-number'>140</span>
-<span class='line-number'>141</span>
-<span class='line-number'>142</span>
-<span class='line-number'>143</span>
-<span class='line-number'>144</span>
-<span class='line-number'>145</span>
-<span class='line-number'>146</span>
-<span class='line-number'>147</span>
-<span class='line-number'>148</span>
-<span class='line-number'>149</span>
-<span class='line-number'>150</span>
-<span class='line-number'>151</span>
-<span class='line-number'>152</span>
-<span class='line-number'>153</span>
-<span class='line-number'>154</span>
-<span class='line-number'>155</span>
-<span class='line-number'>156</span>
-<span class='line-number'>157</span>
-<span class='line-number'>158</span>
-<span class='line-number'>159</span>
-<span class='line-number'>160</span>
-<span class='line-number'>161</span>
-<span class='line-number'>162</span>
-<span class='line-number'>163</span>
-<span class='line-number'>164</span>
-<span class='line-number'>165</span>
-<span class='line-number'>166</span>
-<span class='line-number'>167</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">func</span> <span class="n">stepForward</span><span class="p">(</span><span class="nl">input</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">input</span> <span class="o">+</span> <span class="mi">1</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">func</span> <span class="n">stepBackward</span><span class="p">(</span><span class="nl">input</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">input</span> <span class="o">-</span> <span class="mi">1</span>
-</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">func</span> <span class="n">chooseStepFunction</span><span class="p">(</span><span class="nl">backwards</span><span class="p">:</span> <span class="n">Bool</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="p">(</span><span class="n">Int</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Int</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">return</span> <span class="n">backwards</span> <span class="o">?</span> <span class="nl">stepBackward</span> <span class="p">:</span> <span class="n">stepForward</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">var</span> <span class="n">currentValue</span> <span class="o">=</span> <span class="mi">3</span>
-</span><span class='line'>  <span class="k">let</span> <span class="n">moveNearerToZero</span> <span class="o">=</span> <span class="n">chooseStepFunction</span><span class="p">(</span><span class="n">currentValue</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// moveNearerToZero now refers to the stepBackward() function</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;Counting to zero:&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// Counting to zero:</span>
-</span><span class='line'>  <span class="k">while</span> <span class="n">currentValue</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(currentValue)... &quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="n">currentValue</span> <span class="o">=</span> <span class="n">moveNearerToZero</span><span class="p">(</span><span class="n">currentValue</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;zero!&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// 3...</span>
-</span><span class='line'>  <span class="c1">// 2...</span>
-</span><span class='line'>  <span class="c1">// 1...</span>
-</span><span class='line'>  <span class="c1">// zero!</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Nested</span> <span class="n">Functions</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="k">func</span> <span class="n">chooseStepFunction</span><span class="p">(</span><span class="nl">backwards</span><span class="p">:</span> <span class="n">Bool</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="p">(</span><span class="n">Int</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Int</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">func</span> <span class="n">stepForward</span><span class="p">(</span><span class="nl">input</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Int</span> <span class="p">{</span> <span class="k">return</span> <span class="n">input</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">}</span>
-</span><span class='line'>      <span class="k">func</span> <span class="n">stepBackward</span><span class="p">(</span><span class="nl">input</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Int</span> <span class="p">{</span> <span class="k">return</span> <span class="n">input</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">}</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">backwards</span> <span class="o">?</span> <span class="nl">stepBackward</span> <span class="p">:</span> <span class="n">stepForward</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">var</span> <span class="n">currentValue</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span>
-</span><span class='line'>  <span class="k">let</span> <span class="n">moveNearerToZero</span> <span class="o">=</span> <span class="n">chooseStepFunction</span><span class="p">(</span><span class="n">currentValue</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// moveNearerToZero now refers to the nested stepForward() function</span>
-</span><span class='line'>  <span class="k">while</span> <span class="n">currentValue</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(currentValue)... &quot;</span><span class="p">)</span>
-</span><span class='line'>      <span class="n">currentValue</span> <span class="o">=</span> <span class="n">moveNearerToZero</span><span class="p">(</span><span class="n">currentValue</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;zero!&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// -4...</span>
-</span><span class='line'>  <span class="c1">// -3...</span>
-</span><span class='line'>  <span class="c1">// -2...</span>
-</span><span class='line'>  <span class="c1">// -1...</span>
-</span><span class='line'>  <span class="c1">// zero!</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">]]</span><span class="o">&gt;&lt;/</span><span class="n">content</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;/</span><span class="n">entry</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="o">&lt;</span><span class="n">entry</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">title</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;html&quot;</span><span class="o">&gt;&lt;!</span><span class="p">[</span><span class="n">CDATA</span><span class="p">[</span><span class="n">Learning</span> <span class="n">Swift</span> <span class="n">Part</span> <span class="mi">5</span> <span class="o">-</span> <span class="n">Control</span> <span class="n">Flow</span><span class="p">]]</span><span class="o">&gt;&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;http://zh-wang.github.io/blog/2014/09/19/learning-swift-part-5/&quot;</span><span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">updated</span><span class="o">&gt;</span><span class="mi">2014</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">19</span><span class="nl">T15</span><span class="p">:</span><span class="mi">14</span><span class="o">:</span><span class="mi">08</span><span class="o">+</span><span class="mi">09</span><span class="o">:</span><span class="mo">00</span><span class="o">&lt;/</span><span class="n">updated</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="kt">id</span><span class="o">&gt;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//zh-wang.github.io/blog/2014/09/19/learning-swift-part-5&lt;/id&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">content</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;html&quot;</span><span class="o">&gt;&lt;!</span><span class="p">[</span><span class="n">CDATA</span><span class="p">[</span><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Just</span> <span class="n">some</span> <span class="n">notes</span> <span class="n">after</span> <span class="n">reading</span> <span class="n">Apple</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">s</span> <span class="n">official</span> <span class="n">online</span> <span class="n">guide</span><span class="p">.</span>
-</span><span class='line'><span class="n">Most</span> <span class="n">code</span> <span class="n">are</span> <span class="n">from</span> <span class="n">the</span> <span class="n">guide</span><span class="p">,</span> <span class="n">with</span> <span class="n">some</span> <span class="n">modification</span> <span class="n">by</span> <span class="n">me</span><span class="p">.</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Tuple</span> <span class="k">in</span> <span class="k">switch</span> <span class="n">statement</span> <span class="kt">is</span> <span class="n">interesting</span><span class="p">.</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h2</span><span class="o">&gt;=====</span> <span class="n">Full</span> <span class="n">Notes</span> <span class="o">=====&lt;/</span><span class="n">h2</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h3</span><span class="o">&gt;</span><span class="n">Control</span> <span class="n">Flow</span><span class="o">&lt;/</span><span class="n">h3</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="p">{</span><span class="o">%</span> <span class="n">codeblock</span> <span class="n">Time</span> <span class="n">to</span> <span class="n">be</span> <span class="n">Awesome</span> <span class="o">-</span> <span class="n">awesome</span><span class="p">.</span><span class="n">rb</span> <span class="o">%</span><span class="p">}</span>
-</span><span class='line'><span class="n">puts</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Awesome</span><span class="o">!&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="n">unless</span> <span class="n">lame</span>
-</span><span class='line'><span class="p">{</span><span class="o">%</span> <span class="n">endcodeblock</span> <span class="o">%</span><span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h3</span><span class="o">&gt;</span><span class="n">For</span><span class="o">-</span><span class="n">In</span><span class="o">&lt;/</span><span class="n">h3</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Sample</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">swift</span>
-</span><span class='line'>  <span class="k">for</span> <span class="n">index</span> <span class="k">in</span> <span class="mf">1.</span><span class="p">.</span><span class="mf">.5</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(index) times 5 is \(index * 5)&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="c1">// 1 times 5 is 5</span>
-</span><span class='line'>  <span class="c1">// 2 times 5 is 10</span>
-</span><span class='line'>  <span class="c1">// 3 times 5 is 15</span>
-</span><span class='line'>  <span class="c1">// 4 times 5 is 20</span>
-</span><span class='line'>  <span class="c1">// 5 times 5 is 25</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="k">if</span> <span class="n">no</span> <span class="n">need</span> <span class="n">of</span> <span class="n">value</span> <span class="n">from</span> <span class="n">the</span> <span class="n">range</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="k">let</span> <span class="n">base</span> <span class="o">=</span> <span class="mi">3</span>
-</span><span class='line'>  <span class="k">let</span> <span class="n">power</span> <span class="o">=</span> <span class="mi">10</span>
-</span><span class='line'>  <span class="k">var</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span class='line'>  <span class="k">for</span> <span class="n">_</span> <span class="k">in</span> <span class="mf">1.</span><span class="p">..</span><span class="n">power</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">answer</span> <span class="o">*=</span> <span class="n">base</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(base) to the power of \(power) is \(answer)&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// prints &quot;3 to the power of 10 is 59049&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Use</span> <span class="k">in</span> <span class="n">array</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="k">let</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Anna&quot;</span><span class="p">,</span> <span class="s">&quot;Alex&quot;</span><span class="p">,</span> <span class="s">&quot;Brian&quot;</span><span class="p">,</span> <span class="s">&quot;Jack&quot;</span><span class="p">]</span>
-</span><span class='line'>  <span class="k">for</span> <span class="n">name</span> <span class="k">in</span> <span class="n">names</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="s">&quot;Hello, \(name)!&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="c1">// Hello, Anna!</span>
-</span><span class='line'>  <span class="c1">// Hello, Alex!</span>
-</span><span class='line'>  <span class="c1">// Hello, Brian!</span>
-</span><span class='line'>  <span class="c1">// Hello, Jack!</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Use</span> <span class="k">in</span> <span class="n">dictionary</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="k">let</span> <span class="n">numberOfLegs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;spider&quot;</span><span class="o">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s">&quot;ant&quot;</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s">&quot;cat&quot;</span><span class="o">:</span> <span class="mi">4</span><span class="p">]</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="n">animalName</span><span class="p">,</span> <span class="n">legCount</span><span class="p">)</span> <span class="k">in</span> <span class="n">numberOfLegs</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(animalName)s have \(legCount) legs&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="c1">// spiders have 8 legs</span>
-</span><span class='line'>  <span class="c1">// cats have 4 legs</span>
-</span><span class='line'>  <span class="c1">// ants have 6 legs</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Use</span> <span class="k">in</span> <span class="n">string</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="k">for</span> <span class="n">character</span> <span class="k">in</span> <span class="s">&quot;Hello&quot;</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="n">character</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="c1">// H</span>
-</span><span class='line'>  <span class="c1">// e</span>
-</span><span class='line'>  <span class="c1">// l</span>
-</span><span class='line'>  <span class="c1">// l</span>
-</span><span class='line'>  <span class="c1">// o</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;!--</span> <span class="n">more</span> <span class="o">--&gt;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">For</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Sample</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="k">for</span> <span class="k">var</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">index</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="mi">3</span><span class="p">;</span> <span class="o">++</span><span class="n">index</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="s">&quot;index is \(index)&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="c1">// index is 0</span>
-</span><span class='line'>  <span class="c1">// index is 1</span>
-</span><span class='line'>  <span class="c1">// index is 2</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Index</span> <span class="kt">is</span> <span class="n">only</span> <span class="n">accessible</span> <span class="k">in</span> <span class="n">the</span> <span class="n">loop</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="k">var</span> <span class="nl">index</span><span class="p">:</span> <span class="n">Int</span>
-</span><span class='line'>  <span class="k">for</span> <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">index</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="mi">3</span><span class="p">;</span> <span class="o">++</span><span class="n">index</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="s">&quot;index is \(index)&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="c1">// index is 0</span>
-</span><span class='line'>  <span class="c1">// index is 1</span>
-</span><span class='line'>  <span class="c1">// index is 2</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;The loop statements were executed \(index) times&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// prints &quot;The loop statements were executed 3 times&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">While</span> <span class="n">Loops</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Snakes</span> <span class="n">and</span> <span class="n">Ladders</span>
-</span></code></pre></td></tr></table></div></figure>
-      let finalSquare = 25
-      var board = <a href="count:%20finalSquare%20+%201,%20repeatedValue:%200">Int</a></p>
-
-<pre><code>  board[03] = +08; board[06] = +11; board[09] = +09; board[10] = +02
-  board[14] = -10; board[19] = -11; board[22] = -02; board[24] = -08
-
-  var square = 0
-  var diceRoll = 0
-  while square &lt; finalSquare {
-      // roll the dice
-      if ++diceRoll == 7 { diceRoll = 1 }
-      // move by the rolled amount
-      square += diceRoll
-      if square &lt; board.count {
-          // if we're still on the board, move up or down for a snake or a ladder
-          square += board[square]
+&#8220;`
+      func stepForward(input: Int) -> Int {
+          return input + 1
       }
+      func stepBackward(input: Int) -> Int {
+          return input - 1
+      }</p>
+
+<pre><code>  func chooseStepFunction(backwards: Bool) -&gt; (Int) -&gt; Int {
+      return backwards ? stepBackward : stepForward
   }
-  println("Game over!")
+
+  var currentValue = 3
+  let moveNearerToZero = chooseStepFunction(currentValue &gt; 0)
+  // moveNearerToZero now refers to the stepBackward() function
+
+  println("Counting to zero:")
+  // Counting to zero:
+  while currentValue != 0 {
+      println("\(currentValue)... ")
+      currentValue = moveNearerToZero(currentValue)
+  }
+  println("zero!")
+  // 3...
+  // 2...
+  // 1...
+  // zero!
 </code></pre>
 
 <p>&#8220;`</p></li>
-</ul>
-</li>
-<li>Do-While
-
-<ul>
-<li><p>Snakes and Ladders
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">let</span> <span class="n">finalSquare</span> <span class="o">=</span> <span class="mi">25</span>
-</span><span class='line'>  <span class="k">var</span> <span class="n">board</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;count:%20finalSquare%20+%201,%20repeatedValue:%200&quot;</span><span class="o">&gt;</span><span class="n">Int</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="n">board</span><span class="p">[</span><span class="mo">03</span><span class="p">]</span> <span class="o">=</span> <span class="o">+</span><span class="mi">08</span><span class="p">;</span> <span class="n">board</span><span class="p">[</span><span class="mo">06</span><span class="p">]</span> <span class="o">=</span> <span class="o">+</span><span class="mi">11</span><span class="p">;</span> <span class="n">board</span><span class="p">[</span><span class="mi">09</span><span class="p">]</span> <span class="o">=</span> <span class="o">+</span><span class="mi">09</span><span class="p">;</span> <span class="n">board</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span> <span class="o">=</span> <span class="o">+</span><span class="mo">02</span>
-</span><span class='line'>  <span class="n">board</span><span class="p">[</span><span class="mi">14</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">10</span><span class="p">;</span> <span class="n">board</span><span class="p">[</span><span class="mi">19</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">11</span><span class="p">;</span> <span class="n">board</span><span class="p">[</span><span class="mi">22</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mo">02</span><span class="p">;</span> <span class="n">board</span><span class="p">[</span><span class="mi">24</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mi">08</span>
-</span><span class='line'>  <span class="k">var</span> <span class="n">square</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>  <span class="k">var</span> <span class="n">diceRoll</span> <span class="o">=</span> <span class="mi">0</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">do</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">// move up or down for a snake or ladder</span>
-</span><span class='line'>  <span class="n">square</span> <span class="o">+=</span> <span class="n">board</span><span class="p">[</span><span class="n">square</span><span class="p">]</span>
-</span><span class='line'>  <span class="c1">// roll the dice</span>
-</span><span class='line'>  <span class="k">if</span> <span class="o">++</span><span class="n">diceRoll</span> <span class="o">==</span> <span class="mi">7</span> <span class="p">{</span> <span class="n">diceRoll</span> <span class="o">=</span> <span class="mi">1</span> <span class="p">}</span>
-</span><span class='line'>  <span class="c1">// move by the rolled amount</span>
-</span><span class='line'>  <span class="n">square</span> <span class="o">+=</span> <span class="n">diceRoll</span>
-</span><span class='line'>  <span class="p">}</span> <span class="k">while</span> <span class="n">square</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">finalSquare</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;Game over!&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">If</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Sample</span>
-</span></code></pre></td></tr></table></div></figure>
-      var temperatureInFahrenheit = 30
-      if temperatureInFahrenheit &lt;= 32 {
-          println(&ldquo;It&rsquo;s very cold. Consider wearing a scarf.&rdquo;)
-      }
-      // prints &ldquo;It&rsquo;s very cold. Consider wearing a scarf.&rdquo;</p>
-
-<pre><code>  temperatureInFahrenheit = 40
-  if temperatureInFahrenheit &lt;= 32 {
-      println("It's very cold. Consider wearing a scarf.")
-  } else {
-      println("It's not that cold. Wear a t-shirt.")
-  }
-  // prints "It's not that cold. Wear a t-shirt."
-
-  temperatureInFahrenheit = 90
-  if temperatureInFahrenheit &lt;= 32 {
-      println("It's very cold. Consider wearing a scarf.")
-  } else if temperatureInFahrenheit &gt;= 86 {
-      println("It's really warm. Don't forget to wear sunscreen.")
-  } else {
-      println("It's not that cold. Wear a t-shirt.")
-  }
-  // prints "It's really warm. Don't forget to wear sunscreen."
-
-  temperatureInFahrenheit = 72
-  if temperatureInFahrenheit &lt;= 32 {
-      println("It's very cold. Consider wearing a scarf.")
-  } else if temperatureInFahrenheit &gt;= 86 {
-      println("It's really warm. Don't forget to wear sunscreen.")
-  }
-</code></pre>
-
-<p>&#8220;`</p></li>
-</ul>
-</li>
-<li>Switch
-
-<ul>
-<li>Sample
+<li>Nested Functions
 <code>
-      switch some value to consider {
-      case value 1:
-          respond to value 1
-      case value 2,
-      value 3:
-          respond to value 2 or 3
-      default:
-          otherwise, do something else
+      func chooseStepFunction(backwards: Bool) -&gt; (Int) -&gt; Int {
+          func stepForward(input: Int) -&gt; Int { return input + 1 }
+          func stepBackward(input: Int) -&gt; Int { return input - 1 }
+          return backwards ? stepBackward : stepForward
       }
+      var currentValue = -4
+      let moveNearerToZero = chooseStepFunction(currentValue &gt; 0)
+      // moveNearerToZero now refers to the nested stepForward() function
+      while currentValue != 0 {
+          println("\(currentValue)... ")
+          currentValue = moveNearerToZero(currentValue)
+      }
+      println("zero!")
+      // -4...
+      // -3...
+      // -2...
+      // -1...
+      // zero!
 </code></li>
-<li>Use with char
-<code>
-      let someCharacter: Character = "e"
-      switch someCharacter {
-      case "a", "e", "i", "o", "u":
-          println("\(someCharacter) is a vowel")
-      case "b", "c", "d", "f", "g", "h", "j", "k", "l", "m",
-      "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z":
-          println("\(someCharacter) is a consonant")
-      default:
-          println("\(someCharacter) is not a vowel or a consonant")
-      }
-      // prints "e is a vowel"
-</code></li>
-<li><p>No Implicit Fallthrough</p>
-
-<p>  In contrast with switch statements in C and Objective-C, switch statements in Swift do not fall through the bottom of each case and into the next one by default. Instead, the entire switch statement finishes its execution as soon as the first matching switch case is completed, without requiring an explicit break statement. This makes the switch statement safer and easier to use than in C, and avoids executing more than one switch case by mistake.</p></li>
-<li><p>Bad case
-<code>
-      let anotherCharacter: Character = "a"
-      switch anotherCharacter {
-      case "a":                       // Each case must contain at least one executable statement.
-      case "A":
-          println("The letter A")
-      default:
-          println("Not the letter A")
-      }
-      // this will report a compile-time error
-</code></p></li>
-<li>Range Matching
-<code>
-      let count = 3_000_000_000_000
-      let countedThings = "stars in the Milky Way"
-      var naturalCount: String
-      switch count {
-      case 0:
-          naturalCount = "no"
-      case 1...3:
-          naturalCount = "a few"
-      case 4...9:
-          naturalCount = "several"
-      case 10...99:
-          naturalCount = "tens of"
-      case 100...999:
-          naturalCount = "hundreds of"
-      case 1000...999_999:
-          naturalCount = "thousands of"
-      default:
-          naturalCount = "millions and millions of"
-      }
-</code></li>
-<li>Tuple
-<code>
-      let somePoint = (1, 1)
-      switch somePoint {
-      case (0, 0):
-          println("(0, 0) is at the origin")
-      case (_, 0):
-          println("(\(somePoint.0), 0) is on the x-axis")
-      case (0, _):
-          println("(0, \(somePoint.1)) is on the y-axis")
-      case (-2...2, -2...2):
-          println("(\(somePoint.0), \(somePoint.1)) is inside the box")
-      default:
-          println("(\(somePoint.0), \(somePoint.1)) is outside of the box")
-      }
-      // prints "(1, 1) is inside the box"
-</code></li>
-<li>Value Bindings
-<code>
-      let anotherPoint = (2, 0)
-      switch anotherPoint {
-      case (let x, 0):
-          println("on the x-axis with an x value of \(x)")
-      case (0, let y):
-          println("on the y-axis with a y value of \(y)")
-      case let (x, y):
-          println("somewhere else at (\(x), \(y))")
-      }
-      // prints "on the x-axis with an x value of 2"
-</code></li>
-<li>Where
-<code>
-      let yetAnotherPoint = (1, -1)
-      switch yetAnotherPoint {
-      case let (x, y) where x == y:
-          println("(\(x), \(y)) is on the line x == y")
-      case let (x, y) where x == -y:
-          println("(\(x), \(y)) is on the line x == -y")
-      case let (x, y):
-          println("(\(x), \(y)) is just some arbitrary point")
-      }
-      // prints "(1, -1) is on the line x == -y"
-</code></li>
-</ul>
-</li>
-<li>Control Transfer Statements
-
-<ul>
-<li>Continue<br/>
-The continue statement tells a loop to stop what it is doing and start again at the beginning of the next iteration through the loop. It says “I am done with the current loop iteration” without leaving the loop altogether.
-<code>
-      let puzzleInput = "great minds think alike"
-      var puzzleOutput = ""
-      for character in puzzleInput {
-          switch character {
-          case "a", "e", "i", "o", "u", " ":
-              continue
-          default:
-              puzzleOutput.append(character)
-          }
-      }
-      println(puzzleOutput)
-      // prints "grtmndsthnklk"
-</code></li>
-<li>Break
-<code>
-      let numberSymbol: Character = "三"  // Simplified Chinese for the number 3
-      var possibleIntegerValue: Int?
-      switch numberSymbol {
-      case "1", "١", "一", "๑":
-          possibleIntegerValue = 1
-      case "2", "٢", "二", "๒":
-          possibleIntegerValue = 2
-      case "3", "٣", "三", "๓":
-          possibleIntegerValue = 3
-      case "4", "٤", "四", "๔":
-          possibleIntegerValue = 4
-      default:
-          break
-      }
-      if let integerValue = possibleIntegerValue {
-          println("The integer value of \(numberSymbol) is \(integerValue).")
-      } else {
-          println("An integer value could not be found for \(numberSymbol).")
-      }
-      // prints "The integer value of 三 is 3."
-</code></li>
-<li>Explicit Fallthrough<br/>
-The fallthrough keyword does not check the case conditions for the switch case that it causes execution to fall into. The fallthrough keyword simply causes code execution to move directly to the statements inside the next case (or default case) block, as in C’s standard switch statement behavior.
-<code>
-      let integerToDescribe = 5
-      var description = "The number \(integerToDescribe) is"
-      switch integerToDescribe {
-      case 2, 3, 5, 7, 11, 13, 17, 19:
-          description += " a prime number, and also"
-          fallthrough
-      default:
-          description += " an integer."
-      }
-      println(description)
-      // prints "The number 5 is a prime number, and also an integer."
-</code></li>
-<li>Labeled Statements
-<code>
-      gameLoop: while square != finalSquare {
-          if ++diceRoll == 7 { diceRoll = 1 }
-          switch square + diceRoll {
-          case finalSquare:
-              // diceRoll will move us to the final square, so the game is over
-              break gameLoop
-          case let newSquare where newSquare &gt; finalSquare:
-              // diceRoll will move us beyond the final square, so roll again
-              continue gameLoop
-          default:
-              // this is a valid move, so find out its effect
-              square += diceRoll
-              square += board[square]
-          }
-      }
-      println("Game over!")
-</code></li>
-</ul>
-</li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Swift Part 4 - Strings and Characters]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4/"/>
-    <updated>2014-09-08T18:03:31+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4</id>
-    <content type="html"><![CDATA[<p>Just some notes after reading Apple&rsquo;s official online guide.
-Most code are from the guide, with some modification by me.</p>
-
-<h2>===== Full Notes =====</h2>
-
-<h3>Strings and Characters</h3>
-
-<ul>
-<li>String Literals
-<code>swift
-      let someString = "..."
-</code></li>
-<li><p>Initializing an Empty String
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">var</span> <span class="n">emptyString</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>               <span class="c1">// empty string literal</span>
-</span><span class='line'>  <span class="k">var</span> <span class="n">anotherEmptyString</span> <span class="o">=</span> <span class="n">String</span><span class="p">()</span>  <span class="c1">// initializer syntax</span>
-</span><span class='line'>  <span class="c1">// these two strings are both empty, and are equivalent to each other&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">if</span> <span class="n">emptyString</span><span class="p">.</span><span class="n">isEmpty</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;Nothing to see here&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">String</span> <span class="n">Mutability</span>
-</span></code></pre></td></tr></table></div></figure>
-      var variableString = &ldquo;Horse&rdquo;
-      variableString += &ldquo; and carriage&rdquo;
-      // variableString is now &ldquo;Horse and carriage&rdquo;</p>
-
-<pre><code>  let constantString = "Highlander"
-  constantString += " and another Highlander"
-  // this reports a compile-time error - a constant string cannot be modified
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Strings Are Value Types</p>
-
-<ul>
-<li><p>Swift’s String type is a value type. If you create a new String value, that String value is copied when it is passed to a function or method, or when it is assigned to a constant or variable. In each case, a new copy of the existing String value is created, and the new copy is passed or assigned, not the original version.</p></li>
-<li><p>NSString in obj-c is NOT value type.</p></li>
-</ul>
-</li>
-</ul>
-
-
-<!-- more -->
-
-
-<ul>
-<li><p>Working with Characters
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">for</span> <span class="n">character</span> <span class="k">in</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Dog</span><span class="o">!</span><span class="err">🐶</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="n">character</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="c1">// a single character</span>
-</span><span class='line'>  <span class="k">let</span> <span class="nl">yenSign</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;¥&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Concatenating</span> <span class="n">Strings</span> <span class="n">and</span> <span class="n">Characters</span>
-</span></code></pre></td></tr></table></div></figure>
-      let string1 = &ldquo;hello&rdquo;
-      let string2 = &ldquo; there&rdquo;
-      var welcome = string1 + string2
-      // welcome now equals &ldquo;hello there&rdquo;</p>
-
-<pre><code>  var instruction = "look over"
-  instruction += string2
-  // instruction now equals "look over there"
-
-  let exclamationMark: Character = "!"
-  welcome.append(exclamationMark)
-  // welcome now equals "hello there!"
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li>String Interpolation
-<code>
-      let multiplier = 3
-      let message = "\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)"
-      // message is "3 times 2.5 is 7.5"
-</code></li>
-<li><p>Unicode Scalars</p></li>
-<li><p>Special Unicode Characters in String Literals
-<code>
-      let wiseWords = "\"Imagination is more important than knowledge\" - Einstein"
-      // "Imagination is more important than knowledge" - Einstein
-      let dollarSign = "\u{24}"        // $,  Unicode scalar U+0024
-      let blackHeart = "\u{2665}"      // ♥,  Unicode scalar U+2665
-      let sparklingHeart = "\u{1F496}" // 💖, Unicode scalar U+1F496
-</code></p></li>
-<li><p>Extended Grapheme Clusters
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">let</span> <span class="nl">eAcute</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="err">\</span><span class="n">u</span><span class="p">{</span><span class="n">E9</span><span class="p">}</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>                         <span class="c1">// é</span>
-</span><span class='line'>  <span class="k">let</span> <span class="nl">combinedEAcute</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="err">\</span><span class="n">u</span><span class="p">{</span><span class="mi">65</span><span class="p">}</span><span class="err">\</span><span class="n">u</span><span class="p">{</span><span class="mi">301</span><span class="p">}</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>          <span class="c1">// e followed by ́</span>
-</span><span class='line'>  <span class="c1">// eAcute is é, combinedEAcute is é&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">let</span> <span class="nl">precomposed</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;\u{D55C}&quot;</span>                  <span class="c1">// 한</span>
-</span><span class='line'>  <span class="k">let</span> <span class="nl">decomposed</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;\u{1112}\u{1161}\u{11AB}&quot;</span>   <span class="c1">// ᄒ, ᅡ, ᆫ</span>
-</span><span class='line'>  <span class="c1">// precomposed is 한, decomposed is 한</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">let</span> <span class="nl">enclosedEAcute</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;\u{E9}\u{20DD}&quot;</span>
-</span><span class='line'>  <span class="c1">// enclosedEAcute is é⃝</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Counting</span> <span class="n">Characters</span>
-</span></code></pre></td></tr></table></div></figure>
-      let unusualMenagerie = &ldquo;Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪&rdquo;
-      println(&ldquo;unusualMenagerie has (countElements(unusualMenagerie)) characters&rdquo;)
-      // prints &ldquo;unusualMenagerie has 40 characters&rdquo;</p>
-
-<pre><code>  var word = "cafe"
-  println("the number of characters in \(word) is \(countElements(word))
-  // prints "the number of characters in cafe is 4"
-
-  word += "\u{301}"    // COMBINING ACUTE ACCENT, U+0301
-
-  println("the number of characters in \(word) is \(countElements(word))
-  // prints "the number of characters in café is 4"
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>String and Character Equality</p></li>
-</ul>
-
-
-<pre><code>        let quotation = "We're a lot alike, you and I."
-        let sameQuotation = "We're a lot alike, you and I."
-        if quotation == sameQuotation {
-            println("These two strings are considered equal")
-        }
-        // prints "These two strings are considered equal"
-</code></pre>
-
-<ul>
-<li>Two String values (or two Character values) are considered equal if their extended grapheme clusters are canonically equivalent.</li>
-</ul>
-
-
-<pre><code>        // "Voulez-vous un café?" using LATIN SMALL LETTER E WITH ACUTE
-        let eAcuteQuestion = "Voulez-vous un caf\u{E9}?"
-
-        // "Voulez-vous un café?" using LATIN SMALL LETTER E and COMBINING ACUTE ACCENT
-        let combinedEAcuteQuestion = "Voulez-vous un caf\u{65}\u{301}?"
-
-        if eAcuteQuestion == combinedEAcuteQuestion {
-            println("These two strings are considered equal")
-        }
-        // prints "These two strings are considered equal"
-</code></pre>
-
-<ul>
-<li><p>Conversely, LATIN CAPITAL LETTER A (U+0041, or &ldquo;A&rdquo;), as used in English, is not equivalent to CYRILLIC CAPITAL LETTER A (U+0410, or &ldquo;А&rdquo;).
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">let</span> <span class="nl">latinCapitalLetterA</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="err">\</span><span class="n">u</span><span class="p">{</span><span class="mi">41</span><span class="p">}</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">let</span> <span class="nl">cyrillicCapitalLetterA</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;\u{0410}&quot;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">if</span> <span class="n">latinCapitalLetterA</span> <span class="o">!=</span> <span class="n">cyrillicCapitalLetterA</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;These two characters are not equivalent&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="c1">// prints &quot;These two characters are not equivalent&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Prefix</span> <span class="n">and</span> <span class="n">Suffix</span> <span class="n">Equality</span>
-</span></code></pre></td></tr></table></div></figure>
-      let romeoAndJuliet = [
-          &ldquo;Act 1 Scene 1: Verona, A public place&rdquo;,
-          &ldquo;Act 1 Scene 2: Capulet&rsquo;s mansion&rdquo;,
-          &ldquo;Act 1 Scene 3: A room in Capulet&rsquo;s mansion&rdquo;,
-          &ldquo;Act 1 Scene 4: A street outside Capulet&rsquo;s mansion&rdquo;,
-          &ldquo;Act 1 Scene 5: The Great Hall in Capulet&rsquo;s mansion&rdquo;,
-          &ldquo;Act 2 Scene 1: Outside Capulet&rsquo;s mansion&rdquo;,
-          &ldquo;Act 2 Scene 2: Capulet&rsquo;s orchard&rdquo;,
-          &ldquo;Act 2 Scene 3: Outside Friar Lawrence&rsquo;s cell&rdquo;,
-          &ldquo;Act 2 Scene 4: A street in Verona&rdquo;,
-          &ldquo;Act 2 Scene 5: Capulet&rsquo;s mansion&rdquo;,
-          &ldquo;Act 2 Scene 6: Friar Lawrence&rsquo;s cell&rdquo;
-      ]</p>
-
-<pre><code>  var act1SceneCount = 0
-  for scene in romeoAndJuliet {
-      if scene.hasPrefix("Act 1 ") {
-          ++act1SceneCount
-      }
-  }
-  println("There are \(act1SceneCount) scenes in Act 1")
-  // prints "There are 5 scenes in Act 1"
-
-  var mansionCount = 0
-  var cellCount = 0
-  for scene in romeoAndJuliet {
-      if scene.hasSuffix("Capulet's mansion") {
-          ++mansionCount
-      } else if scene.hasSuffix("Friar Lawrence's cell") {
-          ++cellCount
-      }
-  }
-  println("\(mansionCount) mansion scenes; \(cellCount) cell scenes")
-  // prints "6 mansion scenes; 2 cell scenes"
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>A collection of UTF-8 code units (accessed with the string’s utf8 property)</p></li>
-<li><p>A collection of UTF-16 code units (accessed with the string’s utf16 property)</p></li>
-<li><p>A collection of 21-bit Unicode scalar values, equivalent to the string’s UTF-32 encoding form (accessed with the string’s unicodeScalars property)</p></li>
-<li><p>UTF-8 Representation
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">let</span> <span class="n">dogString</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Dog</span><span class="err">‼🐶</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">for</span> <span class="n">codeUnit</span> <span class="k">in</span> <span class="n">dogString</span><span class="p">.</span><span class="n">utf8</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">print</span><span class="p">(</span><span class="s">&quot;\(codeUnit) &quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="n">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// 68 111 103 226 128 188 240 159 144 182</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">UTF</span><span class="o">-</span><span class="mi">16</span> <span class="n">Representation</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="k">for</span> <span class="n">codeUnit</span> <span class="k">in</span> <span class="n">dogString</span><span class="p">.</span><span class="n">utf16</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">print</span><span class="p">(</span><span class="s">&quot;\(codeUnit) &quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="n">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// 68 111 103 8252 55357 56374</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Unicode</span> <span class="n">Scalar</span> <span class="n">Representation</span>
-</span></code></pre></td></tr></table></div></figure>
-      for scalar in dogString.unicodeScalars {
-          print(&ldquo;(scalar.value) &rdquo;)
-      }
-      print(&ldquo;\n&rdquo;)
-      // 68 111 103 8252 128054</p>
-
-<pre><code>  for scalar in dogString.unicodeScalars {
-      println("\(scalar) ")
-  }
-  // D
-  // o
-  // g
-  // ‼
-  // 🐶
-</code></pre>
-
-<p>&#8220;`</p></li>
 </ul>
 
 ]]></content>

@@ -1,0 +1,777 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Learning Swift Part 10 - Methods - Welcome to FutureAppLaboratory</title>
+  <meta name="author" content="viennakanon">
+
+  
+  <meta name="description" content="===== Full Notes ===== Methods Instance Methods 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21 class Counter { var count = 0 func increment &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Welcome to FutureAppLaboratory" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!-- Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"> </script> 
+
+<script language="javaScript">
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50285032-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+  <meta property="og:title" content="Learning Swift Part 10 - Methods - Welcome to FutureAppLaboratory" />
+<meta property="og:description" content="===== Full Notes ===== Methods Instance Methods 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21 class Counter { var count = 0 func increment &hellip;" />
+<meta property="og:url" content="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10/" />
+<meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
+<meta property="og:author" content="viennakanon" />
+<meta property="og:site_name" content="Welcome to FutureAppLaboratory" />
+<meta property="og:locale" content="ja_JP" />
+<meta property="og:type" content="article" />
+<meta property="fb:app_id" content="749935801705374" />
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Welcome to FutureAppLaboratory</a></h1>
+  
+    <h2>v=（*＾ワ＾*）=v</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:zh-wang.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/blog/categories/swift">Swift</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Learning Swift Part 10 - Methods</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-24T18:51:55+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>===== Full Notes =====</h2>
+
+<h3>Methods</h3>
+
+<ul>
+<li>Instance Methods</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">class</span> <span class="n">Counter</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">increment</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">count</span><span class="o">++</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">reset</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+</span><span class='line'>    <span class="c1">// the initial counter value is 0</span>
+</span><span class='line'>    <span class="n">counter</span><span class="p">.</span><span class="n">increment</span><span class="p">()</span>
+</span><span class='line'>    <span class="c1">// the counter&#39;s value is now 1</span>
+</span><span class='line'>    <span class="n">counter</span><span class="p">.</span><span class="n">incrementBy</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// the counter&#39;s value is now 6</span>
+</span><span class='line'>    <span class="n">counter</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
+</span><span class='line'>    <span class="c1">// the counter&#39;s value is now 0</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Local and External Parameter Names for Methods</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="c1">// Specifically, Swift gives the first parameter name in a method a local parameter name by default, and gives the second and subsequent parameter names both local and external parameter names by default.</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">class</span> <span class="n">Counter</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">count</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">numberOfTimes</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">numberOfTimes</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">counter</span><span class="p">.</span><span class="n">incrementBy</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nl">numberOfTimes</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// counter value is now 15</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// It is behaved as the same as putting a &#39;#&#39; symbol before the name</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="err">#</span><span class="nl">numberOfTimes</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">numberOfTimes</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// This will not allow external name</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">_</span> <span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">numberOfTimes</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<!-- more -->
+
+
+<ul>
+<li>The self Property</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="nf">increment</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">count</span><span class="o">++</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">isToTheRightOfX</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="n">Double</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nb">self</span><span class="p">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">x</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">somePoint</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mf">4.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">somePoint</span><span class="p">.</span><span class="n">isToTheRightOfX</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;This point is to the right of the line where x == 1.0&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// prints &quot;This point is to the right of the line where x == 1.0&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Modifying Value Types from Within Instance Methods</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span class='line'>        <span class="kr">mutating</span> <span class="k">func</span> <span class="n">moveByX</span><span class="p">(</span><span class="nl">deltaX</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="n">y</span> <span class="nl">deltaY</span><span class="p">:</span> <span class="n">Double</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">x</span> <span class="o">+=</span> <span class="n">deltaX</span>
+</span><span class='line'>            <span class="n">y</span> <span class="o">+=</span> <span class="n">deltaY</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">somePoint</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">somePoint</span><span class="p">.</span><span class="n">moveByX</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;The point is now at (\(somePoint.x), \(somePoint.y))&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;The point is now at (3.0, 4.0)&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// constant instance&#39;s properties cannot be modified</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">fixedPoint</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">fixedPoint</span><span class="p">.</span><span class="n">moveByX</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// this will report an error</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Assigning to self Within a Mutating Method</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span class='line'>        <span class="kr">mutating</span> <span class="k">func</span> <span class="n">moveByX</span><span class="p">(</span><span class="nl">deltaX</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="n">y</span> <span class="nl">deltaY</span><span class="p">:</span> <span class="n">Double</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nb">self</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">deltaX</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="n">y</span> <span class="o">+</span> <span class="n">deltaY</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">enum</span> <span class="n">TriStateSwitch</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">Off</span><span class="p">,</span> <span class="n">Low</span><span class="p">,</span> <span class="n">High</span>
+</span><span class='line'>        <span class="kr">mutating</span> <span class="k">func</span> <span class="n">next</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">switch</span> <span class="nb">self</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">case</span> <span class="nl">Off</span><span class="p">:</span>
+</span><span class='line'>                <span class="nb">self</span> <span class="o">=</span> <span class="n">Low</span>
+</span><span class='line'>            <span class="k">case</span> <span class="nl">Low</span><span class="p">:</span>
+</span><span class='line'>                <span class="nb">self</span> <span class="o">=</span> <span class="n">High</span>
+</span><span class='line'>            <span class="k">case</span> <span class="nl">High</span><span class="p">:</span>
+</span><span class='line'>                <span class="nb">self</span> <span class="o">=</span> <span class="n">Off</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">ovenLight</span> <span class="o">=</span> <span class="n">TriStateSwitch</span><span class="p">.</span><span class="n">Low</span>
+</span><span class='line'>    <span class="n">ovenLight</span><span class="p">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class='line'>    <span class="c1">// ovenLight is now equal to .High</span>
+</span><span class='line'>    <span class="n">ovenLight</span><span class="p">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class='line'>    <span class="c1">// ovenLight is now equal to .Off</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Type Methods</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">class</span> <span class="n">SomeClass</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">class</span> <span class="k">func</span> <span class="n">someTypeMethod</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="c1">// type method implementation goes here</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">SomeClass</span><span class="p">.</span><span class="n">someTypeMethod</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Within the body of a type method, the implicit self property refers to the type itself, rather than an instance of that type. For structures and enumerations, this means that you can use self to disambiguate between static properties and static method parameters, just as you do for instance properties and instance method parameters.</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">struct</span> <span class="n">LevelTracker</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">static</span> <span class="k">var</span> <span class="n">highestUnlockedLevel</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">static</span> <span class="k">func</span> <span class="n">unlockLevel</span><span class="p">(</span><span class="nl">level</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">level</span> <span class="o">&gt;</span> <span class="n">highestUnlockedLevel</span> <span class="p">{</span> <span class="n">highestUnlockedLevel</span> <span class="o">=</span> <span class="n">level</span> <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">static</span> <span class="k">func</span> <span class="n">levelIsUnlocked</span><span class="p">(</span><span class="nl">level</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">level</span> <span class="o">&lt;=</span> <span class="n">highestUnlockedLevel</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">currentLevel</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="kr">mutating</span> <span class="k">func</span> <span class="n">advanceToLevel</span><span class="p">(</span><span class="nl">level</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">LevelTracker</span><span class="p">.</span><span class="n">levelIsUnlocked</span><span class="p">(</span><span class="n">level</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">currentLevel</span> <span class="o">=</span> <span class="n">level</span>
+</span><span class='line'>                <span class="k">return</span> <span class="nb">true</span>
+</span><span class='line'>            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">return</span> <span class="nb">false</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">class</span> <span class="n">Player</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">tracker</span> <span class="o">=</span> <span class="n">LevelTracker</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">let</span> <span class="nl">playerName</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">completedLevel</span><span class="p">(</span><span class="nl">level</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">LevelTracker</span><span class="p">.</span><span class="n">unlockLevel</span><span class="p">(</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">tracker</span><span class="p">.</span><span class="n">advanceToLevel</span><span class="p">(</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">playerName</span> <span class="o">=</span> <span class="n">name</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">var</span> <span class="n">player</span> <span class="o">=</span> <span class="n">Player</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="s">&quot;Argyrios&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">player</span><span class="p">.</span><span class="n">completedLevel</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;highest unlocked level is now \(LevelTracker.highestUnlockedLevel)&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;highest unlocked level is now 2&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">player</span> <span class="o">=</span> <span class="n">Player</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="s">&quot;Beto&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">player</span><span class="p">.</span><span class="n">tracker</span><span class="p">.</span><span class="n">advanceToLevel</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;player is now on level 6&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;level 6 has not yet been unlocked&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// prints &quot;level 6 has not yet been unlocked&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">viennakanon</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-24T18:51:55+09:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/swift/'>swift</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/10/24/learning-swift-part-9/" title="Previous Post: Learning Swift Part 9 - Properties">&laquo; Learning Swift Part 9 - Properties</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/10/24/learning-swift-part-10/">Learning Swift Part 10 - Methods</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/24/learning-swift-part-9/">Learning Swift Part 9 - Properties</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/24/learning-swift-part-8/">Learning Swift Part 8 - Classes & Structures</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/24/learning-swift-part-7/">Learning Swift Part 7 - Closure & Enumerations</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/09/25/learning-swift-part-6/">Learning Swift Part 6 - Functions</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (10)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+</section>
+<section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 90.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 72.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 90.0%'>codility(5)</a> <a href='/blog/categories/ios' style='font-size: 66.0%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 66.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 78.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 72.0%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(10)</a> <a href='/blog/categories/zsh' style='font-size: 66.0%'>zsh(1)</a> </span>
+</section>
+<section>
+      <h1>Latest Tweets</h1>
+      <div id="latest_tweets_seperator" style="clear: both; padding-top: 5px;"></div>
+      <a class="twitter-timeline" href="https://twitter.com/viennakanon" data-widget-id="458542348645830656">Tweets by @viennakanon</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+<section>
+  <h1>About Me</h1>
+  <div id="gravatar-aside-profile" style="clear: both; padding-top: 5px;"></div>
+  <div style="clear:both"></div>
+  <script type="text/javascript">
+    $(function(){
+      var url = "http://www.gravatar.com/23650956f68b532003138fb2bec1bbe6.json?callback=?";
+      var $box = $("#gravatar-aside-profile")
+      var $msg = $box.children().children()
+
+      var blink = function(a){a.fadeOut(400).fadeIn(400)};
+      var intervalID = window.setInterval(blink, 1500, $msg)
+
+      var setupProfile = function(data) {
+        var entry = data.entry[0]
+        $box
+          .empty()
+          .css("padding-top", 5)
+          .append($("<img>")
+            .attr("src", entry.thumbnailUrl)
+            .attr("alt", "thumbnail from Gravatar")
+            .css("float", "left")
+            .css("margin-right", 5)
+          )
+          .append($("<div>")
+            .css("padding", "5px 0px")
+            .append($("<h2>")
+              .css("margin-bottom", 5)
+              .append("(<a href='" + entry.profileUrl + "'>@" +
+                  entry.preferredUsername + "<\/a>)")
+            )
+            .append($("<p>")
+              .css("padding-left",90)
+              .css("margin", 0)
+              .css("font-size", "90%")
+              .html(entry.aboutMe.replace(/\n/g, "<br/>"))
+            )
+          )
+      }
+
+      var clearInterval = function(){window.clearInterval(intervalID)}
+      var updateMessageToError = function(){$msg.stop().fadeOut().text("profile load failed.").fadeIn()}
+
+      jQuery.getJSON(url)
+        .always(clearInterval)
+        .done(setupProfile)
+        .fail(updateMessageToError)
+    })
+  
+  </script>
+</section>
+<section>
+    <h1>License</h1>
+    <div id="license_seperator" style="clear: both; padding-top: 5px;"></div>
+    <div class="widget-content" style="font-size: 100%">
+        <img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png">
+        <br>
+        <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type"> The contents in this blog </span>
+        by 
+        <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName"> viennakanon </span>
+        is licensed under a 
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"> Creative Commons 表示 - 非営利 - 改変禁止 3.0 Unported License </a>
+        .
+    </div>
+</section>
+<section>
+  <h1>Find me on Github</h1>
+  <div id="github_profile_seperator" style="clear: both; padding-top: 5px;"></div>
+  <iframe src="http://lab.lepture.com/github-cards/card.html?user=zh-wang" frameborder="0" scrolling="1" width="300" height="200" allowtransparency></iframe>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - viennakanon -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'viennakanon';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10/';
+        var disqus_url = 'http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/ja_JP/all.js#appId=749935801705374&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

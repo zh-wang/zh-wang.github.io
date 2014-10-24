@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-10-24T18:45:39+09:00</updated>
+  <updated>2014-10-24T19:52:57+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,764 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Learning Swift Part 10 - Methods]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10/"/>
+    <updated>2014-10-24T18:51:55+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10</id>
+    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
+
+<h3>Methods</h3>
+
+<ul>
+<li>Instance Methods</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">class</span> <span class="n">Counter</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">increment</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">count</span><span class="o">++</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">reset</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+</span><span class='line'>    <span class="c1">// the initial counter value is 0</span>
+</span><span class='line'>    <span class="n">counter</span><span class="p">.</span><span class="n">increment</span><span class="p">()</span>
+</span><span class='line'>    <span class="c1">// the counter&#39;s value is now 1</span>
+</span><span class='line'>    <span class="n">counter</span><span class="p">.</span><span class="n">incrementBy</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// the counter&#39;s value is now 6</span>
+</span><span class='line'>    <span class="n">counter</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
+</span><span class='line'>    <span class="c1">// the counter&#39;s value is now 0</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Local and External Parameter Names for Methods</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="c1">// Specifically, Swift gives the first parameter name in a method a local parameter name by default, and gives the second and subsequent parameter names both local and external parameter names by default.</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">class</span> <span class="n">Counter</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">count</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">numberOfTimes</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">numberOfTimes</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">counter</span><span class="p">.</span><span class="n">incrementBy</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nl">numberOfTimes</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// counter value is now 15</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// It is behaved as the same as putting a &#39;#&#39; symbol before the name</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="err">#</span><span class="nl">numberOfTimes</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">numberOfTimes</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// This will not allow external name</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">_</span> <span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">numberOfTimes</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<!-- more -->
+
+
+<ul>
+<li>The self Property</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="nf">increment</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">count</span><span class="o">++</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">isToTheRightOfX</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="n">Double</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nb">self</span><span class="p">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">x</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">somePoint</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mf">4.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">somePoint</span><span class="p">.</span><span class="n">isToTheRightOfX</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;This point is to the right of the line where x == 1.0&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// prints &quot;This point is to the right of the line where x == 1.0&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Modifying Value Types from Within Instance Methods</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span class='line'>        <span class="kr">mutating</span> <span class="k">func</span> <span class="n">moveByX</span><span class="p">(</span><span class="nl">deltaX</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="n">y</span> <span class="nl">deltaY</span><span class="p">:</span> <span class="n">Double</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">x</span> <span class="o">+=</span> <span class="n">deltaX</span>
+</span><span class='line'>            <span class="n">y</span> <span class="o">+=</span> <span class="n">deltaY</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">somePoint</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">somePoint</span><span class="p">.</span><span class="n">moveByX</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;The point is now at (\(somePoint.x), \(somePoint.y))&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;The point is now at (3.0, 4.0)&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// constant instance&#39;s properties cannot be modified</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">fixedPoint</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">fixedPoint</span><span class="p">.</span><span class="n">moveByX</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// this will report an error</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Assigning to self Within a Mutating Method</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span class='line'>        <span class="kr">mutating</span> <span class="k">func</span> <span class="n">moveByX</span><span class="p">(</span><span class="nl">deltaX</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="n">y</span> <span class="nl">deltaY</span><span class="p">:</span> <span class="n">Double</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nb">self</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">deltaX</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="n">y</span> <span class="o">+</span> <span class="n">deltaY</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">enum</span> <span class="n">TriStateSwitch</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">Off</span><span class="p">,</span> <span class="n">Low</span><span class="p">,</span> <span class="n">High</span>
+</span><span class='line'>        <span class="kr">mutating</span> <span class="k">func</span> <span class="n">next</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">switch</span> <span class="nb">self</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">case</span> <span class="nl">Off</span><span class="p">:</span>
+</span><span class='line'>                <span class="nb">self</span> <span class="o">=</span> <span class="n">Low</span>
+</span><span class='line'>            <span class="k">case</span> <span class="nl">Low</span><span class="p">:</span>
+</span><span class='line'>                <span class="nb">self</span> <span class="o">=</span> <span class="n">High</span>
+</span><span class='line'>            <span class="k">case</span> <span class="nl">High</span><span class="p">:</span>
+</span><span class='line'>                <span class="nb">self</span> <span class="o">=</span> <span class="n">Off</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">ovenLight</span> <span class="o">=</span> <span class="n">TriStateSwitch</span><span class="p">.</span><span class="n">Low</span>
+</span><span class='line'>    <span class="n">ovenLight</span><span class="p">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class='line'>    <span class="c1">// ovenLight is now equal to .High</span>
+</span><span class='line'>    <span class="n">ovenLight</span><span class="p">.</span><span class="n">next</span><span class="p">()</span>
+</span><span class='line'>    <span class="c1">// ovenLight is now equal to .Off</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Type Methods</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">class</span> <span class="n">SomeClass</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">class</span> <span class="k">func</span> <span class="n">someTypeMethod</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>            <span class="c1">// type method implementation goes here</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">SomeClass</span><span class="p">.</span><span class="n">someTypeMethod</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Within the body of a type method, the implicit self property refers to the type itself, rather than an instance of that type. For structures and enumerations, this means that you can use self to disambiguate between static properties and static method parameters, just as you do for instance properties and instance method parameters.</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">struct</span> <span class="n">LevelTracker</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">static</span> <span class="k">var</span> <span class="n">highestUnlockedLevel</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">static</span> <span class="k">func</span> <span class="n">unlockLevel</span><span class="p">(</span><span class="nl">level</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">level</span> <span class="o">&gt;</span> <span class="n">highestUnlockedLevel</span> <span class="p">{</span> <span class="n">highestUnlockedLevel</span> <span class="o">=</span> <span class="n">level</span> <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">static</span> <span class="k">func</span> <span class="n">levelIsUnlocked</span><span class="p">(</span><span class="nl">level</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">level</span> <span class="o">&lt;=</span> <span class="n">highestUnlockedLevel</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">currentLevel</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="kr">mutating</span> <span class="k">func</span> <span class="n">advanceToLevel</span><span class="p">(</span><span class="nl">level</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">LevelTracker</span><span class="p">.</span><span class="n">levelIsUnlocked</span><span class="p">(</span><span class="n">level</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">currentLevel</span> <span class="o">=</span> <span class="n">level</span>
+</span><span class='line'>                <span class="k">return</span> <span class="nb">true</span>
+</span><span class='line'>            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">return</span> <span class="nb">false</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">class</span> <span class="n">Player</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">tracker</span> <span class="o">=</span> <span class="n">LevelTracker</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">let</span> <span class="nl">playerName</span><span class="p">:</span> <span class="n">String</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">completedLevel</span><span class="p">(</span><span class="nl">level</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">LevelTracker</span><span class="p">.</span><span class="n">unlockLevel</span><span class="p">(</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">tracker</span><span class="p">.</span><span class="n">advanceToLevel</span><span class="p">(</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">playerName</span> <span class="o">=</span> <span class="n">name</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">var</span> <span class="n">player</span> <span class="o">=</span> <span class="n">Player</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="s">&quot;Argyrios&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">player</span><span class="p">.</span><span class="n">completedLevel</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;highest unlocked level is now \(LevelTracker.highestUnlockedLevel)&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;highest unlocked level is now 2&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">player</span> <span class="o">=</span> <span class="n">Player</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="s">&quot;Beto&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">player</span><span class="p">.</span><span class="n">tracker</span><span class="p">.</span><span class="n">advanceToLevel</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;player is now on level 6&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;level 6 has not yet been unlocked&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// prints &quot;level 6 has not yet been unlocked&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Learning Swift Part 9 - Properties]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-9/"/>
+    <updated>2014-10-24T18:46:57+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-9</id>
+    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
+
+<h3>Properties</h3>
+
+<ul>
+<li>Stored Properties</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">struct</span> <span class="n">FixedLengthRange</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">firstValue</span><span class="p">:</span> <span class="n">Int</span>
+</span><span class='line'>        <span class="k">let</span> <span class="nl">length</span><span class="p">:</span> <span class="n">Int</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">rangeOfThreeItems</span> <span class="o">=</span> <span class="n">FixedLengthRange</span><span class="p">(</span><span class="nl">firstValue</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nl">length</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// the range represents integer values 0, 1, and 2</span>
+</span><span class='line'>    <span class="n">rangeOfThreeItems</span><span class="p">.</span><span class="n">firstValue</span> <span class="o">=</span> <span class="mi">6</span>
+</span><span class='line'>    <span class="c1">// the range now represents integer values 6, 7, and 8</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Stored Properties of Constant Structure Instances</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">rangeOfFourItems</span> <span class="o">=</span> <span class="n">FixedLengthRange</span><span class="p">(</span><span class="nl">firstValue</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="nl">length</span><span class="p">:</span> <span class="mi">4</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// this range represents integer values 0, 1, 2, and 3</span>
+</span><span class='line'>    <span class="n">rangeOfFourItems</span><span class="p">.</span><span class="n">firstValue</span> <span class="o">=</span> <span class="mi">6</span>
+</span><span class='line'>    <span class="c1">// this will report an error, even though firstValue is a variable property</span>
+</span><span class='line'>    <span class="c1">// This behavior is due to structures being value types. When an instance of a value type is marked as a constant, so are all of its properties.</span>
+</span><span class='line'>    <span class="c1">// The same is not true for classes, which are reference types. If you assign an instance of a reference type to a constant, you can still change that instance’s variable properties.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Lazy Stored Properties</p>
+
+<p>  A lazy stored property is a property whose initial value is not calculated until the first time it is used. You indicate a lazy stored property by writing the lazy modifier before its declaration.</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">class</span> <span class="n">DataImporter</span> <span class="p">{</span>
+</span><span class='line'>        <span class="cm">/*</span>
+</span><span class='line'><span class="cm">        DataImporter is a class to import data from an external file.</span>
+</span><span class='line'><span class="cm">        The class is assumed to take a non-trivial amount of time to initialize.</span>
+</span><span class='line'><span class="cm">        */</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">fileName</span> <span class="o">=</span> <span class="s">&quot;data.txt&quot;</span>
+</span><span class='line'>        <span class="c1">// the DataImporter class would provide data importing functionality here</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">class</span> <span class="n">DataManager</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">lazy</span> <span class="k">var</span> <span class="n">importer</span> <span class="o">=</span> <span class="n">DataImporter</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">String</span><span class="p">]()</span>
+</span><span class='line'>        <span class="c1">// the DataManager class would provide data management functionality here</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">manager</span> <span class="o">=</span> <span class="n">DataManager</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">manager</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Some data&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">manager</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Some more data&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// the DataImporter instance for the importer property has not yet been created</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="n">manager</span><span class="p">.</span><span class="n">importer</span><span class="p">.</span><span class="n">fileName</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// the DataImporter instance for the importer property has now been created</span>
+</span><span class='line'>    <span class="c1">// prints &quot;data.txt&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<!-- more -->
+
+
+<ul>
+<li><p>Stored Properties and Instance Variables</p></li>
+<li><p>Computed Properties</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">struct</span> <span class="n">Size</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">width</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">struct</span> <span class="n">Rect</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">origin</span> <span class="o">=</span> <span class="n">Point</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">size</span> <span class="o">=</span> <span class="n">Size</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">center</span><span class="p">:</span> <span class="n">Point</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kr">get</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">let</span> <span class="n">centerX</span> <span class="o">=</span> <span class="n">origin</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>                <span class="k">let</span> <span class="n">centerY</span> <span class="o">=</span> <span class="n">origin</span><span class="p">.</span><span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>                <span class="k">return</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="n">centerX</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="n">centerY</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="kr">set</span><span class="p">(</span><span class="n">newCenter</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">origin</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>                <span class="n">origin</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">y</span> <span class="o">-</span> <span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">square</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">(</span><span class="nl">origin</span><span class="p">:</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">),</span>
+</span><span class='line'>        <span class="nl">size</span><span class="p">:</span> <span class="n">Size</span><span class="p">(</span><span class="nl">width</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span> <span class="nl">height</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">))</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">initialSquareCenter</span> <span class="o">=</span> <span class="n">square</span><span class="p">.</span><span class="n">center</span>
+</span><span class='line'>    <span class="n">square</span><span class="p">.</span><span class="n">center</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mf">15.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">15.0</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;square.origin is now at (\(square.origin.x), \(square.origin.y))&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;square.origin is now at (10.0, 10.0)&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Read-Only Computed Properties</p>
+
+<p>  A computed property with a getter but no setter is known as a read-only computed property. A read-only computed property always returns a value, and can be accessed through dot syntax, but cannot be set to a different value.</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">struct</span> <span class="n">Cuboid</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">width</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">depth</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">volume</span><span class="p">:</span> <span class="n">Double</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">width</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="n">depth</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">fourByFiveByTwo</span> <span class="o">=</span> <span class="n">Cuboid</span><span class="p">(</span><span class="nl">width</span><span class="p">:</span> <span class="mf">4.0</span><span class="p">,</span> <span class="nl">height</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">,</span> <span class="nl">depth</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;the volume of fourByFiveByTwo is 40.0&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Property Observers</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">class</span> <span class="n">StepCounter</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">totalSteps</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kr">willSet</span><span class="p">(</span><span class="n">newTotalSteps</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">println</span><span class="p">(</span><span class="s">&quot;About to set totalSteps to \(newTotalSteps)&quot;</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="kr">didSet</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">if</span> <span class="n">totalSteps</span> <span class="o">&gt;</span> <span class="n">oldValue</span>  <span class="p">{</span>
+</span><span class='line'>                    <span class="n">println</span><span class="p">(</span><span class="s">&quot;Added \(totalSteps - oldValue) steps&quot;</span><span class="p">)</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">stepCounter</span> <span class="o">=</span> <span class="n">StepCounter</span><span class="p">()</span>
+</span><span class='line'>    <span class="n">stepCounter</span><span class="p">.</span><span class="n">totalSteps</span> <span class="o">=</span> <span class="mi">200</span>
+</span><span class='line'>    <span class="c1">// About to set totalSteps to 200</span>
+</span><span class='line'>    <span class="c1">// Added 200 steps</span>
+</span><span class='line'>    <span class="n">stepCounter</span><span class="p">.</span><span class="n">totalSteps</span> <span class="o">=</span> <span class="mi">360</span>
+</span><span class='line'>    <span class="c1">// About to set totalSteps to 360</span>
+</span><span class='line'>    <span class="c1">// Added 160 steps</span>
+</span><span class='line'>    <span class="n">stepCounter</span><span class="p">.</span><span class="n">totalSteps</span> <span class="o">=</span> <span class="mi">896</span>
+</span><span class='line'>    <span class="c1">// About to set totalSteps to 896</span>
+</span><span class='line'>    <span class="c1">// Added 536 steps</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Global and Local Variables</p></li>
+<li><p>Type Properties (Like C static variables)</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">struct</span> <span class="n">SomeStructure</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">static</span> <span class="k">var</span> <span class="n">storedTypeProperty</span> <span class="o">=</span> <span class="s">&quot;Some value.&quot;</span>
+</span><span class='line'>        <span class="k">static</span> <span class="k">var</span> <span class="nl">computedTypeProperty</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>            <span class="c1">// return an Int value here</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">enum</span> <span class="n">SomeEnumeration</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">static</span> <span class="k">var</span> <span class="n">storedTypeProperty</span> <span class="o">=</span> <span class="s">&quot;Some value.&quot;</span>
+</span><span class='line'>        <span class="k">static</span> <span class="k">var</span> <span class="nl">computedTypeProperty</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>            <span class="c1">// return an Int value here</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">class</span> <span class="n">SomeClass</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">class</span> <span class="k">var</span> <span class="nl">computedTypeProperty</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>            <span class="c1">// return an Int value here</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Querying and Setting Type Properties</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="n">SomeClass</span><span class="p">.</span><span class="n">computedTypeProperty</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;42&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="n">SomeStructure</span><span class="p">.</span><span class="n">storedTypeProperty</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;Some value.&quot;</span>
+</span><span class='line'>    <span class="n">SomeStructure</span><span class="p">.</span><span class="n">storedTypeProperty</span> <span class="o">=</span> <span class="s">&quot;Another value.&quot;</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="n">SomeStructure</span><span class="p">.</span><span class="n">storedTypeProperty</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;Another value.&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">struct</span> <span class="n">AudioChannel</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">static</span> <span class="k">let</span> <span class="n">thresholdLevel</span> <span class="o">=</span> <span class="mi">10</span>
+</span><span class='line'>        <span class="k">static</span> <span class="k">var</span> <span class="n">maxInputLevelForAllChannels</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">currentLevel</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kr">didSet</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">if</span> <span class="n">currentLevel</span> <span class="o">&gt;</span> <span class="n">AudioChannel</span><span class="p">.</span><span class="n">thresholdLevel</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="c1">// cap the new audio level to the threshold level</span>
+</span><span class='line'>                    <span class="n">currentLevel</span> <span class="o">=</span> <span class="n">AudioChannel</span><span class="p">.</span><span class="n">thresholdLevel</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>                <span class="k">if</span> <span class="n">currentLevel</span> <span class="o">&gt;</span> <span class="n">AudioChannel</span><span class="p">.</span><span class="n">maxInputLevelForAllChannels</span> <span class="p">{</span>
+</span><span class='line'>                    <span class="c1">// store this as the new overall maximum input level</span>
+</span><span class='line'>                    <span class="n">AudioChannel</span><span class="p">.</span><span class="n">maxInputLevelForAllChannels</span> <span class="o">=</span> <span class="n">currentLevel</span>
+</span><span class='line'>                <span class="p">}</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">var</span> <span class="n">leftChannel</span> <span class="o">=</span> <span class="n">AudioChannel</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">rightChannel</span> <span class="o">=</span> <span class="n">AudioChannel</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">leftChannel</span><span class="p">.</span><span class="n">currentLevel</span> <span class="o">=</span> <span class="mi">7</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="n">leftChannel</span><span class="p">.</span><span class="n">currentLevel</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;7&quot;</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="n">AudioChannel</span><span class="p">.</span><span class="n">maxInputLevelForAllChannels</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;7&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">rightChannel</span><span class="p">.</span><span class="n">currentLevel</span> <span class="o">=</span> <span class="mi">11</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="n">rightChannel</span><span class="p">.</span><span class="n">currentLevel</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;10&quot;</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="n">AudioChannel</span><span class="p">.</span><span class="n">maxInputLevelForAllChannels</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;10&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Learning Swift Part 8 - Classes & Structures]]></title>
@@ -5790,572 +6548,6 @@ Local status:<br/>
 
 <p>これでOK。
 <img src="http://zh-wang.github.io/images/2014_04_24_zsh_vcs_snapshot.png" title="zsh_vcs" alt="zsh_vcs_snapshot" /></p>
-
-<script language="javaScript">
-$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
-</script>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Mozc完全解説01]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01/"/>
-    <updated>2014-04-22T12:20:06+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01</id>
-    <content type="html"><![CDATA[<h2>What is mozc?</h2>
-
-<blockquote><p>Mozc is a Japanese Input Method Editor (IME) designed for multi-platform such
-as Chromium OS, Android, Windows, Mac and Linux. This open-source project
-originates from Google Japanese Input.</p></blockquote>
-
-<h2>(1) ソースを手に入れよう</h2>
-
-<p>ここからダウンロード　<a href="https://code.google.com/p/mozc/">mozc project from google code</a></p>
-
-<p>今回使うmozcのバージョンは</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>MAJOR=1
-</span><span class='line'>MINOR=10
-</span><span class='line'>BUILD=1390
-</span><span class='line'>REVISION=103
-</span><span class='line'>ANDROID_VERSION_CODE=1794
-</span><span class='line'>FLAG=RELEASE
-</span><span class='line'>TARGET_PLATFORM=Android
-</span><span class='line'>ANDROID_APPLICATION_ID=org.mozc.android.inputmethod.japanese
-</span><span class='line'>ANDROID_SERVICE_NAME=org.mozc.android.inputmethod.japanese.MozcService</span></code></pre></td></tr></table></div></figure>
-
-
-<p>android版のビルドはMac非対応なので、vagrantを通してVMのubuntuでビルドします。<br/>
-こちらのリポジトリを使えば楽です。
-<a href="https://github.com/niw/mozc">https://github.com/niw/mozc</a></p>
-
-<p>デフォルトでビルドすると、eclipseで開けるプロジェクトは作ってくれないので、手動で作りました。こちらからダウンロードできます。<br/>
-<a href="https://dl.dropboxusercontent.com/u/40868784/mozc_android.zip  ">https://dl.dropboxusercontent.com/u/40868784/mozc_android.zip  </a>
-フォルダ自体とその中のprotobuff, resources_ossをeclipseにインポートすればOK。後はMozcProxyPreferenceActivityというプロジェクトを実行するだけ。</p>
-
-<p>※ ビルドする際に、&#8221;SDK does not have any Build Tools installed.&ldquo;が表示されたら、Build Toolsをダウンロードする必要があります。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ /usr/bin/curl -L -O 'http://dl.google.com/android/repository/build-tools_r19-linux.zip' && unzip build-tools_r19-linux.zip -d /opt/android/android-sdk-linux/build-tools/ 
-</span><span class='line'>$ mv /opt/android/android-sdk-linux/build-tools/android-4.4 /opt/android/android-sdk-linux/build-tools/19.0.0
-</span><span class='line'>
-</span><span class='line'>or
-</span><span class='line'>
-</span><span class='line'>$ /opt/android/android-sdk-linux/tools/android update sdk -u -t build-tools-20.0.0</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>(2) キーのタッチから、変換候補がもらうまで、簡単な解析をやります</h2>
-
-<!-- more -->
-
-
-<p>android側のフリックキーボードで「あ」を押し、タッチイベントが発生する。そうすると、以下のコードが順番的に実行されます。</p>
-
-<p>org.mozc.android.inputmethod.japanese.ViewManager:260:onKey<br/>
-ここでViewのタッチエベントをキャッチする。<br/>
-↓<br/>
-org.mozc.android.inputmethod.japanese.MozcService:245:onKeyEvent  <br/>
-メーンサービスでKeyEventを処理する。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="nd">@Override</span>
-</span><span class='line'><span class="kd">public</span> <span class="kt">void</span> <span class="nf">onKeyEvent</span><span class="o">(</span> <span class="n">ProtoCommands</span><span class="o">.</span><span class="na">KeyEvent</span> <span class="n">mozcKeyEvent</span><span class="o">,</span> <span class="n">KeyEventInterface</span> <span class="n">keyEvent</span><span class="o">,</span> <span class="n">KeyboardSpecification</span> <span class="n">keyboardSpecification</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">TouchEvent</span><span class="o">&gt;</span> <span class="n">touchEventList</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">...</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">sendKeyWithKeyboardSpecification</span><span class="o">(</span><span class="n">mozcKeyEvent</span><span class="o">,</span> <span class="n">keyEvent</span><span class="o">,</span>
-</span><span class='line'>                                   <span class="n">keyboardSpecification</span><span class="o">,</span> <span class="n">getResources</span><span class="o">().</span><span class="na">getConfiguration</span><span class="o">(),</span>
-</span><span class='line'>                                   <span class="n">touchEventList</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>↓<br/>
-org.mozc.android.inputmethod.japanese.MozcService:968:sendKeyWithKeyboardSpecification</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="cm">/**</span>
-</span><span class='line'><span class="cm">   * Sends mozcKeyEvent and/or Request to mozc server.</span>
-</span><span class='line'><span class="cm">   *</span>
-</span><span class='line'><span class="cm">   * This skips to send request if the given keyboard specification is</span>
-</span><span class='line'><span class="cm">   * same as before.</span>
-</span><span class='line'><span class="cm">   */</span>
-</span><span class='line'>  <span class="kt">boolean</span> <span class="nf">sendKeyWithKeyboardSpecification</span><span class="o">(</span> <span class="o">...</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>↓<br/>
-org.mozc.android.inputmethod.japanese.session.SessionExecutor:626:sendKey</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="cm">/**</span>
-</span><span class='line'><span class="cm">   * Sends {@code SEND_KEY} command to the server asynchronously.</span>
-</span><span class='line'><span class="cm">   */</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sendKey</span><span class="o">(</span><span class="n">ProtoCommands</span><span class="o">.</span><span class="na">KeyEvent</span> <span class="n">mozcKeyEvent</span><span class="o">,</span> <span class="n">KeyEventInterface</span> <span class="n">triggeringKeyEvent</span><span class="o">,</span> <span class="n">List</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="n">TouchEvent</span><span class="o">&gt;</span> <span class="n">touchEventList</span><span class="o">,</span> <span class="n">EvaluationCallback</span> <span class="n">callback</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="o">...</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">evaluateAsynchronously</span><span class="o">(</span><span class="n">inputBuilder</span><span class="o">,</span> <span class="n">triggeringKeyEvent</span><span class="o">,</span> <span class="n">callback</span><span class="o">);</span>
-</span><span class='line'>  <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>↓<br/>
-org.mozc.android.inputmethod.japanese.session.SessionExecutor:612:evaluateAsynchronously<br/>
-asyncなので、handlerに渡します。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="kt">void</span> <span class="nf">evaluateAsynchronously</span><span class="o">(</span><span class="n">Input</span><span class="o">.</span><span class="na">Builder</span> <span class="n">inputBuilder</span><span class="o">,</span> <span class="n">KeyEventInterface</span> <span class="n">triggeringKeyEvent</span><span class="o">,</span> <span class="n">EvaluationCallback</span> <span class="n">callback</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="o">...</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">handler</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">(</span><span class="n">handler</span><span class="o">.</span><span class="na">obtainMessage</span><span class="o">(</span><span class="n">type</span><span class="o">,</span> <span class="n">context</span><span class="o">));</span>
-</span><span class='line'>  <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>↓<br/>
-org.mozc.android.inputmethod.japanese.session.SessionExecutor:300:handlerMessage<br/>
-SessionExecutorの中のExecutorMainCallbackがmessageを取り、処理する。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="cm">/**</span>
-</span><span class='line'><span class="cm">   * A core implementation of evaluation executing process.</span>
-</span><span class='line'><span class="cm">   *</span>
-</span><span class='line'><span class="cm">   * &lt;p&gt;This class takes messages from the UI thread. By using {@link SessionHandler},</span>
-</span><span class='line'><span class="cm">   * it evaluates the {@link Input} in a message, and then returns the result with notifying</span>
-</span><span class='line'><span class="cm">   * the UI thread if necessary.</span>
-</span><span class='line'><span class="cm">   * All evaluations should be done with this class in order to keep evaluation in the incoming</span>
-</span><span class='line'><span class="cm">   * order.</span>
-</span><span class='line'><span class="cm">   * Package private for testing purpose.</span>
-</span><span class='line'><span class="cm">   */</span>
-</span><span class='line'>  <span class="kd">static</span> <span class="kd">class</span> <span class="nc">ExecutorMainCallback</span> <span class="kd">implements</span> <span class="n">Handler</span><span class="o">.</span><span class="na">Callback</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="o">...</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">handleMessage</span><span class="o">(</span><span class="n">Message</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="c1">// Dispatch the message.</span>
-</span><span class='line'>      <span class="k">switch</span> <span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">what</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">case</span> <span class="nl">INITIALIZE_SESSION_HANDLER:</span>
-</span><span class='line'>          <span class="n">sessionHandler</span><span class="o">.</span><span class="na">initialize</span><span class="o">(</span><span class="n">Context</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">cast</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">obj</span><span class="o">));</span>
-</span><span class='line'>          <span class="k">break</span><span class="o">;</span>
-</span><span class='line'>        <span class="k">case</span> <span class="nl">DELETE_SESSION:</span>
-</span><span class='line'>          <span class="n">deleteSession</span><span class="o">();</span>
-</span><span class='line'>          <span class="k">break</span><span class="o">;</span>
-</span><span class='line'>        <span class="k">case</span> <span class="nl">EVALUATE_ASYNCHRONOUSLY:</span>
-</span><span class='line'>        <span class="k">case</span> <span class="nl">EVALUATE_KEYEVENT_ASYNCHRONOUSLY:</span>
-</span><span class='line'>          <span class="n">evaluateAsynchronously</span><span class="o">(</span>
-</span><span class='line'>              <span class="n">AsynchronousEvaluationContext</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">cast</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">obj</span><span class="o">),</span> <span class="n">message</span><span class="o">.</span><span class="na">getTarget</span><span class="o">());</span>
-</span><span class='line'>    <span class="o">...</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>↓<br/>
-org.mozc.android.inputmethod.japanese.session.SessionExecutor:459</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="n">context</span><span class="o">.</span><span class="na">outCommand</span> <span class="o">=</span> <span class="n">evaluate</span><span class="o">(</span><span class="n">inputBuilder</span><span class="o">.</span><span class="na">build</span><span class="o">());</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>↓<br/>
-org.mozc.android.inputmethod.japanese.session.SessionExecutor:333<br/>
-ここで、JNIを通してnative変換エンジンと通信する。（同期で）</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="n">Command</span> <span class="nf">evaluate</span><span class="o">(</span><span class="n">Input</span> <span class="n">input</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="o">...</span>
-</span><span class='line'>    <span class="n">Command</span> <span class="n">outCommand</span> <span class="o">=</span> <span class="n">sessionHandler</span><span class="o">.</span><span class="na">evalCommand</span><span class="o">(</span><span class="n">inCommand</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">...</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>↓<br/>
-org.mozc.android.inputmethod.japanese.session.LocalSessionHandler:100</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="nd">@Override</span>
-</span><span class='line'>  <span class="kd">public</span> <span class="n">Command</span> <span class="nf">evalCommand</span><span class="o">(</span><span class="n">Command</span> <span class="n">command</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kt">byte</span><span class="o">[]</span> <span class="n">inBytes</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="na">toByteArray</span><span class="o">();</span>
-</span><span class='line'>    <span class="kt">byte</span><span class="o">[]</span> <span class="n">outBytes</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>    <span class="n">outBytes</span> <span class="o">=</span> <span class="n">MozcJNI</span><span class="o">.</span><span class="na">evalCommand</span><span class="o">(</span><span class="n">inBytes</span><span class="o">);</span>
-</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">Command</span><span class="o">.</span><span class="na">parseFrom</span><span class="o">(</span><span class="n">outBytes</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvalidProtocolBufferException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>      <span class="n">MozcLog</span><span class="o">.</span><span class="na">w</span><span class="o">(</span><span class="s">&quot;InvalidProtocolBufferException is thrown.&quot;</span>
-</span><span class='line'>          <span class="o">+</span> <span class="s">&quot;We can do nothing so just return default instance.&quot;</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">MozcLog</span><span class="o">.</span><span class="na">w</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">Command</span><span class="o">.</span><span class="na">getDefaultInstance</span><span class="o">();</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>  <span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>ここでのCommand.parseFrom(outBytes)をデーバッグすると、以下の入力、出力、変換候補リストが分かります。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-<span class='line-number'>115</span>
-<span class='line-number'>116</span>
-<span class='line-number'>117</span>
-<span class='line-number'>118</span>
-<span class='line-number'>119</span>
-<span class='line-number'>120</span>
-<span class='line-number'>121</span>
-<span class='line-number'>122</span>
-<span class='line-number'>123</span>
-<span class='line-number'>124</span>
-<span class='line-number'>125</span>
-<span class='line-number'>126</span>
-<span class='line-number'>127</span>
-<span class='line-number'>128</span>
-<span class='line-number'>129</span>
-<span class='line-number'>130</span>
-<span class='line-number'>131</span>
-<span class='line-number'>132</span>
-<span class='line-number'>133</span>
-<span class='line-number'>134</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">input</span> <span class="p">{</span>
-</span><span class='line'>    <span class="ss">type</span><span class="p">:</span> <span class="no">SEND_KEY</span>
-</span><span class='line'>    <span class="nb">id</span><span class="p">:</span> <span class="mi">6381052470309579002</span>
-</span><span class='line'>    <span class="n">key</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">key_code</span><span class="p">:</span> <span class="mi">49</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>    <span class="n">touch_events</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">source_id</span><span class="p">:</span> <span class="mi">2</span>
-</span><span class='line'>        <span class="n">stroke</span> <span class="p">{</span>
-</span><span class='line'>              <span class="ss">action</span><span class="p">:</span> <span class="no">TOUCH_DOWN</span>
-</span><span class='line'>              <span class="ss">x</span><span class="p">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">30168644</span>
-</span><span class='line'>              <span class="ss">y</span><span class="p">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">16023746</span>
-</span><span class='line'>              <span class="ss">timestamp</span><span class="p">:</span> <span class="mi">0</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>        <span class="n">stroke</span> <span class="p">{</span>
-</span><span class='line'>              <span class="ss">action</span><span class="p">:</span> <span class="no">TOUCH_UP</span>
-</span><span class='line'>              <span class="ss">x</span><span class="p">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">30168644</span>
-</span><span class='line'>              <span class="ss">y</span><span class="p">:</span> <span class="mi">0</span><span class="o">.</span><span class="mi">16023746</span>
-</span><span class='line'>              <span class="ss">timestamp</span><span class="p">:</span> <span class="mi">25</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="n">output</span> <span class="p">{</span>
-</span><span class='line'>    <span class="nb">id</span><span class="p">:</span> <span class="mi">6381052470309579002</span>
-</span><span class='line'>    <span class="ss">mode</span><span class="p">:</span> <span class="no">HIRAGANA</span>
-</span><span class='line'>    <span class="ss">consumed</span><span class="p">:</span> <span class="kp">true</span>
-</span><span class='line'>    <span class="n">preedit</span> <span class="p">{</span>
-</span><span class='line'>      <span class="ss">cursor</span><span class="p">:</span> <span class="mi">1</span>
-</span><span class='line'>      <span class="no">Segment</span> <span class="p">{</span>
-</span><span class='line'>            <span class="ss">annotation</span><span class="p">:</span> <span class="no">UNDERLINE</span>
-</span><span class='line'>            <span class="ss">value</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\343\201\204</span><span class="s2">&quot;</span>
-</span><span class='line'>            <span class="n">value_length</span><span class="p">:</span> <span class="mi">1</span>
-</span><span class='line'>            <span class="ss">key</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\343\201\204</span><span class="s2">&quot;</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>     <span class="p">}</span>
-</span><span class='line'>     <span class="n">candidates</span> <span class="p">{</span>
-</span><span class='line'>      <span class="ss">size</span><span class="p">:</span> <span class="mi">151</span>
-</span><span class='line'>      <span class="no">Candidate</span> <span class="p">{</span>
-</span><span class='line'>            <span class="ss">index</span><span class="p">:</span> <span class="mi">0</span>
-</span><span class='line'>            <span class="ss">value</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\343\201\204\343\202\215</span><span class="s2">&quot;</span>
-</span><span class='line'>            <span class="n">annotation</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="ss">description</span><span class="p">:</span> <span class="s2">&quot;Suffix&quot;</span>
-</span><span class='line'>                  <span class="p">}</span>
-</span><span class='line'>            <span class="nb">id</span><span class="p">:</span> <span class="mi">0</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="no">Candidate</span> <span class="p">{</span>
-</span><span class='line'>            <span class="ss">index</span><span class="p">:</span> <span class="mi">1</span>
-</span><span class='line'>            <span class="ss">value</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\343\201\204</span><span class="s2">&quot;</span>
-</span><span class='line'>            <span class="n">annotation</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="ss">description</span><span class="p">:</span> <span class="s2">&quot;Realtime&quot;</span>
-</span><span class='line'>                  <span class="p">}</span>
-</span><span class='line'>            <span class="nb">id</span><span class="p">:</span> <span class="mi">1</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="no">Candidate</span> <span class="p">{</span>
-</span><span class='line'>            <span class="ss">index</span><span class="p">:</span> <span class="mi">2</span>
-</span><span class='line'>            <span class="ss">value</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\350\203\203</span><span class="s2">&quot;</span>
-</span><span class='line'>            <span class="n">annotation</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="ss">description</span><span class="p">:</span> <span class="s2">&quot;Realtime&quot;</span>
-</span><span class='line'>                  <span class="p">}</span>
-</span><span class='line'>            <span class="nb">id</span><span class="p">:</span> <span class="mi">2</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="no">Candidate</span> <span class="p">{</span>
-</span><span class='line'>            <span class="ss">index</span><span class="p">:</span> <span class="mi">3</span>
-</span><span class='line'>            <span class="ss">value</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\343\201\203</span><span class="s2">&quot;</span>
-</span><span class='line'>            <span class="n">annotation</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="ss">description</span><span class="p">:</span>
-</span><span class='line'>                <span class="s2">&quot;</span><span class="se">\346\215\250\343\201\246\344\273\256\345\220\215</span><span class="s2"></span>
-</span><span class='line'><span class="s2">                    </span><span class="se">\345\260\217\346\233\270\343\201\215\346\226\207\345\255\227</span><span class="s2">&quot;</span>
-</span><span class='line'>                  <span class="p">}</span>
-</span><span class='line'>            <span class="nb">id</span><span class="p">:</span> <span class="mi">3</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="o">.</span><span class="n">.</span><span class="o">.</span> <span class="sr">//</span> <span class="err">省略</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="no">Candidate</span> <span class="p">{</span>
-</span><span class='line'>            <span class="ss">index</span><span class="p">:</span> <span class="mi">8</span>
-</span><span class='line'>            <span class="ss">value</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\344\275\215</span><span class="s2">&quot;</span>
-</span><span class='line'>            <span class="n">annotation</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="ss">description</span><span class="p">:</span> <span class="s2">&quot;Realtime&quot;</span>
-</span><span class='line'>                  <span class="p">}</span>
-</span><span class='line'>            <span class="nb">id</span><span class="p">:</span> <span class="mi">8</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="ss">position</span><span class="p">:</span> <span class="mi">0</span>
-</span><span class='line'>      <span class="ss">category</span><span class="p">:</span> <span class="no">SUGGESTION</span>
-</span><span class='line'>      <span class="n">display_type</span><span class="p">:</span> <span class="no">MAIN</span>
-</span><span class='line'>      <span class="n">footer</span> <span class="p">{</span>
-</span><span class='line'>            <span class="ss">label</span><span class="p">:</span>
-</span><span class='line'>          <span class="s2">&quot;Tab</span><span class="se">\343\202\255\343\203\274\343\201\247\351\201\270\346\212\236</span><span class="s2">&quot;</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="n">status</span> <span class="p">{</span>
-</span><span class='line'>      <span class="ss">activated</span><span class="p">:</span> <span class="kp">true</span>
-</span><span class='line'>      <span class="ss">mode</span><span class="p">:</span> <span class="no">HIRAGANA</span>
-</span><span class='line'>      <span class="n">comeback_mode</span><span class="p">:</span> <span class="no">HIRAGANA</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="n">all_candidate_words</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">candidates</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nb">id</span><span class="p">:</span> <span class="mi">0</span>
-</span><span class='line'>            <span class="ss">index</span><span class="p">:</span> <span class="mi">0</span>
-</span><span class='line'>            <span class="ss">key</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\343\201\204\343\202\215</span><span class="s2">&quot;</span>
-</span><span class='line'>            <span class="ss">value</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\343\201\204\343\202\215</span><span class="s2">&quot;</span>
-</span><span class='line'>            <span class="n">annotation</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="ss">description</span><span class="p">:</span> <span class="s2">&quot;Suffix&quot;</span>
-</span><span class='line'>                  <span class="p">}</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="n">candidates</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nb">id</span><span class="p">:</span> <span class="mi">1</span>
-</span><span class='line'>            <span class="ss">index</span><span class="p">:</span> <span class="mi">1</span>
-</span><span class='line'>            <span class="ss">value</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\343\201\204</span><span class="s2">&quot;</span>
-</span><span class='line'>            <span class="n">annotation</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="ss">description</span><span class="p">:</span> <span class="s2">&quot;Realtime&quot;</span>
-</span><span class='line'>                  <span class="p">}</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="n">candidates</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nb">id</span><span class="p">:</span> <span class="mi">2</span>
-</span><span class='line'>            <span class="ss">index</span><span class="p">:</span> <span class="mi">2</span>
-</span><span class='line'>            <span class="ss">value</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\350\203\203</span><span class="s2">&quot;</span>
-</span><span class='line'>            <span class="n">annotation</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="ss">description</span><span class="p">:</span> <span class="s2">&quot;Realtime&quot;</span>
-</span><span class='line'>                  <span class="p">}</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="n">candidates</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nb">id</span><span class="p">:</span> <span class="mi">3</span>
-</span><span class='line'>            <span class="ss">index</span><span class="p">:</span> <span class="mi">3</span>
-</span><span class='line'>            <span class="ss">key</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\343\201\203</span><span class="s2">&quot;</span>
-</span><span class='line'>            <span class="ss">value</span><span class="p">:</span> <span class="s2">&quot;</span><span class="se">\343\201\203</span><span class="s2">&quot;</span>
-</span><span class='line'>            <span class="n">annotation</span> <span class="p">{</span>
-</span><span class='line'>                    <span class="ss">description</span><span class="p">:</span>
-</span><span class='line'>                <span class="s2">&quot;</span><span class="se">\346\215\250\343\201\246\344\273\256\345\220\215</span><span class="s2"></span>
-</span><span class='line'><span class="s2">                    </span><span class="se">\345\260\217\346\233\270\343\201\215\346\226\207\345\255\227</span><span class="s2">&quot;</span>
-</span><span class='line'>                  <span class="p">}</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="o">.</span><span class="n">.</span><span class="o">.</span> <span class="sr">//</span> <span class="err">省略</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>第一回目はここまで。(^O^)／</p>
 
 <script language="javaScript">
 $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
