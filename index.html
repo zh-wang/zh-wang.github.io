@@ -9,8 +9,20 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Just some notes after reading Apple&rsquo;s official online guide.
-Most code are from the guide, with some modification by me. Tuple in switch &hellip;">
+  <meta name="description" content="===== Full Notes ===== Closure Closure Expression Syntax 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14 let names = [&quot;Chris&quot;, &quot;Alex&quot;, &quot;Ewa &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -52,8 +64,20 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Just some notes after reading Apple&rsquo;s official online guide.
-Most code are from the guide, with some modification by me. Tuple in switch &hellip;" />
+<meta property="og:description" content="===== Full Notes ===== Closure Closure Expression Syntax 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14 let names = [&quot;Chris&quot;, &quot;Alex&quot;, &quot;Ewa &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -96,6 +120,128 @@ Most code are from the guide, with some modification by me. Tuple in switch &hel
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/24/learning-swift-part-7/">Learning Swift Part 7 - Closure & Enumerations</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-24T11:05:49+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/10/24/learning-swift-part-7/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-7/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>===== Full Notes =====</h2>
+
+<h3>Closure</h3>
+
+<ul>
+<li>Closure Expression Syntax</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Chris&quot;</span><span class="p">,</span> <span class="s">&quot;Alex&quot;</span><span class="p">,</span> <span class="s">&quot;Ewa&quot;</span><span class="p">,</span> <span class="s">&quot;Barry&quot;</span><span class="p">,</span> <span class="s">&quot;Daniella&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">{</span> <span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">return</span> <span class="n">type</span> <span class="k">in</span>
+</span><span class='line'>        <span class="n">statements</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">func</span> <span class="n">backwards</span><span class="p">(</span><span class="nl">s1</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">s2</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">s1</span> <span class="o">&gt;</span> <span class="n">s2</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">backwards</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// reversed is equal to [&quot;Ewa&quot;, &quot;Daniella&quot;, &quot;Chris&quot;, &quot;Barry&quot;, &quot;Alex&quot;]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// This is the same closure</span>
+</span><span class='line'>    <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="p">{</span> <span class="p">(</span><span class="nl">s1</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">s2</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="k">in</span> <span class="k">return</span> <span class="n">s1</span> <span class="o">&gt;</span> <span class="n">s2</span> <span class="p">}</span> <span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Inferring Type From Context</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="p">{</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span> <span class="k">in</span> <span class="k">return</span> <span class="n">s1</span> <span class="o">&gt;</span> <span class="n">s2</span> <span class="p">}</span> <span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Implicit Returns from Single-Expression Closures</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="p">{</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span> <span class="k">in</span> <span class="n">s1</span> <span class="o">&gt;</span> <span class="n">s2</span> <span class="p">}</span> <span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Shorthand Argument Names</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="p">{</span> <span class="err">$</span><span class="mi">0</span> <span class="o">&gt;</span> <span class="err">$</span><span class="mi">1</span> <span class="p">}</span> <span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Operator Functions</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="o">&gt;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/10/24/learning-swift-part-7/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -1367,97 +1513,6 @@ But in this problem, after we sort edges in <em>x</em> and <em>y</em>, we can do
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/11/mozc-for-ios/">Mozc for iOS</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-11T18:10:34+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/07/11/mozc-for-ios/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/07/11/mozc-for-ios/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>はじめに</h2>
-
-<p>iOS 8ではサードパーティIMEが開発できるようになったので、mozcのiOS版を作ってみたい。<br/>
-まだ初期段階ですが、JUST KEEP BUILDING!</p>
-
-<h2>環境について</h2>
-
-<p>今回は、android版を参考し、mozcのコア機能が含まれるライブラリを作りたいですね。<br/>
-使うmozcソースのリビジョンは</p>
-
-<pre><code>18:06 zhenghongwang@viennakanon:projects/mozc/src (svn)[src:266]$ svn log -r COMMITTED
-------------------------------------------------------------------------
-r266 | yukawa@google.com | 2014-07-06 16:49:48 +0900 (日, 06  7 2014) | 11 lines
-
-Use Ninja to build Android, NaCl, and Linux Desktop binaries
-
-With this CL, Mozc starts using Ninja instead of Make to build Android, NaCl, and Linux Desktop binaries.  Note that Windows binaries have already been built with Ninja for one and a half years.
-
-This CL is supposed not to change any user-visible behavior.
-
-Closes Issue 222.
-
-BUG=Issue mozc:222
-TEST=unittest
-</code></pre>
-
-<p>ninjaを使い始めたみたいです。まあ、iOSやMACならxcodeでビルドするからあんまり関係ないよね。</p>
-
-<p>ビルドマシンはMBP, OSX 10.9, xcode 5。</p>
-
-<p>他の注意点</p>
-
-<ul>
-<li>変換のコアライブラリだけをビルドする。androidのnative側と同じです。</li>
-<li>gypは事前にインストールした。</li>
-<li>protobufをiOS向けにビルドすると、<code>target specifies product type 'com.apple.product-type.tool', but there's no such product type for the 'iphoneos' platform</code>が出てしまうので、protobufも事前にインストール。</li>
-<li>ソースの中のprotobufをarm64にビルドするために、patchが必要みたい。まだ未解決なので、今回はarmv7とarmv7sにビルドする。</li>
-</ul>
-
-
-<h2>ソースの変更点</h2>
-
-<ol>
-<li>src/iosのフォルダを新規。中はgypの設定、ビルドのターゲットなどが書かれている。</li>
-<li>src/build_ios.pyを新規。ビルドのスクリプトです。</li>
-<li>一部のソールを変更した。srcの中で、<code>svn diff</code>を見ればわかる。</li>
-</ol>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/07/11/mozc-for-ios/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -1471,6 +1526,10 @@ TEST=unittest
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/10/24/learning-swift-part-7/">Learning Swift Part 7 - Closure & Enumerations</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/09/25/learning-swift-part-6/">Learning Swift Part 6 - Functions</a>
@@ -1488,10 +1547,6 @@ TEST=unittest
         <a href="/blog/2014/09/05/learning-swift-part-3/">Learning Swift Part 3 - Basic Operators</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/09/05/learning-swift-part-2/">Learning Swift Part 2 - Basics</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1500,11 +1555,11 @@ TEST=unittest
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (6)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (7)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 110.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 80.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 110.0%'>codility(5)</a> <a href='/blog/categories/ios' style='font-size: 70.0%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 70.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 90.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 80.0%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(6)</a> <a href='/blog/categories/zsh' style='font-size: 70.0%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 102.85714285714286%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 77.14285714285714%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 102.85714285714286%'>codility(5)</a> <a href='/blog/categories/ios' style='font-size: 68.57142857142857%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 68.57142857142857%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 85.71428571428572%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 77.14285714285714%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(7)</a> <a href='/blog/categories/zsh' style='font-size: 68.57142857142857%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

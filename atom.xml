@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-10-21T12:27:39+09:00</updated>
+  <updated>2014-10-24T12:26:35+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,460 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Learning Swift Part 7 - Closure & Enumerations]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-7/"/>
+    <updated>2014-10-24T11:05:49+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-7</id>
+    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
+
+<h3>Closure</h3>
+
+<ul>
+<li>Closure Expression Syntax</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Chris&quot;</span><span class="p">,</span> <span class="s">&quot;Alex&quot;</span><span class="p">,</span> <span class="s">&quot;Ewa&quot;</span><span class="p">,</span> <span class="s">&quot;Barry&quot;</span><span class="p">,</span> <span class="s">&quot;Daniella&quot;</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">{</span> <span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="k">return</span> <span class="n">type</span> <span class="k">in</span>
+</span><span class='line'>        <span class="n">statements</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">func</span> <span class="n">backwards</span><span class="p">(</span><span class="nl">s1</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">s2</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">s1</span> <span class="o">&gt;</span> <span class="n">s2</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">backwards</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// reversed is equal to [&quot;Ewa&quot;, &quot;Daniella&quot;, &quot;Chris&quot;, &quot;Barry&quot;, &quot;Alex&quot;]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// This is the same closure</span>
+</span><span class='line'>    <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="p">{</span> <span class="p">(</span><span class="nl">s1</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">s2</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="k">in</span> <span class="k">return</span> <span class="n">s1</span> <span class="o">&gt;</span> <span class="n">s2</span> <span class="p">}</span> <span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Inferring Type From Context</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="p">{</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span> <span class="k">in</span> <span class="k">return</span> <span class="n">s1</span> <span class="o">&gt;</span> <span class="n">s2</span> <span class="p">}</span> <span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Implicit Returns from Single-Expression Closures</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="p">{</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span> <span class="k">in</span> <span class="n">s1</span> <span class="o">&gt;</span> <span class="n">s2</span> <span class="p">}</span> <span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Shorthand Argument Names</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="p">{</span> <span class="err">$</span><span class="mi">0</span> <span class="o">&gt;</span> <span class="err">$</span><span class="mi">1</span> <span class="p">}</span> <span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Operator Functions</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="o">&gt;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<!-- more -->
+
+
+<ul>
+<li>Trailing Closure</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="nf">someFunctionThatTakesAClosure</span><span class="p">(</span><span class="nl">closure</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="p">())</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// function body goes here</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// here&#39;s how you call this function without using a trailing closure:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">someFunctionThatTakesAClosure</span><span class="p">({</span>
+</span><span class='line'>        <span class="c1">// closure&#39;s body goes here</span>
+</span><span class='line'>    <span class="p">})</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// here&#39;s how you call this function with a trailing closure instead:</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">someFunctionThatTakesAClosure</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// trailing closure&#39;s body goes here</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Sample</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">digitNames</span> <span class="o">=</span> <span class="p">[</span>
+</span><span class='line'>        <span class="mi">0</span><span class="o">:</span> <span class="s">&quot;Zero&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="o">:</span> <span class="s">&quot;One&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="o">:</span> <span class="s">&quot;Two&quot;</span><span class="p">,</span>   <span class="mi">3</span><span class="o">:</span> <span class="s">&quot;Three&quot;</span><span class="p">,</span> <span class="mi">4</span><span class="o">:</span> <span class="s">&quot;Four&quot;</span><span class="p">,</span>
+</span><span class='line'>        <span class="mi">5</span><span class="o">:</span> <span class="s">&quot;Five&quot;</span><span class="p">,</span> <span class="mi">6</span><span class="o">:</span> <span class="s">&quot;Six&quot;</span><span class="p">,</span> <span class="mi">7</span><span class="o">:</span> <span class="s">&quot;Seven&quot;</span><span class="p">,</span> <span class="mi">8</span><span class="o">:</span> <span class="s">&quot;Eight&quot;</span><span class="p">,</span> <span class="mi">9</span><span class="o">:</span> <span class="s">&quot;Nine&quot;</span>
+</span><span class='line'>    <span class="p">]</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">16</span><span class="p">,</span> <span class="mi">58</span><span class="p">,</span> <span class="mi">510</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">strings</span> <span class="o">=</span> <span class="n">numbers</span><span class="p">.</span><span class="n">map</span> <span class="p">{</span>
+</span><span class='line'>        <span class="p">(</span><span class="k">var</span> <span class="n">number</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="k">in</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">output</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
+</span><span class='line'>        <span class="k">while</span> <span class="n">number</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">output</span> <span class="o">=</span> <span class="n">digitNames</span><span class="p">[</span><span class="n">number</span> <span class="o">%</span> <span class="mi">10</span><span class="p">]</span><span class="o">!</span> <span class="o">+</span> <span class="n">output</span>
+</span><span class='line'>            <span class="n">number</span> <span class="o">/=</span> <span class="mi">10</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">output</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// strings is inferred to be of type [String]</span>
+</span><span class='line'>    <span class="c1">// its value is [&quot;OneSix&quot;, &quot;FiveEight&quot;, &quot;FiveOneZero&quot;]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Capturing Value</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">makeIncrementor</span><span class="p">(</span><span class="n">forIncrement</span> <span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">runningTotal</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">incrementor</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">runningTotal</span> <span class="o">+=</span> <span class="n">amount</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">runningTotal</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">incrementor</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">incrementByTen</span> <span class="o">=</span> <span class="n">makeIncrementor</span><span class="p">(</span><span class="nl">forIncrement</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">incrementByTen</span><span class="p">()</span>
+</span><span class='line'>    <span class="c1">// returns a value of 10</span>
+</span><span class='line'>    <span class="n">incrementByTen</span><span class="p">()</span>
+</span><span class='line'>    <span class="c1">// returns a value of 20</span>
+</span><span class='line'>    <span class="n">incrementByTen</span><span class="p">()</span>
+</span><span class='line'>    <span class="c1">// returns a value of 30</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">incrementBySeven</span> <span class="o">=</span> <span class="n">makeIncrementor</span><span class="p">(</span><span class="nl">forIncrement</span><span class="p">:</span> <span class="mi">7</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">incrementBySeven</span><span class="p">()</span>
+</span><span class='line'>    <span class="c1">// returns a value of 7</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">incrementByTen</span><span class="p">()</span>
+</span><span class='line'>    <span class="c1">// returns a value of 40</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Closures Are Reference Types</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">alsoIncrementByTen</span> <span class="o">=</span> <span class="n">incrementByTen</span>
+</span><span class='line'>    <span class="n">alsoIncrementByTen</span><span class="p">()</span>
+</span><span class='line'>    <span class="c1">// returns a value of 50</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Enumerations</h3>
+
+<ul>
+<li>Enumeration Syntax</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">enum</span> <span class="n">CompassPoint</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">North</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">South</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">East</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">West</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">enum</span> <span class="n">Planet</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">Mercury</span><span class="p">,</span> <span class="n">Venus</span><span class="p">,</span> <span class="n">Earth</span><span class="p">,</span> <span class="n">Mars</span><span class="p">,</span> <span class="n">Jupiter</span><span class="p">,</span> <span class="n">Saturn</span><span class="p">,</span> <span class="n">Uranus</span><span class="p">,</span> <span class="n">Neptune</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">var</span> <span class="n">directionToHead</span> <span class="o">=</span> <span class="n">CompassPoint</span><span class="p">.</span><span class="n">West</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Can be shortened</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">directionToHead</span> <span class="o">=</span> <span class="p">.</span><span class="n">East</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Matching Enumeration Values with a Switch Statement</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="n">directionToHead</span> <span class="o">=</span> <span class="p">.</span><span class="n">South</span>
+</span><span class='line'>    <span class="k">switch</span> <span class="n">directionToHead</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="p">.</span><span class="nl">North</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Lots of planets have a north&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">case</span> <span class="p">.</span><span class="nl">South</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Watch out for penguins&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">case</span> <span class="p">.</span><span class="nl">East</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Where the sun rises&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">case</span> <span class="p">.</span><span class="nl">West</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Where the skies are blue&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// prints &quot;Watch out for penguins&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">somePlanet</span> <span class="o">=</span> <span class="n">Planet</span><span class="p">.</span><span class="n">Earth</span>
+</span><span class='line'>    <span class="k">switch</span> <span class="n">somePlanet</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="p">.</span><span class="nl">Earth</span><span class="p">:</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Mostly harmless&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">default</span><span class="o">:</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Not a safe place for humans&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// prints &quot;Mostly harmless&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Associated Values</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">enum</span> <span class="n">Barcode</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">UPCA</span><span class="p">(</span><span class="n">Int</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">Int</span><span class="p">,</span> <span class="n">Int</span><span class="p">)</span>  <span class="c1">// a Barcode</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">QRCode</span><span class="p">(</span><span class="n">String</span><span class="p">)</span>            <span class="c1">// a QRCode</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">var</span> <span class="n">productBarcode</span> <span class="o">=</span> <span class="n">Barcode</span><span class="p">.</span><span class="n">UPCA</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">85909</span><span class="p">,</span> <span class="mi">51226</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">productBarcode</span> <span class="o">=</span> <span class="p">.</span><span class="n">QRCode</span><span class="p">(</span><span class="s">&quot;ABCDEFGHIJKLMNOP&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">switch</span> <span class="n">productBarcode</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="p">.</span><span class="n">UPCA</span><span class="p">(</span><span class="k">let</span> <span class="n">numberSystem</span><span class="p">,</span> <span class="k">let</span> <span class="n">manufacturer</span><span class="p">,</span> <span class="k">let</span> <span class="n">product</span><span class="p">,</span> <span class="k">let</span> <span class="n">check</span><span class="p">)</span><span class="o">:</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">case</span> <span class="p">.</span><span class="n">QRCode</span><span class="p">(</span><span class="k">let</span> <span class="n">productCode</span><span class="p">)</span><span class="o">:</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;QR code: \(productCode).&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// prints &quot;QR code: ABCDEFGHIJKLMNOP.&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Can be shortened</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">switch</span> <span class="n">productBarcode</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="k">let</span> <span class="p">.</span><span class="n">UPCA</span><span class="p">(</span><span class="n">numberSystem</span><span class="p">,</span> <span class="n">manufacturer</span><span class="p">,</span> <span class="n">product</span><span class="p">,</span> <span class="n">check</span><span class="p">)</span><span class="o">:</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">case</span> <span class="k">let</span> <span class="p">.</span><span class="n">QRCode</span><span class="p">(</span><span class="n">productCode</span><span class="p">)</span><span class="o">:</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;QR code: \(productCode).&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// prints &quot;QR code: ABCDEFGHIJKLMNOP.&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Raw Values</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">enum</span> <span class="nl">ASCIIControlCharacter</span><span class="p">:</span> <span class="n">Character</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">Tab</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\t</span><span class="s">&quot;</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">LineFeed</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">CarriageReturn</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\r</span><span class="s">&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">enum</span> <span class="nl">Planet</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">case</span> <span class="n">Mercury</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Venus</span><span class="p">,</span> <span class="n">Earth</span><span class="p">,</span> <span class="n">Mars</span><span class="p">,</span> <span class="n">Jupiter</span><span class="p">,</span> <span class="n">Saturn</span><span class="p">,</span> <span class="n">Uranus</span><span class="p">,</span> <span class="n">Neptune</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">earthsOrder</span> <span class="o">=</span> <span class="n">Planet</span><span class="p">.</span><span class="n">Earth</span><span class="p">.</span><span class="n">toRaw</span><span class="p">()</span>
+</span><span class='line'>    <span class="c1">// earthsOrder is 3</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">possiblePlanet</span> <span class="o">=</span> <span class="n">Planet</span><span class="p">.</span><span class="n">fromRaw</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// possiblePlanet is of type Planet? and equals Planet.Uranus</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">positionToFind</span> <span class="o">=</span> <span class="mi">9</span>
+</span><span class='line'>    <span class="k">if</span> <span class="k">let</span> <span class="n">somePlanet</span> <span class="o">=</span> <span class="n">Planet</span><span class="p">.</span><span class="n">fromRaw</span><span class="p">(</span><span class="n">positionToFind</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">switch</span> <span class="n">somePlanet</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">case</span> <span class="p">.</span><span class="nl">Earth</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">println</span><span class="p">(</span><span class="s">&quot;Mostly harmless&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">default</span><span class="o">:</span>
+</span><span class='line'>            <span class="n">println</span><span class="p">(</span><span class="s">&quot;Not a safe place for humans&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;There isn&#39;t a planet at position \(positionToFind)&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// prints &quot;There isn&#39;t a planet at position 9&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Learning Swift Part 6 - Functions]]></title>

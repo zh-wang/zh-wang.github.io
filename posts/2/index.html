@@ -9,7 +9,8 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="What is MathJax? MathJax is an open source JavaScript display engine for mathematics that works in all browsers. By importing MathJax to Octopress( &hellip;">
+  <meta name="description" content="はじめに iOS 8ではサードパーティIMEが開発できるようになったので、mozcのiOS版を作ってみたい。
+まだ初期段階ですが、JUST KEEP BUILDING! 環境について 今回は、android版を参考し、mozcのコア機能が含まれるライブラリを作りたいですね。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -51,7 +52,8 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="What is MathJax? MathJax is an open source JavaScript display engine for mathematics that works in all browsers. By importing MathJax to Octopress( &hellip;" />
+<meta property="og:description" content="はじめに iOS 8ではサードパーティIMEが開発できるようになったので、mozcのiOS版を作ってみたい。
+まだ初期段階ですが、JUST KEEP BUILDING! 環境について 今回は、android版を参考し、mozcのコア機能が含まれるライブラリを作りたいですね。 &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/posts/2/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -94,6 +96,97 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/11/mozc-for-ios/">Mozc for iOS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-11T18:10:34+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/07/11/mozc-for-ios/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/07/11/mozc-for-ios/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>はじめに</h2>
+
+<p>iOS 8ではサードパーティIMEが開発できるようになったので、mozcのiOS版を作ってみたい。<br/>
+まだ初期段階ですが、JUST KEEP BUILDING!</p>
+
+<h2>環境について</h2>
+
+<p>今回は、android版を参考し、mozcのコア機能が含まれるライブラリを作りたいですね。<br/>
+使うmozcソースのリビジョンは</p>
+
+<pre><code>18:06 zhenghongwang@viennakanon:projects/mozc/src (svn)[src:266]$ svn log -r COMMITTED
+------------------------------------------------------------------------
+r266 | yukawa@google.com | 2014-07-06 16:49:48 +0900 (日, 06  7 2014) | 11 lines
+
+Use Ninja to build Android, NaCl, and Linux Desktop binaries
+
+With this CL, Mozc starts using Ninja instead of Make to build Android, NaCl, and Linux Desktop binaries.  Note that Windows binaries have already been built with Ninja for one and a half years.
+
+This CL is supposed not to change any user-visible behavior.
+
+Closes Issue 222.
+
+BUG=Issue mozc:222
+TEST=unittest
+</code></pre>
+
+<p>ninjaを使い始めたみたいです。まあ、iOSやMACならxcodeでビルドするからあんまり関係ないよね。</p>
+
+<p>ビルドマシンはMBP, OSX 10.9, xcode 5。</p>
+
+<p>他の注意点</p>
+
+<ul>
+<li>変換のコアライブラリだけをビルドする。androidのnative側と同じです。</li>
+<li>gypは事前にインストールした。</li>
+<li>protobufをiOS向けにビルドすると、<code>target specifies product type 'com.apple.product-type.tool', but there's no such product type for the 'iphoneos' platform</code>が出てしまうので、protobufも事前にインストール。</li>
+<li>ソースの中のprotobufをarm64にビルドするために、patchが必要みたい。まだ未解決なので、今回はarmv7とarmv7sにビルドする。</li>
+</ul>
+
+
+<h2>ソースの変更点</h2>
+
+<ol>
+<li>src/iosのフォルダを新規。中はgypの設定、ビルドのターゲットなどが書かれている。</li>
+<li>src/build_ios.pyを新規。ビルドのスクリプトです。</li>
+<li>一部のソールを変更した。srcの中で、<code>svn diff</code>を見ればわかる。</li>
+</ol>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/07/11/mozc-for-ios/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -551,6 +644,10 @@ originates from Google Japanese Input.</p></blockquote>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/10/24/learning-swift-part-7/">Learning Swift Part 7 - Closure & Enumerations</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/09/25/learning-swift-part-6/">Learning Swift Part 6 - Functions</a>
       </li>
     
@@ -566,10 +663,6 @@ originates from Google Japanese Input.</p></blockquote>
         <a href="/blog/2014/09/05/learning-swift-part-3/">Learning Swift Part 3 - Basic Operators</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/09/05/learning-swift-part-2/">Learning Swift Part 2 - Basics</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -578,11 +671,11 @@ originates from Google Japanese Input.</p></blockquote>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (6)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (7)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 110.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 80.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 110.0%'>codility(5)</a> <a href='/blog/categories/ios' style='font-size: 70.0%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 70.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 90.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 80.0%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(6)</a> <a href='/blog/categories/zsh' style='font-size: 70.0%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 102.85714285714286%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 77.14285714285714%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 102.85714285714286%'>codility(5)</a> <a href='/blog/categories/ios' style='font-size: 68.57142857142857%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 68.57142857142857%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 85.71428571428572%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 77.14285714285714%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(7)</a> <a href='/blog/categories/zsh' style='font-size: 68.57142857142857%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>
