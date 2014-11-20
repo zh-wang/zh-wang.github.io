@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Learning Swift Part 9 - Properties - Welcome to FutureAppLaboratory</title>
+  <title>Learning Swift Part 9 - Properties, Subscripts - Welcome to FutureAppLaboratory</title>
   <meta name="author" content="viennakanon">
 
   
@@ -57,7 +57,7 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
   </script>
 
 
-  <meta property="og:title" content="Learning Swift Part 9 - Properties - Welcome to FutureAppLaboratory" />
+  <meta property="og:title" content="Learning Swift Part 9 - Properties, Subscripts - Welcome to FutureAppLaboratory" />
 <meta property="og:description" content="===== Full Notes ===== Properties Stored Properties 1
 2
 3
@@ -111,7 +111,7 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
   
   <header>
     
-      <h1 class="entry-title">Learning Swift Part 9 - Properties</h1>
+      <h1 class="entry-title">Learning Swift Part 9 - Properties, Subscripts</h1>
     
     
       <p class="meta">
@@ -517,6 +517,131 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 </span><span class='line'>    <span class="c1">// prints &quot;10&quot;</span>
 </span></code></pre></td></tr></table></div></figure>
 
+
+<h3>Subscripts</h3>
+
+<ul>
+<li><p>Classes, structures, and enumerations can define subscripts, which are shortcuts for accessing the member elements of a collection, list, or sequence. You use subscripts to set and retrieve values by index without needing separate methods for setting and retrieval. For example, you access elements in an Array instance as someArray[index] and elements in a Dictionary instance as someDictionary[key].</p></li>
+<li><p>Subscript Syntax</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">subscript</span><span class="p">(</span><span class="nl">index</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kr">get</span> <span class="p">{</span>
+</span><span class='line'>            <span class="c1">// return an appropriate subscript value here</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="kr">set</span><span class="p">(</span><span class="n">newValue</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="c1">// perform a suitable setting action here</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// if you want a subscript to be read-only</span>
+</span><span class='line'>    <span class="k">subscript</span><span class="p">(</span><span class="nl">index</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// return an appropriate subscript value here</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>A sample, an array to output multiplied index</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">struct</span> <span class="n">TimesTable</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">let</span> <span class="nl">multiplier</span><span class="p">:</span> <span class="n">Int</span>
+</span><span class='line'>        <span class="k">subscript</span><span class="p">(</span><span class="nl">index</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">multiplier</span> <span class="o">*</span> <span class="n">index</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">threeTimesTable</span> <span class="o">=</span> <span class="n">TimesTable</span><span class="p">(</span><span class="nl">multiplier</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;six times three is \(threeTimesTable[6])&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;six times three is 18&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>A sample, a matrix-like structure</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">struct</span> <span class="n">Matrix</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">let</span> <span class="nl">rows</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">columns</span><span class="p">:</span> <span class="n">Int</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">grid</span><span class="p">:</span> <span class="p">[</span><span class="n">Double</span><span class="p">]</span>
+</span><span class='line'>        <span class="k">init</span><span class="p">(</span><span class="nl">rows</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">columns</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nb">self</span><span class="p">.</span><span class="n">rows</span> <span class="o">=</span> <span class="n">rows</span>
+</span><span class='line'>            <span class="nb">self</span><span class="p">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">columns</span>
+</span><span class='line'>            <span class="n">grid</span> <span class="o">=</span> <span class="n">Array</span><span class="p">(</span><span class="nl">count</span><span class="p">:</span> <span class="n">rows</span> <span class="o">*</span> <span class="n">columns</span><span class="p">,</span> <span class="nl">repeatedValue</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">func</span> <span class="n">indexIsValidForRow</span><span class="p">(</span><span class="nl">row</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">column</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">row</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">row</span> <span class="o">&lt;</span> <span class="n">rows</span> <span class="o">&amp;&amp;</span> <span class="n">column</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">column</span> <span class="o">&lt;</span> <span class="n">columns</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">subscript</span><span class="p">(</span><span class="nl">row</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">column</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Double</span> <span class="p">{</span>
+</span><span class='line'>            <span class="kr">get</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">assert</span><span class="p">(</span><span class="n">indexIsValidForRow</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="nl">column</span><span class="p">:</span> <span class="n">column</span><span class="p">),</span> <span class="s">&quot;Index out of range&quot;</span><span class="p">)</span>
+</span><span class='line'>                <span class="k">return</span> <span class="n">grid</span><span class="p">[(</span><span class="n">row</span> <span class="o">*</span> <span class="n">columns</span><span class="p">)</span> <span class="o">+</span> <span class="n">column</span><span class="p">]</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="kr">set</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">assert</span><span class="p">(</span><span class="n">indexIsValidForRow</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="nl">column</span><span class="p">:</span> <span class="n">column</span><span class="p">),</span> <span class="s">&quot;Index out of range&quot;</span><span class="p">)</span>
+</span><span class='line'>                <span class="n">grid</span><span class="p">[(</span><span class="n">row</span> <span class="o">*</span> <span class="n">columns</span><span class="p">)</span> <span class="o">+</span> <span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="n">newValue</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Usage</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">matrix</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="nl">rows</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="nl">columns</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.5</span>
+</span><span class='line'>    <span class="n">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mf">3.2</span>
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 
@@ -590,11 +715,15 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/11/20/learning-swift-part-11/">Learning Swift Part 11</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/10/24/learning-swift-part-10/">Learning Swift Part 10 - Methods</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2014/10/24/learning-swift-part-9/">Learning Swift Part 9 - Properties</a>
+        <a href="/blog/2014/10/24/learning-swift-part-9/">Learning Swift Part 9 - Properties, Subscripts</a>
       </li>
     
       <li class="post">
@@ -605,10 +734,6 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
         <a href="/blog/2014/10/24/learning-swift-part-7/">Learning Swift Part 7 - Closure & Enumerations</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/09/25/learning-swift-part-6/">Learning Swift Part 6 - Functions</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -617,11 +742,11 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (10)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (11)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 90.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 72.0%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 90.0%'>codility(5)</a> <a href='/blog/categories/ios' style='font-size: 66.0%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 66.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 78.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 72.0%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(10)</a> <a href='/blog/categories/zsh' style='font-size: 66.0%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.27272727272728%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 70.9090909090909%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 87.27272727272728%'>codility(5)</a> <a href='/blog/categories/ios' style='font-size: 65.45454545454545%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 65.45454545454545%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 76.36363636363636%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 70.9090909090909%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(11)</a> <a href='/blog/categories/zsh' style='font-size: 65.45454545454545%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

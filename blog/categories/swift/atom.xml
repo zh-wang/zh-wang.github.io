@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-10-24T19:52:57+09:00</updated>
+  <updated>2014-11-20T20:45:05+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -14,163 +14,29 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Learning Swift Part 10 - Methods]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10/"/>
-    <updated>2014-10-24T18:51:55+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10</id>
+    <title type="html"><![CDATA[Learning Swift Part 11]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/11/20/learning-swift-part-11/"/>
+    <updated>2014-11-20T19:10:05+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/11/20/learning-swift-part-11</id>
     <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
 
-<h3>Methods</h3>
+<h3>Inheritance</h3>
 
 <ul>
-<li><p>Instance Methods
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">class</span> <span class="n">Counter</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">var</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>      <span class="k">func</span> <span class="n">increment</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>          <span class="n">count</span><span class="o">++</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>          <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="k">func</span> <span class="n">reset</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>          <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">let</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
-</span><span class='line'>  <span class="c1">// the initial counter value is 0</span>
-</span><span class='line'>  <span class="n">counter</span><span class="p">.</span><span class="n">increment</span><span class="p">()</span>
-</span><span class='line'>  <span class="c1">// the counter&#39;s value is now 1</span>
-</span><span class='line'>  <span class="n">counter</span><span class="p">.</span><span class="n">incrementBy</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// the counter&#39;s value is now 6</span>
-</span><span class='line'>  <span class="n">counter</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
-</span><span class='line'>  <span class="c1">// the counter&#39;s value is now 0</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Local</span> <span class="n">and</span> <span class="n">External</span> <span class="n">Parameter</span> <span class="n">Names</span> <span class="k">for</span> <span class="n">Methods</span><span class="o">&lt;</span><span class="n">br</span><span class="o">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-      // Specifically, Swift gives the first parameter name in a method a local parameter name by default, and gives the second and subsequent parameter names both local and external parameter names by default.</p>
-
-<pre><code>  class Counter {
-      var count: Int = 0
-      func incrementBy(amount: Int, numberOfTimes: Int) {
-          count += amount * numberOfTimes
-      }
-  }
-
-  let counter = Counter()
-  counter.incrementBy(5, numberOfTimes: 3)
-  // counter value is now 15
-
-  // It is behaved as the same as putting a '#' symbol before the name
-
-  func incrementBy(amount: Int, #numberOfTimes: Int) {
-      count += amount * numberOfTimes
-  }
-
-  // This will not allow external name
-
-  func incrementBy(amount: Int, _ : Int) {
-      count += amount * numberOfTimes
-  }
-</code></pre>
-
-<p>&#8220;`</p></li>
-</ul>
-
-
-<!-- more -->
-
-
-<ul>
-<li><p>The self Property
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">func</span> <span class="nf">increment</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nb">self</span><span class="p">.</span><span class="n">count</span><span class="o">++</span>
-</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
-</span><span class='line'>  <span class="k">func</span> <span class="n">isToTheRightOfX</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="n">Double</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Bool</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="nb">self</span><span class="p">.</span><span class="n">x</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">x</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">let</span> <span class="n">somePoint</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mf">4.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">if</span> <span class="n">somePoint</span><span class="p">.</span><span class="n">isToTheRightOfX</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;This point is to the right of the line where x == 1.0&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="c1">// prints &quot;This point is to the right of the line where x == 1.0&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Modifying</span> <span class="n">Value</span> <span class="n">Types</span> <span class="n">from</span> <span class="n">Within</span> <span class="n">Instance</span> <span class="n">Methods</span>
-</span></code></pre></td></tr></table></div></figure>
-      struct Point {
-          var x = 0.0, y = 0.0
-          mutating func moveByX(deltaX: Double, y deltaY: Double) {
-              x += deltaX
-              y += deltaY
+<li>A base class, Vehicle
+<code>
+      class Vehicle {
+          var currentSpeed = 0.0
+          var description: String {
+                  return "traveling at \(currentSpeed) miles per hour"
+          }
+          func makeNoise() {
+                  // do nothing - an arbitrary vehicle doesn't necessarily make a noise
           }
       }
-      var somePoint = Point(x: 1.0, y: 1.0)
-      somePoint.moveByX(2.0, y: 3.0)
-      println(&ldquo;The point is now at ((somePoint.x), (somePoint.y))&rdquo;)
-      // prints &ldquo;The point is now at (3.0, 4.0)&rdquo;</p>
-
-<pre><code>  // constant instance's properties cannot be modified
-
-  let fixedPoint = Point(x: 3.0, y: 3.0)
-  fixedPoint.moveByX(2.0, y: 3.0)
-  // this will report an error
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Assigning to self Within a Mutating Method
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</code></li>
+<li><p>Subclass, Bicycle and Tandem
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -199,130 +65,373 @@
 <span class='line-number'>27</span>
 <span class='line-number'>28</span>
 <span class='line-number'>29</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
-</span><span class='line'>      <span class="kr">mutating</span> <span class="k">func</span> <span class="n">moveByX</span><span class="p">(</span><span class="nl">deltaX</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="n">y</span> <span class="nl">deltaY</span><span class="p">:</span> <span class="n">Double</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nb">self</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">deltaX</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="n">y</span> <span class="o">+</span> <span class="n">deltaY</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  class Bicycle: Vehicle {
+</span><span class='line'>      var hasBasket = false
+</span><span class='line'>  }&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">enum</span> <span class="n">TriStateSwitch</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">case</span> <span class="n">Off</span><span class="p">,</span> <span class="n">Low</span><span class="p">,</span> <span class="n">High</span>
-</span><span class='line'>  <span class="kr">mutating</span> <span class="k">func</span> <span class="n">next</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">switch</span> <span class="nb">self</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">case</span> <span class="nl">Off</span><span class="p">:</span>
-</span><span class='line'>          <span class="nb">self</span> <span class="o">=</span> <span class="n">Low</span>
-</span><span class='line'>      <span class="k">case</span> <span class="nl">Low</span><span class="p">:</span>
-</span><span class='line'>          <span class="nb">self</span> <span class="o">=</span> <span class="n">High</span>
-</span><span class='line'>      <span class="k">case</span> <span class="nl">High</span><span class="p">:</span>
-</span><span class='line'>          <span class="nb">self</span> <span class="o">=</span> <span class="n">Off</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">var</span> <span class="n">ovenLight</span> <span class="o">=</span> <span class="n">TriStateSwitch</span><span class="p">.</span><span class="n">Low</span>
-</span><span class='line'>  <span class="n">ovenLight</span><span class="p">.</span><span class="n">next</span><span class="p">()</span>
-</span><span class='line'>  <span class="c1">// ovenLight is now equal to .High</span>
-</span><span class='line'>  <span class="n">ovenLight</span><span class="p">.</span><span class="n">next</span><span class="p">()</span>
-</span><span class='line'>  <span class="c1">// ovenLight is now equal to .Off</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  class Tandem: Bicycle {
+</span><span class='line'>  var currentNumberOfPassengers = 0
+</span><span class='line'>  }
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kt">Type</span> <span class="n">Methods</span>
-</span></code></pre></td></tr></table></div></figure>
-      class SomeClass {
-          class func someTypeMethod() {
-              // type method implementation goes here
+</span><span class='line'>  let tandem = Tandem()
+</span><span class='line'>  tandem.hasBasket = true
+</span><span class='line'>  tandem.currentNumberOfPassengers = 2
+</span><span class='line'>  tandem.currentSpeed = 22.0
+</span><span class='line'>  println("Tandem: \(tandem.description)")
+</span><span class='line'>  // Tandem: traveling at 22.0 miles per hour
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;/ul&gt;
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>&lt;!-- more --&gt;
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>&lt;ul&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Overriding&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;ul&gt;
+</span><span class='line'>&lt;li&gt;A subclass can provide its own custom implementation of an instance method, class method, instance property, class property, or subscript that it would otherwise inherit from a superclass. This is known as overriding.&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;To override a characteristic that would otherwise be inherited, you prefix your overriding definition with the override keyword. Doing so clarifies that you intend to provide an override and have not provided a matching definition by mistake. Overriding by accident can cause unexpected behavior, and any overrides without the override keyword are diagnosed as an error when your code is compiled.&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;The override keyword also prompts the Swift compiler to check that your overriding class’s superclass (or one of its parents) has a declaration that matches the one you provided for the override. This check ensures that your overriding definition is correct.&lt;/li&gt;
+</span><span class='line'>&lt;/ul&gt;
+</span><span class='line'>&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Accessing Superclass Methods, Properties, and Subscripts&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;ul&gt;
+</span><span class='line'>&lt;li&gt;An overridden method named someMethod can call the superclass version of someMethod by calling super.someMethod() within the overriding method implementation.&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;An overridden property called someProperty can access the superclass version of someProperty as super.someProperty within the overriding getter or setter implementation.&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;An overridden subscript for someIndex can access the superclass version of the same subscript as super[someIndex] from within the overriding subscript implementation.&lt;/li&gt;
+</span><span class='line'>&lt;/ul&gt;
+</span><span class='line'>&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Overriding Methods</span></code></pre></td></tr></table></div></figure>
+      class Train: Vehicle {
+          override func makeNoise() {
+              println(&ldquo;Choo Choo&rdquo;)
           }
-      }
-      SomeClass.someTypeMethod()</p>
+      }</p>
 
-<pre><code>  // Within the body of a type method, the implicit self property refers to the type itself, rather than an instance of that type. For structures and enumerations, this means that you can use self to disambiguate between static properties and static method parameters, just as you do for instance properties and instance method parameters.
-
-  struct LevelTracker {
-      static var highestUnlockedLevel = 1
-      static func unlockLevel(level: Int) {
-          if level &gt; highestUnlockedLevel { highestUnlockedLevel = level }
-      }
-      static func levelIsUnlocked(level: Int) -&gt; Bool {
-          return level &lt;= highestUnlockedLevel
-      }
-      var currentLevel = 1
-      mutating func advanceToLevel(level: Int) -&gt; Bool {
-          if LevelTracker.levelIsUnlocked(level) {
-              currentLevel = level
-              return true
-          } else {
-              return false
-          }
-      }
-  }
-
-  class Player {
-      var tracker = LevelTracker()
-      let playerName: String
-      func completedLevel(level: Int) {
-          LevelTracker.unlockLevel(level + 1)
-          tracker.advanceToLevel(level + 1)
-      }
-      init(name: String) {
-          playerName = name
-      }
-  }
-
-  var player = Player(name: "Argyrios")
-  player.completedLevel(1)
-  println("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
-  // prints "highest unlocked level is now 2"
-
-  player = Player(name: "Beto")
-  if player.tracker.advanceToLevel(6) {
-      println("player is now on level 6")
-  } else {
-      println("level 6 has not yet been unlocked")
-  }
-  // prints "level 6 has not yet been unlocked"
+<pre><code>  let train = Train()
+  train.makeNoise()
+  // prints "Choo Choo"
 </code></pre>
 
 <p>&#8220;`</p></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Swift Part 9 - Properties]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-9/"/>
-    <updated>2014-10-24T18:46:57+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-9</id>
-    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
-
-<h3>Properties</h3>
+<li><p>Overriding Properties</p>
 
 <ul>
-<li>Stored Properties
-<code>swift
-      struct FixedLengthRange {
-          var firstValue: Int
-          let length: Int
-      }
-      var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
-      // the range represents integer values 0, 1, and 2
-      rangeOfThreeItems.firstValue = 6
-      // the range now represents integer values 6, 7, and 8
-</code></li>
-<li>Stored Properties of Constant Structure Instances
-<code>
-      let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
-      // this range represents integer values 0, 1, 2, and 3
-      rangeOfFourItems.firstValue = 6
-      // this will report an error, even though firstValue is a variable property
-      // This behavior is due to structures being value types. When an instance of a value type is marked as a constant, so are all of its properties.
-      // The same is not true for classes, which are reference types. If you assign an instance of a reference type to a constant, you can still change that instance’s variable properties.
-</code></li>
-<li><p>Lazy Stored Properties</p>
+<li>You can override an inherited instance or class property to provide your own custom getter and setter for that property, or to add property observers to enable the overriding property to observe when the underlying property value changes.</li>
+</ul>
+</li>
+<li><p>Overriding Property Getters and Setters</p>
 
-<p>  A lazy stored property is a property whose initial value is not calculated until the first time it is used. You indicate a lazy stored property by writing the lazy modifier before its declaration.
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<ul>
+<li>You can present an inherited read-only property as a read-write property by providing both a getter and a setter in your subclass property override. You cannot, however, present an inherited read-write property as a read-only property.</li>
+<li><p>If you provide a setter as part of a property override, you must also provide a getter for that override. If you don’t want to modify the inherited property’s value within the overriding getter, you can simply pass through the inherited value by returning super.someProperty from the getter, where someProperty is the name of the property you are overriding.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  class Car: Vehicle {
+</span><span class='line'>      var gear = 1
+</span><span class='line'>      override var description: String {
+</span><span class='line'>          return super.description + &ldquo; in gear (gear)&rdquo;
+</span><span class='line'>      }
+</span><span class='line'>  }&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  let car = Car()
+</span><span class='line'>  car.currentSpeed = 25.0
+</span><span class='line'>  car.gear = 3
+</span><span class='line'>  println(&ldquo;Car: (car.description)&rdquo;)
+</span><span class='line'>  // Car: traveling at 25.0 miles per hour in gear 3</span></code></pre></td></tr></table></div></figure></p></li>
+</ul>
+</li>
+<li><p>Overriding Property Observers
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  class AutomaticCar: Car {
+</span><span class='line'>      override var currentSpeed: Double {
+</span><span class='line'>          didSet {
+</span><span class='line'>              gear = Int(currentSpeed / 10.0) + 1
+</span><span class='line'>          }
+</span><span class='line'>      }
+</span><span class='line'>  }&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  let automatic = AutomaticCar()
+</span><span class='line'>  automatic.currentSpeed = 35.0
+</span><span class='line'>  println("AutomaticCar: \(automatic.description)")
+</span><span class='line'>  // AutomaticCar: traveling at 35.0 miles per hour in gear 4
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;Preventing Overrides
+</span><span class='line'>
+</span><span class='line'>&lt;ul&gt;
+</span><span class='line'>&lt;li&gt;You can prevent a method, property, or subscript from being overridden by marking it as final. Do this by writing the final modifier before the method, property, or subscript’s introducer keyword (such as final var, final func, final class func, and final subscript).&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;Any attempt to override a final method, property, or subscript in a subclass is reported as a compile-time error. Methods, properties, or subscripts that you add to a class in an extension can also be marked as final within the extension’s definition.&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;You can mark an entire class as final by writing the final modifier before the class keyword in its class definition (final class). Any attempt to subclass a final class is reported as a compile-time error.&lt;/li&gt;
+</span><span class='line'>&lt;/ul&gt;
+</span><span class='line'>&lt;/li&gt;
+</span><span class='line'>&lt;/ul&gt;
+</span><span class='line'>
+</span><span class='line'>]]&gt;&lt;/content&gt;
+</span><span class='line'>  &lt;/entry&gt;
+</span><span class='line'>  
+</span><span class='line'>  &lt;entry&gt;
+</span><span class='line'>&lt;title type="html"&gt;&lt;![CDATA[Learning Swift Part 10 - Methods]]&gt;&lt;/title&gt;
+</span><span class='line'>&lt;link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10/"/&gt;
+</span><span class='line'>&lt;updated&gt;2014-10-24T18:51:55+09:00&lt;/updated&gt;
+</span><span class='line'>&lt;id&gt;http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10&lt;/id&gt;
+</span><span class='line'>&lt;content type="html"&gt;&lt;![CDATA[&lt;h2&gt;===== Full Notes =====&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h3&gt;Methods&lt;/h3&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;ul&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Instance Methods</span></code></pre></td></tr></table></div></figure>swift
+      class Counter {
+          var count = 0
+          func increment() {
+              count++
+          }
+          func incrementBy(amount: Int) {
+              count += amount
+          }
+          func reset() {
+              count = 0
+          }
+      }</p>
+
+<pre><code>  let counter = Counter()
+  // the initial counter value is 0
+  counter.increment()
+  // the counter's value is now 1
+  counter.incrementBy(5)
+  // the counter's value is now 6
+  counter.reset()
+  // the counter's value is now 0
+</code></pre>
+
+<p>&#8220;`</p></li>
+<li><p>Local and External Parameter Names for Methods<br/>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  // Specifically, Swift gives the first parameter name in a method a local parameter name by default, and gives the second and subsequent parameter names both local and external parameter names by default.&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  class Counter {
+</span><span class='line'>  var count: Int = 0
+</span><span class='line'>  func incrementBy(amount: Int, numberOfTimes: Int) {
+</span><span class='line'>      count += amount * numberOfTimes
+</span><span class='line'>  }
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  let counter = Counter()
+</span><span class='line'>  counter.incrementBy(5, numberOfTimes: 3)
+</span><span class='line'>  // counter value is now 15
+</span><span class='line'>
+</span><span class='line'>  // It is behaved as the same as putting a '#' symbol before the name
+</span><span class='line'>
+</span><span class='line'>  func incrementBy(amount: Int, #numberOfTimes: Int) {
+</span><span class='line'>  count += amount * numberOfTimes
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  // This will not allow external name
+</span><span class='line'>
+</span><span class='line'>  func incrementBy(amount: Int, _ : Int) {
+</span><span class='line'>  count += amount * numberOfTimes
+</span><span class='line'>  }
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;/ul&gt;
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>&lt;!-- more --&gt;
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>&lt;ul&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;The self Property</span></code></pre></td></tr></table></div></figure>
+      func increment() {
+          self.count++
+      }</p>
+
+<pre><code>  struct Point {
+      var x = 0.0, y = 0.0
+      func isToTheRightOfX(x: Double) -&gt; Bool {
+          return self.x &gt; x
+      }
+  }
+  let somePoint = Point(x: 4.0, y: 5.0)
+  if somePoint.isToTheRightOfX(1.0) {
+      println("This point is to the right of the line where x == 1.0")
+  }
+  // prints "This point is to the right of the line where x == 1.0"
+</code></pre>
+
+<p>&#8220;`</p></li>
+<li><p>Modifying Value Types from Within Instance Methods
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  struct Point {
+</span><span class='line'>      var x = 0.0, y = 0.0
+</span><span class='line'>      mutating func moveByX(deltaX: Double, y deltaY: Double) {
+</span><span class='line'>          x += deltaX
+</span><span class='line'>          y += deltaY
+</span><span class='line'>      }
+</span><span class='line'>  }
+</span><span class='line'>  var somePoint = Point(x: 1.0, y: 1.0)
+</span><span class='line'>  somePoint.moveByX(2.0, y: 3.0)
+</span><span class='line'>  println(&ldquo;The point is now at ((somePoint.x), (somePoint.y))&rdquo;)
+</span><span class='line'>  // prints &ldquo;The point is now at (3.0, 4.0)&rdquo;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  // constant instance's properties cannot be modified
+</span><span class='line'>
+</span><span class='line'>  let fixedPoint = Point(x: 3.0, y: 3.0)
+</span><span class='line'>  fixedPoint.moveByX(2.0, y: 3.0)
+</span><span class='line'>  // this will report an error
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Assigning to self Within a Mutating Method</span></code></pre></td></tr></table></div></figure>
+      struct Point {
+          var x = 0.0, y = 0.0
+          mutating func moveByX(deltaX: Double, y deltaY: Double) {
+              self = Point(x: x + deltaX, y: y + deltaY)
+          }
+      }</p>
+
+<pre><code>  enum TriStateSwitch {
+      case Off, Low, High
+      mutating func next() {
+          switch self {
+          case Off:
+              self = Low
+          case Low:
+              self = High
+          case High:
+              self = Off
+          }
+      }
+  }
+  var ovenLight = TriStateSwitch.Low
+  ovenLight.next()
+  // ovenLight is now equal to .High
+  ovenLight.next()
+  // ovenLight is now equal to .Off
+</code></pre>
+
+<p>&#8220;`</p></li>
+<li><p>Type Methods
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -415,411 +524,225 @@
 <span class='line-number'>91</span>
 <span class='line-number'>92</span>
 <span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-<span class='line-number'>115</span>
-<span class='line-number'>116</span>
-<span class='line-number'>117</span>
-<span class='line-number'>118</span>
-<span class='line-number'>119</span>
-<span class='line-number'>120</span>
-<span class='line-number'>121</span>
-<span class='line-number'>122</span>
-<span class='line-number'>123</span>
-<span class='line-number'>124</span>
-<span class='line-number'>125</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">class</span> <span class="n">DataImporter</span> <span class="p">{</span>
-</span><span class='line'>      <span class="o">/&lt;</span><span class="n">em</span><span class="o">&gt;</span>
-</span><span class='line'>      <span class="n">DataImporter</span> <span class="kt">is</span> <span class="n">a</span> <span class="k">class</span> <span class="n">to</span> <span class="k">import</span> <span class="n">data</span> <span class="n">from</span> <span class="n">an</span> <span class="n">external</span> <span class="n">file</span><span class="p">.</span>
-</span><span class='line'>      <span class="n">The</span> <span class="k">class</span> <span class="kt">is</span> <span class="n">assumed</span> <span class="n">to</span> <span class="n">take</span> <span class="n">a</span> <span class="n">non</span><span class="o">-</span><span class="n">trivial</span> <span class="n">amount</span> <span class="n">of</span> <span class="n">time</span> <span class="n">to</span> <span class="n">initialize</span><span class="p">.</span>
-</span><span class='line'>      <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
-</span><span class='line'>      <span class="k">var</span> <span class="n">fileName</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">data</span><span class="p">.</span><span class="n">txt</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
-</span><span class='line'>      <span class="c1">// the DataImporter class would provide data importing functionality here</span>
-</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  class SomeClass {
+</span><span class='line'>      class func someTypeMethod() {
+</span><span class='line'>          // type method implementation goes here
+</span><span class='line'>      }
+</span><span class='line'>  }
+</span><span class='line'>  SomeClass.someTypeMethod()&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">class</span> <span class="n">DataManager</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">lazy</span> <span class="k">var</span> <span class="n">importer</span> <span class="o">=</span> <span class="n">DataImporter</span><span class="p">()</span>
-</span><span class='line'>  <span class="k">var</span> <span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">String</span><span class="p">]()</span>
-</span><span class='line'>  <span class="c1">// the DataManager class would provide data management functionality here</span>
-</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  // Within the body of a type method, the implicit self property refers to the type itself, rather than an instance of that type. For structures and enumerations, this means that you can use self to disambiguate between static properties and static method parameters, just as you do for instance properties and instance method parameters.
 </span><span class='line'>
-</span><span class='line'>  <span class="k">let</span> <span class="n">manager</span> <span class="o">=</span> <span class="n">DataManager</span><span class="p">()</span>
-</span><span class='line'>  <span class="n">manager</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Some data&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="n">manager</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="s">&quot;Some more data&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// the DataImporter instance for the importer property has not yet been created</span>
+</span><span class='line'>  struct LevelTracker {
+</span><span class='line'>  static var highestUnlockedLevel = 1
+</span><span class='line'>  static func unlockLevel(level: Int) {
+</span><span class='line'>      if level &gt; highestUnlockedLevel { highestUnlockedLevel = level }
+</span><span class='line'>  }
+</span><span class='line'>  static func levelIsUnlocked(level: Int) -&gt; Bool {
+</span><span class='line'>      return level &lt;= highestUnlockedLevel
+</span><span class='line'>  }
+</span><span class='line'>  var currentLevel = 1
+</span><span class='line'>  mutating func advanceToLevel(level: Int) -&gt; Bool {
+</span><span class='line'>      if LevelTracker.levelIsUnlocked(level) {
+</span><span class='line'>          currentLevel = level
+</span><span class='line'>          return true
+</span><span class='line'>      } else {
+</span><span class='line'>          return false
+</span><span class='line'>      }
+</span><span class='line'>  }
+</span><span class='line'>  }
 </span><span class='line'>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="n">manager</span><span class="p">.</span><span class="n">importer</span><span class="p">.</span><span class="n">fileName</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// the DataImporter instance for the importer property has now been created</span>
-</span><span class='line'>  <span class="c1">// prints &quot;data.txt&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>  class Player {
+</span><span class='line'>  var tracker = LevelTracker()
+</span><span class='line'>  let playerName: String
+</span><span class='line'>  func completedLevel(level: Int) {
+</span><span class='line'>      LevelTracker.unlockLevel(level + 1)
+</span><span class='line'>      tracker.advanceToLevel(level + 1)
+</span><span class='line'>  }
+</span><span class='line'>  init(name: String) {
+</span><span class='line'>      playerName = name
+</span><span class='line'>  }
+</span><span class='line'>  }
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>  var player = Player(name: "Argyrios")
+</span><span class='line'>  player.completedLevel(1)
+</span><span class='line'>  println("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
+</span><span class='line'>  // prints "highest unlocked level is now 2"
 </span><span class='line'>
+</span><span class='line'>  player = Player(name: "Beto")
+</span><span class='line'>  if player.tracker.advanceToLevel(6) {
+</span><span class='line'>  println("player is now on level 6")
+</span><span class='line'>  } else {
+</span><span class='line'>  println("level 6 has not yet been unlocked")
+</span><span class='line'>  }
+</span><span class='line'>  // prints "level 6 has not yet been unlocked"
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;!--</span> <span class="n">more</span> <span class="o">--&gt;</span>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;/ul&gt;
 </span><span class='line'>
+</span><span class='line'>]]&gt;&lt;/content&gt;
+</span><span class='line'>  &lt;/entry&gt;
+</span><span class='line'>  
+</span><span class='line'>  &lt;entry&gt;
+</span><span class='line'>&lt;title type="html"&gt;&lt;![CDATA[Learning Swift Part 9 - Properties, Subscripts]]&gt;&lt;/title&gt;
+</span><span class='line'>&lt;link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-9/"/&gt;
+</span><span class='line'>&lt;updated&gt;2014-10-24T18:46:57+09:00&lt;/updated&gt;
+</span><span class='line'>&lt;id&gt;http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-9&lt;/id&gt;
+</span><span class='line'>&lt;content type="html"&gt;&lt;![CDATA[&lt;h2&gt;===== Full Notes =====&lt;/h2&gt;
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Stored</span> <span class="n">Properties</span> <span class="n">and</span> <span class="n">Instance</span> <span class="n">Variables</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Computed</span> <span class="n">Properties</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">struct</span> <span class="n">Size</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">var</span> <span class="n">width</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mf">0.0</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">struct</span> <span class="n">Rect</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">var</span> <span class="n">origin</span> <span class="o">=</span> <span class="n">Point</span><span class="p">()</span>
-</span><span class='line'>      <span class="k">var</span> <span class="n">size</span> <span class="o">=</span> <span class="n">Size</span><span class="p">()</span>
-</span><span class='line'>      <span class="k">var</span> <span class="nl">center</span><span class="p">:</span> <span class="n">Point</span> <span class="p">{</span>
-</span><span class='line'>          <span class="kr">get</span> <span class="p">{</span>
-</span><span class='line'>              <span class="k">let</span> <span class="n">centerX</span> <span class="o">=</span> <span class="n">origin</span><span class="p">.</span><span class="n">x</span> <span class="o">+</span> <span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-</span><span class='line'>              <span class="k">let</span> <span class="n">centerY</span> <span class="o">=</span> <span class="n">origin</span><span class="p">.</span><span class="n">y</span> <span class="o">+</span> <span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-</span><span class='line'>              <span class="k">return</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="n">centerX</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="n">centerY</span><span class="p">)</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>          <span class="kr">set</span><span class="p">(</span><span class="n">newCenter</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>              <span class="n">origin</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">x</span> <span class="o">-</span> <span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-</span><span class='line'>              <span class="n">origin</span><span class="p">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">newCenter</span><span class="p">.</span><span class="n">y</span> <span class="o">-</span> <span class="p">(</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">var</span> <span class="n">square</span> <span class="o">=</span> <span class="n">Rect</span><span class="p">(</span><span class="nl">origin</span><span class="p">:</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">),</span>
-</span><span class='line'>      <span class="nl">size</span><span class="p">:</span> <span class="n">Size</span><span class="p">(</span><span class="nl">width</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span> <span class="nl">height</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">))</span>
-</span><span class='line'>  <span class="k">let</span> <span class="n">initialSquareCenter</span> <span class="o">=</span> <span class="n">square</span><span class="p">.</span><span class="n">center</span>
-</span><span class='line'>  <span class="n">square</span><span class="p">.</span><span class="n">center</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mf">15.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">15.0</span><span class="p">)</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;square.origin is now at (\(square.origin.x), \(square.origin.y))&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// prints &quot;square.origin is now at (10.0, 10.0)&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Read</span><span class="o">-</span><span class="n">Only</span> <span class="n">Computed</span> <span class="n">Properties</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>&lt;h3&gt;Properties&lt;/h3&gt;
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="n">A</span> <span class="n">computed</span> <span class="n">property</span> <span class="n">with</span> <span class="n">a</span> <span class="k">getter</span> <span class="n">but</span> <span class="n">no</span> <span class="k">setter</span> <span class="kt">is</span> <span class="n">known</span> <span class="kt">as</span> <span class="n">a</span> <span class="n">read</span><span class="o">-</span><span class="n">only</span> <span class="n">computed</span> <span class="n">property</span><span class="p">.</span> <span class="n">A</span> <span class="n">read</span><span class="o">-</span><span class="n">only</span> <span class="n">computed</span> <span class="n">property</span> <span class="n">always</span> <span class="n">returns</span> <span class="n">a</span> <span class="n">value</span><span class="p">,</span> <span class="n">and</span> <span class="n">can</span> <span class="n">be</span> <span class="n">accessed</span> <span class="n">through</span> <span class="n">dot</span> <span class="n">syntax</span><span class="p">,</span> <span class="n">but</span> <span class="n">cannot</span> <span class="n">be</span> <span class="kr">set</span> <span class="n">to</span> <span class="n">a</span> <span class="n">different</span> <span class="n">value</span><span class="p">.</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="k">struct</span> <span class="n">Cuboid</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">var</span> <span class="n">width</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">depth</span> <span class="o">=</span> <span class="mf">0.0</span>
-</span><span class='line'>      <span class="k">var</span> <span class="nl">volume</span><span class="p">:</span> <span class="n">Double</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">return</span> <span class="n">width</span> <span class="o">*</span> <span class="n">height</span> <span class="o">*</span> <span class="n">depth</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">let</span> <span class="n">fourByFiveByTwo</span> <span class="o">=</span> <span class="n">Cuboid</span><span class="p">(</span><span class="nl">width</span><span class="p">:</span> <span class="mf">4.0</span><span class="p">,</span> <span class="nl">height</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">,</span> <span class="nl">depth</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">)</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// prints &quot;the volume of fourByFiveByTwo is 40.0&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Property</span> <span class="n">Observers</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="k">class</span> <span class="n">StepCounter</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">var</span> <span class="nl">totalSteps</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>          <span class="kr">willSet</span><span class="p">(</span><span class="n">newTotalSteps</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>              <span class="n">println</span><span class="p">(</span><span class="s">&quot;About to set totalSteps to \(newTotalSteps)&quot;</span><span class="p">)</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>          <span class="kr">didSet</span> <span class="p">{</span>
-</span><span class='line'>              <span class="k">if</span> <span class="n">totalSteps</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">oldValue</span>  <span class="p">{</span>
-</span><span class='line'>                  <span class="n">println</span><span class="p">(</span><span class="s">&quot;Added \(totalSteps - oldValue) steps&quot;</span><span class="p">)</span>
-</span><span class='line'>              <span class="p">}</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">let</span> <span class="n">stepCounter</span> <span class="o">=</span> <span class="n">StepCounter</span><span class="p">()</span>
-</span><span class='line'>  <span class="n">stepCounter</span><span class="p">.</span><span class="n">totalSteps</span> <span class="o">=</span> <span class="mi">200</span>
-</span><span class='line'>  <span class="c1">// About to set totalSteps to 200</span>
-</span><span class='line'>  <span class="c1">// Added 200 steps</span>
-</span><span class='line'>  <span class="n">stepCounter</span><span class="p">.</span><span class="n">totalSteps</span> <span class="o">=</span> <span class="mi">360</span>
-</span><span class='line'>  <span class="c1">// About to set totalSteps to 360</span>
-</span><span class='line'>  <span class="c1">// Added 160 steps</span>
-</span><span class='line'>  <span class="n">stepCounter</span><span class="p">.</span><span class="n">totalSteps</span> <span class="o">=</span> <span class="mi">896</span>
-</span><span class='line'>  <span class="c1">// About to set totalSteps to 896</span>
-</span><span class='line'>  <span class="c1">// Added 536 steps</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Global</span> <span class="n">and</span> <span class="n">Local</span> <span class="n">Variables</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="kt">Type</span> <span class="n">Properties</span> <span class="p">(</span><span class="n">Like</span> <span class="n">C</span> <span class="k">static</span> <span class="n">variables</span><span class="p">)</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="k">struct</span> <span class="n">SomeStructure</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">static</span> <span class="k">var</span> <span class="n">storedTypeProperty</span> <span class="o">=</span> <span class="s">&quot;Some value.&quot;</span>
-</span><span class='line'>      <span class="k">static</span> <span class="k">var</span> <span class="nl">computedTypeProperty</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
-</span><span class='line'>          <span class="c1">// return an Int value here</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">enum</span> <span class="n">SomeEnumeration</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">static</span> <span class="k">var</span> <span class="n">storedTypeProperty</span> <span class="o">=</span> <span class="s">&quot;Some value.&quot;</span>
-</span><span class='line'>      <span class="k">static</span> <span class="k">var</span> <span class="nl">computedTypeProperty</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
-</span><span class='line'>          <span class="c1">// return an Int value here</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">class</span> <span class="n">SomeClass</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">class</span> <span class="k">var</span> <span class="nl">computedTypeProperty</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
-</span><span class='line'>          <span class="c1">// return an Int value here</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Querying</span> <span class="n">and</span> <span class="n">Setting</span> <span class="kt">Type</span> <span class="n">Properties</span>
-</span></code></pre></td></tr></table></div></figure>
-      println(SomeClass.computedTypeProperty)
-      // prints &ldquo;42&rdquo;</p>
+</span><span class='line'>&lt;ul&gt;
+</span><span class='line'>&lt;li&gt;Stored Properties
+</span><span class='line'>&lt;code&gt;swift
+</span><span class='line'>  struct FixedLengthRange {
+</span><span class='line'>      var firstValue: Int
+</span><span class='line'>      let length: Int
+</span><span class='line'>  }
+</span><span class='line'>  var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
+</span><span class='line'>  // the range represents integer values 0, 1, and 2
+</span><span class='line'>  rangeOfThreeItems.firstValue = 6
+</span><span class='line'>  // the range now represents integer values 6, 7, and 8
+</span><span class='line'>&lt;/code&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;Stored Properties of Constant Structure Instances
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>  let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
+</span><span class='line'>  // this range represents integer values 0, 1, 2, and 3
+</span><span class='line'>  rangeOfFourItems.firstValue = 6
+</span><span class='line'>  // this will report an error, even though firstValue is a variable property
+</span><span class='line'>  // This behavior is due to structures being value types. When an instance of a value type is marked as a constant, so are all of its properties.
+</span><span class='line'>  // The same is not true for classes, which are reference types. If you assign an instance of a reference type to a constant, you can still change that instance’s variable properties.
+</span><span class='line'>&lt;/code&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Lazy Stored Properties&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  A lazy stored property is a property whose initial value is not calculated until the first time it is used. You indicate a lazy stored property by writing the lazy modifier before its declaration.</span></code></pre></td></tr></table></div></figure>
+      class DataImporter {
+          /<em>
+          DataImporter is a class to import data from an external file.
+          The class is assumed to take a non-trivial amount of time to initialize.
+          </em>/
+          var fileName = &ldquo;data.txt&rdquo;
+          // the DataImporter class would provide data importing functionality here
+      }</p>
 
-<pre><code>  println(SomeStructure.storedTypeProperty)
-  // prints "Some value."
-  SomeStructure.storedTypeProperty = "Another value."
-  println(SomeStructure.storedTypeProperty)
-  // prints "Another value."
+<pre><code>  class DataManager {
+      lazy var importer = DataImporter()
+      var data = [String]()
+      // the DataManager class would provide data management functionality here
+  }
 
-  struct AudioChannel {
-      static let thresholdLevel = 10
-      static var maxInputLevelForAllChannels = 0
-      var currentLevel: Int = 0 {
-          didSet {
-              if currentLevel &gt; AudioChannel.thresholdLevel {
-                  // cap the new audio level to the threshold level
-                  currentLevel = AudioChannel.thresholdLevel
+  let manager = DataManager()
+  manager.data.append("Some data")
+  manager.data.append("Some more data")
+  // the DataImporter instance for the importer property has not yet been created
+
+  println(manager.importer.fileName)
+  // the DataImporter instance for the importer property has now been created
+  // prints "data.txt"
+</code></pre>
+
+<p>&#8220;`</p></li>
+</ul>
+
+
+<!-- more -->
+
+
+<ul>
+<li><p>Stored Properties and Instance Variables</p></li>
+<li><p>Computed Properties
+<code>
+      struct Point {
+          var x = 0.0, y = 0.0
+      }
+      struct Size {
+          var width = 0.0, height = 0.0
+      }
+      struct Rect {
+          var origin = Point()
+          var size = Size()
+          var center: Point {
+              get {
+                  let centerX = origin.x + (size.width / 2)
+                  let centerY = origin.y + (size.height / 2)
+                  return Point(x: centerX, y: centerY)
               }
-              if currentLevel &gt; AudioChannel.maxInputLevelForAllChannels {
-                  // store this as the new overall maximum input level
-                  AudioChannel.maxInputLevelForAllChannels = currentLevel
+              set(newCenter) {
+                  origin.x = newCenter.x - (size.width / 2)
+                  origin.y = newCenter.y - (size.height / 2)
               }
           }
       }
-  }
-
-  var leftChannel = AudioChannel()
-  var rightChannel = AudioChannel()
-
-  leftChannel.currentLevel = 7
-  println(leftChannel.currentLevel)
-  // prints "7"
-  println(AudioChannel.maxInputLevelForAllChannels)
-  // prints "7"
-
-  rightChannel.currentLevel = 11
-  println(rightChannel.currentLevel)
-  // prints "10"
-  println(AudioChannel.maxInputLevelForAllChannels)
-  // prints "10"
-</code></pre>
-
-<p>&#8220;`</p></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Swift Part 8 - Classes & Structures]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-8/"/>
-    <updated>2014-10-24T18:41:40+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-8</id>
-    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
-
-<h3>Classes and Structures</h3>
-
-<ul>
-<li><p>Comparing Classes and Structures (Both can)</p>
-
-<ul>
-<li>Define properties to store values</li>
-<li>Define methods to provide functionality</li>
-<li>Define subscripts to provide access to their values using subscript syntax</li>
-<li>Define initializers to set up their initial state</li>
-<li>Be extended to expand their functionality beyond a default implementation</li>
-<li>Conform to protocols to provide standard functionality of a certain kind</li>
-</ul>
-</li>
-<li><p>Classes have additional capabilities that structures do NOT</p>
-
-<ul>
-<li>Inheritance enables one class to inherit the characteristics of another.</li>
-<li>Type casting enables you to check and interpret the type of a class instance at runtime.</li>
-<li>Deinitializers enable an instance of a class to free up any resources it has assigned.</li>
-<li>Reference counting allows more than one reference to a class instance.</li>
-</ul>
-</li>
-<li><p>Definition Syntax
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">class</span> <span class="n">SomeClass</span> <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// class definition goes here</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">struct</span> <span class="n">SomeStructure</span> <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// structure definition goes here</span>
-</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">struct</span> <span class="n">Resolution</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">var</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>  <span class="k">var</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">class</span> <span class="n">VideoMode</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">var</span> <span class="n">resolution</span> <span class="o">=</span> <span class="n">Resolution</span><span class="p">()</span>
-</span><span class='line'>  <span class="k">var</span> <span class="n">interlaced</span> <span class="o">=</span> <span class="nb">false</span>
-</span><span class='line'>  <span class="k">var</span> <span class="n">frameRate</span> <span class="o">=</span> <span class="mf">0.0</span>
-</span><span class='line'>  <span class="k">var</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="o">?</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;!--</span> <span class="n">more</span> <span class="o">--&gt;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="kt">Class</span> <span class="n">and</span> <span class="n">Structure</span> <span class="n">Instances</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="k">let</span> <span class="n">someResolution</span> <span class="o">=</span> <span class="n">Resolution</span><span class="p">()</span>
-</span><span class='line'>  <span class="k">let</span> <span class="n">someVideoMode</span> <span class="o">=</span> <span class="n">VideoMode</span><span class="p">()</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Accessing</span> <span class="n">Properties</span>
-</span></code></pre></td></tr></table></div></figure>
-      println(&ldquo;The width of someResolution is (someResolution.width)&rdquo;)
-      // prints &ldquo;The width of someResolution is 0&rdquo;</p>
-
-<pre><code>  println("The width of someVideoMode is \(someVideoMode.resolution.width)")
-  // prints "The width of someVideoMode is 0"
-
-  someVideoMode.resolution.width = 1280
-  println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
-  // prints "The width of someVideoMode is now 1280"
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li>Memeberwise Initializers for Structure Types
-<code>
-      let vga = Resolution(witdth: 640, height: 480)
-</code></li>
-<li><p>Structures and Enumerations Are Value Types</p>
-
-<p>  A value type is a type whose value is copied when it is assigned to a variable or constant, or when it is passed to a function. In fact, all of the basic types in Swift—integers, floating-point numbers, Booleans, strings, arrays and dictionaries—are value types, and are implemented as structures behind the scenes.
-<code>
-      enum CompassPoint {
-          case North, South, East, West
-      }
-      var currentDirection = CompassPoint.West
-      let rememberedDirection = currentDirection
-      currentDirection = .East
-      if rememberedDirection == .West {
-          println("The remembered direction is still .West")
-      }
-      // prints "The remembered direction is still .West"
+      var square = Rect(origin: Point(x: 0.0, y: 0.0),
+          size: Size(width: 10.0, height: 10.0))
+      let initialSquareCenter = square.center
+      square.center = Point(x: 15.0, y: 15.0)
+      println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
+      // prints "square.origin is now at (10.0, 10.0)"
 </code></p></li>
-<li><p>Classes Are Reference Types</p>
+<li><p>Read-Only Computed Properties</p>
 
-<p>  Unlike value types, reference types are not copied when they are assigned to a variable or constant, or when they are passed to a function. Rather than a copy, a reference to the same existing instance is used instead.
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">let</span> <span class="n">tenEighty</span> <span class="o">=</span> <span class="n">VideoMode</span><span class="p">()</span>
-</span><span class='line'>  <span class="n">tenEighty</span><span class="p">.</span><span class="n">resolution</span> <span class="o">=</span> <span class="n">hd</span>
-</span><span class='line'>  <span class="n">tenEighty</span><span class="p">.</span><span class="n">interlaced</span> <span class="o">=</span> <span class="nb">true</span>
-</span><span class='line'>  <span class="n">tenEighty</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="mi">1080</span><span class="n">i</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">tenEighty</span><span class="p">.</span><span class="n">frameRate</span> <span class="o">=</span> <span class="mf">25.0</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">let</span> <span class="n">alsoTenEighty</span> <span class="o">=</span> <span class="n">tenEighty</span>
-</span><span class='line'>  <span class="n">alsoTenEighty</span><span class="p">.</span><span class="n">frameRate</span> <span class="o">=</span> <span class="mf">30.0</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;The frameRate property of tenEighty is now \(tenEighty.frameRate)&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// prints &quot;The frameRate property of tenEighty is now 30.0&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Identity</span> <span class="n">Operators</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="n">It</span> <span class="n">can</span> <span class="n">sometimes</span> <span class="n">be</span> <span class="n">useful</span> <span class="n">to</span> <span class="n">find</span> <span class="k">out</span> <span class="k">if</span> <span class="n">two</span> <span class="n">constants</span> <span class="n">or</span> <span class="n">variables</span> <span class="n">refer</span> <span class="n">to</span> <span class="n">exactly</span> <span class="n">the</span> <span class="n">same</span> <span class="n">instance</span> <span class="n">of</span> <span class="n">a</span> <span class="k">class</span><span class="p">.</span> <span class="n">To</span> <span class="n">enable</span> <span class="n">this</span><span class="p">,</span> <span class="n">Swift</span> <span class="n">provides</span> <span class="n">two</span> <span class="n">identity</span> <span class="nl">operators</span><span class="p">:</span>
-</span></code></pre></td></tr></table></div></figure>
-      // Identical to (===)
-      // Not identical to (!==)</p>
-
-<pre><code>  if tenEighty === alsoTenEighty {
-      println("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
-  }
-  // prints "tenEighty and alsoTenEighty refer to the same VideoMode instance."
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Assignment and Copy Behavior for Strings, Arrays, and Dictionaries</p>
-
-<p>  Swift’s String, Array, and Dictionary types are implemented as structures. This means that strings, arrays, and dictionaries are copied when they are assigned to a new constant or variable, or when they are passed to a function or method.</p>
-
-<p>  This behavior is different from NSString, NSArray, and NSDictionary in Foundation, which are implemented as classes, not structures. NSString, NSArray, and NSDictionary instances are always assigned and passed around as a reference to an existing instance, rather than as a copy.</p></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Swift Part 7 - Closure & Enumerations]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-7/"/>
-    <updated>2014-10-24T11:05:49+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-7</id>
-    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
-
-<h3>Closure</h3>
-
-<ul>
-<li><p>Closure Expression Syntax
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p>  A computed property with a getter but no setter is known as a read-only computed property. A read-only computed property always returns a value, and can be accessed through dot syntax, but cannot be set to a different value.
+<code>
+      struct Cuboid {
+          var width = 0.0, height = 0.0, depth = 0.0
+          var volume: Double {
+              return width * height * depth
+          }
+      }
+      let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
+      println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
+      // prints "the volume of fourByFiveByTwo is 40.0"
+</code></p></li>
+<li>Property Observers
+<code>
+      class StepCounter {
+          var totalSteps: Int = 0 {
+              willSet(newTotalSteps) {
+                  println("About to set totalSteps to \(newTotalSteps)")
+              }
+              didSet {
+                  if totalSteps &gt; oldValue  {
+                      println("Added \(totalSteps - oldValue) steps")
+                  }
+              }
+          }
+      }
+      let stepCounter = StepCounter()
+      stepCounter.totalSteps = 200
+      // About to set totalSteps to 200
+      // Added 200 steps
+      stepCounter.totalSteps = 360
+      // About to set totalSteps to 360
+      // Added 160 steps
+      stepCounter.totalSteps = 896
+      // About to set totalSteps to 896
+      // Added 536 steps
+</code></li>
+<li><p>Global and Local Variables</p></li>
+<li><p>Type Properties (Like C static variables)
+<code>
+      struct SomeStructure {
+          static var storedTypeProperty = "Some value."
+          static var computedTypeProperty: Int {
+              // return an Int value here
+          }
+      }
+      enum SomeEnumeration {
+          static var storedTypeProperty = "Some value."
+          static var computedTypeProperty: Int {
+              // return an Int value here
+          }
+      }
+      class SomeClass {
+          class var computedTypeProperty: Int {
+              // return an Int value here
+          }
+      }
+</code></p></li>
+<li><p>Querying and Setting Type Properties
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -860,262 +783,97 @@
 <span class='line-number'>39</span>
 <span class='line-number'>40</span>
 <span class='line-number'>41</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">let</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Chris</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Alex</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Ewa</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Barry</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Daniella</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;]</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  println(SomeClass.computedTypeProperty)
+</span><span class='line'>  // prints &ldquo;42&rdquo;&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="p">{</span> <span class="p">(</span><span class="n">parameters</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="k">return</span> <span class="n">type</span> <span class="k">in</span>
-</span><span class='line'>  <span class="n">statements</span>
-</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  println(SomeStructure.storedTypeProperty)
+</span><span class='line'>  // prints "Some value."
+</span><span class='line'>  SomeStructure.storedTypeProperty = "Another value."
+</span><span class='line'>  println(SomeStructure.storedTypeProperty)
+</span><span class='line'>  // prints "Another value."
 </span><span class='line'>
-</span><span class='line'>  <span class="k">func</span> <span class="n">backwards</span><span class="p">(</span><span class="nl">s1</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">s2</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Bool</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">return</span> <span class="n">s1</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">s2</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">var</span> <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">backwards</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// reversed is equal to [&quot;Ewa&quot;, &quot;Daniella&quot;, &quot;Chris&quot;, &quot;Barry&quot;, &quot;Alex&quot;]</span>
+</span><span class='line'>  struct AudioChannel {
+</span><span class='line'>  static let thresholdLevel = 10
+</span><span class='line'>  static var maxInputLevelForAllChannels = 0
+</span><span class='line'>  var currentLevel: Int = 0 {
+</span><span class='line'>      didSet {
+</span><span class='line'>          if currentLevel &gt; AudioChannel.thresholdLevel {
+</span><span class='line'>              // cap the new audio level to the threshold level
+</span><span class='line'>              currentLevel = AudioChannel.thresholdLevel
+</span><span class='line'>          }
+</span><span class='line'>          if currentLevel &gt; AudioChannel.maxInputLevelForAllChannels {
+</span><span class='line'>              // store this as the new overall maximum input level
+</span><span class='line'>              AudioChannel.maxInputLevelForAllChannels = currentLevel
+</span><span class='line'>          }
+</span><span class='line'>      }
+</span><span class='line'>  }
+</span><span class='line'>  }
 </span><span class='line'>
-</span><span class='line'>  <span class="c1">// This is the same closure</span>
-</span><span class='line'>  <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="p">{</span> <span class="p">(</span><span class="nl">s1</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">s2</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Bool</span> <span class="k">in</span> <span class="k">return</span> <span class="n">s1</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">s2</span> <span class="p">}</span> <span class="p">)</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>  var leftChannel = AudioChannel()
+</span><span class='line'>  var rightChannel = AudioChannel()
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Inferring</span> <span class="kt">Type</span> <span class="n">From</span> <span class="n">Context</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="p">{</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span> <span class="k">in</span> <span class="k">return</span> <span class="n">s1</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">s2</span> <span class="p">}</span> <span class="p">)</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Implicit</span> <span class="n">Returns</span> <span class="n">from</span> <span class="n">Single</span><span class="o">-</span><span class="n">Expression</span> <span class="n">Closures</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="p">{</span> <span class="n">s1</span><span class="p">,</span> <span class="n">s2</span> <span class="k">in</span> <span class="n">s1</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">s2</span> <span class="p">}</span> <span class="p">)</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Shorthand</span> <span class="n">Argument</span> <span class="n">Names</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="p">{</span> <span class="err">$</span><span class="mi">0</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="err">$</span><span class="mi">1</span> <span class="p">}</span> <span class="p">)</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Operator</span> <span class="n">Functions</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="n">reversed</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">gt</span><span class="p">;)</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>  leftChannel.currentLevel = 7
+</span><span class='line'>  println(leftChannel.currentLevel)
+</span><span class='line'>  // prints "7"
+</span><span class='line'>  println(AudioChannel.maxInputLevelForAllChannels)
+</span><span class='line'>  // prints "7"
+</span><span class='line'>
+</span><span class='line'>  rightChannel.currentLevel = 11
+</span><span class='line'>  println(rightChannel.currentLevel)
+</span><span class='line'>  // prints "10"
+</span><span class='line'>  println(AudioChannel.maxInputLevelForAllChannels)
+</span><span class='line'>  // prints "10"
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;/ul&gt;
 </span><span class='line'>
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;!--</span> <span class="n">more</span> <span class="o">--&gt;</span>
+</span><span class='line'>&lt;h3&gt;Subscripts&lt;/h3&gt;
 </span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Trailing</span> <span class="n">Closure</span>
-</span></code></pre></td></tr></table></div></figure>
-      func someFunctionThatTakesAClosure(closure: () -> ()) {
-          // function body goes here
+</span><span class='line'>&lt;ul&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Classes, structures, and enumerations can define subscripts, which are shortcuts for accessing the member elements of a collection, list, or sequence. You use subscripts to set and retrieve values by index without needing separate methods for setting and retrieval. For example, you access elements in an Array instance as someArray[index] and elements in a Dictionary instance as someDictionary[key].&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Subscript Syntax</span></code></pre></td></tr></table></div></figure>
+      subscript(index: Int) -> Int {
+          get {
+              // return an appropriate subscript value here
+          }
+          set(newValue) {
+              // perform a suitable setting action here
+          }
       }</p>
 
-<pre><code>  // here's how you call this function without using a trailing closure:
-
-  someFunctionThatTakesAClosure({
-      // closure's body goes here
-  })
-
-  // here's how you call this function with a trailing closure instead:
-
-  someFunctionThatTakesAClosure() {
-      // trailing closure's body goes here
+<pre><code>  // if you want a subscript to be read-only
+  subscript(index: Int) -&gt; Int {
+      // return an appropriate subscript value here
   }
+</code></pre>
 
-  // Sample
-
-  let digitNames = [
-      0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
-      5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
-  ]
-  let numbers = [16, 58, 510]
-
-  let strings = numbers.map {
-      (var number) -&gt; String in
-      var output = ""
-      while number &gt; 0 {
-          output = digitNames[number % 10]! + output
-          number /= 10
+<p>&#8220;`</p></li>
+<li>A sample, an array to output multiplied index
+<code>
+      struct TimesTable {
+          let multiplier: Int
+          subscript(index: Int) -&gt; Int {
+              return multiplier * index
+          }
       }
-      return output
-  }
-  // strings is inferred to be of type [String]
-  // its value is ["OneSix", "FiveEight", "FiveOneZero"]
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Capturing Value
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">func</span> <span class="n">makeIncrementor</span><span class="p">(</span><span class="n">forIncrement</span> <span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">var</span> <span class="n">runningTotal</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>      <span class="k">func</span> <span class="n">incrementor</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
-</span><span class='line'>          <span class="n">runningTotal</span> <span class="o">+=</span> <span class="n">amount</span>
-</span><span class='line'>          <span class="k">return</span> <span class="n">runningTotal</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">incrementor</span>
-</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">let</span> <span class="n">incrementByTen</span> <span class="o">=</span> <span class="n">makeIncrementor</span><span class="p">(</span><span class="nl">forIncrement</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">incrementByTen</span><span class="p">()</span>
-</span><span class='line'>  <span class="c1">// returns a value of 10</span>
-</span><span class='line'>  <span class="n">incrementByTen</span><span class="p">()</span>
-</span><span class='line'>  <span class="c1">// returns a value of 20</span>
-</span><span class='line'>  <span class="n">incrementByTen</span><span class="p">()</span>
-</span><span class='line'>  <span class="c1">// returns a value of 30</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">let</span> <span class="n">incrementBySeven</span> <span class="o">=</span> <span class="n">makeIncrementor</span><span class="p">(</span><span class="nl">forIncrement</span><span class="p">:</span> <span class="mi">7</span><span class="p">)</span>
-</span><span class='line'>  <span class="n">incrementBySeven</span><span class="p">()</span>
-</span><span class='line'>  <span class="c1">// returns a value of 7</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">incrementByTen</span><span class="p">()</span>
-</span><span class='line'>  <span class="c1">// returns a value of 40</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Closures</span> <span class="n">Are</span> <span class="n">Reference</span> <span class="n">Types</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="k">let</span> <span class="n">alsoIncrementByTen</span> <span class="o">=</span> <span class="n">incrementByTen</span>
-</span><span class='line'>  <span class="n">alsoIncrementByTen</span><span class="p">()</span>
-</span><span class='line'>  <span class="c1">// returns a value of 50</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h3</span><span class="o">&gt;</span><span class="n">Enumerations</span><span class="o">&lt;/</span><span class="n">h3</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Enumeration</span> <span class="n">Syntax</span>
-</span></code></pre></td></tr></table></div></figure>
-      enum CompassPoint {
-          case North
-          case South
-          case East
-          case West
-      }</p>
-
-<pre><code>  enum Planet {
-      case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
-  }
-
-  var directionToHead = CompassPoint.West
-
-  // Can be shortened
-
-  directionToHead = .East
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Matching Enumeration Values with a Switch Statement
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="n">directionToHead</span> <span class="o">=</span> <span class="p">.</span><span class="n">South</span>
-</span><span class='line'>  <span class="k">switch</span> <span class="n">directionToHead</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">case</span> <span class="p">.</span><span class="nl">North</span><span class="p">:</span>
-</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Lots</span> <span class="n">of</span> <span class="n">planets</span> <span class="n">have</span> <span class="n">a</span> <span class="n">north</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
-</span><span class='line'>  <span class="k">case</span> <span class="p">.</span><span class="nl">South</span><span class="p">:</span>
-</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Watch</span> <span class="k">out</span> <span class="k">for</span> <span class="n">penguins</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
-</span><span class='line'>  <span class="k">case</span> <span class="p">.</span><span class="nl">East</span><span class="p">:</span>
-</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Where</span> <span class="n">the</span> <span class="n">sun</span> <span class="n">rises</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
-</span><span class='line'>  <span class="k">case</span> <span class="p">.</span><span class="nl">West</span><span class="p">:</span>
-</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Where</span> <span class="n">the</span> <span class="n">skies</span> <span class="n">are</span> <span class="n">blue</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="c1">// prints &amp;ldquo;Watch out for penguins&amp;rdquo;&lt;/p&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">let</span> <span class="n">somePlanet</span> <span class="o">=</span> <span class="n">Planet</span><span class="p">.</span><span class="n">Earth</span>
-</span><span class='line'>  <span class="k">switch</span> <span class="n">somePlanet</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">case</span> <span class="p">.</span><span class="nl">Earth</span><span class="p">:</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;Mostly harmless&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">default</span><span class="o">:</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;Not a safe place for humans&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="c1">// prints &quot;Mostly harmless&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Associated</span> <span class="n">Values</span>
-</span></code></pre></td></tr></table></div></figure>
-      enum Barcode {
-          case UPCA(Int, Int, Int, Int)  // a Barcode
-          case QRCode(String)            // a QRCode
-      }</p>
-
-<pre><code>  var productBarcode = Barcode.UPCA(8, 85909, 51226, 3)
-
-  productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
-
-  switch productBarcode {
-  case .UPCA(let numberSystem, let manufacturer, let product, let check):
-      println("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
-  case .QRCode(let productCode):
-      println("QR code: \(productCode).")
-  }
-  // prints "QR code: ABCDEFGHIJKLMNOP."
-
-  // Can be shortened
-
-  switch productBarcode {
-  case let .UPCA(numberSystem, manufacturer, product, check):
-      println("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
-  case let .QRCode(productCode):
-      println("QR code: \(productCode).")
-  }
-  // prints "QR code: ABCDEFGHIJKLMNOP."
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Raw Values
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+      let threeTimesTable = TimesTable(multiplier: 3)
+      println("six times three is \(threeTimesTable[6])")
+      // prints "six times three is 18"
+</code></li>
+<li><p>A sample, a matrix-like structure
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1181,144 +939,106 @@
 <span class='line-number'>64</span>
 <span class='line-number'>65</span>
 <span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">enum</span> <span class="nl">ASCIIControlCharacter</span><span class="p">:</span> <span class="n">Character</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">case</span> <span class="n">Tab</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="err">\</span><span class="n">t</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
-</span><span class='line'>      <span class="k">case</span> <span class="n">LineFeed</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="err">\</span><span class="n">n</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
-</span><span class='line'>      <span class="k">case</span> <span class="n">CarriageReturn</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="err">\</span><span class="n">r</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  struct Matrix {
+</span><span class='line'>      let rows: Int, columns: Int
+</span><span class='line'>      var grid: [Double]
+</span><span class='line'>      init(rows: Int, columns: Int) {
+</span><span class='line'>          self.rows = rows
+</span><span class='line'>          self.columns = columns
+</span><span class='line'>          grid = Array(count: rows * columns, repeatedValue: 0.0)
+</span><span class='line'>      }
+</span><span class='line'>      func indexIsValidForRow(row: Int, column: Int) -&gt; Bool {
+</span><span class='line'>          return row &gt;= 0 &amp;&amp; row &lt; rows &amp;&amp; column &gt;= 0 &amp;&amp; column &lt; columns
+</span><span class='line'>      }
+</span><span class='line'>      subscript(row: Int, column: Int) -&gt; Double {
+</span><span class='line'>          get {
+</span><span class='line'>              assert(indexIsValidForRow(row, column: column), &ldquo;Index out of range&rdquo;)
+</span><span class='line'>              return grid[(row * columns) + column]
+</span><span class='line'>          }
+</span><span class='line'>          set {
+</span><span class='line'>              assert(indexIsValidForRow(row, column: column), &ldquo;Index out of range&rdquo;)
+</span><span class='line'>              grid[(row * columns) + column] = newValue
+</span><span class='line'>          }
+</span><span class='line'>      }
+</span><span class='line'>  }&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">enum</span> <span class="nl">Planet</span><span class="p">:</span> <span class="n">Int</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">case</span> <span class="n">Mercury</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">Venus</span><span class="p">,</span> <span class="n">Earth</span><span class="p">,</span> <span class="n">Mars</span><span class="p">,</span> <span class="n">Jupiter</span><span class="p">,</span> <span class="n">Saturn</span><span class="p">,</span> <span class="n">Uranus</span><span class="p">,</span> <span class="n">Neptune</span>
-</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  // Usage
+</span><span class='line'>  var matrix = Matrix(rows: 2, columns: 2)
+</span><span class='line'>  matrix[0, 1] = 1.5
+</span><span class='line'>  matrix[1, 0] = 3.2
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
 </span><span class='line'>
-</span><span class='line'>  <span class="k">let</span> <span class="n">earthsOrder</span> <span class="o">=</span> <span class="n">Planet</span><span class="p">.</span><span class="n">Earth</span><span class="p">.</span><span class="n">toRaw</span><span class="p">()</span>
-</span><span class='line'>  <span class="c1">// earthsOrder is 3</span>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;/ul&gt;
 </span><span class='line'>
-</span><span class='line'>  <span class="k">let</span> <span class="n">possiblePlanet</span> <span class="o">=</span> <span class="n">Planet</span><span class="p">.</span><span class="n">fromRaw</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// possiblePlanet is of type Planet? and equals Planet.Uranus</span>
+</span><span class='line'>]]&gt;&lt;/content&gt;
+</span><span class='line'>  &lt;/entry&gt;
+</span><span class='line'>  
+</span><span class='line'>  &lt;entry&gt;
+</span><span class='line'>&lt;title type="html"&gt;&lt;![CDATA[Learning Swift Part 8 - Classes & Structures]]&gt;&lt;/title&gt;
+</span><span class='line'>&lt;link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-8/"/&gt;
+</span><span class='line'>&lt;updated&gt;2014-10-24T18:41:40+09:00&lt;/updated&gt;
+</span><span class='line'>&lt;id&gt;http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-8&lt;/id&gt;
+</span><span class='line'>&lt;content type="html"&gt;&lt;![CDATA[&lt;h2&gt;===== Full Notes =====&lt;/h2&gt;
 </span><span class='line'>
-</span><span class='line'>  <span class="k">let</span> <span class="n">positionToFind</span> <span class="o">=</span> <span class="mi">9</span>
-</span><span class='line'>  <span class="k">if</span> <span class="k">let</span> <span class="n">somePlanet</span> <span class="o">=</span> <span class="n">Planet</span><span class="p">.</span><span class="n">fromRaw</span><span class="p">(</span><span class="n">positionToFind</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">switch</span> <span class="n">somePlanet</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">case</span> <span class="p">.</span><span class="nl">Earth</span><span class="p">:</span>
-</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="s">&quot;Mostly harmless&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">default</span><span class="o">:</span>
-</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="s">&quot;Not a safe place for humans&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;There isn&#39;t a planet at position \(positionToFind)&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="c1">// prints &quot;There isn&#39;t a planet at position 9&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>&lt;h3&gt;Classes and Structures&lt;/h3&gt;
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>&lt;ul&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Comparing Classes and Structures (Both can)&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'><span class="p">]]</span><span class="o">&gt;&lt;/</span><span class="n">content</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="o">&lt;/</span><span class="n">entry</span><span class="o">&gt;</span>
+</span><span class='line'>&lt;ul&gt;
+</span><span class='line'>&lt;li&gt;Define properties to store values&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;Define methods to provide functionality&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;Define subscripts to provide access to their values using subscript syntax&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;Define initializers to set up their initial state&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;Be extended to expand their functionality beyond a default implementation&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;Conform to protocols to provide standard functionality of a certain kind&lt;/li&gt;
+</span><span class='line'>&lt;/ul&gt;
+</span><span class='line'>&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Classes have additional capabilities that structures do NOT&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'>  <span class="o">&lt;</span><span class="n">entry</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">title</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;html&quot;</span><span class="o">&gt;&lt;!</span><span class="p">[</span><span class="n">CDATA</span><span class="p">[</span><span class="n">Learning</span> <span class="n">Swift</span> <span class="n">Part</span> <span class="mi">6</span> <span class="o">-</span> <span class="n">Functions</span><span class="p">]]</span><span class="o">&gt;&lt;/</span><span class="n">title</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">link</span> <span class="n">href</span><span class="o">=</span><span class="s">&quot;http://zh-wang.github.io/blog/2014/09/25/learning-swift-part-6/&quot;</span><span class="o">/&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">updated</span><span class="o">&gt;</span><span class="mi">2014</span><span class="o">-</span><span class="mi">09</span><span class="o">-</span><span class="mi">25</span><span class="nl">T18</span><span class="p">:</span><span class="mi">54</span><span class="o">:</span><span class="mi">45</span><span class="o">+</span><span class="mi">09</span><span class="o">:</span><span class="mo">00</span><span class="o">&lt;/</span><span class="n">updated</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="kt">id</span><span class="o">&gt;</span><span class="nl">http</span><span class="p">:</span><span class="c1">//zh-wang.github.io/blog/2014/09/25/learning-swift-part-6&lt;/id&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">content</span> <span class="n">type</span><span class="o">=</span><span class="s">&quot;html&quot;</span><span class="o">&gt;&lt;!</span><span class="p">[</span><span class="n">CDATA</span><span class="p">[</span><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Just</span> <span class="n">some</span> <span class="n">notes</span> <span class="n">after</span> <span class="n">reading</span> <span class="n">Apple</span><span class="o">&amp;</span><span class="n">rsquo</span><span class="p">;</span><span class="n">s</span> <span class="n">official</span> <span class="n">online</span> <span class="n">guide</span><span class="p">.</span>
-</span><span class='line'><span class="n">Most</span> <span class="n">code</span> <span class="n">are</span> <span class="n">from</span> <span class="n">the</span> <span class="n">guide</span><span class="p">,</span> <span class="n">with</span> <span class="n">some</span> <span class="n">modification</span> <span class="n">by</span> <span class="n">me</span><span class="p">.</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Tuple</span> <span class="k">in</span> <span class="k">switch</span> <span class="n">statement</span> <span class="kt">is</span> <span class="n">interesting</span><span class="p">.</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h2</span><span class="o">&gt;=====</span> <span class="n">Full</span> <span class="n">Notes</span> <span class="o">=====&lt;/</span><span class="n">h2</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">h3</span><span class="o">&gt;</span><span class="n">Functions</span><span class="o">&lt;/</span><span class="n">h3</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Defining</span> <span class="n">and</span> <span class="n">Calling</span> <span class="n">Functions</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="n">swift</span>
-</span><span class='line'>  <span class="k">func</span> <span class="n">sayHello</span><span class="p">(</span><span class="nl">personName</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">String</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">let</span> <span class="n">greeting</span> <span class="o">=</span> <span class="s">&quot;Hello, &quot;</span> <span class="o">+</span> <span class="n">personName</span> <span class="o">+</span> <span class="s">&quot;!&quot;</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">greeting</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Function</span> <span class="n">Parameters</span> <span class="n">and</span> <span class="n">Return</span> <span class="n">Values</span><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Multiple</span> <span class="n">Input</span> <span class="n">Parameters</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="k">func</span> <span class="n">halfOpenRangeLength</span><span class="p">(</span><span class="nl">start</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">end</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">Int</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="n">halfOpenRangeLength</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-</span><span class='line'>  <span class="c1">// prints &quot;9&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Functions</span> <span class="n">Without</span> <span class="n">Parameters</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="k">func</span> <span class="n">sayHelloWorld</span><span class="p">()</span> <span class="o">-&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">String</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="s">&quot;hello, world&quot;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="n">sayHelloWorld</span><span class="p">())</span>
-</span><span class='line'>  <span class="c1">// prints &quot;hello, world&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="n">Function</span> <span class="n">Without</span> <span class="n">Return</span> <span class="n">Values</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">code</span><span class="o">&gt;</span>
-</span><span class='line'>  <span class="k">func</span> <span class="n">sayGoodbye</span><span class="p">(</span><span class="nl">personName</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">println</span><span class="p">(</span><span class="s">&quot;Goodbye, \(personName)!&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="n">sayGoodbye</span><span class="p">(</span><span class="s">&quot;Dave&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// prints &quot;Goodbye, Dave!&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;!--</span> <span class="n">more</span> <span class="o">--&gt;</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Functions</span> <span class="n">with</span> <span class="n">Multiple</span> <span class="n">Return</span> <span class="n">Values</span>
-</span></code></pre></td></tr></table></div></figure>
-      func minMax(array: [Int]) -> (min: Int, max: Int) {
-          var currentMin = array[0]
-          var currentMax = array[0]
-          for value in array[1..&lt;array.count] {
-              if value &lt; currentMin {
-                  currentMin = value
-              } else if value > currentMax {
-                  currentMax = value
-              }
-          }
-          return (currentMin, currentMax)
+</span><span class='line'>&lt;ul&gt;
+</span><span class='line'>&lt;li&gt;Inheritance enables one class to inherit the characteristics of another.&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;Type casting enables you to check and interpret the type of a class instance at runtime.&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;Deinitializers enable an instance of a class to free up any resources it has assigned.&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;Reference counting allows more than one reference to a class instance.&lt;/li&gt;
+</span><span class='line'>&lt;/ul&gt;
+</span><span class='line'>&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Definition Syntax</span></code></pre></td></tr></table></div></figure>swift
+      class SomeClass {
+          // class definition goes here
+      }
+      struct SomeStructure {
+          // structure definition goes here
       }</p>
 
-<pre><code>  let bounds = minMax([8, -6, 2, 109, 3, 71])
-  println("min is \(bounds.min) and max is \(bounds.max)")
-  // prints "min is -6 and max is 109"
+<pre><code>  struct Resolution {
+      var width = 0
+      var height = 0
+  }
+  class VideoMode {
+      var resolution = Resolution()
+      var interlaced = false
+      var frameRate = 0.0
+      var name: String?
+  }
 </code></pre>
 
 <p>&#8220;`</p></li>
-<li><p>Optional Tuple Return Types
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</ul>
+
+
+<!-- more -->
+
+
+<ul>
+<li>Class and Structure Instances
+<code>
+      let someResolution = Resolution()
+      let someVideoMode = VideoMode()
+</code></li>
+<li><p>Accessing Properties
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1340,147 +1060,70 @@
 <span class='line-number'>20</span>
 <span class='line-number'>21</span>
 <span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">func</span> <span class="n">minMax</span><span class="p">(</span><span class="nl">array</span><span class="p">:</span> <span class="p">[</span><span class="n">Int</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nl">min</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">max</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span><span class="o">?</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="n">array</span><span class="p">.</span><span class="n">isEmpty</span> <span class="p">{</span> <span class="k">return</span> <span class="nb">nil</span> <span class="p">}</span>
-</span><span class='line'>      <span class="k">var</span> <span class="n">currentMin</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span class='line'>      <span class="k">var</span> <span class="n">currentMax</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-</span><span class='line'>      <span class="k">for</span> <span class="n">value</span> <span class="k">in</span> <span class="n">array</span><span class="p">[</span><span class="mf">1.</span><span class="p">.</span><span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="n">array</span><span class="p">.</span><span class="n">count</span><span class="p">]</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">if</span> <span class="n">value</span> <span class="o">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="n">currentMin</span> <span class="p">{</span>
-</span><span class='line'>              <span class="n">currentMin</span> <span class="o">=</span> <span class="n">value</span>
-</span><span class='line'>          <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">currentMax</span> <span class="p">{</span>
-</span><span class='line'>              <span class="n">currentMax</span> <span class="o">=</span> <span class="n">value</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="k">return</span> <span class="p">(</span><span class="n">currentMin</span><span class="p">,</span> <span class="n">currentMax</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  println(&ldquo;The width of someResolution is (someResolution.width)&rdquo;)
+</span><span class='line'>  // prints &ldquo;The width of someResolution is 0&rdquo;&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">if</span> <span class="k">let</span> <span class="n">bounds</span> <span class="o">=</span> <span class="n">minMax</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">6</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">109</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">71</span><span class="p">])</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;min is \(bounds.min) and max is \(bounds.max)&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="c1">// prints &quot;min is -6 and max is 109&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  println("The width of someVideoMode is \(someVideoMode.resolution.width)")
+</span><span class='line'>  // prints "The width of someVideoMode is 0"
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">External</span> <span class="n">parameter</span> <span class="n">Names</span>
-</span></code></pre></td></tr></table></div></figure>
-      func someFunction(externalParameterName localParameterName: Int) {
-          // function body goes here, and can use localParameterName
-          // to refer to the argument value for that parameter
-      }</p>
+</span><span class='line'>  someVideoMode.resolution.width = 1280
+</span><span class='line'>  println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
+</span><span class='line'>  // prints "The width of someVideoMode is now 1280"
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;Memeberwise Initializers for Structure Types
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>  let vga = Resolution(witdth: 640, height: 480)
+</span><span class='line'>&lt;/code&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Structures and Enumerations Are Value Types&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  A value type is a type whose value is copied when it is assigned to a variable or constant, or when it is passed to a function. In fact, all of the basic types in Swift—integers, floating-point numbers, Booleans, strings, arrays and dictionaries—are value types, and are implemented as structures behind the scenes.
+</span><span class='line'>&lt;code&gt;
+</span><span class='line'>  enum CompassPoint {
+</span><span class='line'>      case North, South, East, West
+</span><span class='line'>  }
+</span><span class='line'>  var currentDirection = CompassPoint.West
+</span><span class='line'>  let rememberedDirection = currentDirection
+</span><span class='line'>  currentDirection = .East
+</span><span class='line'>  if rememberedDirection == .West {
+</span><span class='line'>      println("The remembered direction is still .West")
+</span><span class='line'>  }
+</span><span class='line'>  // prints "The remembered direction is still .West"
+</span><span class='line'>&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Classes Are Reference Types&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  Unlike value types, reference types are not copied when they are assigned to a variable or constant, or when they are passed to a function. Rather than a copy, a reference to the same existing instance is used instead.</span></code></pre></td></tr></table></div></figure>
+      let tenEighty = VideoMode()
+      tenEighty.resolution = hd
+      tenEighty.interlaced = true
+      tenEighty.name = &ldquo;1080i&rdquo;
+      tenEighty.frameRate = 25.0</p>
 
-<pre><code>  func join(string s1: String, toString s2: String, withJoiner joiner: String)
-      -&gt; String {
-          return s1 + joiner + s2
-  }
+<pre><code>  let alsoTenEighty = tenEighty
+  alsoTenEighty.frameRate = 30.0
 
-  join(string: "hello", toString: "world", withJoiner: ", ")
-  // returns "hello, world"
+  println("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
+  // prints "The frameRate property of tenEighty is now 30.0"
 </code></pre>
 
 <p>&#8220;`</p></li>
-<li><p>Shorthand External Parameter Names
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">func</span> <span class="n">containsCharacter</span><span class="p">(</span><span class="err">#</span><span class="nl">string</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="err">#</span><span class="nl">characterToFind</span><span class="p">:</span> <span class="n">Character</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">for</span> <span class="n">character</span> <span class="k">in</span> <span class="n">string</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">if</span> <span class="n">character</span> <span class="o">==</span> <span class="n">characterToFind</span> <span class="p">{</span>
-</span><span class='line'>              <span class="k">return</span> <span class="nb">true</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="k">return</span> <span class="nb">false</span>
-</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">let</span> <span class="n">containsAVee</span> <span class="o">=</span> <span class="n">containsCharacter</span><span class="p">(</span><span class="nl">string</span><span class="p">:</span> <span class="s">&quot;aardvark&quot;</span><span class="p">,</span> <span class="nl">characterToFind</span><span class="p">:</span> <span class="s">&quot;v&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// containsAVee equals true, because &quot;aardvark&quot; contains a &quot;v&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Default</span> <span class="n">Parameter</span> <span class="n">Values</span>
-</span></code></pre></td></tr></table></div></figure>
-      func join(string s1: String, toString s2: String,
-          withJoiner joiner: String = &ldquo; &rdquo;) -> String {
-              return s1 + joiner + s2
-      }</p>
+<li><p>Identity Operators</p>
 
-<pre><code>  join(string: "hello", toString: "world", withJoiner: "-")
-  // returns "hello-world"
-
-  join(string: "hello", toString: "world")
-  // returns "hello world"
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>External Names for Parameters with Default Values (automatically generated)
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="k">func</span> <span class="n">join</span><span class="p">(</span><span class="nl">s1</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">s2</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">joiner</span><span class="p">:</span> <span class="n">String</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span> <span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;)</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">s1</span> <span class="o">+</span> <span class="n">joiner</span> <span class="o">+</span> <span class="n">s2</span>
-</span><span class='line'>  <span class="p">}</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="n">join</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="s">&quot;world&quot;</span><span class="p">,</span> <span class="nl">joiner</span><span class="p">:</span> <span class="s">&quot;-&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// returns &quot;hello-world&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Variadic</span> <span class="n">Parameters</span> <span class="p">(</span><span class="n">varargs</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-      // Note that Double&hellip; is different from [Double]</p>
-
-<pre><code>  func arithmeticMean(numbers: Double...) -&gt; Double {
-      var total: Double = 0
-      for number in numbers {
-          total += number
-      }
-      return total / Double(numbers.count)
-  }
-  arithmeticMean(1, 2, 3, 4, 5)
-  // returns 3.0, which is the arithmetic mean of these five numbers
-  arithmeticMean(3, 8.25, 18.75)
-  // returns 10.0, which is the arithmetic mean of these three numbers
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li>Constant and Variable Parameters
-<code>
-      func alignRight(var string: String, count: Int, pad: Character) -&gt; String {
-          let amountToPad = count - countElements(string)
-          if amountToPad &lt; 1 {
-              return string
-          }
-          let padString = String(pad)
-          for _ in 1...amountToPad {
-              string = padString + string
-          }
-          return string
-      }
-      let originalString = "hello"
-      let paddedString = alignRight(originalString, 10, "-")
-      // paddedString is equal to "-----hello"
-      // originalString is still equal to "hello"
-</code></li>
-<li><p>In-Out Parameters
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p>  It can sometimes be useful to find out if two constants or variables refer to exactly the same instance of a class. To enable this, Swift provides two identity operators:
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -1497,102 +1140,362 @@
 <span class='line-number'>15</span>
 <span class='line-number'>16</span>
 <span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>  <span class="c1">// Variable parameters, as described above, can only be changed within the function itself. If you want a function to modify a parameter’s value, and you want those changes to persist after the function call has ended, define that parameter as an in-out parameter instead.&lt;/p&gt;</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  // Identical to (===)
+</span><span class='line'>  // Not identical to (!==)&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="k">func</span> <span class="n">swapTwoInts</span><span class="p">(</span><span class="k">inout</span> <span class="nl">a</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="k">inout</span> <span class="nl">b</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">let</span> <span class="n">temporaryA</span> <span class="o">=</span> <span class="n">a</span>
-</span><span class='line'>  <span class="n">a</span> <span class="o">=</span> <span class="n">b</span>
-</span><span class='line'>  <span class="n">b</span> <span class="o">=</span> <span class="n">temporaryA</span>
-</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  if tenEighty === alsoTenEighty {
+</span><span class='line'>  println("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
+</span><span class='line'>  }
+</span><span class='line'>  // prints "tenEighty and alsoTenEighty refer to the same VideoMode instance."
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
 </span><span class='line'>
-</span><span class='line'>  <span class="k">var</span> <span class="n">someInt</span> <span class="o">=</span> <span class="mi">3</span>
-</span><span class='line'>  <span class="k">var</span> <span class="n">anotherInt</span> <span class="o">=</span> <span class="mi">107</span>
-</span><span class='line'>  <span class="n">swapTwoInts</span><span class="p">(</span><span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="n">someInt</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">amp</span><span class="p">;</span><span class="n">anotherInt</span><span class="p">)</span>
-</span><span class='line'>  <span class="n">println</span><span class="p">(</span><span class="s">&quot;someInt is now \(someInt), and anotherInt is now \(anotherInt)&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">// prints &quot;someInt is now 107, and anotherInt is now 3&quot;</span>
-</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Assignment and Copy Behavior for Strings, Arrays, and Dictionaries&lt;/p&gt;
 </span><span class='line'>
-</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="err">```</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Function</span> <span class="kt">Type</span>
-</span></code></pre></td></tr></table></div></figure>
-      func addTwoInts(a: Int, b: Int) -> Int {
-          return a + b
-      }
-      func multiplyTwoInts(a: Int, b: Int) -> Int {
-          return a * b
-      }</p>
+</span><span class='line'>&lt;p&gt;  Swift’s String, Array, and Dictionary types are implemented as structures. This means that strings, arrays, and dictionaries are copied when they are assigned to a new constant or variable, or when they are passed to a function or method.&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  This behavior is different from NSString, NSArray, and NSDictionary in Foundation, which are implemented as classes, not structures. NSString, NSArray, and NSDictionary instances are always assigned and passed around as a reference to an existing instance, rather than as a copy.&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;/ul&gt;
+</span><span class='line'>
+</span><span class='line'>]]&gt;&lt;/content&gt;
+</span><span class='line'>  &lt;/entry&gt;
+</span><span class='line'>  
+</span><span class='line'>  &lt;entry&gt;
+</span><span class='line'>&lt;title type="html"&gt;&lt;![CDATA[Learning Swift Part 7 - Closure & Enumerations]]&gt;&lt;/title&gt;
+</span><span class='line'>&lt;link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-7/"/&gt;
+</span><span class='line'>&lt;updated&gt;2014-10-24T11:05:49+09:00&lt;/updated&gt;
+</span><span class='line'>&lt;id&gt;http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-7&lt;/id&gt;
+</span><span class='line'>&lt;content type="html"&gt;&lt;![CDATA[&lt;h2&gt;===== Full Notes =====&lt;/h2&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;h3&gt;Closure&lt;/h3&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;ul&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Closure Expression Syntax</span></code></pre></td></tr></table></div></figure>swift
+      let names = [&ldquo;Chris&rdquo;, &ldquo;Alex&rdquo;, &ldquo;Ewa&rdquo;, &ldquo;Barry&rdquo;, &ldquo;Daniella&rdquo;]</p>
 
-<pre><code>  var mathFunction: (Int, Int) -&gt; Int = addTwoInts
+<pre><code>  { (parameters) -&gt; return type in
+      statements
+  }
 
-  println("Result: \(mathFunction(2, 3))")
-  // prints "Result: 5"
+  func backwards(s1: String, s2: String) -&gt; Bool {
+      return s1 &gt; s2
+  }
+  var reversed = sorted(names, backwards)
+  // reversed is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
 
-  mathFunction = multiplyTwoInts
-  println("Result: \(mathFunction(2, 3))")
-  // prints "Result: 6"
+  // This is the same closure
+  reversed = sorted(names, { (s1: String, s2: String) -&gt; Bool in return s1 &gt; s2 } )
 </code></pre>
 
 <p>&#8220;`</p></li>
-<li>Function Types as Parameter Types
+<li>Inferring Type From Context
 <code>
-      func printMathResult(mathFunction: (Int, Int) -&gt; Int, a: Int, b: Int) {
-          println("Result: \(mathFunction(a, b))")
-      }
-      printMathResult(addTwoInts, 3, 5)
-      // prints "Result: 8"
+      reversed = sorted(names, { s1, s2 in return s1 &gt; s2 } )
 </code></li>
-<li><p>Function Type as Return Types
-&#8220;`
-      func stepForward(input: Int) -> Int {
-          return input + 1
-      }
-      func stepBackward(input: Int) -> Int {
-          return input - 1
+<li>Implicit Returns from Single-Expression Closures
+<code>
+      reversed = sorted(names, { s1, s2 in s1 &gt; s2 } )
+</code></li>
+<li>Shorthand Argument Names
+<code>
+      reversed = sorted(names, { $0 &gt; $1 } )
+</code></li>
+<li>Operator Functions
+<code>
+      reversed = sorted(names, &gt;)
+</code></li>
+</ul>
+
+
+<!-- more -->
+
+
+<ul>
+<li><p>Trailing Closure
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  func someFunctionThatTakesAClosure(closure: () -&gt; ()) {
+</span><span class='line'>      // function body goes here
+</span><span class='line'>  }&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  // here's how you call this function without using a trailing closure:
+</span><span class='line'>
+</span><span class='line'>  someFunctionThatTakesAClosure({
+</span><span class='line'>  // closure's body goes here
+</span><span class='line'>  })
+</span><span class='line'>
+</span><span class='line'>  // here's how you call this function with a trailing closure instead:
+</span><span class='line'>
+</span><span class='line'>  someFunctionThatTakesAClosure() {
+</span><span class='line'>  // trailing closure's body goes here
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  // Sample
+</span><span class='line'>
+</span><span class='line'>  let digitNames = [
+</span><span class='line'>  0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
+</span><span class='line'>  5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
+</span><span class='line'>  ]
+</span><span class='line'>  let numbers = [16, 58, 510]
+</span><span class='line'>
+</span><span class='line'>  let strings = numbers.map {
+</span><span class='line'>  (var number) -&gt; String in
+</span><span class='line'>  var output = ""
+</span><span class='line'>  while number &gt; 0 {
+</span><span class='line'>      output = digitNames[number % 10]! + output
+</span><span class='line'>      number /= 10
+</span><span class='line'>  }
+</span><span class='line'>  return output
+</span><span class='line'>  }
+</span><span class='line'>  // strings is inferred to be of type [String]
+</span><span class='line'>  // its value is ["OneSix", "FiveEight", "FiveOneZero"]
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Capturing Value</span></code></pre></td></tr></table></div></figure>
+      func makeIncrementor(forIncrement amount: Int) -> () -> Int {
+          var runningTotal = 0
+          func incrementor() -> Int {
+              runningTotal += amount
+              return runningTotal
+          }
+          return incrementor
       }</p>
 
-<pre><code>  func chooseStepFunction(backwards: Bool) -&gt; (Int) -&gt; Int {
-      return backwards ? stepBackward : stepForward
-  }
+<pre><code>  let incrementByTen = makeIncrementor(forIncrement: 10)
 
-  var currentValue = 3
-  let moveNearerToZero = chooseStepFunction(currentValue &gt; 0)
-  // moveNearerToZero now refers to the stepBackward() function
+  incrementByTen()
+  // returns a value of 10
+  incrementByTen()
+  // returns a value of 20
+  incrementByTen()
+  // returns a value of 30
 
-  println("Counting to zero:")
-  // Counting to zero:
-  while currentValue != 0 {
-      println("\(currentValue)... ")
-      currentValue = moveNearerToZero(currentValue)
-  }
-  println("zero!")
-  // 3...
-  // 2...
-  // 1...
-  // zero!
+  let incrementBySeven = makeIncrementor(forIncrement: 7)
+  incrementBySeven()
+  // returns a value of 7
+
+  incrementByTen()
+  // returns a value of 40
 </code></pre>
 
 <p>&#8220;`</p></li>
-<li>Nested Functions
+<li><p>Closures Are Reference Types
 <code>
-      func chooseStepFunction(backwards: Bool) -&gt; (Int) -&gt; Int {
-          func stepForward(input: Int) -&gt; Int { return input + 1 }
-          func stepBackward(input: Int) -&gt; Int { return input - 1 }
-          return backwards ? stepBackward : stepForward
+      let alsoIncrementByTen = incrementByTen
+      alsoIncrementByTen()
+      // returns a value of 50
+</code></p>
+
+<h3>Enumerations</h3></li>
+<li><p>Enumeration Syntax
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  enum CompassPoint {
+</span><span class='line'>      case North
+</span><span class='line'>      case South
+</span><span class='line'>      case East
+</span><span class='line'>      case West
+</span><span class='line'>  }&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  enum Planet {
+</span><span class='line'>  case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  var directionToHead = CompassPoint.West
+</span><span class='line'>
+</span><span class='line'>  // Can be shortened
+</span><span class='line'>
+</span><span class='line'>  directionToHead = .East
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Matching Enumeration Values with a Switch Statement</span></code></pre></td></tr></table></div></figure>
+      directionToHead = .South
+      switch directionToHead {
+      case .North:
+          println(&ldquo;Lots of planets have a north&rdquo;)
+      case .South:
+          println(&ldquo;Watch out for penguins&rdquo;)
+      case .East:
+          println(&ldquo;Where the sun rises&rdquo;)
+      case .West:
+          println(&ldquo;Where the skies are blue&rdquo;)
       }
-      var currentValue = -4
-      let moveNearerToZero = chooseStepFunction(currentValue &gt; 0)
-      // moveNearerToZero now refers to the nested stepForward() function
-      while currentValue != 0 {
-          println("\(currentValue)... ")
-          currentValue = moveNearerToZero(currentValue)
+      // prints &ldquo;Watch out for penguins&rdquo;</p>
+
+<pre><code>  let somePlanet = Planet.Earth
+  switch somePlanet {
+  case .Earth:
+      println("Mostly harmless")
+  default:
+      println("Not a safe place for humans")
+  }
+  // prints "Mostly harmless"
+</code></pre>
+
+<p>&#8220;`</p></li>
+<li><p>Associated Values
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  enum Barcode {
+</span><span class='line'>      case UPCA(Int, Int, Int, Int)  // a Barcode
+</span><span class='line'>      case QRCode(String)            // a QRCode
+</span><span class='line'>  }&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  var productBarcode = Barcode.UPCA(8, 85909, 51226, 3)
+</span><span class='line'>
+</span><span class='line'>  productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
+</span><span class='line'>
+</span><span class='line'>  switch productBarcode {
+</span><span class='line'>  case .UPCA(let numberSystem, let manufacturer, let product, let check):
+</span><span class='line'>  println("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
+</span><span class='line'>  case .QRCode(let productCode):
+</span><span class='line'>  println("QR code: \(productCode).")
+</span><span class='line'>  }
+</span><span class='line'>  // prints "QR code: ABCDEFGHIJKLMNOP."
+</span><span class='line'>
+</span><span class='line'>  // Can be shortened
+</span><span class='line'>
+</span><span class='line'>  switch productBarcode {
+</span><span class='line'>  case let .UPCA(numberSystem, manufacturer, product, check):
+</span><span class='line'>  println("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
+</span><span class='line'>  case let .QRCode(productCode):
+</span><span class='line'>  println("QR code: \(productCode).")
+</span><span class='line'>  }
+</span><span class='line'>  // prints "QR code: ABCDEFGHIJKLMNOP."
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Raw Values</span></code></pre></td></tr></table></div></figure>
+      enum ASCIIControlCharacter: Character {
+          case Tab = &ldquo;\t&rdquo;
+          case LineFeed = &ldquo;\n&rdquo;
+          case CarriageReturn = &ldquo;\r&rdquo;
+      }</p>
+
+<pre><code>  enum Planet: Int {
+      case Mercury = 1, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
+  }
+
+  let earthsOrder = Planet.Earth.toRaw()
+  // earthsOrder is 3
+
+  let possiblePlanet = Planet.fromRaw(7)
+  // possiblePlanet is of type Planet? and equals Planet.Uranus
+
+  let positionToFind = 9
+  if let somePlanet = Planet.fromRaw(positionToFind) {
+      switch somePlanet {
+      case .Earth:
+          println("Mostly harmless")
+      default:
+          println("Not a safe place for humans")
       }
-      println("zero!")
-      // -4...
-      // -3...
-      // -2...
-      // -1...
-      // zero!
-</code></li>
+  } else {
+      println("There isn't a planet at position \(positionToFind)")
+  }
+  // prints "There isn't a planet at position 9"
+</code></pre>
+
+<p>&#8220;`</p></li>
 </ul>
 
 ]]></content>
