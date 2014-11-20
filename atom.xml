@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-11-20T20:45:05+09:00</updated>
+  <updated>2014-11-20T20:46:04+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Learning Swift Part 11]]></title>
+    <title type="html"><![CDATA[Learning Swift Part 11 - Inheritance]]></title>
     <link href="http://zh-wang.github.io/blog/2014/11/20/learning-swift-part-11/"/>
     <updated>2014-11-20T19:10:05+09:00</updated>
     <id>http://zh-wang.github.io/blog/2014/11/20/learning-swift-part-11</id>
