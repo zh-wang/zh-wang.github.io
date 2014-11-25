@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Csv | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/csv/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-11-25T19:14:36+09:00</updated>
+  <updated>2014-11-25T19:19:40+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -34,12 +34,12 @@ gsutil cp -r gs://&lt;バケットID&gt;/reviews/reviews_&lt;アプリのパッ�
 <p>UTF-16でエンコーディングされたファイルなんで、一応処理しやすいためUTF-8にしながら、一つのファイルに合体した。</p>
 
 <pre><code>iconv -f UTF-16 -t UTF-8 reviews_YOUR.PACKAGE.NAME_201308.csv &gt;&gt; 201308_201406_review.csv
-iconv -f UTF-16 -t UTF-8 reviews_YOUR.PACKAGE.NAME_201308.csv &gt;&gt; 201308_201406_review.csv | sed -n '1!p' &gt;&gt; 201308_201406_review.csv # 一番めの行はcsvの項目なので要らない
+iconv -f UTF-16 -t UTF-8 reviews_YOUR.PACKAGE.NAME_201308.csv &gt;&gt; 201308_201406_review.csv | sed -n '1!p' &gt;&gt; 201308_201406_review.csv # 一行目はcsvの項目なので要らない
 ...
 </code></pre>
 
 <ul>
-<li>Google Playの仕様変更により、2014年半ばまでのデータには[review_link]という項目か見つからないかもしれないので、注意しよう。</li>
+<li>Google Playの仕様変更により、2014年半ばまでのデータには<strong>review_link</strong>という項目か見つからないかもしれないので、注意しよう。</li>
 </ul>
 
 
