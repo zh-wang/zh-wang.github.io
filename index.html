@@ -9,15 +9,7 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="===== Full Notes ===== Inheritance A base class, Vehicle 1
-2
-3
-4
-5
-6
-7
-8
-9 class Vehicle { var currentSpeed = 0.0 var description: String { return " &hellip;">
+  <meta name="description" content="会社の仕事の関係で、Google Playからユーザーレビューをエクスポート（csvファイル）して、特定なレビューを収集するタスクがあった。rubyで割と簡単にできたので、一応手順をメモしようと思った。 Google Play Developer Consoleからcsvをエクスポート &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -59,15 +51,7 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="===== Full Notes ===== Inheritance A base class, Vehicle 1
-2
-3
-4
-5
-6
-7
-8
-9 class Vehicle { var currentSpeed = 0.0 var description: String { return " &hellip;" />
+<meta property="og:description" content="会社の仕事の関係で、Google Playからユーザーレビューをエクスポート（csvファイル）して、特定なレビューを収集するタスクがあった。rubyで割と簡単にできたので、一応手順をメモしようと思った。 Google Play Developer Consoleからcsvをエクスポート &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -110,6 +94,80 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/11/25/ruby-csv/">Rubyでcsvをいじる</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-25T18:04:08+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/11/25/ruby-csv/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/11/25/ruby-csv/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>会社の仕事の関係で、Google Playからユーザーレビューをエクスポート（csvファイル）して、特定なレビューを収集するタスクがあった。rubyで割と簡単にできたので、一応手順をメモしようと思った。</p>
+
+<h3>Google Play Developer Consoleからcsvをエクスポート</h3>
+
+<p>こちらのリンクを参考した。 <br/>
+<a href="http://qiita.com/punchdrunker/items/e97248428d19cfa7fb08">http://qiita.com/punchdrunker/items/e97248428d19cfa7fb08</a></p>
+
+<pre><code>gsutil cp -r gs://&lt;バケットID&gt;/reviews/reviews_&lt;アプリのパッケージ名&gt;_2013\* /path/to/directory
+gsutil cp -r gs://&lt;バケットID&gt;/reviews/reviews_&lt;アプリのパッケージ名&gt;_2014\* /path/to/directory
+</code></pre>
+
+<p>こんな感じで2013と2014年分のレビューをcsvファイルとしてエクスポートすることが出来た。</p>
+
+<p>UTF-16でエンコーディングされたファイルなんで、一応処理しやすいためUTF-8にしながら、一つのファイルに合体した。</p>
+
+<pre><code>iconv -f UTF-16 -t UTF-8 reviews_YOUR.PACKAGE.NAME_201308.csv &gt;&gt; 201308_201406_review.csv
+iconv -f UTF-16 -t UTF-8 reviews_YOUR.PACKAGE.NAME_201308.csv &gt;&gt; 201308_201406_review.csv | sed -n '1!p' &gt;&gt; 201308_201406_review.csv # 一番めの行はcsvの項目なので要らない
+...
+</code></pre>
+
+<ul>
+<li>Google Playの仕様変更により、2014年半ばまでのデータには[review_link]という項目か見つからないかもしれないので、注意しよう。</li>
+</ul>
+
+
+<h3>rubyで読み込んで処理する</h3>
+
+<pre><code>#!/usr/bin/ruby
+require 'csv'
+
+table = CSV.table('201308_201406_review.csv') # 読み込み
+table.delete_if { |row| row[:star_rating] &gt;= 3 } # 処理する。ここでは★２つ以下のレビューをselect。
+File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理したデータをcsvといて書き出す。
+</code></pre>
+
+<p>意外と簡単だね。(・∀・)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1274,101 +1332,6 @@ Most code are from the guide, with some modification by me.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/05/learning-swift-part-2/">Learning Swift Part 2 - Basics</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-05T15:06:10+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/09/05/learning-swift-part-2/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/09/05/learning-swift-part-2/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
-Most code are from the guide, with some modification by me.</p>
-
-<h2>===== Full Notes =====</h2>
-
-<h3>Basics</h3>
-
-<ul>
-<li>Declaring Constant and Variables</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">maximumNumberOfLoginAttempts</span> <span class="o">=</span> <span class="mi">10</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">currentLoginAttempt</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="mf">0.0</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Type Annotations</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">var</span> <span class="nl">welcomeMessgae</span><span class="p">:</span> <span class="n">String</span>
-</span><span class='line'>    <span class="n">welcomeMessgae</span> <span class="o">=</span> <span class="s">&quot;Hello&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">var</span> <span class="n">red</span><span class="p">,</span> <span class="n">green</span><span class="p">,</span> <span class="nl">blue</span><span class="p">:</span> <span class="n">Double</span> <span class="c1">// Multiple variables defined</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Naming Constants and Variables</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="err">π</span> <span class="o">=</span> <span class="mf">3.14159</span>
-</span><span class='line'>    <span class="k">let</span> <span class="err">你好</span> <span class="o">=</span> <span class="s">&quot;你好世界&quot;</span>
-</span><span class='line'>    <span class="k">let</span> <span class="err">🐶🐮</span> <span class="o">=</span> <span class="s">&quot;dogcow&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/09/05/learning-swift-part-2/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -1382,6 +1345,10 @@ Most code are from the guide, with some modification by me.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/25/ruby-csv/">Rubyでcsvをいじる</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/11/20/learning-swift-part-11/">Learning Swift Part 11 - Inheritance</a>
@@ -1399,10 +1366,6 @@ Most code are from the guide, with some modification by me.</p>
         <a href="/blog/2014/10/24/learning-swift-part-8/">Learning Swift Part 8 - Classes & Structures</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/10/24/learning-swift-part-7/">Learning Swift Part 7 - Closure & Enumerations</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1411,11 +1374,11 @@ Most code are from the guide, with some modification by me.</p>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/swift/'>swift (11)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (1)</a></li><li><a href='/blog/categories/swift/'>swift (11)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.27272727272728%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 70.9090909090909%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 87.27272727272728%'>codility(5)</a> <a href='/blog/categories/ios' style='font-size: 65.45454545454545%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 65.45454545454545%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 76.36363636363636%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 70.9090909090909%'>octopress(2)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(11)</a> <a href='/blog/categories/zsh' style='font-size: 65.45454545454545%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.27272727272728%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 70.9090909090909%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 87.27272727272728%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 65.45454545454545%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 65.45454545454545%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 65.45454545454545%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 76.36363636363636%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 70.9090909090909%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 65.45454545454545%'>ruby(1)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(11)</a> <a href='/blog/categories/zsh' style='font-size: 65.45454545454545%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>
