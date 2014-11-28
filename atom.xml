@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-11-26T11:29:18+09:00</updated>
+  <updated>2014-11-28T12:09:01+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,68 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Vim-quickrun Config]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/11/28/vim-quickrun-config/"/>
+    <updated>2014-11-28T10:51:39+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/11/28/vim-quickrun-config</id>
+    <content type="html"><![CDATA[<p>Vim-quickrunの設定を書いたので、一応メモする。</p>
+
+<h3>必要なバンドル</h3>
+
+<pre><code>" これがないと意味ないだろう
+Bundle 'thinca/vim-quickrun'
+
+" vimから非同期実行。quickrunが実行中でも、ファイル編集が出来るようになる。
+Bundle 'Shougo/vimproc.git'
+
+" hookが使えるようになる
+Bundle 'osyo-manga/shabadou.vim'
+
+" uniteのウィンドウにquickfixを開く"
+Bundle 'osyo-manga/unite-quickfix'
+</code></pre>
+
+<p>まず以上のバンドルを入れる。</p>
+
+<h3>設定</h3>
+
+<pre><code>" 出力がないやエラーの場合はquickfixに出力。それ以外は普通にバッファへ。
+" vimprocの非同期設定。
+" ウィンドウのサイズなど
+let g:quickrun_config = {
+\   "_" : {
+\       "hook/close_unite_quickfix/enable_hook_loaded" : 1,
+\       "hook/unite_quickfix/enable_failure" : 1,
+\       "hook/close_quickfix/enable_exit" : 1,
+\       "hook/close_buffer/enable_failure" : 1,
+\       "hook/close_buffer/enable_empty_data" : 1,
+\       "runner" : "vimproc",
+\       "runner/vimproc/updatetime" : 60,
+\       "outputter" : "multi:buffer:quickfix",
+\       "outputter/buffer/split" : ":botright 8sp",
+\   },
+\}
+
+" quickrunを強制終了
+nnoremap &lt;expr&gt;&lt;silent&gt; &lt;C-c&gt; quickrun#is_running() ? quickrun#sweep_sessions() : "\&lt;C-c&gt;"
+
+" 簡単起動
+cmap qr QuickRun
+cmap QR QuickRun
+
+" 簡単終了
+command! -nargs=0 QC call CloseQuickRunWindow()
+function! CloseQuickRunWindow()
+    execute "normal \&lt;c-c&gt;\&lt;c-w&gt;jZZ"
+endfunction
+cmap qc QC
+</code></pre>
+
+<p>これで快適快適(・ω&lt;)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rubyでcsvをいじる]]></title>
@@ -6467,221 +6529,6 @@ $$ to be the minimal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-w$.</p>
 <p><script language="javaScript">
 $(document).ready( function () { $(&ldquo;a[href^=&lsquo;http&rsquo;]:not([href*=&lsquo;&rdquo; + location.hostname + &ldquo;&rsquo;])&rdquo;).attr(&lsquo;target&rsquo;, &lsquo;_blank&rsquo;); })
 </script></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Codility - Magnesium 2014]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/05/27/codility-magnesium-2014-challenge-report/"/>
-    <updated>2014-05-27T19:05:37+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/05/27/codility-magnesium-2014-challenge-report</id>
-    <content type="html"><![CDATA[<h2>Introduction</h2>
-
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Magnesium 2014 Challenge</a>.</p>
-
-<ul>
-<li>The problem is that, finding the longest path in a weighted graph in which the weights are ascending. Vertices can be visited multiple times.</li>
-<li>Here, <strong>length of a path</strong> means the number of vertices the path visits, not the weight sum of all edges that compose the path.</li>
-<li>Therefore, <strong>longest path</strong> means a path that visits more vertices than any other paths for the given graph.</li>
-<li>Time bound is O(V+E*log(E)).</li>
-</ul>
-
-
-<!-- more -->
-
-
-<h2>Analysis</h2>
-
-<ul>
-<li>A classic DFS search on every vertex can do this job, despite its worst time complexity is O(VE), which cause timeout.</li>
-<li>Let&rsquo;s make an O(V+E*log(E)) approach.</li>
-<li>Because we do <strong>NOT</strong> need to trace the whole path, we just need to store a {<em>w</em>, <em>l</em>} pair for each vertex of the graph.</li>
-<li>This pair of data means that for a vertex <em>V</em>, the longest path ends with <em>V</em> has a length <em>l</em> path, and, the largest weight of the path is <em>w</em>.</li>
-<li>Then we pick edges one by one in ascending order, do some comparison and update the paired data for node which the edge connects.</li>
-</ul>
-
-
-<h2>Why this algorithm works?</h2>
-
-<ul>
-<li>For any <em>w_1</em> >= <em>w_2</em> and <em>l_1</em> >= <em>l_2</em>, we can always say that {<em>w_1</em>, <em>l_1</em>} is a better answer that {<em>w_2</em>, <em>l_2</em>}. Therefore, we only store the former answer. Note that, this only goes right when edges are picked by ascending order. That&rsquo;s the <strong>GREEDY</strong> algorithm works.</li>
-<li>Sorting edges costs O(E*log(E)). Updating paired data costs O(V). The whole time cost is O(V+E*log(E)).</li>
-</ul>
-
-
-<h2>Source</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class='line'><span class="n">Node</span> <span class="n">root</span><span class="o">;</span>
-</span><span class='line'><span class="n">Edge</span><span class="o">[]</span> <span class="n">edges</span><span class="o">;</span>
-</span><span class='line'><span class="n">Node</span><span class="o">[]</span> <span class="n">nodes</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">N</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">B</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">C</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">edges</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Edge</span><span class="o">[</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">];</span>
-</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">edges</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Edge</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">B</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">C</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">edges</span><span class="o">,</span> <span class="k">new</span> <span class="n">Comparator</span><span class="o">&lt;</span><span class="n">Edge</span><span class="o">&gt;()</span> <span class="o">{</span>
-</span><span class='line'>        <span class="nd">@Override</span>
-</span><span class='line'>        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="n">Edge</span> <span class="n">o1</span><span class="o">,</span> <span class="n">Edge</span> <span class="n">o2</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="c1">// TODO Auto-generated method stub</span>
-</span><span class='line'>            <span class="k">return</span> <span class="n">o1</span><span class="o">.</span><span class="na">c</span> <span class="o">-</span> <span class="n">o2</span><span class="o">.</span><span class="na">c</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">});</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">edges</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">nodes</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">[</span><span class="mi">200000</span><span class="o">];</span>
-</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">200000</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">nodes</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="c1">// get start node</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">start</span> <span class="o">=</span> <span class="n">edges</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">a</span><span class="o">;</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">end</span> <span class="o">=</span> <span class="n">edges</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">b</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">Node</span> <span class="n">cnodefront</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">[</span><span class="n">start</span><span class="o">];</span>
-</span><span class='line'>        <span class="n">Node</span> <span class="n">cnodeend</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">[</span><span class="n">end</span><span class="o">];</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">Node</span> <span class="n">nextEndNode</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">[</span><span class="n">end</span><span class="o">];</span>
-</span><span class='line'>        <span class="n">Node</span> <span class="n">nextStartNode</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">[</span><span class="n">start</span><span class="o">];</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">cnodefront</span><span class="o">.</span><span class="na">value</span> <span class="o">&lt;</span> <span class="n">edges</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">c</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">nextEndNode</span> <span class="o">=</span> <span class="n">createNextNode</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">end</span><span class="o">,</span> <span class="n">cnodefront</span><span class="o">.</span><span class="na">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">cnodeend</span><span class="o">.</span><span class="na">value</span> <span class="o">&lt;</span> <span class="n">edges</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">c</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">nextStartNode</span> <span class="o">=</span> <span class="n">createNextNode</span><span class="o">(</span><span class="n">i</span><span class="o">,</span> <span class="n">start</span><span class="o">,</span> <span class="n">cnodeend</span><span class="o">.</span><span class="na">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="n">nodes</span><span class="o">[</span><span class="n">end</span><span class="o">]</span> <span class="o">=</span> <span class="n">nextEndNode</span><span class="o">;</span>
-</span><span class='line'>        <span class="n">nodes</span><span class="o">[</span><span class="n">start</span><span class="o">]</span> <span class="o">=</span> <span class="n">nextStartNode</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">private</span> <span class="n">Node</span> <span class="nf">createNextNode</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">,</span> <span class="kt">int</span> <span class="n">end</span><span class="o">,</span> <span class="kt">int</span> <span class="n">depth</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">Node</span> <span class="n">node</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Node</span><span class="o">(</span><span class="n">edges</span><span class="o">[</span><span class="n">i</span><span class="o">].</span><span class="na">c</span><span class="o">,</span> <span class="n">depth</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">Node</span> <span class="n">cnode</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">[</span><span class="n">end</span><span class="o">];</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">depth</span> <span class="o">&gt;</span> <span class="n">cnode</span><span class="o">.</span><span class="na">depth</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">result</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">result</span><span class="o">,</span> <span class="n">depth</span><span class="o">);</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">node</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">cnode</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">private</span> <span class="kd">class</span> <span class="nc">Edge</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="n">b</span><span class="o">,</span> <span class="n">c</span><span class="o">;</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="nf">Edge</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">,</span> <span class="kt">int</span> <span class="n">b</span><span class="o">,</span> <span class="kt">int</span> <span class="n">c</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">a</span> <span class="o">=</span> <span class="n">a</span><span class="o">;</span>
-</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">b</span> <span class="o">=</span> <span class="n">b</span><span class="o">;</span>
-</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">c</span> <span class="o">=</span> <span class="n">c</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">private</span> <span class="kd">class</span> <span class="nc">Node</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">value</span><span class="o">;</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">depth</span><span class="o">;</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="nf">Node</span><span class="o">(</span><span class="kt">int</span> <span class="n">value</span><span class="o">,</span> <span class="kt">int</span> <span class="n">depth</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">value</span> <span class="o">=</span> <span class="n">value</span><span class="o">;</span>
-</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">depth</span> <span class="o">=</span> <span class="n">depth</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<script language="javaScript">
-$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
-</script>
-
 ]]></content>
   </entry>
   
