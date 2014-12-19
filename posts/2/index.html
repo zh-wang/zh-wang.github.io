@@ -102,6 +102,120 @@ Most code are from the guide, with some modification by me. ===== Full Notes &he
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/09/08/learning-swift-part-4/">Learning Swift Part 4 - Strings and Characters</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-08T18:03:31+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/09/08/learning-swift-part-4/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me.</p>
+
+<h2>===== Full Notes =====</h2>
+
+<h3>Strings and Characters</h3>
+
+<ul>
+<li>String Literals</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">someString</span> <span class="o">=</span> <span class="s">&quot;...&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Initializing an Empty String</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">var</span> <span class="n">emptyString</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>               <span class="c1">// empty string literal</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">anotherEmptyString</span> <span class="o">=</span> <span class="n">String</span><span class="p">()</span>  <span class="c1">// initializer syntax</span>
+</span><span class='line'>    <span class="c1">// these two strings are both empty, and are equivalent to each other</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">emptyString</span><span class="p">.</span><span class="n">isEmpty</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Nothing to see here&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>String Mutability</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">var</span> <span class="n">variableString</span> <span class="o">=</span> <span class="s">&quot;Horse&quot;</span>
+</span><span class='line'>    <span class="n">variableString</span> <span class="o">+=</span> <span class="s">&quot; and carriage&quot;</span>
+</span><span class='line'>    <span class="c1">// variableString is now &quot;Horse and carriage&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">constantString</span> <span class="o">=</span> <span class="s">&quot;Highlander&quot;</span>
+</span><span class='line'>    <span class="n">constantString</span> <span class="o">+=</span> <span class="s">&quot; and another Highlander&quot;</span>
+</span><span class='line'>    <span class="c1">// this reports a compile-time error - a constant string cannot be modified</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Strings Are Value Types</p>
+
+<ul>
+<li><p>Swift’s String type is a value type. If you create a new String value, that String value is copied when it is passed to a function or method, or when it is assigned to a constant or variable. In each case, a new copy of the existing String value is created, and the new copy is passed or assigned, not the original version.</p></li>
+<li><p>NSString in obj-c is NOT value type.</p></li>
+</ul>
+</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/08/learning-swift-part-4/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/09/05/learning-swift-part-3/">Learning Swift Part 3 - Basic Operators</a></h1>
     
     
@@ -1142,60 +1256,6 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/18/codility-aluminium-2014/">Codility - Aluminium 2014 - Part 1</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-18T15:54:12+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/06/18/codility-aluminium-2014/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Introduction</h2>
-
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Aluminium 2014 Challenge</a>, Part 1.</p>
-
-<ul>
-<li>The problem is, finding the maximum sum of a compact subsequence of array elements after performing a single swap operation. It&rsquo;s a little tricky <a href="http://en.wikipedia.org/wiki/Maximum_subarray_problem">maximal subarray</a> problem.</li>
-<li>For example, given an array {3, -10, 4, 5}, we can swap 3 and -10 to get a compact subsequence {3, 4, 5}, which has the maximum sum 12</li>
-<li>Time bound and space bound are both O(n)</li>
-<li>There exists many algorithms to solve maximal subarray problems, but they cannot directly applied to this problem.</li>
-</ul>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/06/18/codility-aluminium-2014/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="3">&larr; Older</a>
@@ -1213,6 +1273,10 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/12/19/android-asynctask-parallelexcution/">AsyncTask同士は非同期実行</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/28/vim-quickrun-config/">Vim-quickrun Config</a>
       </li>
     
@@ -1228,10 +1292,6 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
         <a href="/blog/2014/10/24/learning-swift-part-10/">Learning Swift Part 10 - Methods</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/10/24/learning-swift-part-9/">Learning Swift Part 9 - Properties, Subscripts</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1240,11 +1300,11 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (1)</a></li><li><a href='/blog/categories/swift/'>swift (11)</a></li><li><a href='/blog/categories/vim/'>vim (1)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (3)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (1)</a></li><li><a href='/blog/categories/swift/'>swift (11)</a></li><li><a href='/blog/categories/vim/'>vim (1)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.27272727272728%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 70.9090909090909%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 87.27272727272728%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 65.45454545454545%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 65.45454545454545%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 65.45454545454545%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 76.36363636363636%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 70.9090909090909%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 65.45454545454545%'>ruby(1)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(11)</a> <a href='/blog/categories/vim' style='font-size: 65.45454545454545%'>vim(1)</a> <a href='/blog/categories/zsh' style='font-size: 65.45454545454545%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.27272727272728%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 76.36363636363636%'>android(3)</a> <a href='/blog/categories/codility' style='font-size: 87.27272727272728%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 65.45454545454545%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 65.45454545454545%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 65.45454545454545%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 76.36363636363636%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 70.9090909090909%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 65.45454545454545%'>ruby(1)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(11)</a> <a href='/blog/categories/vim' style='font-size: 65.45454545454545%'>vim(1)</a> <a href='/blog/categories/zsh' style='font-size: 65.45454545454545%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

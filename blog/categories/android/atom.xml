@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-11-28T12:09:01+09:00</updated>
+  <updated>2014-12-19T13:16:53+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,116 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[AsyncTask同士は非同期実行]]></title>
+    <link href="http://zh-wang.github.io/blog/2014/12/19/android-asynctask-parallelexcution/"/>
+    <updated>2014-12-19T12:25:51+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2014/12/19/android-asynctask-parallelexcution</id>
+    <content type="html"><![CDATA[<h2>AsyncTaskはなに？</h2>
+
+<p><a href="http://developer.android.com/reference/android/os/AsyncTask.html">http://developer.android.com/reference/android/os/AsyncTask.html</a></p>
+
+<ul>
+<li>AsyncTask enables proper and easy use of the UI thread. This class allows to perform background operations and publish results on the UI thread without having to manipulate threads and/or handlers.</li>
+</ul>
+
+
+<h2>ほんとに非同期なの？</h2>
+
+<p>AsyncTaskはUIThreadと非同期処理を行うが、AsyncTask同士の間ではデフォルトで<strong>同期</strong>的に行っているみたいね。</p>
+
+<pre><code class="java">     private class TestTask extends AsyncTask&lt;Void, Void, Void&gt; /* Params, Progress, Result */ {
+
+        private final int id;
+        private final int duration;
+
+        TestTask(int id, int duration) {
+            this.id       = id;
+            this.duration = duration;
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            int taskExecutionNumber = executedTasksCount.incrementAndGet();
+            log("doInBackground: entered, taskExecutionNumber = " + taskExecutionNumber);
+            SystemClock.sleep(duration); // emulates some job
+            log("doInBackground: is about to finish, taskExecutionNumber = " + taskExecutionNumber);
+            return null;
+        }
+
+        private void log(String msg) {
+            Log.d("TestTask #" + id, msg);
+        }
+    }
+
+    // ===========================
+
+    for (int i = 0; i &lt; numberOfTasks; i++) {
+        int taskId = i + 1;
+        int taskDuration = 1000; // 1000 ms
+        TestTask task = new TestTask(taskId, taskDuration);
+
+        // デフォルトでは同期処理。
+        // task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR) が実行される。
+        task.execute();
+    }
+</code></pre>
+
+<p>結果。順番待ちですね。</p>
+
+<p><img src="/images/2014_12_19_image01.png" title="結果1" alt="result_1" /></p>
+
+<pre><code>    for (int i = 0; i &lt; numberOfTasks; i++) {
+        int taskId = i + 1;
+        int taskDuration = 1000; // 1000 ms
+        TestTask task = new TestTask(taskId, taskDuration);
+
+        // こう書くと、非同期実行になる
+        // ソース(sdk v.21)を見ると、並列実行ができるExecutorで処理されるぽい
+        task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+    }
+
+    // ========================
+    // 以下はAsyncTask.THREAD_POOL_EXECUTORの正体。
+    // androidのソースから抜いた
+    // ========================
+
+    private static final int CPU_COUNT = Runtime.getRuntime().availableProcessors();
+    private static final int CORE_POOL_SIZE = CPU_COUNT + 1;
+    private static final int MAXIMUM_POOL_SIZE = CPU_COUNT * 2 + 1;
+    private static final int KEEP_ALIVE = 1;
+
+    private static final ThreadFactory sThreadFactory = new ThreadFactory() {
+        private final AtomicInteger mCount = new AtomicInteger(1);
+
+        public Thread newThread(Runnable r) {
+            return new Thread(r, "AsyncTask #" + mCount.getAndIncrement());
+        }
+    };
+
+    private static final BlockingQueue&lt;Runnable&gt; sPoolWorkQueue =
+            new LinkedBlockingQueue&lt;Runnable&gt;(128);
+
+    /**
+     * An {@link Executor} that can be used to execute tasks in parallel.
+     */
+    public static final Executor THREAD_POOL_EXECUTOR =
+        new ThreadPoolExecutor(CORE_POOL_SIZE, MAXIMUM_POOL_SIZE, KEEP_ALIVE, TimeUnit.SECONDS, sPoolWorkQueue, sThreadFactory);
+</code></pre>
+
+<p>結果。非同期になった！</p>
+
+<p><img src="/images/2014_12_19_image02.png" title="結果2" alt="結果2" /></p>
+
+<p>因みに、同時に処理できるスレッドの数は、<code>CORE_POOL_SIZE</code>に定義されている。sdk v21の場合、CPUのコア数+1になっている。<br/>
+私のテスト端末はクアッドコアなので、同時に５つ走らせる。</p>
+
+<p>それ以上走らせると、やっはり順番待ちになるのね。</p>
+
+<p><img src="/images/2014_12_19_image03.png" title="結果3" alt="結果3" /></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mozc完全解説02]]></title>

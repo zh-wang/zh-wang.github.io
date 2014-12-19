@@ -9,9 +9,7 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Vim-quickrunの設定を書いたので、一応メモする。 必要なバンドル " これがないと意味ないだろう
-Bundle 'thinca/vim-quickrun' " vimから非同期実行。quickrunが実行中でも、ファイル編集が出来るようになる。
-Bundle 'Shougo/ &hellip;">
+  <meta name="description" content="AsyncTaskはなに？ http://developer.android.com/reference/android/os/AsyncTask.html AsyncTask enables proper and easy use of the UI thread. This class &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -53,9 +51,7 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Vim-quickrunの設定を書いたので、一応メモする。 必要なバンドル " これがないと意味ないだろう
-Bundle 'thinca/vim-quickrun' " vimから非同期実行。quickrunが実行中でも、ファイル編集が出来るようになる。
-Bundle 'Shougo/ &hellip;" />
+<meta property="og:description" content="AsyncTaskはなに？ http://developer.android.com/reference/android/os/AsyncTask.html AsyncTask enables proper and easy use of the UI thread. This class &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -98,6 +94,219 @@ Bundle 'Shougo/ &hellip;" />
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/19/android-asynctask-parallelexcution/">AsyncTask同士は非同期実行</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-19T12:25:51+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/12/19/android-asynctask-parallelexcution/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/12/19/android-asynctask-parallelexcution/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>AsyncTaskはなに？</h2>
+
+<p><a href="http://developer.android.com/reference/android/os/AsyncTask.html">http://developer.android.com/reference/android/os/AsyncTask.html</a></p>
+
+<ul>
+<li>AsyncTask enables proper and easy use of the UI thread. This class allows to perform background operations and publish results on the UI thread without having to manipulate threads and/or handlers.</li>
+</ul>
+
+
+<h2>ほんとに非同期なの？</h2>
+
+<p>AsyncTaskはUIThreadと非同期処理を行うが、AsyncTask同士の間ではデフォルトで<strong>同期</strong>的に行っているみたいね。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'> <span class="kd">private</span> <span class="kd">class</span> <span class="nc">TestTask</span> <span class="kd">extends</span> <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">Void</span><span class="o">,</span> <span class="n">Void</span><span class="o">,</span> <span class="n">Void</span><span class="o">&gt;</span> <span class="cm">/* Params, Progress, Result */</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">id</span><span class="o">;</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">duration</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">TestTask</span><span class="o">(</span><span class="kt">int</span> <span class="n">id</span><span class="o">,</span> <span class="kt">int</span> <span class="n">duration</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">id</span>       <span class="o">=</span> <span class="n">id</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">this</span><span class="o">.</span><span class="na">duration</span> <span class="o">=</span> <span class="n">duration</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">protected</span> <span class="n">Void</span> <span class="nf">doInBackground</span><span class="o">(</span><span class="n">Void</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">taskExecutionNumber</span> <span class="o">=</span> <span class="n">executedTasksCount</span><span class="o">.</span><span class="na">incrementAndGet</span><span class="o">();</span>
+</span><span class='line'>        <span class="n">log</span><span class="o">(</span><span class="s">&quot;doInBackground: entered, taskExecutionNumber = &quot;</span> <span class="o">+</span> <span class="n">taskExecutionNumber</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">SystemClock</span><span class="o">.</span><span class="na">sleep</span><span class="o">(</span><span class="n">duration</span><span class="o">);</span> <span class="c1">// emulates some job</span>
+</span><span class='line'>        <span class="n">log</span><span class="o">(</span><span class="s">&quot;doInBackground: is about to finish, taskExecutionNumber = &quot;</span> <span class="o">+</span> <span class="n">taskExecutionNumber</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">log</span><span class="o">(</span><span class="n">String</span> <span class="n">msg</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">&quot;TestTask #&quot;</span> <span class="o">+</span> <span class="n">id</span><span class="o">,</span> <span class="n">msg</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// ===========================</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfTasks</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">taskId</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">taskDuration</span> <span class="o">=</span> <span class="mi">1000</span><span class="o">;</span> <span class="c1">// 1000 ms</span>
+</span><span class='line'>    <span class="n">TestTask</span> <span class="n">task</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">TestTask</span><span class="o">(</span><span class="n">taskId</span><span class="o">,</span> <span class="n">taskDuration</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// デフォルトでは同期処理。</span>
+</span><span class='line'>    <span class="c1">// task.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR) が実行される。</span>
+</span><span class='line'>    <span class="n">task</span><span class="o">.</span><span class="na">execute</span><span class="o">();</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>結果。順番待ちですね。</p>
+
+<p><img src="/images/2014_12_19_image01.png" title="結果1" alt="result_1" /></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numberOfTasks</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">taskId</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">taskDuration</span> <span class="o">=</span> <span class="mi">1000</span><span class="o">;</span> <span class="c1">// 1000 ms</span>
+</span><span class='line'>    <span class="n">TestTask</span> <span class="n">task</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">TestTask</span><span class="o">(</span><span class="n">taskId</span><span class="o">,</span> <span class="n">taskDuration</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// こう書くと、非同期実行になる</span>
+</span><span class='line'>    <span class="c1">// ソース(sdk v.21)を見ると、並列実行ができるExecutorで処理されるぽい</span>
+</span><span class='line'>    <span class="n">task</span><span class="o">.</span><span class="na">executeOnExecutor</span><span class="o">(</span><span class="n">AsyncTask</span><span class="o">.</span><span class="na">THREAD_POOL_EXECUTOR</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// ========================</span>
+</span><span class='line'><span class="c1">// 以下はAsyncTask.THREAD_POOL_EXECUTORの正体。</span>
+</span><span class='line'><span class="c1">// androidのソースから抜いた</span>
+</span><span class='line'><span class="c1">// ========================</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">CPU_COUNT</span> <span class="o">=</span> <span class="n">Runtime</span><span class="o">.</span><span class="na">getRuntime</span><span class="o">().</span><span class="na">availableProcessors</span><span class="o">();</span>
+</span><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">CORE_POOL_SIZE</span> <span class="o">=</span> <span class="n">CPU_COUNT</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">MAXIMUM_POOL_SIZE</span> <span class="o">=</span> <span class="n">CPU_COUNT</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">KEEP_ALIVE</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">ThreadFactory</span> <span class="n">sThreadFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ThreadFactory</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="kd">final</span> <span class="n">AtomicInteger</span> <span class="n">mCount</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">AtomicInteger</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">Thread</span> <span class="nf">newThread</span><span class="o">(</span><span class="n">Runnable</span> <span class="n">r</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">new</span> <span class="nf">Thread</span><span class="o">(</span><span class="n">r</span><span class="o">,</span> <span class="s">&quot;AsyncTask #&quot;</span> <span class="o">+</span> <span class="n">mCount</span><span class="o">.</span><span class="na">getAndIncrement</span><span class="o">());</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">BlockingQueue</span><span class="o">&lt;</span><span class="n">Runnable</span><span class="o">&gt;</span> <span class="n">sPoolWorkQueue</span> <span class="o">=</span>
+</span><span class='line'>        <span class="k">new</span> <span class="n">LinkedBlockingQueue</span><span class="o">&lt;</span><span class="n">Runnable</span><span class="o">&gt;(</span><span class="mi">128</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * An {@link Executor} that can be used to execute tasks in parallel.</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">Executor</span> <span class="n">THREAD_POOL_EXECUTOR</span> <span class="o">=</span>
+</span><span class='line'>    <span class="k">new</span> <span class="nf">ThreadPoolExecutor</span><span class="o">(</span><span class="n">CORE_POOL_SIZE</span><span class="o">,</span> <span class="n">MAXIMUM_POOL_SIZE</span><span class="o">,</span> <span class="n">KEEP_ALIVE</span><span class="o">,</span> <span class="n">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">,</span> <span class="n">sPoolWorkQueue</span><span class="o">,</span> <span class="n">sThreadFactory</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>結果。非同期になった！</p>
+
+<p><img src="/images/2014_12_19_image02.png" title="結果2" alt="結果2" /></p>
+
+<p>因みに、同時に処理できるスレッドの数は、<code>CORE_POOL_SIZE</code>に定義されている。sdk v21の場合、CPUのコア数+1になっている。<br/>
+私のテスト端末はクアッドコアなので、同時に５つ走らせる。</p>
+
+<p>それ以上走らせると、やっはり順番待ちになるのね。</p>
+
+<p><img src="/images/2014_12_19_image03.png" title="結果3" alt="結果3" /></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1198,120 +1407,6 @@ Most code are from the guide, with some modification by me.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/08/learning-swift-part-4/">Learning Swift Part 4 - Strings and Characters</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-08T18:03:31+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/09/08/learning-swift-part-4/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
-Most code are from the guide, with some modification by me.</p>
-
-<h2>===== Full Notes =====</h2>
-
-<h3>Strings and Characters</h3>
-
-<ul>
-<li>String Literals</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">someString</span> <span class="o">=</span> <span class="s">&quot;...&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Initializing an Empty String</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">var</span> <span class="n">emptyString</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>               <span class="c1">// empty string literal</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">anotherEmptyString</span> <span class="o">=</span> <span class="n">String</span><span class="p">()</span>  <span class="c1">// initializer syntax</span>
-</span><span class='line'>    <span class="c1">// these two strings are both empty, and are equivalent to each other</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="n">emptyString</span><span class="p">.</span><span class="n">isEmpty</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Nothing to see here&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>String Mutability</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">var</span> <span class="n">variableString</span> <span class="o">=</span> <span class="s">&quot;Horse&quot;</span>
-</span><span class='line'>    <span class="n">variableString</span> <span class="o">+=</span> <span class="s">&quot; and carriage&quot;</span>
-</span><span class='line'>    <span class="c1">// variableString is now &quot;Horse and carriage&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">let</span> <span class="n">constantString</span> <span class="o">=</span> <span class="s">&quot;Highlander&quot;</span>
-</span><span class='line'>    <span class="n">constantString</span> <span class="o">+=</span> <span class="s">&quot; and another Highlander&quot;</span>
-</span><span class='line'>    <span class="c1">// this reports a compile-time error - a constant string cannot be modified</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><p>Strings Are Value Types</p>
-
-<ul>
-<li><p>Swift’s String type is a value type. If you create a new String value, that String value is copied when it is passed to a function or method, or when it is assigned to a constant or variable. In each case, a new copy of the existing String value is created, and the new copy is passed or assigned, not the original version.</p></li>
-<li><p>NSString in obj-c is NOT value type.</p></li>
-</ul>
-</li>
-</ul>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/09/08/learning-swift-part-4/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -1325,6 +1420,10 @@ Most code are from the guide, with some modification by me.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/12/19/android-asynctask-parallelexcution/">AsyncTask同士は非同期実行</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/11/28/vim-quickrun-config/">Vim-quickrun Config</a>
@@ -1342,10 +1441,6 @@ Most code are from the guide, with some modification by me.</p>
         <a href="/blog/2014/10/24/learning-swift-part-10/">Learning Swift Part 10 - Methods</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/10/24/learning-swift-part-9/">Learning Swift Part 9 - Properties, Subscripts</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1354,11 +1449,11 @@ Most code are from the guide, with some modification by me.</p>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (2)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (1)</a></li><li><a href='/blog/categories/swift/'>swift (11)</a></li><li><a href='/blog/categories/vim/'>vim (1)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (3)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (1)</a></li><li><a href='/blog/categories/swift/'>swift (11)</a></li><li><a href='/blog/categories/vim/'>vim (1)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.27272727272728%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 70.9090909090909%'>android(2)</a> <a href='/blog/categories/codility' style='font-size: 87.27272727272728%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 65.45454545454545%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 65.45454545454545%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 65.45454545454545%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 76.36363636363636%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 70.9090909090909%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 65.45454545454545%'>ruby(1)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(11)</a> <a href='/blog/categories/vim' style='font-size: 65.45454545454545%'>vim(1)</a> <a href='/blog/categories/zsh' style='font-size: 65.45454545454545%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.27272727272728%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 76.36363636363636%'>android(3)</a> <a href='/blog/categories/codility' style='font-size: 87.27272727272728%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 65.45454545454545%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 65.45454545454545%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 65.45454545454545%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 76.36363636363636%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 70.9090909090909%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 65.45454545454545%'>ruby(1)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(11)</a> <a href='/blog/categories/vim' style='font-size: 65.45454545454545%'>vim(1)</a> <a href='/blog/categories/zsh' style='font-size: 65.45454545454545%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>
