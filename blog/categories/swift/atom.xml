@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-12-19T13:16:53+09:00</updated>
+  <updated>2015-01-06T19:45:57+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,112 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Learning Swift Part 12 - Deinitialization]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/01/06/learning-swift-part-12/"/>
+    <updated>2015-01-06T19:34:40+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/01/06/learning-swift-part-12</id>
+    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
+
+<h3>Deinitialization</h3>
+
+<ul>
+<li><p>How Deinitialization Works</p>
+
+<ul>
+<li>Swift automatically deallocates your instances when they are no longer needed, to free up resources. Swift handles the memory management of instances through automatic reference counting (ARC), as described in Automatic Reference Counting.</li>
+</ul>
+</li>
+<li><p>Deinitializers in Action, a sample of Bank operations
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  struct Bank {
+</span><span class='line'>      static var coinsInBank = 10_000
+</span><span class='line'>      static func vendCoins(var numberOfCoinsToVend: Int) -&gt; Int {
+</span><span class='line'>          numberOfCoinsToVend = min(numberOfCoinsToVend, coinsInBank)
+</span><span class='line'>          coinsInBank -= numberOfCoinsToVend
+</span><span class='line'>          return numberOfCoinsToVend
+</span><span class='line'>      }
+</span><span class='line'>      static func receiveCoins(coins: Int) {
+</span><span class='line'>          coinsInBank += coins
+</span><span class='line'>      }
+</span><span class='line'>  }&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  class Player {
+</span><span class='line'>      var coinsInPurse: Int
+</span><span class='line'>      init(coins: Int) {
+</span><span class='line'>          coinsInPurse = Bank.vendCoins(coins)
+</span><span class='line'>      }
+</span><span class='line'>      func winCoins(coins: Int) {
+</span><span class='line'>          coinsInPurse += Bank.vendCoins(coins)
+</span><span class='line'>      }
+</span><span class='line'>      deinit {
+</span><span class='line'>          Bank.receiveCoins(coinsInPurse)
+</span><span class='line'>      }
+</span><span class='line'>  }&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  var playerOne: Player? = Player(coins: 100)
+</span><span class='line'>  println(&ldquo;A new player has joined the game with (playerOne!.coinsInPurse) coins&rdquo;)
+</span><span class='line'>  // prints &ldquo;A new player has joined the game with 100 coins&rdquo;
+</span><span class='line'>  println(&ldquo;There are now (Bank.coinsInBank) coins left in the bank&rdquo;)
+</span><span class='line'>  // prints &ldquo;There are now 9900 coins left in the bank&rdquo;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  playerOne!.winCoins(2_000)
+</span><span class='line'>  println(&ldquo;PlayerOne won 2000 coins &amp; now has (playerOne!.coinsInPurse) coins&rdquo;)
+</span><span class='line'>  // prints &ldquo;PlayerOne won 2000 coins &amp; now has 2100 coins&rdquo;
+</span><span class='line'>  println(&ldquo;The bank now only has (Bank.coinsInBank) coins left&rdquo;)
+</span><span class='line'>  // prints &ldquo;The bank now only has 7900 coins left&rdquo;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  playerOne = nil
+</span><span class='line'>  println(&ldquo;PlayerOne has left the game&rdquo;)
+</span><span class='line'>  // prints &ldquo;PlayerOne has left the game&rdquo;
+</span><span class='line'>  println(&ldquo;The bank now has (Bank.coinsInBank) coins&rdquo;)
+</span><span class='line'>  // prints &ldquo;The bank now has 10000 coins&rdquo;</span></code></pre></td></tr></table></div></figure></p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Learning Swift Part 11 - Inheritance]]></title>
@@ -1123,379 +1229,22 @@
 <li><p>Identity Operators</p>
 
 <p>  It can sometimes be useful to find out if two constants or variables refer to exactly the same instance of a class. To enable this, Swift provides two identity operators:
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  // Identical to (===)
-</span><span class='line'>  // Not identical to (!==)&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  if tenEighty === alsoTenEighty {
-</span><span class='line'>  println("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
-</span><span class='line'>  }
-</span><span class='line'>  // prints "tenEighty and alsoTenEighty refer to the same VideoMode instance."
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Assignment and Copy Behavior for Strings, Arrays, and Dictionaries&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;  Swift’s String, Array, and Dictionary types are implemented as structures. This means that strings, arrays, and dictionaries are copied when they are assigned to a new constant or variable, or when they are passed to a function or method.&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;  This behavior is different from NSString, NSArray, and NSDictionary in Foundation, which are implemented as classes, not structures. NSString, NSArray, and NSDictionary instances are always assigned and passed around as a reference to an existing instance, rather than as a copy.&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;/ul&gt;
-</span><span class='line'>
-</span><span class='line'>]]&gt;&lt;/content&gt;
-</span><span class='line'>  &lt;/entry&gt;
-</span><span class='line'>  
-</span><span class='line'>  &lt;entry&gt;
-</span><span class='line'>&lt;title type="html"&gt;&lt;![CDATA[Learning Swift Part 7 - Closure & Enumerations]]&gt;&lt;/title&gt;
-</span><span class='line'>&lt;link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-7/"/&gt;
-</span><span class='line'>&lt;updated&gt;2014-10-24T11:05:49+09:00&lt;/updated&gt;
-</span><span class='line'>&lt;id&gt;http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-7&lt;/id&gt;
-</span><span class='line'>&lt;content type="html"&gt;&lt;![CDATA[&lt;h2&gt;===== Full Notes =====&lt;/h2&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h3&gt;Closure&lt;/h3&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;ul&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Closure Expression Syntax</span></code></pre></td></tr></table></div></figure>swift
-      let names = [&ldquo;Chris&rdquo;, &ldquo;Alex&rdquo;, &ldquo;Ewa&rdquo;, &ldquo;Barry&rdquo;, &ldquo;Daniella&rdquo;]</p>
+&#8220;`
+      // Identical to (===)
+      // Not identical to (!==)</p>
 
-<pre><code>  { (parameters) -&gt; return type in
-      statements
+<pre><code>  if tenEighty === alsoTenEighty {
+      println("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
   }
-
-  func backwards(s1: String, s2: String) -&gt; Bool {
-      return s1 &gt; s2
-  }
-  var reversed = sorted(names, backwards)
-  // reversed is equal to ["Ewa", "Daniella", "Chris", "Barry", "Alex"]
-
-  // This is the same closure
-  reversed = sorted(names, { (s1: String, s2: String) -&gt; Bool in return s1 &gt; s2 } )
+  // prints "tenEighty and alsoTenEighty refer to the same VideoMode instance."
 </code></pre>
 
 <p>&#8220;`</p></li>
-<li>Inferring Type From Context
-<code>
-      reversed = sorted(names, { s1, s2 in return s1 &gt; s2 } )
-</code></li>
-<li>Implicit Returns from Single-Expression Closures
-<code>
-      reversed = sorted(names, { s1, s2 in s1 &gt; s2 } )
-</code></li>
-<li>Shorthand Argument Names
-<code>
-      reversed = sorted(names, { $0 &gt; $1 } )
-</code></li>
-<li>Operator Functions
-<code>
-      reversed = sorted(names, &gt;)
-</code></li>
-</ul>
+<li><p>Assignment and Copy Behavior for Strings, Arrays, and Dictionaries</p>
 
+<p>  Swift’s String, Array, and Dictionary types are implemented as structures. This means that strings, arrays, and dictionaries are copied when they are assigned to a new constant or variable, or when they are passed to a function or method.</p>
 
-<!-- more -->
-
-
-<ul>
-<li><p>Trailing Closure
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  func someFunctionThatTakesAClosure(closure: () -&gt; ()) {
-</span><span class='line'>      // function body goes here
-</span><span class='line'>  }&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  // here's how you call this function without using a trailing closure:
-</span><span class='line'>
-</span><span class='line'>  someFunctionThatTakesAClosure({
-</span><span class='line'>  // closure's body goes here
-</span><span class='line'>  })
-</span><span class='line'>
-</span><span class='line'>  // here's how you call this function with a trailing closure instead:
-</span><span class='line'>
-</span><span class='line'>  someFunctionThatTakesAClosure() {
-</span><span class='line'>  // trailing closure's body goes here
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>  // Sample
-</span><span class='line'>
-</span><span class='line'>  let digitNames = [
-</span><span class='line'>  0: "Zero", 1: "One", 2: "Two",   3: "Three", 4: "Four",
-</span><span class='line'>  5: "Five", 6: "Six", 7: "Seven", 8: "Eight", 9: "Nine"
-</span><span class='line'>  ]
-</span><span class='line'>  let numbers = [16, 58, 510]
-</span><span class='line'>
-</span><span class='line'>  let strings = numbers.map {
-</span><span class='line'>  (var number) -&gt; String in
-</span><span class='line'>  var output = ""
-</span><span class='line'>  while number &gt; 0 {
-</span><span class='line'>      output = digitNames[number % 10]! + output
-</span><span class='line'>      number /= 10
-</span><span class='line'>  }
-</span><span class='line'>  return output
-</span><span class='line'>  }
-</span><span class='line'>  // strings is inferred to be of type [String]
-</span><span class='line'>  // its value is ["OneSix", "FiveEight", "FiveOneZero"]
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Capturing Value</span></code></pre></td></tr></table></div></figure>
-      func makeIncrementor(forIncrement amount: Int) -> () -> Int {
-          var runningTotal = 0
-          func incrementor() -> Int {
-              runningTotal += amount
-              return runningTotal
-          }
-          return incrementor
-      }</p>
-
-<pre><code>  let incrementByTen = makeIncrementor(forIncrement: 10)
-
-  incrementByTen()
-  // returns a value of 10
-  incrementByTen()
-  // returns a value of 20
-  incrementByTen()
-  // returns a value of 30
-
-  let incrementBySeven = makeIncrementor(forIncrement: 7)
-  incrementBySeven()
-  // returns a value of 7
-
-  incrementByTen()
-  // returns a value of 40
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Closures Are Reference Types
-<code>
-      let alsoIncrementByTen = incrementByTen
-      alsoIncrementByTen()
-      // returns a value of 50
-</code></p>
-
-<h3>Enumerations</h3></li>
-<li><p>Enumeration Syntax
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  enum CompassPoint {
-</span><span class='line'>      case North
-</span><span class='line'>      case South
-</span><span class='line'>      case East
-</span><span class='line'>      case West
-</span><span class='line'>  }&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  enum Planet {
-</span><span class='line'>  case Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>  var directionToHead = CompassPoint.West
-</span><span class='line'>
-</span><span class='line'>  // Can be shortened
-</span><span class='line'>
-</span><span class='line'>  directionToHead = .East
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Matching Enumeration Values with a Switch Statement</span></code></pre></td></tr></table></div></figure>
-      directionToHead = .South
-      switch directionToHead {
-      case .North:
-          println(&ldquo;Lots of planets have a north&rdquo;)
-      case .South:
-          println(&ldquo;Watch out for penguins&rdquo;)
-      case .East:
-          println(&ldquo;Where the sun rises&rdquo;)
-      case .West:
-          println(&ldquo;Where the skies are blue&rdquo;)
-      }
-      // prints &ldquo;Watch out for penguins&rdquo;</p>
-
-<pre><code>  let somePlanet = Planet.Earth
-  switch somePlanet {
-  case .Earth:
-      println("Mostly harmless")
-  default:
-      println("Not a safe place for humans")
-  }
-  // prints "Mostly harmless"
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Associated Values
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  enum Barcode {
-</span><span class='line'>      case UPCA(Int, Int, Int, Int)  // a Barcode
-</span><span class='line'>      case QRCode(String)            // a QRCode
-</span><span class='line'>  }&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  var productBarcode = Barcode.UPCA(8, 85909, 51226, 3)
-</span><span class='line'>
-</span><span class='line'>  productBarcode = .QRCode("ABCDEFGHIJKLMNOP")
-</span><span class='line'>
-</span><span class='line'>  switch productBarcode {
-</span><span class='line'>  case .UPCA(let numberSystem, let manufacturer, let product, let check):
-</span><span class='line'>  println("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
-</span><span class='line'>  case .QRCode(let productCode):
-</span><span class='line'>  println("QR code: \(productCode).")
-</span><span class='line'>  }
-</span><span class='line'>  // prints "QR code: ABCDEFGHIJKLMNOP."
-</span><span class='line'>
-</span><span class='line'>  // Can be shortened
-</span><span class='line'>
-</span><span class='line'>  switch productBarcode {
-</span><span class='line'>  case let .UPCA(numberSystem, manufacturer, product, check):
-</span><span class='line'>  println("UPC-A: \(numberSystem), \(manufacturer), \(product), \(check).")
-</span><span class='line'>  case let .QRCode(productCode):
-</span><span class='line'>  println("QR code: \(productCode).")
-</span><span class='line'>  }
-</span><span class='line'>  // prints "QR code: ABCDEFGHIJKLMNOP."
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Raw Values</span></code></pre></td></tr></table></div></figure>
-      enum ASCIIControlCharacter: Character {
-          case Tab = &ldquo;\t&rdquo;
-          case LineFeed = &ldquo;\n&rdquo;
-          case CarriageReturn = &ldquo;\r&rdquo;
-      }</p>
-
-<pre><code>  enum Planet: Int {
-      case Mercury = 1, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune
-  }
-
-  let earthsOrder = Planet.Earth.toRaw()
-  // earthsOrder is 3
-
-  let possiblePlanet = Planet.fromRaw(7)
-  // possiblePlanet is of type Planet? and equals Planet.Uranus
-
-  let positionToFind = 9
-  if let somePlanet = Planet.fromRaw(positionToFind) {
-      switch somePlanet {
-      case .Earth:
-          println("Mostly harmless")
-      default:
-          println("Not a safe place for humans")
-      }
-  } else {
-      println("There isn't a planet at position \(positionToFind)")
-  }
-  // prints "There isn't a planet at position 9"
-</code></pre>
-
-<p>&#8220;`</p></li>
+<p>  This behavior is different from NSString, NSArray, and NSDictionary in Foundation, which are implemented as classes, not structures. NSString, NSArray, and NSDictionary instances are always assigned and passed around as a reference to an existing instance, rather than as a copy.</p></li>
 </ul>
 
 ]]></content>

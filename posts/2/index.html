@@ -10,7 +10,7 @@
 
   
   <meta name="description" content="Just some notes after reading Apple&rsquo;s official online guide.
-Most code are from the guide, with some modification by me. ===== Full Notes &hellip;">
+Most code are from the guide, with some modification by me. Tuple in switch &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -53,7 +53,7 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
 <meta property="og:description" content="Just some notes after reading Apple&rsquo;s official online guide.
-Most code are from the guide, with some modification by me. ===== Full Notes &hellip;" />
+Most code are from the guide, with some modification by me. Tuple in switch &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/posts/2/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -96,6 +96,183 @@ Most code are from the guide, with some modification by me. ===== Full Notes &he
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/19/learning-swift-part-5/">Learning Swift Part 5 - Control Flow</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-19T15:14:08+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/09/19/learning-swift-part-5/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/09/19/learning-swift-part-5/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me.</p>
+
+<p>Tuple in switch statement is interesting.</p>
+
+<h2>===== Full Notes =====</h2>
+
+<h3>Control Flow</h3>
+
+<figure class='code'><figcaption><span>Time to be Awesome - awesome.rb </span></figcaption>
+<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='rb'><span class='line'><span class="nb">puts</span> <span class="s2">&quot;Awesome!&quot;</span> <span class="k">unless</span> <span class="n">lame</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>For-In</h3>
+
+<ul>
+<li>Sample</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">for</span> <span class="n">index</span> <span class="k">in</span> <span class="mf">1.</span><span class="p">.</span><span class="mf">.5</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(index) times 5 is \(index * 5)&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// 1 times 5 is 5</span>
+</span><span class='line'>    <span class="c1">// 2 times 5 is 10</span>
+</span><span class='line'>    <span class="c1">// 3 times 5 is 15</span>
+</span><span class='line'>    <span class="c1">// 4 times 5 is 20</span>
+</span><span class='line'>    <span class="c1">// 5 times 5 is 25</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>if no need of value from the range</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">base</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">power</span> <span class="o">=</span> <span class="mi">10</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">_</span> <span class="k">in</span> <span class="mf">1.</span><span class="p">..</span><span class="n">power</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">answer</span> <span class="o">*=</span> <span class="n">base</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(base) to the power of \(power) is \(answer)&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;3 to the power of 10 is 59049&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Use in array</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Anna&quot;</span><span class="p">,</span> <span class="s">&quot;Alex&quot;</span><span class="p">,</span> <span class="s">&quot;Brian&quot;</span><span class="p">,</span> <span class="s">&quot;Jack&quot;</span><span class="p">]</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">name</span> <span class="k">in</span> <span class="n">names</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Hello, \(name)!&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// Hello, Anna!</span>
+</span><span class='line'>    <span class="c1">// Hello, Alex!</span>
+</span><span class='line'>    <span class="c1">// Hello, Brian!</span>
+</span><span class='line'>    <span class="c1">// Hello, Jack!</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Use in dictionary</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">numberOfLegs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;spider&quot;</span><span class="o">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s">&quot;ant&quot;</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s">&quot;cat&quot;</span><span class="o">:</span> <span class="mi">4</span><span class="p">]</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">animalName</span><span class="p">,</span> <span class="n">legCount</span><span class="p">)</span> <span class="k">in</span> <span class="n">numberOfLegs</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(animalName)s have \(legCount) legs&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// spiders have 8 legs</span>
+</span><span class='line'>    <span class="c1">// cats have 4 legs</span>
+</span><span class='line'>    <span class="c1">// ants have 6 legs</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Use in string</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">for</span> <span class="n">character</span> <span class="k">in</span> <span class="s">&quot;Hello&quot;</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="n">character</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// H</span>
+</span><span class='line'>    <span class="c1">// e</span>
+</span><span class='line'>    <span class="c1">// l</span>
+</span><span class='line'>    <span class="c1">// l</span>
+</span><span class='line'>    <span class="c1">// o</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/19/learning-swift-part-5/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -1207,55 +1384,6 @@ TEST=unittest
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/20/codility-aluminium-2014-p2/">Codility - Aluminium 2014 - Part 2</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-20T11:17:21+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/06/20/codility-aluminium-2014-p2/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/06/20/codility-aluminium-2014-p2/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Introduction</h2>
-
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Aluminium 2014 Challenge</a>, Part 2.</p>
-
-<p>In <a href="http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014/">Part 1</a>, we introduced a solution for CLASSIC maximal subarray problem.<br/>
-Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> version.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/06/20/codility-aluminium-2014-p2/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="3">&larr; Older</a>
@@ -1273,6 +1401,10 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/01/06/learning-swift-part-12/">Learning Swift Part 12 - Deinitialization</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/12/19/android-asynctask-parallelexcution/">AsyncTask同士は非同期実行</a>
       </li>
     
@@ -1288,10 +1420,6 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
         <a href="/blog/2014/11/20/learning-swift-part-11/">Learning Swift Part 11 - Inheritance</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/10/24/learning-swift-part-10/">Learning Swift Part 10 - Methods</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1300,11 +1428,11 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (3)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (1)</a></li><li><a href='/blog/categories/swift/'>swift (11)</a></li><li><a href='/blog/categories/vim/'>vim (1)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (3)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (1)</a></li><li><a href='/blog/categories/swift/'>swift (12)</a></li><li><a href='/blog/categories/vim/'>vim (1)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.27272727272728%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 76.36363636363636%'>android(3)</a> <a href='/blog/categories/codility' style='font-size: 87.27272727272728%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 65.45454545454545%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 65.45454545454545%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 65.45454545454545%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 76.36363636363636%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 70.9090909090909%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 65.45454545454545%'>ruby(1)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(11)</a> <a href='/blog/categories/vim' style='font-size: 65.45454545454545%'>vim(1)</a> <a href='/blog/categories/zsh' style='font-size: 65.45454545454545%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 85.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 75.0%'>android(3)</a> <a href='/blog/categories/codility' style='font-size: 85.0%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 65.0%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 65.0%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 65.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 75.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 70.0%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 65.0%'>ruby(1)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(12)</a> <a href='/blog/categories/vim' style='font-size: 65.0%'>vim(1)</a> <a href='/blog/categories/zsh' style='font-size: 65.0%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>
@@ -1389,7 +1517,7 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - viennakanon -
+  Copyright &copy; 2015 - viennakanon -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

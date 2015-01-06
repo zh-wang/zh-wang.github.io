@@ -9,7 +9,7 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="AsyncTaskはなに？ http://developer.android.com/reference/android/os/AsyncTask.html AsyncTask enables proper and easy use of the UI thread. This class &hellip;">
+  <meta name="description" content="===== Full Notes ===== Deinitialization How Deinitialization Works Swift automatically deallocates your instances when they are no longer needed, to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -51,7 +51,7 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="AsyncTaskはなに？ http://developer.android.com/reference/android/os/AsyncTask.html AsyncTask enables proper and easy use of the UI thread. This class &hellip;" />
+<meta property="og:description" content="===== Full Notes ===== Deinitialization How Deinitialization Works Swift automatically deallocates your instances when they are no longer needed, to &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -94,6 +94,144 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/01/06/learning-swift-part-12/">Learning Swift Part 12 - Deinitialization</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-06T19:34:40+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/01/06/learning-swift-part-12/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/01/06/learning-swift-part-12/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>===== Full Notes =====</h2>
+
+<h3>Deinitialization</h3>
+
+<ul>
+<li><p>How Deinitialization Works</p>
+
+<ul>
+<li>Swift automatically deallocates your instances when they are no longer needed, to free up resources. Swift handles the memory management of instances through automatic reference counting (ARC), as described in Automatic Reference Counting.</li>
+</ul>
+</li>
+<li><p>Deinitializers in Action, a sample of Bank operations</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>struct Bank {
+</span><span class='line'>    static var coinsInBank = 10_000
+</span><span class='line'>    static func vendCoins(var numberOfCoinsToVend: Int) -&gt; Int {
+</span><span class='line'>        numberOfCoinsToVend = min(numberOfCoinsToVend, coinsInBank)
+</span><span class='line'>        coinsInBank -= numberOfCoinsToVend
+</span><span class='line'>        return numberOfCoinsToVend
+</span><span class='line'>    }
+</span><span class='line'>    static func receiveCoins(coins: Int) {
+</span><span class='line'>        coinsInBank += coins
+</span><span class='line'>    }
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>class Player {
+</span><span class='line'>    var coinsInPurse: Int
+</span><span class='line'>    init(coins: Int) {
+</span><span class='line'>        coinsInPurse = Bank.vendCoins(coins)
+</span><span class='line'>    }
+</span><span class='line'>    func winCoins(coins: Int) {
+</span><span class='line'>        coinsInPurse += Bank.vendCoins(coins)
+</span><span class='line'>    }
+</span><span class='line'>    deinit {
+</span><span class='line'>        Bank.receiveCoins(coinsInPurse)
+</span><span class='line'>    }
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>var playerOne: Player? = Player(coins: 100)
+</span><span class='line'>println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
+</span><span class='line'>// prints "A new player has joined the game with 100 coins"
+</span><span class='line'>println("There are now \(Bank.coinsInBank) coins left in the bank")
+</span><span class='line'>// prints "There are now 9900 coins left in the bank"
+</span><span class='line'>
+</span><span class='line'>playerOne!.winCoins(2_000)
+</span><span class='line'>println("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
+</span><span class='line'>// prints "PlayerOne won 2000 coins & now has 2100 coins"
+</span><span class='line'>println("The bank now only has \(Bank.coinsInBank) coins left")
+</span><span class='line'>// prints "The bank now only has 7900 coins left"
+</span><span class='line'>
+</span><span class='line'>playerOne = nil
+</span><span class='line'>println("PlayerOne has left the game")
+</span><span class='line'>// prints "PlayerOne has left the game"
+</span><span class='line'>println("The bank now has \(Bank.coinsInBank) coins")
+</span><span class='line'>// prints "The bank now has 10000 coins"</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1230,183 +1368,6 @@ Most code are from the guide, with some modification by me.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/19/learning-swift-part-5/">Learning Swift Part 5 - Control Flow</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-19T15:14:08+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/09/19/learning-swift-part-5/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/09/19/learning-swift-part-5/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
-Most code are from the guide, with some modification by me.</p>
-
-<p>Tuple in switch statement is interesting.</p>
-
-<h2>===== Full Notes =====</h2>
-
-<h3>Control Flow</h3>
-
-<figure class='code'><figcaption><span>Time to be Awesome - awesome.rb </span></figcaption>
-<div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='rb'><span class='line'><span class="nb">puts</span> <span class="s2">&quot;Awesome!&quot;</span> <span class="k">unless</span> <span class="n">lame</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>For-In</h3>
-
-<ul>
-<li>Sample</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">for</span> <span class="n">index</span> <span class="k">in</span> <span class="mf">1.</span><span class="p">.</span><span class="mf">.5</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(index) times 5 is \(index * 5)&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="c1">// 1 times 5 is 5</span>
-</span><span class='line'>    <span class="c1">// 2 times 5 is 10</span>
-</span><span class='line'>    <span class="c1">// 3 times 5 is 15</span>
-</span><span class='line'>    <span class="c1">// 4 times 5 is 20</span>
-</span><span class='line'>    <span class="c1">// 5 times 5 is 25</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>if no need of value from the range</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">base</span> <span class="o">=</span> <span class="mi">3</span>
-</span><span class='line'>    <span class="k">let</span> <span class="n">power</span> <span class="o">=</span> <span class="mi">10</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">answer</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">_</span> <span class="k">in</span> <span class="mf">1.</span><span class="p">..</span><span class="n">power</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">answer</span> <span class="o">*=</span> <span class="n">base</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(base) to the power of \(power) is \(answer)&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1">// prints &quot;3 to the power of 10 is 59049&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Use in array</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Anna&quot;</span><span class="p">,</span> <span class="s">&quot;Alex&quot;</span><span class="p">,</span> <span class="s">&quot;Brian&quot;</span><span class="p">,</span> <span class="s">&quot;Jack&quot;</span><span class="p">]</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">name</span> <span class="k">in</span> <span class="n">names</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Hello, \(name)!&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="c1">// Hello, Anna!</span>
-</span><span class='line'>    <span class="c1">// Hello, Alex!</span>
-</span><span class='line'>    <span class="c1">// Hello, Brian!</span>
-</span><span class='line'>    <span class="c1">// Hello, Jack!</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Use in dictionary</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">numberOfLegs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;spider&quot;</span><span class="o">:</span> <span class="mi">8</span><span class="p">,</span> <span class="s">&quot;ant&quot;</span><span class="o">:</span> <span class="mi">6</span><span class="p">,</span> <span class="s">&quot;cat&quot;</span><span class="o">:</span> <span class="mi">4</span><span class="p">]</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="n">animalName</span><span class="p">,</span> <span class="n">legCount</span><span class="p">)</span> <span class="k">in</span> <span class="n">numberOfLegs</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(animalName)s have \(legCount) legs&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="c1">// spiders have 8 legs</span>
-</span><span class='line'>    <span class="c1">// cats have 4 legs</span>
-</span><span class='line'>    <span class="c1">// ants have 6 legs</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Use in string</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">for</span> <span class="n">character</span> <span class="k">in</span> <span class="s">&quot;Hello&quot;</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="n">character</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="c1">// H</span>
-</span><span class='line'>    <span class="c1">// e</span>
-</span><span class='line'>    <span class="c1">// l</span>
-</span><span class='line'>    <span class="c1">// l</span>
-</span><span class='line'>    <span class="c1">// o</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/09/19/learning-swift-part-5/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -1420,6 +1381,10 @@ Most code are from the guide, with some modification by me.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/01/06/learning-swift-part-12/">Learning Swift Part 12 - Deinitialization</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2014/12/19/android-asynctask-parallelexcution/">AsyncTask同士は非同期実行</a>
@@ -1437,10 +1402,6 @@ Most code are from the guide, with some modification by me.</p>
         <a href="/blog/2014/11/20/learning-swift-part-11/">Learning Swift Part 11 - Inheritance</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/10/24/learning-swift-part-10/">Learning Swift Part 10 - Methods</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1449,11 +1410,11 @@ Most code are from the guide, with some modification by me.</p>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (3)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (1)</a></li><li><a href='/blog/categories/swift/'>swift (11)</a></li><li><a href='/blog/categories/vim/'>vim (1)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (3)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (1)</a></li><li><a href='/blog/categories/swift/'>swift (12)</a></li><li><a href='/blog/categories/vim/'>vim (1)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.27272727272728%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 76.36363636363636%'>android(3)</a> <a href='/blog/categories/codility' style='font-size: 87.27272727272728%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 65.45454545454545%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 65.45454545454545%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 65.45454545454545%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 76.36363636363636%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 70.9090909090909%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 65.45454545454545%'>ruby(1)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(11)</a> <a href='/blog/categories/vim' style='font-size: 65.45454545454545%'>vim(1)</a> <a href='/blog/categories/zsh' style='font-size: 65.45454545454545%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 85.0%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 75.0%'>android(3)</a> <a href='/blog/categories/codility' style='font-size: 85.0%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 65.0%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 65.0%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 65.0%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 75.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 70.0%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 65.0%'>ruby(1)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(12)</a> <a href='/blog/categories/vim' style='font-size: 65.0%'>vim(1)</a> <a href='/blog/categories/zsh' style='font-size: 65.0%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>
@@ -1538,7 +1499,7 @@ Most code are from the guide, with some modification by me.</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - viennakanon -
+  Copyright &copy; 2015 - viennakanon -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2014-12-19T13:16:53+09:00</updated>
+  <updated>2015-01-06T19:45:57+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,114 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Learning Swift Part 12 - Deinitialization]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/01/06/learning-swift-part-12/"/>
+    <updated>2015-01-06T19:34:40+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/01/06/learning-swift-part-12</id>
+    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
+
+<h3>Deinitialization</h3>
+
+<ul>
+<li><p>How Deinitialization Works</p>
+
+<ul>
+<li>Swift automatically deallocates your instances when they are no longer needed, to free up resources. Swift handles the memory management of instances through automatic reference counting (ARC), as described in Automatic Reference Counting.</li>
+</ul>
+</li>
+<li><p>Deinitializers in Action, a sample of Bank operations</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>struct Bank {
+</span><span class='line'>    static var coinsInBank = 10_000
+</span><span class='line'>    static func vendCoins(var numberOfCoinsToVend: Int) -&gt; Int {
+</span><span class='line'>        numberOfCoinsToVend = min(numberOfCoinsToVend, coinsInBank)
+</span><span class='line'>        coinsInBank -= numberOfCoinsToVend
+</span><span class='line'>        return numberOfCoinsToVend
+</span><span class='line'>    }
+</span><span class='line'>    static func receiveCoins(coins: Int) {
+</span><span class='line'>        coinsInBank += coins
+</span><span class='line'>    }
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>class Player {
+</span><span class='line'>    var coinsInPurse: Int
+</span><span class='line'>    init(coins: Int) {
+</span><span class='line'>        coinsInPurse = Bank.vendCoins(coins)
+</span><span class='line'>    }
+</span><span class='line'>    func winCoins(coins: Int) {
+</span><span class='line'>        coinsInPurse += Bank.vendCoins(coins)
+</span><span class='line'>    }
+</span><span class='line'>    deinit {
+</span><span class='line'>        Bank.receiveCoins(coinsInPurse)
+</span><span class='line'>    }
+</span><span class='line'>}
+</span><span class='line'>
+</span><span class='line'>var playerOne: Player? = Player(coins: 100)
+</span><span class='line'>println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
+</span><span class='line'>// prints "A new player has joined the game with 100 coins"
+</span><span class='line'>println("There are now \(Bank.coinsInBank) coins left in the bank")
+</span><span class='line'>// prints "There are now 9900 coins left in the bank"
+</span><span class='line'>
+</span><span class='line'>playerOne!.winCoins(2_000)
+</span><span class='line'>println("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
+</span><span class='line'>// prints "PlayerOne won 2000 coins & now has 2100 coins"
+</span><span class='line'>println("The bank now only has \(Bank.coinsInBank) coins left")
+</span><span class='line'>// prints "The bank now only has 7900 coins left"
+</span><span class='line'>
+</span><span class='line'>playerOne = nil
+</span><span class='line'>println("PlayerOne has left the game")
+</span><span class='line'>// prints "PlayerOne has left the game"
+</span><span class='line'>println("The bank now has \(Bank.coinsInBank) coins")
+</span><span class='line'>// prints "The bank now has 10000 coins"</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[AsyncTask同士は非同期実行]]></title>
@@ -6292,238 +6400,6 @@ x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}
 <p></p>
 
 <p>Enjoy it!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Codility - Aluminium 2014 - Part 2]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/06/20/codility-aluminium-2014-p2/"/>
-    <updated>2014-06-20T11:17:21+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/06/20/codility-aluminium-2014-p2</id>
-    <content type="html"><![CDATA[<h2>Introduction</h2>
-
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Aluminium 2014 Challenge</a>, Part 2.</p>
-
-<p>In <a href="http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014/">Part 1</a>, we introduced a solution for CLASSIC maximal subarray problem.<br/>
-Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> version.</p>
-
-<!-- more -->
-
-
-<h2>Analysis</h2>
-
-<p>We still can split the whole given array $a_0, a_1, \cdots, a_n-1$ by index $i$.<br/>
-Now we have subarray $L_1 = \{a_0, a_1, \cdots, a_i\}$ and $L_2 = \{a_i+1, a_i+2, \cdots, a_n-1\}$.</p>
-
-<ul>
-<li>We only consider that <strong>forward</strong> swapping of $a_j$ and $a_k$ only occurs in the former subarray, $a_0, a_1, \cdots, a_i$, for $0 \leq j &lt; k &lt; i$. For the case of <strong>backward</strong> swapping in the latter subarray, we do the same calculation on reversed given array. Note that, any element swapped forward will <strong>NOT</strong> be considered into maximal subarray. (Why?)</li>
-<li>As we argued in Part 1, we want to minimize sum of $L_1$ and sum of $L_2$. Because we don&rsquo;t consider swap in $L_2$, we can do the same calculation as in Part 1.</li>
-<li>How can we minimize the sum of $L_1$ after a single swap within it? Obviously, swapping an element with the largest element before it yields a largest decrease, by <strong>sum of subarray minus largest</strong>, and this is saved in $sub$ array in decreasing order.</li>
-<li>let the element which swaps with the largest element before it to be $a_x$, for each $0 \leq x \leq i$, we will calculate
-
-<ul>
-<li>Swap $a_x$ with the largest element. The subarray sum to index $x$ will be decreased again by value of $a_x$, based on $sub_x-1$.</li>
-<li>Not swap with $a_x$. Let swap occurs before index $x$, just use the value of index $x-1$ minimal value.
-We will choose the smaller. Then save results in an array.</li>
-</ul>
-</li>
-<li>Calculate results of $L_2$.</li>
-<li>Use the whole sum of given array to subtract results of $L_1$ and $L_2$. The largest one is the answer.</li>
-<li>Because calculation above is on 1-d array, time and space complexity are O(n).</li>
-</ul>
-
-
-<p>Code</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">inputs</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="n">data</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
-</span><span class='line'>    <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">rdata</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
-</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">inputs</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="n">data</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">inputs</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
-</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">inputs</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="n">rdata</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">inputs</span><span class="o">[</span><span class="n">inputs</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">i</span><span class="o">]);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">r1</span> <span class="o">=</span> <span class="n">cal</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">r2</span> <span class="o">=</span> <span class="n">cal</span><span class="o">(</span><span class="n">rdata</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">r1</span><span class="o">,</span> <span class="n">r2</span><span class="o">);</span>
-</span><span class='line'>    <span class="c1">// result equals 0 means no subarray have sum larger than 0,</span>
-</span><span class='line'>    <span class="c1">// we need to choose a largest negative element.</span>
-</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">result</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">Collections</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">private</span> <span class="kt">int</span> <span class="nf">cal</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="n">Integer</span> <span class="n">integer</span> <span class="o">:</span> <span class="n">data</span><span class="o">)</span> <span class="n">sum</span> <span class="o">+=</span> <span class="n">integer</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">psum</span> <span class="o">=</span> <span class="n">partial_sum</span><span class="o">(</span><span class="n">data</span><span class="o">,</span> <span class="n">compAdd</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">pmax</span> <span class="o">=</span> <span class="n">partial_sum</span><span class="o">(</span><span class="n">data</span><span class="o">,</span> <span class="n">compMax</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">sub</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
-</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">sub</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">psum</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">-</span> <span class="n">pmax</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">min_sub</span> <span class="o">=</span> <span class="n">partial_sum</span><span class="o">(</span><span class="n">sub</span><span class="o">,</span> <span class="n">compMin</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">L1</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
-</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">L1</span><span class="o">.</span><span class="na">add</span><span class="o">(</span>
-</span><span class='line'>                <span class="n">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span>
-</span><span class='line'>                        <span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">min_sub</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">:</span> <span class="mi">0</span><span class="o">)</span> <span class="o">+</span> <span class="n">data</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">),</span>
-</span><span class='line'>                        <span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">L1</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">:</span> <span class="mi">0</span><span class="o">)</span>
-</span><span class='line'>                        <span class="o">)</span>
-</span><span class='line'>                <span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">Collections</span><span class="o">.</span><span class="na">reverse</span><span class="o">(</span><span class="n">data</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">r_psum</span> <span class="o">=</span> <span class="n">partial_sum</span><span class="o">(</span><span class="n">data</span><span class="o">,</span> <span class="n">compAdd</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">L2</span> <span class="o">=</span> <span class="n">partial_sum</span><span class="o">(</span><span class="n">r_psum</span><span class="o">,</span> <span class="n">compMin</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">Collections</span><span class="o">.</span><span class="na">reverse</span><span class="o">(</span><span class="n">L2</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// We can split array into L1 and L2 at index i form 0 to n - 1. We just take the largest.</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">best</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">n</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">best</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">best</span><span class="o">,</span> <span class="n">sum</span> <span class="o">-</span> <span class="n">L1</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">-</span> <span class="o">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="n">n</span> <span class="o">?</span> <span class="mi">0</span> <span class="o">:</span> <span class="n">L2</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="o">))</span> <span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">best</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">private</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="nf">partial_sum</span><span class="o">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">data</span><span class="o">,</span> <span class="n">Comparator</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">comparator</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">List</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">res</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
-</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">data</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="n">res</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">data</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="mi">0</span><span class="o">));</span>
-</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">data</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">Integer</span> <span class="n">lastValue</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">Integer</span> <span class="n">currentValue</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
-</span><span class='line'>        <span class="n">res</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">comparator</span><span class="o">.</span><span class="na">compare</span><span class="o">(</span><span class="n">lastValue</span><span class="o">,</span> <span class="n">currentValue</span><span class="o">));</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">res</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">Comparator</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">compAdd</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Comparator</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="n">Integer</span> <span class="n">o1</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">o2</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">o1</span> <span class="o">+</span> <span class="n">o2</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">Comparator</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">compMax</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Comparator</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="n">Integer</span> <span class="n">o1</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">o2</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">o1</span><span class="o">,</span> <span class="n">o2</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">Comparator</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">compMin</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Comparator</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;()</span> <span class="o">{</span>
-</span><span class='line'>    <span class="nd">@Override</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="n">Integer</span> <span class="n">o1</span><span class="o">,</span> <span class="n">Integer</span> <span class="n">o2</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">o1</span><span class="o">,</span> <span class="n">o2</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">};</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<script language="javaScript">
-$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
-</script>
-
 ]]></content>
   </entry>
   
