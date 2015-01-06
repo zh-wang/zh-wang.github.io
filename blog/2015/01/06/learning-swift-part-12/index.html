@@ -130,15 +130,12 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 <ul>
 <li><p>How Deinitialization Works</p>
 
-<ul>
-<li>Swift automatically deallocates your instances when they are no longer needed, to free up resources. Swift handles the memory management of instances through automatic reference counting (ARC), as described in Automatic Reference Counting.</li>
-</ul>
-</li>
+<p>  Swift automatically deallocates your instances when they are no longer needed, to free up resources. Swift handles the memory management of instances through automatic reference counting (ARC), as described in Automatic Reference Counting.</p></li>
 <li><p>Deinitializers in Action, a sample of Bank operations</p></li>
 </ul>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -180,48 +177,49 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 <span class='line-number'>40</span>
 <span class='line-number'>41</span>
 <span class='line-number'>42</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>struct Bank {
-</span><span class='line'>    static var coinsInBank = 10_000
-</span><span class='line'>    static func vendCoins(var numberOfCoinsToVend: Int) -&gt; Int {
-</span><span class='line'>        numberOfCoinsToVend = min(numberOfCoinsToVend, coinsInBank)
-</span><span class='line'>        coinsInBank -= numberOfCoinsToVend
-</span><span class='line'>        return numberOfCoinsToVend
-</span><span class='line'>    }
-</span><span class='line'>    static func receiveCoins(coins: Int) {
-</span><span class='line'>        coinsInBank += coins
-</span><span class='line'>    }
-</span><span class='line'>}
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">struct</span> <span class="n">Bank</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">static</span> <span class="k">var</span> <span class="n">coinsInBank</span> <span class="o">=</span> <span class="mi">10</span><span class="n">_000</span>
+</span><span class='line'>    <span class="k">static</span> <span class="k">func</span> <span class="n">vendCoins</span><span class="p">(</span><span class="k">var</span> <span class="nl">numberOfCoinsToVend</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">numberOfCoinsToVend</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">numberOfCoinsToVend</span><span class="p">,</span> <span class="n">coinsInBank</span><span class="p">)</span>
+</span><span class='line'>        <span class="n">coinsInBank</span> <span class="o">-=</span> <span class="n">numberOfCoinsToVend</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">numberOfCoinsToVend</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">static</span> <span class="k">func</span> <span class="n">receiveCoins</span><span class="p">(</span><span class="nl">coins</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">coinsInBank</span> <span class="o">+=</span> <span class="n">coins</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>class Player {
-</span><span class='line'>    var coinsInPurse: Int
-</span><span class='line'>    init(coins: Int) {
-</span><span class='line'>        coinsInPurse = Bank.vendCoins(coins)
-</span><span class='line'>    }
-</span><span class='line'>    func winCoins(coins: Int) {
-</span><span class='line'>        coinsInPurse += Bank.vendCoins(coins)
-</span><span class='line'>    }
-</span><span class='line'>    deinit {
-</span><span class='line'>        Bank.receiveCoins(coinsInPurse)
-</span><span class='line'>    }
-</span><span class='line'>}
+</span><span class='line'><span class="k">class</span> <span class="n">Player</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">coinsInPurse</span><span class="p">:</span> <span class="n">Int</span>
+</span><span class='line'>    <span class="k">init</span><span class="p">(</span><span class="nl">coins</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">coinsInPurse</span> <span class="o">=</span> <span class="n">Bank</span><span class="p">.</span><span class="n">vendCoins</span><span class="p">(</span><span class="n">coins</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">func</span> <span class="n">winCoins</span><span class="p">(</span><span class="nl">coins</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">coinsInPurse</span> <span class="o">+=</span> <span class="n">Bank</span><span class="p">.</span><span class="n">vendCoins</span><span class="p">(</span><span class="n">coins</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">deinit</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">Bank</span><span class="p">.</span><span class="n">receiveCoins</span><span class="p">(</span><span class="n">coinsInPurse</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>var playerOne: Player? = Player(coins: 100)
-</span><span class='line'>println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
-</span><span class='line'>// prints "A new player has joined the game with 100 coins"
-</span><span class='line'>println("There are now \(Bank.coinsInBank) coins left in the bank")
-</span><span class='line'>// prints "There are now 9900 coins left in the bank"
+</span><span class='line'><span class="k">var</span> <span class="nl">playerOne</span><span class="p">:</span> <span class="n">Player</span><span class="o">?</span> <span class="o">=</span> <span class="n">Player</span><span class="p">(</span><span class="nl">coins</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
+</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;A new player has joined the game with \(playerOne!.coinsInPurse) coins&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">// prints &quot;A new player has joined the game with 100 coins&quot;</span>
+</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;There are now \(Bank.coinsInBank) coins left in the bank&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">// prints &quot;There are now 9900 coins left in the bank&quot;</span>
 </span><span class='line'>
-</span><span class='line'>playerOne!.winCoins(2_000)
-</span><span class='line'>println("PlayerOne won 2000 coins & now has \(playerOne!.coinsInPurse) coins")
-</span><span class='line'>// prints "PlayerOne won 2000 coins & now has 2100 coins"
-</span><span class='line'>println("The bank now only has \(Bank.coinsInBank) coins left")
-</span><span class='line'>// prints "The bank now only has 7900 coins left"
+</span><span class='line'><span class="n">playerOne</span><span class="o">!</span><span class="p">.</span><span class="n">winCoins</span><span class="p">(</span><span class="mi">2</span><span class="n">_000</span><span class="p">)</span>
+</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;PlayerOne won 2000 coins &amp; now has \(playerOne!.coinsInPurse) coins&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">// prints &quot;PlayerOne won 2000 coins &amp; now has 2100 coins&quot;</span>
+</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;The bank now only has \(Bank.coinsInBank) coins left&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">// prints &quot;The bank now only has 7900 coins left&quot;</span>
 </span><span class='line'>
-</span><span class='line'>playerOne = nil
-</span><span class='line'>println("PlayerOne has left the game")
-</span><span class='line'>// prints "PlayerOne has left the game"
-</span><span class='line'>println("The bank now has \(Bank.coinsInBank) coins")
-</span><span class='line'>// prints "The bank now has 10000 coins"</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'><span class="n">playerOne</span> <span class="o">=</span> <span class="nb">nil</span>
+</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;PlayerOne has left the game&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">// prints &quot;PlayerOne has left the game&quot;</span>
+</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;The bank now has \(Bank.coinsInBank) coins&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1">// prints &quot;The bank now has 10000 coins&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
 
 </div>
 
