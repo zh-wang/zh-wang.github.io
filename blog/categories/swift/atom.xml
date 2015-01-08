@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-01-06T19:59:18+09:00</updated>
+  <updated>2015-01-08T10:52:33+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,451 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Learning Swift Part 13 - ARC]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/01/08/learning-swift-part-13/"/>
+    <updated>2015-01-08T10:13:30+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/01/08/learning-swift-part-13</id>
+    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
+
+<h3>Automatic Reference Counting</h3>
+
+<ul>
+<li><p>Swift uses Automatic Reference Counting (ARC) to track and manage your app’s memory usage. In most cases, this means that memory management “just works” in Swift, and you do not need to think about memory management yourself.</p></li>
+<li><p>Reference counting only applies to instances of classes. Structures and enumerations are value types, not reference types, and are not stored and passed by reference.</p></li>
+<li><p>How ARC Works</p>
+
+<p>  To make this possible, whenever you assign a class instance to a property, constant, or variable, that property, constant, or variable makes a strong reference to the instance. The reference is called a “strong“ reference because it keeps a firm hold on that instance, and does not allow it to be deallocated for as long as that strong reference remains.</p></li>
+<li><p>ARC in Action</p></li>
+</ul>
+
+
+<pre><code class="swift">        class Person {
+            let name: String
+            init(name: String) {
+                self.name = name
+                println("\(name) is being initialized")
+            }
+            deinit {
+                println("\(name) is being deinitialized")
+            }
+        }
+
+        // The next code snippet defines three variables of type Person?, which are used to set up multiple references to a new Person instance in subsequent code snippets. Because these variables are of an optional type (Person?, not Person), they are automatically initialized with a value of nil, and do not currently reference a Person instance.
+        var reference1: Person?
+        var reference2: Person?
+        var reference3: Person?
+
+        reference2 = reference1
+        reference3 = reference1
+
+        reference1 = nil
+        reference2 = nil
+
+        reference3 = nil
+        // prints "John Appleseed is being deinitialized"
+</code></pre>
+
+<ul>
+<li><p>Strong Reference Cycles Between Class Instances</p>
+
+<p>  It is possible to write code in which an instance of a class never gets to a point where it has zero strong references. This can happen if two class instances hold a strong reference to each other, such that each instance keeps the other alive. This is known as a strong reference cycle.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  class Person {
+</span><span class='line'>      let name: String
+</span><span class='line'>      init(name: String) { self.name = name }
+</span><span class='line'>      var apartment: Apartment?
+</span><span class='line'>      deinit { println(&ldquo;(name) is being deinitialized&rdquo;) }
+</span><span class='line'>  }&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  class Apartment {
+</span><span class='line'>  let number: Int
+</span><span class='line'>  init(number: Int) { self.number = number }
+</span><span class='line'>  var tenant: Person?
+</span><span class='line'>  deinit { println("Apartment #\(number) is being deinitialized") }
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  var john: Person?
+</span><span class='line'>  var number73: Apartment?
+</span><span class='line'>
+</span><span class='line'>  john = Person(name: "John Appleseed")
+</span><span class='line'>  number73 = Apartment(number: 73)
+</span><span class='line'>
+</span><span class='line'>  john!.apartment = number73
+</span><span class='line'>  number73!.tenant = john
+</span><span class='line'>  // The strong references between the Person instance and the Apartment instance remain and cannot be broken.
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Resolving Strong Reference Cycles Between Class Instances&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  Swift provides two ways to resolve strong reference cycles when you work with properties of class type: weak references and unowned references. Use a weak reference whenever it is valid for that reference to become nil at some point during its lifetime. Conversely, use an unowned reference when you know that the reference will never be nil once it has been set during initialization.&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Weak References&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  Weak references must be declared as variables, to indicate that their value can change at runtime. A weak reference cannot be declared as a constant.</span></code></pre></td></tr></table></div></figure>
+      class Person {
+          let name: String
+          init(name: String) { self.name = name }
+          var apartment: Apartment?
+          deinit { println(&ldquo;(name) is being deinitialized&rdquo;) }
+      }</p>
+
+<pre><code>  class Apartment {
+      let number: Int
+      init(number: Int) { self.number = number }
+      weak var tenant: Person?
+      deinit { println("Apartment #\(number) is being deinitialized") }
+  }
+
+  var john: Person?
+  var number73: Apartment?
+
+  john = Person(name: "John Appleseed")
+  number73 = Apartment(number: 73)
+
+  john!.apartment = number73
+  number73!.tenant = john
+
+  john = nil
+  // prints "John Appleseed is being deinitialized"
+  // The Person instance still has a strong reference to the Apartment instance, but the Apartment instance now has a weak reference to the Person instance. This means that when you break the strong reference held by the john variables, there are no more strong references to the Person instance.
+  // Because there are no more strong references to the Person instance, it is deallocated.
+
+  number73 = nil
+  // prints "Apartment #73 is being deinitialized"
+  // The only remaining strong reference to the Apartment instance is from the number73 variable. If you break that strong reference, there are no more strong references to the Apartment instance.
+  // Because there are no more strong references to the Apartment instance, it too is deallocated.
+</code></pre>
+
+<p>&#8220;`</p></li>
+<li><p>Unowned References</p>
+
+<p>  Like weak references, an unowned reference does not keep a strong hold on the instance it refers to. Unlike a weak reference, however, an unowned reference is assumed to always have a value. Because of this, an unowned reference is always defined as a non-optional type. You indicate an unowned reference by placing the unowned keyword before a property or variable declaration.</p>
+
+<p>  Because an unowned reference is non-optional, you don’t need to unwrap the unowned reference each time it is used. An unowned reference can always be accessed directly. However, ARC cannot set the reference to nil when the instance it refers to is deallocated, because variables of a non-optional type cannot be set to nil.</p>
+
+<p>  If you try to access an unowned reference after the instance that it references is deallocated, you will trigger a runtime error. Use unowned references only when you are sure that the reference will always refer to an instance.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  class Customer {
+</span><span class='line'>      let name: String
+</span><span class='line'>      var card: CreditCard?
+</span><span class='line'>      init(name: String) {
+</span><span class='line'>          self.name = name
+</span><span class='line'>      }
+</span><span class='line'>      deinit { println(&ldquo;(name) is being deinitialized&rdquo;) }
+</span><span class='line'>  }&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  class CreditCard {
+</span><span class='line'>  let number: UInt64
+</span><span class='line'>  unowned let customer: Customer
+</span><span class='line'>  init(number: UInt64, customer: Customer) {
+</span><span class='line'>      self.number = number
+</span><span class='line'>      self.customer = customer
+</span><span class='line'>  }
+</span><span class='line'>  deinit { println("Card #\(number) is being deinitialized") }
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  var john: Customer?
+</span><span class='line'>
+</span><span class='line'>  john = Customer(name: "John Appleseed")
+</span><span class='line'>  john!.card = CreditCard(number: 1234_5678_9012_3456, customer: john!)
+</span><span class='line'>
+</span><span class='line'>  john = nil
+</span><span class='line'>  // prints "John Appleseed is being deinitialized"
+</span><span class='line'>  // prints "Card #1234567890123456 is being deinitialized"
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Unowned References and Implicitly Unwrapped Optional Properties&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  The &lt;em&gt;Person&lt;/em&gt; and &lt;em&gt;Apartment&lt;/em&gt; example shows a situation where two properties, both of which are allowed to be nil, have the potential to cause a strong reference cycle. This scenario is best resolved with a weak reference.&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  The &lt;em&gt;Customer&lt;/em&gt; and &lt;em&gt;CreditCard&lt;/em&gt; example shows a situation where one property that is allowed to be nil and another property that cannot be nil have the potential to cause a strong reference cycle. This scenario is best resolved with an unowned reference.&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  However, there is a third scenario, in which both properties should always have a value, and neither property should ever be nil once initialization is complete. In this scenario, it is useful to combine an unowned property on one class with an implicitly unwrapped optional property on the other class.</span></code></pre></td></tr></table></div></figure>
+      class Country {
+          let name: String
+          let capitalCity: City!
+          init(name: String, capitalName: String) {
+              self.name = name
+              self.capitalCity = City(name: capitalName, country: self)
+          }
+      }</p>
+
+<pre><code>  class City {
+      let name: String
+      unowned let country: Country
+      init(name: String, country: Country) {
+          self.name = name
+          self.country = country
+      }
+  }
+
+  var country = Country(name: "Canada", capitalName: "Ottawa")
+  println("\(country.name)'s capital city is called \(country.capitalCity.name)")
+  // prints "Canada's capital city is called Ottawa"
+</code></pre>
+
+<p>&#8220;`</p></li>
+<li><p>Strong Reference Cycles for Closures</p>
+
+<p>  A strong reference cycle can also occur if you assign a closure to a property of a class instance, and the body of that closure captures the instance. This capture might occur because the closure’s body accesses a property of the instance, such as self.someProperty, or because the closure calls a method on the instance, such as self.someMethod(). In either case, these accesses cause the closure to “capture” self, creating a strong reference cycle.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  // The example below shows how you can create a strong reference cycle when using a closure that references self. This example defines a class called HTMLElement, which provides a simple model for an individual element within an HTML document:
+</span><span class='line'>  class HTMLElement {&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;      let name: String
+</span><span class='line'>  let text: String?
+</span><span class='line'>
+</span><span class='line'>  // The asHTML property is declared as a lazy property, because it is only needed if and when the element actually needs to be rendered as a string value for some HTML output target. The fact that asHTML is a lazy property means that you can refer to self within the default closure, because the lazy property will not be accessed until after initialization has been completed and self is known to exist.
+</span><span class='line'>  lazy var asHTML: () -&gt; String = {
+</span><span class='line'>      if let text = self.text {
+</span><span class='line'>          return "&lt;\(self.name)&gt;\(text)&lt;/\(self.name)&gt;"
+</span><span class='line'>      } else {
+</span><span class='line'>          return "&lt;\(self.name) /&gt;"
+</span><span class='line'>      }
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  init(name: String, text: String? = nil) {
+</span><span class='line'>      self.name = name
+</span><span class='line'>      self.text = text
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  deinit {
+</span><span class='line'>      println("\(name) is being deinitialized")
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  // The paragraph variable above is defined as an optional HTMLElement, so that it can be set to nil below to demonstrate the presence of a strong reference cycle.
+</span><span class='line'>  var paragraph: HTMLElement? = HTMLElement(name: "p", text: "hello, world")
+</span><span class='line'>  println(paragraph!.asHTML())
+</span><span class='line'>  // prints "&lt;p&gt;hello, world&lt;/p&gt;"
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  Unfortunately, the HTMLElement class, as written above, creates a strong reference cycle between an HTMLElement instance and the closure used for its default asHTML. ( Even though the closure refers to self multiple times, it only captures one strong reference to the HTMLElement instance. )
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  paragraph = nil
+</span><span class='line'>  // If you set the paragraph variable to nil and break its strong reference to the HTMLElement instance, neither the HTMLElement instance nor its closure are deallocated, because of the strong reference cycle
+</span><span class='line'>  // Note that the message in the HTMLElement deinitializer is not printed, which shows that the HTMLElement instance is not deallocated.
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Resolving Strong Reference Cycles for Closures&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  You resolve a strong reference cycle between a closure and a class instance by defining a capture list as part of the closure’s definition. A capture list defines the rules to use when capturing one or more reference types within the closure’s body. As with strong reference cycles between two class instances, you declare each captured reference to be a weak or unowned reference rather than a strong reference. The appropriate choice of weak or unowned depends on the relationships between the different parts of your code.&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  * Swift requires you to write self.someProperty or self.someMethod (rather than just someProperty or someMethod) whenever you refer to a member of self within a closure. This helps you remember that it’s possible to capture self by accident.&lt;/p&gt;&lt;/li&gt;
+</span><span class='line'>&lt;li&gt;&lt;p&gt;Defining a Capture List&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  Each item in a capture list is a pairing of the weak or unowned keyword with a reference to a class instance (such as self or someInstance). These pairings are written within a pair of square braces, separated by commas.</span></code></pre></td></tr></table></div></figure>
+      lazy var someClosure: (Int, String) -> String = {
+          [unowned self] (index: Int, stringToProcess: String) -> String in
+          // closure body goes here
+      }</p>
+
+<p>  If a closure does not specify a parameter list or return type because they can be inferred from context, place the capture list at the very start of the closure, followed by the in keyword:</p>
+
+<pre><code>  lazy var someClosure: () -&gt; String = {
+      [unowned self] in
+      // closure body goes here
+  }
+</code></pre>
+
+<p>&#8220;`</p></li>
+<li>Weak and Unowned References
+
+<ul>
+<li>Define a capture in a closure as an unowned reference when the closure and the instance it captures will always refer to each other, and will always be deallocated at the same time.</li>
+<li>Conversely, define a capture as a weak reference when the captured reference may become nil at some point in the future. Weak references are always of an optional type, and automatically become nil when the instance they reference is deallocated. This enables you to check for their existence within the closure’s body.</li>
+<li><p>If the captured reference will never become nil, it should always be captured as an unowned reference, rather than a weak reference.
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  class HTMLElement {&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;  let name: String
+</span><span class='line'>  let text: String?
+</span><span class='line'>
+</span><span class='line'>  lazy var asHTML: () -&gt; String = {
+</span><span class='line'>      [unowned self] in
+</span><span class='line'>      if let text = self.text {
+</span><span class='line'>          return "&lt;\(self.name)&gt;\(text)&lt;/\(self.name)&gt;"
+</span><span class='line'>      } else {
+</span><span class='line'>          return "&lt;\(self.name) /&gt;"
+</span><span class='line'>      }
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  init(name: String, text: String? = nil) {
+</span><span class='line'>      self.name = name
+</span><span class='line'>      self.text = text
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  deinit {
+</span><span class='line'>      println("\(name) is being deinitialized")
+</span><span class='line'>  }
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  }&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  var paragraph: HTMLElement? = HTMLElement(name: &ldquo;p&rdquo;, text: &ldquo;hello, world&rdquo;)
+</span><span class='line'>  println(paragraph!.asHTML())
+</span><span class='line'>  // prints &ldquo;&lt;p&gt;hello, world&lt;/p&gt;&rdquo;&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;  paragraph = nil
+</span><span class='line'>  // prints &ldquo;p is being deinitialized&rdquo;</span></code></pre></td></tr></table></div></figure></p></li>
+</ul>
+</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Learning Swift Part 12 - Deinitialization]]></title>
@@ -936,272 +1381,37 @@
       // prints "six times three is 18"
 </code></li>
 <li><p>A sample, a matrix-like structure
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  struct Matrix {
-</span><span class='line'>      let rows: Int, columns: Int
-</span><span class='line'>      var grid: [Double]
-</span><span class='line'>      init(rows: Int, columns: Int) {
-</span><span class='line'>          self.rows = rows
-</span><span class='line'>          self.columns = columns
-</span><span class='line'>          grid = Array(count: rows * columns, repeatedValue: 0.0)
-</span><span class='line'>      }
-</span><span class='line'>      func indexIsValidForRow(row: Int, column: Int) -&gt; Bool {
-</span><span class='line'>          return row &gt;= 0 &amp;&amp; row &lt; rows &amp;&amp; column &gt;= 0 &amp;&amp; column &lt; columns
-</span><span class='line'>      }
-</span><span class='line'>      subscript(row: Int, column: Int) -&gt; Double {
-</span><span class='line'>          get {
-</span><span class='line'>              assert(indexIsValidForRow(row, column: column), &ldquo;Index out of range&rdquo;)
-</span><span class='line'>              return grid[(row * columns) + column]
-</span><span class='line'>          }
-</span><span class='line'>          set {
-</span><span class='line'>              assert(indexIsValidForRow(row, column: column), &ldquo;Index out of range&rdquo;)
-</span><span class='line'>              grid[(row * columns) + column] = newValue
-</span><span class='line'>          }
-</span><span class='line'>      }
-</span><span class='line'>  }&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  // Usage
-</span><span class='line'>  var matrix = Matrix(rows: 2, columns: 2)
-</span><span class='line'>  matrix[0, 1] = 1.5
-</span><span class='line'>  matrix[1, 0] = 3.2
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;/ul&gt;
-</span><span class='line'>
-</span><span class='line'>]]&gt;&lt;/content&gt;
-</span><span class='line'>  &lt;/entry&gt;
-</span><span class='line'>  
-</span><span class='line'>  &lt;entry&gt;
-</span><span class='line'>&lt;title type="html"&gt;&lt;![CDATA[Learning Swift Part 8 - Classes & Structures]]&gt;&lt;/title&gt;
-</span><span class='line'>&lt;link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-8/"/&gt;
-</span><span class='line'>&lt;updated&gt;2014-10-24T18:41:40+09:00&lt;/updated&gt;
-</span><span class='line'>&lt;id&gt;http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-8&lt;/id&gt;
-</span><span class='line'>&lt;content type="html"&gt;&lt;![CDATA[&lt;h2&gt;===== Full Notes =====&lt;/h2&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h3&gt;Classes and Structures&lt;/h3&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;ul&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Comparing Classes and Structures (Both can)&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;ul&gt;
-</span><span class='line'>&lt;li&gt;Define properties to store values&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;Define methods to provide functionality&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;Define subscripts to provide access to their values using subscript syntax&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;Define initializers to set up their initial state&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;Be extended to expand their functionality beyond a default implementation&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;Conform to protocols to provide standard functionality of a certain kind&lt;/li&gt;
-</span><span class='line'>&lt;/ul&gt;
-</span><span class='line'>&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Classes have additional capabilities that structures do NOT&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;ul&gt;
-</span><span class='line'>&lt;li&gt;Inheritance enables one class to inherit the characteristics of another.&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;Type casting enables you to check and interpret the type of a class instance at runtime.&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;Deinitializers enable an instance of a class to free up any resources it has assigned.&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;Reference counting allows more than one reference to a class instance.&lt;/li&gt;
-</span><span class='line'>&lt;/ul&gt;
-</span><span class='line'>&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Definition Syntax</span></code></pre></td></tr></table></div></figure>swift
-      class SomeClass {
-          // class definition goes here
-      }
-      struct SomeStructure {
-          // structure definition goes here
+&#8220;`
+      struct Matrix {
+          let rows: Int, columns: Int
+          var grid: [Double]
+          init(rows: Int, columns: Int) {
+              self.rows = rows
+              self.columns = columns
+              grid = Array(count: rows * columns, repeatedValue: 0.0)
+          }
+          func indexIsValidForRow(row: Int, column: Int) -> Bool {
+              return row >= 0 &amp;&amp; row &lt; rows &amp;&amp; column >= 0 &amp;&amp; column &lt; columns
+          }
+          subscript(row: Int, column: Int) -> Double {
+              get {
+                  assert(indexIsValidForRow(row, column: column), &ldquo;Index out of range&rdquo;)
+                  return grid[(row * columns) + column]
+              }
+              set {
+                  assert(indexIsValidForRow(row, column: column), &ldquo;Index out of range&rdquo;)
+                  grid[(row * columns) + column] = newValue
+              }
+          }
       }</p>
 
-<pre><code>  struct Resolution {
-      var width = 0
-      var height = 0
-  }
-  class VideoMode {
-      var resolution = Resolution()
-      var interlaced = false
-      var frameRate = 0.0
-      var name: String?
-  }
+<pre><code>  // Usage
+  var matrix = Matrix(rows: 2, columns: 2)
+  matrix[0, 1] = 1.5
+  matrix[1, 0] = 3.2
 </code></pre>
 
 <p>&#8220;`</p></li>
-</ul>
-
-
-<!-- more -->
-
-
-<ul>
-<li>Class and Structure Instances
-<code>
-      let someResolution = Resolution()
-      let someVideoMode = VideoMode()
-</code></li>
-<li><p>Accessing Properties
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  println(&ldquo;The width of someResolution is (someResolution.width)&rdquo;)
-</span><span class='line'>  // prints &ldquo;The width of someResolution is 0&rdquo;&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  println("The width of someVideoMode is \(someVideoMode.resolution.width)")
-</span><span class='line'>  // prints "The width of someVideoMode is 0"
-</span><span class='line'>
-</span><span class='line'>  someVideoMode.resolution.width = 1280
-</span><span class='line'>  println("The width of someVideoMode is now \(someVideoMode.resolution.width)")
-</span><span class='line'>  // prints "The width of someVideoMode is now 1280"
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;Memeberwise Initializers for Structure Types
-</span><span class='line'>&lt;code&gt;
-</span><span class='line'>  let vga = Resolution(witdth: 640, height: 480)
-</span><span class='line'>&lt;/code&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Structures and Enumerations Are Value Types&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;  A value type is a type whose value is copied when it is assigned to a variable or constant, or when it is passed to a function. In fact, all of the basic types in Swift—integers, floating-point numbers, Booleans, strings, arrays and dictionaries—are value types, and are implemented as structures behind the scenes.
-</span><span class='line'>&lt;code&gt;
-</span><span class='line'>  enum CompassPoint {
-</span><span class='line'>      case North, South, East, West
-</span><span class='line'>  }
-</span><span class='line'>  var currentDirection = CompassPoint.West
-</span><span class='line'>  let rememberedDirection = currentDirection
-</span><span class='line'>  currentDirection = .East
-</span><span class='line'>  if rememberedDirection == .West {
-</span><span class='line'>      println("The remembered direction is still .West")
-</span><span class='line'>  }
-</span><span class='line'>  // prints "The remembered direction is still .West"
-</span><span class='line'>&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Classes Are Reference Types&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;  Unlike value types, reference types are not copied when they are assigned to a variable or constant, or when they are passed to a function. Rather than a copy, a reference to the same existing instance is used instead.</span></code></pre></td></tr></table></div></figure>
-      let tenEighty = VideoMode()
-      tenEighty.resolution = hd
-      tenEighty.interlaced = true
-      tenEighty.name = &ldquo;1080i&rdquo;
-      tenEighty.frameRate = 25.0</p>
-
-<pre><code>  let alsoTenEighty = tenEighty
-  alsoTenEighty.frameRate = 30.0
-
-  println("The frameRate property of tenEighty is now \(tenEighty.frameRate)")
-  // prints "The frameRate property of tenEighty is now 30.0"
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Identity Operators</p>
-
-<p>  It can sometimes be useful to find out if two constants or variables refer to exactly the same instance of a class. To enable this, Swift provides two identity operators:
-&#8220;`
-      // Identical to (===)
-      // Not identical to (!==)</p>
-
-<pre><code>  if tenEighty === alsoTenEighty {
-      println("tenEighty and alsoTenEighty refer to the same VideoMode instance.")
-  }
-  // prints "tenEighty and alsoTenEighty refer to the same VideoMode instance."
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Assignment and Copy Behavior for Strings, Arrays, and Dictionaries</p>
-
-<p>  Swift’s String, Array, and Dictionary types are implemented as structures. This means that strings, arrays, and dictionaries are copied when they are assigned to a new constant or variable, or when they are passed to a function or method.</p>
-
-<p>  This behavior is different from NSString, NSArray, and NSDictionary in Foundation, which are implemented as classes, not structures. NSString, NSArray, and NSDictionary instances are always assigned and passed around as a reference to an existing instance, rather than as a copy.</p></li>
 </ul>
 
 ]]></content>
