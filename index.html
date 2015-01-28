@@ -133,7 +133,7 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 <h2>Steps</h2>
 
 <ol>
-<li>You need an account on Imgur. Then create an app from &ldquo;Settings -> Applications&rdquo;. The redirect link should set to YOUR_APP_IDENTIFIER or something else you like, but must match <code>scheme</code> in step 5.</li>
+<li>You need an account on Imgur. Then create an app from &ldquo;Settings -> Applications&rdquo;. The redirect link should set to <code>YOUR_APP_IDENTIFIER://callback</code> or something else you like, but must match <code>scheme</code> in step 5.</li>
 <li>Get your app&rsquo;s client id.</li>
 <li>Replace it with <code>CLIENT_ID</code> in the source code.</li>
 <li>Create an sample android project with an activity with the source code below.</li>

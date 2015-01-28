@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-01-28T17:17:47+09:00</updated>
+  <updated>2015-01-28T18:16:41+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -25,7 +25,7 @@
 <h2>Steps</h2>
 
 <ol>
-<li>You need an account on Imgur. Then create an app from &ldquo;Settings -> Applications&rdquo;. The redirect link should set to YOUR_APP_IDENTIFIER or something else you like, but must match <code>scheme</code> in step 5.</li>
+<li>You need an account on Imgur. Then create an app from &ldquo;Settings -> Applications&rdquo;. The redirect link should set to <code>YOUR_APP_IDENTIFIER://callback</code> or something else you like, but must match <code>scheme</code> in step 5.</li>
 <li>Get your app&rsquo;s client id.</li>
 <li>Replace it with <code>CLIENT_ID</code> in the source code.</li>
 <li>Create an sample android project with an activity with the source code below.</li>
