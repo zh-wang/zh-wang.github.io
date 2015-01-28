@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-01-08T10:52:33+09:00</updated>
+  <updated>2015-01-28T17:17:47+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,242 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Upload Image With Imgur Api on Android]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/01/28/upload-image-with-imgur-api-on-android/"/>
+    <updated>2015-01-28T16:29:13+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/01/28/upload-image-with-imgur-api-on-android</id>
+    <content type="html"><![CDATA[<h2>Introduction</h2>
+
+<p>This an example android application which use Imgur&rsquo;s api to upload image, with OAuth2 authorization.</p>
+
+<h2>Steps</h2>
+
+<ol>
+<li>You need an account on Imgur. Then create an app from &ldquo;Settings -> Applications&rdquo;. The redirect link should set to YOUR_APP_IDENTIFIER or something else you like, but must match <code>scheme</code> in step 5.</li>
+<li>Get your app&rsquo;s client id.</li>
+<li>Replace it with <code>CLIENT_ID</code> in the source code.</li>
+<li>Create an sample android project with an activity with the source code below.</li>
+<li><p>Add following lines to <code>AndroidManifest.xml</code>, under Activity <code>OAuthTestActivity</code>. This allows transition from authorization page to your android app.</p>
+
+<pre><code> &lt;intent-filter&gt;
+     &lt;action android:name="android.intent.action.VIEW" /&gt;
+     &lt;category android:name="android.intent.category.DEFAULT" /&gt;
+     &lt;category android:name="android.intent.category.BROWSABLE" /&gt;
+     &lt;data android:scheme="YOUR_APP_IDENTIFIER" android:host="callback" /&gt;
+ &lt;/intent-filter&gt;
+</code></pre></li>
+<li><p>Build and Run.</p></li>
+<li>Authorize with your imgur&rsquo;s account with your web browser.
+<img src="/images/2015_01_28_image04.png" title="Authorize with your imgur's account" alt="Image A" /></li>
+<li>Choose an image to upload.
+<img src="/images/2015_01_28_image01.png" title="Choose an image" alt="Image B" /></li>
+<li>Upload.
+<img src="/images/2015_01_28_image02.png" title="Upload" alt="Image C" /></li>
+<li>Check the uploaded image in your web browser.
+<img src="/images/2015_01_28_image03.png" title="Open browser" alt="Image D" /></li>
+</ol>
+
+
+<h2>Source Code</h2>
+
+<pre><code class="java">
+public class OAuthTestActivity extends Activity {
+
+    public static final int REQUEST_CODE_PICK_IMAGE = 1001;
+
+    private static final String AUTHORIZATION_URL = "https://api.imgur.com/oauth2/authorize";
+    private static final String CLIENT_ID = "CLIENT_ID";
+
+    private LinearLayout rootView;
+
+    private String accessToken;
+    private String refreshToken;
+
+    private String picturePath = "";
+    private Button send;
+
+    private String uploadedImageUrl = "";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        rootView = new LinearLayout(this);
+        rootView.setOrientation(LinearLayout.VERTICAL);
+        TextView tv = new TextView(this);
+        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        tv.setLayoutParams(llp);
+        rootView.addView(tv);
+        setContentView(rootView);
+
+        String action = getIntent().getAction();
+
+        if (action == null || !action.equals(Intent.ACTION_VIEW)) { // We need access token to use Imgur's api
+
+            tv.setText("Start OAuth Authorization");
+
+            Uri uri = Uri.parse(AUTHORIZATION_URL).buildUpon()
+                    .appendQueryParameter("client_id", CLIENT_ID)
+                    .appendQueryParameter("response_type", "token")
+                    .appendQueryParameter("state", "init")
+                    .build();
+
+            Intent intent = new Intent();
+            intent.setData(uri);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+            finish();
+
+        } else { // Now we have the token, can do the upload
+
+            tv.setText("Got Access Token");
+
+            Uri uri = getIntent().getData();
+            Log.d("Got imgur's access token", uri.toString());
+            String uriString = uri.toString();
+            String paramsString = "http://callback?" + uriString.substring(uriString.indexOf("#") + 1);
+            Log.d("tag", paramsString);
+            List&lt;NameValuePair&gt; params = URLEncodedUtils.parse(URI.create(paramsString), "utf-8");
+            Log.d("tag", Arrays.toString(params.toArray(new NameValuePair[0])));
+
+            for (NameValuePair pair : params) {
+                if (pair.getName().equals("access_token")) {
+                    accessToken = pair.getValue();
+                } else if (pair.getName().equals("refresh_token")) {
+                    refreshToken = pair.getValue();
+                }
+            }
+
+            Log.d("tag", "access_token = " + accessToken);
+            Log.d("tag", "refresh_token = " + refreshToken);
+
+            Button chooseImage = new Button(this);
+            rootView.addView(chooseImage);
+            chooseImage.setText("Choose an image");
+            chooseImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
+                }
+            });
+
+            send = new Button(this);
+            rootView.addView(send);
+            send.setText("send to imgur");
+            send.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (picturePath != null &amp;&amp; picturePath.length() &gt; 0 &amp;&amp;
+                            accessToken != null &amp;&amp; accessToken.length() &gt; 0) {
+                        (new UploadToImgurTask()).execute(picturePath);
+                    }
+                }
+            });
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (send == null) return;
+        if (picturePath == null || picturePath.length() == 0) {
+            send.setVisibility(View.GONE);
+        } else {
+            send.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("tag", "request code : " + requestCode + ", result code : " + resultCode);
+        if (data == null) {
+            Log.d("tag" , "data is null");
+        }
+        if (resultCode == Activity.RESULT_OK &amp;&amp; requestCode == REQUEST_CODE_PICK_IMAGE &amp;&amp; null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = { MediaStore.Images.Media.DATA };
+
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            picturePath = cursor.getString(columnIndex);
+            Log.d("tag", "image path : " + picturePath);
+            cursor.close();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    // Here is the upload task
+    class UploadToImgurTask extends AsyncTask&lt;String, Void, Boolean&gt; {
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            final String upload_to = "https://api.imgur.com/3/upload";
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpContext localContext = new BasicHttpContext();
+            HttpPost httpPost = new HttpPost(upload_to);
+
+            try {
+                HttpEntity entity = MultipartEntityBuilder.create()
+                        .addPart("image", new FileBody(new File(params[0])))
+                        .build();
+
+                httpPost.setHeader("Authorization", "Bearer " + accessToken);
+                httpPost.setEntity(entity);
+
+                final HttpResponse response = httpClient.execute(httpPost,
+                        localContext);
+
+                final String response_string = EntityUtils.toString(response
+                        .getEntity());
+
+                final JSONObject json = new JSONObject(response_string);
+
+                Log.d("tag", json.toString());
+
+                JSONObject data = json.optJSONObject("data");
+                uploadedImageUrl = data.optString("link");
+                Log.d("tag", "uploaded image url : " + uploadedImageUrl);
+
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if (aBoolean.booleanValue()) { // after sucessful uploading, show the image in web browser
+                Button openBrowser = new Button(OAuthTestActivity.this);
+                rootView.addView(openBrowser);
+                openBrowser.setText("Open Browser");
+                openBrowser.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent();
+                        intent.setData(Uri.parse(uploadedImageUrl));
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                });
+            }
+        }
+    }
+
+}
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[AsyncTask同士は非同期実行]]></title>

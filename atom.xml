@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-01-08T10:52:33+09:00</updated>
+  <updated>2015-01-28T17:17:47+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,434 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Upload Image With Imgur Api on Android]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/01/28/upload-image-with-imgur-api-on-android/"/>
+    <updated>2015-01-28T16:29:13+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/01/28/upload-image-with-imgur-api-on-android</id>
+    <content type="html"><![CDATA[<h2>Introduction</h2>
+
+<p>This an example android application which use Imgur&rsquo;s api to upload image, with OAuth2 authorization.</p>
+
+<h2>Steps</h2>
+
+<ol>
+<li>You need an account on Imgur. Then create an app from &ldquo;Settings -> Applications&rdquo;. The redirect link should set to YOUR_APP_IDENTIFIER or something else you like, but must match <code>scheme</code> in step 5.</li>
+<li>Get your app&rsquo;s client id.</li>
+<li>Replace it with <code>CLIENT_ID</code> in the source code.</li>
+<li>Create an sample android project with an activity with the source code below.</li>
+<li><p>Add following lines to <code>AndroidManifest.xml</code>, under Activity <code>OAuthTestActivity</code>. This allows transition from authorization page to your android app.</p>
+
+<pre><code> &lt;intent-filter&gt;
+     &lt;action android:name="android.intent.action.VIEW" /&gt;
+     &lt;category android:name="android.intent.category.DEFAULT" /&gt;
+     &lt;category android:name="android.intent.category.BROWSABLE" /&gt;
+     &lt;data android:scheme="YOUR_APP_IDENTIFIER" android:host="callback" /&gt;
+ &lt;/intent-filter&gt;
+</code></pre></li>
+<li><p>Build and Run.</p></li>
+<li>Authorize with your imgur&rsquo;s account with your web browser.
+<img src="http://zh-wang.github.io/images/2015_01_28_image04.png" title="Authorize with your imgur's account" alt="Image A" /></li>
+<li>Choose an image to upload.
+<img src="http://zh-wang.github.io/images/2015_01_28_image01.png" title="Choose an image" alt="Image B" /></li>
+<li>Upload.
+<img src="http://zh-wang.github.io/images/2015_01_28_image02.png" title="Upload" alt="Image C" /></li>
+<li>Check the uploaded image in your web browser.
+<img src="http://zh-wang.github.io/images/2015_01_28_image03.png" title="Open browser" alt="Image D" /></li>
+</ol>
+
+
+<h2>Source Code</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
+<span class='line-number'>174</span>
+<span class='line-number'>175</span>
+<span class='line-number'>176</span>
+<span class='line-number'>177</span>
+<span class='line-number'>178</span>
+<span class='line-number'>179</span>
+<span class='line-number'>180</span>
+<span class='line-number'>181</span>
+<span class='line-number'>182</span>
+<span class='line-number'>183</span>
+<span class='line-number'>184</span>
+<span class='line-number'>185</span>
+<span class='line-number'>186</span>
+<span class='line-number'>187</span>
+<span class='line-number'>188</span>
+<span class='line-number'>189</span>
+<span class='line-number'>190</span>
+<span class='line-number'>191</span>
+<span class='line-number'>192</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">OAuthTestActivity</span> <span class="kd">extends</span> <span class="n">Activity</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">REQUEST_CODE_PICK_IMAGE</span> <span class="o">=</span> <span class="mi">1001</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">AUTHORIZATION_URL</span> <span class="o">=</span> <span class="s">&quot;https://api.imgur.com/oauth2/authorize&quot;</span><span class="o">;</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">CLIENT_ID</span> <span class="o">=</span> <span class="s">&quot;CLIENT_ID&quot;</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">LinearLayout</span> <span class="n">rootView</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">String</span> <span class="n">accessToken</span><span class="o">;</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">String</span> <span class="n">refreshToken</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">String</span> <span class="n">picturePath</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">Button</span> <span class="n">send</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">String</span> <span class="n">uploadedImageUrl</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onCreate</span><span class="o">(</span><span class="n">Bundle</span> <span class="n">savedInstanceState</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">super</span><span class="o">.</span><span class="na">onCreate</span><span class="o">(</span><span class="n">savedInstanceState</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">rootView</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">LinearLayout</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">rootView</span><span class="o">.</span><span class="na">setOrientation</span><span class="o">(</span><span class="n">LinearLayout</span><span class="o">.</span><span class="na">VERTICAL</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">TextView</span> <span class="n">tv</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">TextView</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">LinearLayout</span><span class="o">.</span><span class="na">LayoutParams</span> <span class="n">llp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinearLayout</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">(</span>
+</span><span class='line'>                <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">WRAP_CONTENT</span><span class="o">,</span> <span class="n">ViewGroup</span><span class="o">.</span><span class="na">LayoutParams</span><span class="o">.</span><span class="na">WRAP_CONTENT</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">tv</span><span class="o">.</span><span class="na">setLayoutParams</span><span class="o">(</span><span class="n">llp</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">rootView</span><span class="o">.</span><span class="na">addView</span><span class="o">(</span><span class="n">tv</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">setContentView</span><span class="o">(</span><span class="n">rootView</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="n">String</span> <span class="n">action</span> <span class="o">=</span> <span class="n">getIntent</span><span class="o">().</span><span class="na">getAction</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">action</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="o">!</span><span class="n">action</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_VIEW</span><span class="o">))</span> <span class="o">{</span> <span class="c1">// We need access token to use Imgur&#39;s api</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">tv</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;Start OAuth Authorization&quot;</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">Uri</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">AUTHORIZATION_URL</span><span class="o">).</span><span class="na">buildUpon</span><span class="o">()</span>
+</span><span class='line'>                    <span class="o">.</span><span class="na">appendQueryParameter</span><span class="o">(</span><span class="s">&quot;client_id&quot;</span><span class="o">,</span> <span class="n">CLIENT_ID</span><span class="o">)</span>
+</span><span class='line'>                    <span class="o">.</span><span class="na">appendQueryParameter</span><span class="o">(</span><span class="s">&quot;response_type&quot;</span><span class="o">,</span> <span class="s">&quot;token&quot;</span><span class="o">)</span>
+</span><span class='line'>                    <span class="o">.</span><span class="na">appendQueryParameter</span><span class="o">(</span><span class="s">&quot;state&quot;</span><span class="o">,</span> <span class="s">&quot;init&quot;</span><span class="o">)</span>
+</span><span class='line'>                    <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">();</span>
+</span><span class='line'>            <span class="n">intent</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="n">uri</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">intent</span><span class="o">.</span><span class="na">setFlags</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">FLAG_ACTIVITY_NEW_TASK</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">finish</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span> <span class="c1">// Now we have the token, can do the upload</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">tv</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;Got Access Token&quot;</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">Uri</span> <span class="n">uri</span> <span class="o">=</span> <span class="n">getIntent</span><span class="o">().</span><span class="na">getData</span><span class="o">();</span>
+</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">&quot;Got imgur&#39;s access token&quot;</span><span class="o">,</span> <span class="n">uri</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+</span><span class='line'>            <span class="n">String</span> <span class="n">uriString</span> <span class="o">=</span> <span class="n">uri</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+</span><span class='line'>            <span class="n">String</span> <span class="n">paramsString</span> <span class="o">=</span> <span class="s">&quot;http://callback?&quot;</span> <span class="o">+</span> <span class="n">uriString</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">uriString</span><span class="o">.</span><span class="na">indexOf</span><span class="o">(</span><span class="s">&quot;#&quot;</span><span class="o">)</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">&quot;tag&quot;</span><span class="o">,</span> <span class="n">paramsString</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">List</span><span class="o">&lt;</span><span class="n">NameValuePair</span><span class="o">&gt;</span> <span class="n">params</span> <span class="o">=</span> <span class="n">URLEncodedUtils</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">URI</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">paramsString</span><span class="o">),</span> <span class="s">&quot;utf-8&quot;</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">&quot;tag&quot;</span><span class="o">,</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">params</span><span class="o">.</span><span class="na">toArray</span><span class="o">(</span><span class="k">new</span> <span class="n">NameValuePair</span><span class="o">[</span><span class="mi">0</span><span class="o">])));</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">for</span> <span class="o">(</span><span class="n">NameValuePair</span> <span class="n">pair</span> <span class="o">:</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="k">if</span> <span class="o">(</span><span class="n">pair</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;access_token&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>                    <span class="n">accessToken</span> <span class="o">=</span> <span class="n">pair</span><span class="o">.</span><span class="na">getValue</span><span class="o">();</span>
+</span><span class='line'>                <span class="o">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">pair</span><span class="o">.</span><span class="na">getName</span><span class="o">().</span><span class="na">equals</span><span class="o">(</span><span class="s">&quot;refresh_token&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>                    <span class="n">refreshToken</span> <span class="o">=</span> <span class="n">pair</span><span class="o">.</span><span class="na">getValue</span><span class="o">();</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">&quot;tag&quot;</span><span class="o">,</span> <span class="s">&quot;access_token = &quot;</span> <span class="o">+</span> <span class="n">accessToken</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">&quot;tag&quot;</span><span class="o">,</span> <span class="s">&quot;refresh_token = &quot;</span> <span class="o">+</span> <span class="n">refreshToken</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">Button</span> <span class="n">chooseImage</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Button</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">rootView</span><span class="o">.</span><span class="na">addView</span><span class="o">(</span><span class="n">chooseImage</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">chooseImage</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;Choose an image&quot;</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">chooseImage</span><span class="o">.</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>                <span class="nd">@Override</span>
+</span><span class='line'>                <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                    <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">ACTION_PICK</span><span class="o">,</span> <span class="n">MediaStore</span><span class="o">.</span><span class="na">Images</span><span class="o">.</span><span class="na">Media</span><span class="o">.</span><span class="na">EXTERNAL_CONTENT_URI</span><span class="o">);</span>
+</span><span class='line'>                    <span class="n">startActivityForResult</span><span class="o">(</span><span class="n">intent</span><span class="o">,</span> <span class="n">REQUEST_CODE_PICK_IMAGE</span><span class="o">);</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>            <span class="o">});</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">send</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Button</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">rootView</span><span class="o">.</span><span class="na">addView</span><span class="o">(</span><span class="n">send</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">send</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;send to imgur&quot;</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">send</span><span class="o">.</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>                <span class="nd">@Override</span>
+</span><span class='line'>                <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                    <span class="k">if</span> <span class="o">(</span><span class="n">picturePath</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">picturePath</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span>
+</span><span class='line'>                            <span class="n">accessToken</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">accessToken</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                        <span class="o">(</span><span class="k">new</span> <span class="nf">UploadToImgurTask</span><span class="o">()).</span><span class="na">execute</span><span class="o">(</span><span class="n">picturePath</span><span class="o">);</span>
+</span><span class='line'>                    <span class="o">}</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>            <span class="o">});</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onResume</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">super</span><span class="o">.</span><span class="na">onResume</span><span class="o">();</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">send</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="k">return</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">picturePath</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">picturePath</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">send</span><span class="o">.</span><span class="na">setVisibility</span><span class="o">(</span><span class="n">View</span><span class="o">.</span><span class="na">GONE</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">send</span><span class="o">.</span><span class="na">setVisibility</span><span class="o">(</span><span class="n">View</span><span class="o">.</span><span class="na">VISIBLE</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onActivityResult</span><span class="o">(</span><span class="kt">int</span> <span class="n">requestCode</span><span class="o">,</span> <span class="kt">int</span> <span class="n">resultCode</span><span class="o">,</span> <span class="n">Intent</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">&quot;tag&quot;</span><span class="o">,</span> <span class="s">&quot;request code : &quot;</span> <span class="o">+</span> <span class="n">requestCode</span> <span class="o">+</span> <span class="s">&quot;, result code : &quot;</span> <span class="o">+</span> <span class="n">resultCode</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">data</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">&quot;tag&quot;</span> <span class="o">,</span> <span class="s">&quot;data is null&quot;</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">resultCode</span> <span class="o">==</span> <span class="n">Activity</span><span class="o">.</span><span class="na">RESULT_OK</span> <span class="o">&amp;&amp;</span> <span class="n">requestCode</span> <span class="o">==</span> <span class="n">REQUEST_CODE_PICK_IMAGE</span> <span class="o">&amp;&amp;</span> <span class="kc">null</span> <span class="o">!=</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">Uri</span> <span class="n">selectedImage</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">getData</span><span class="o">();</span>
+</span><span class='line'>            <span class="n">String</span><span class="o">[]</span> <span class="n">filePathColumn</span> <span class="o">=</span> <span class="o">{</span> <span class="n">MediaStore</span><span class="o">.</span><span class="na">Images</span><span class="o">.</span><span class="na">Media</span><span class="o">.</span><span class="na">DATA</span> <span class="o">};</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">Cursor</span> <span class="n">cursor</span> <span class="o">=</span> <span class="n">getContentResolver</span><span class="o">().</span><span class="na">query</span><span class="o">(</span><span class="n">selectedImage</span><span class="o">,</span>
+</span><span class='line'>                    <span class="n">filePathColumn</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">,</span> <span class="kc">null</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">cursor</span><span class="o">.</span><span class="na">moveToFirst</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="kt">int</span> <span class="n">columnIndex</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="na">getColumnIndex</span><span class="o">(</span><span class="n">filePathColumn</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+</span><span class='line'>            <span class="n">picturePath</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="na">getString</span><span class="o">(</span><span class="n">columnIndex</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">&quot;tag&quot;</span><span class="o">,</span> <span class="s">&quot;image path : &quot;</span> <span class="o">+</span> <span class="n">picturePath</span><span class="o">);</span>
+</span><span class='line'>            <span class="n">cursor</span><span class="o">.</span><span class="na">close</span><span class="o">();</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="kd">super</span><span class="o">.</span><span class="na">onActivityResult</span><span class="o">(</span><span class="n">requestCode</span><span class="o">,</span> <span class="n">resultCode</span><span class="o">,</span> <span class="n">data</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Here is the upload task</span>
+</span><span class='line'>    <span class="kd">class</span> <span class="nc">UploadToImgurTask</span> <span class="kd">extends</span> <span class="n">AsyncTask</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">Void</span><span class="o">,</span> <span class="n">Boolean</span><span class="o">&gt;</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nd">@Override</span>
+</span><span class='line'>        <span class="kd">protected</span> <span class="n">Boolean</span> <span class="nf">doInBackground</span><span class="o">(</span><span class="n">String</span><span class="o">...</span> <span class="n">params</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="kd">final</span> <span class="n">String</span> <span class="n">upload_to</span> <span class="o">=</span> <span class="s">&quot;https://api.imgur.com/3/upload&quot;</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">HttpClient</span> <span class="n">httpClient</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">DefaultHttpClient</span><span class="o">();</span>
+</span><span class='line'>            <span class="n">HttpContext</span> <span class="n">localContext</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">BasicHttpContext</span><span class="o">();</span>
+</span><span class='line'>            <span class="n">HttpPost</span> <span class="n">httpPost</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">HttpPost</span><span class="o">(</span><span class="n">upload_to</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">HttpEntity</span> <span class="n">entity</span> <span class="o">=</span> <span class="n">MultipartEntityBuilder</span><span class="o">.</span><span class="na">create</span><span class="o">()</span>
+</span><span class='line'>                        <span class="o">.</span><span class="na">addPart</span><span class="o">(</span><span class="s">&quot;image&quot;</span><span class="o">,</span> <span class="k">new</span> <span class="nf">FileBody</span><span class="o">(</span><span class="k">new</span> <span class="nf">File</span><span class="o">(</span><span class="n">params</span><span class="o">[</span><span class="mi">0</span><span class="o">])))</span>
+</span><span class='line'>                        <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">httpPost</span><span class="o">.</span><span class="na">setHeader</span><span class="o">(</span><span class="s">&quot;Authorization&quot;</span><span class="o">,</span> <span class="s">&quot;Bearer &quot;</span> <span class="o">+</span> <span class="n">accessToken</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">httpPost</span><span class="o">.</span><span class="na">setEntity</span><span class="o">(</span><span class="n">entity</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="kd">final</span> <span class="n">HttpResponse</span> <span class="n">response</span> <span class="o">=</span> <span class="n">httpClient</span><span class="o">.</span><span class="na">execute</span><span class="o">(</span><span class="n">httpPost</span><span class="o">,</span>
+</span><span class='line'>                        <span class="n">localContext</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="kd">final</span> <span class="n">String</span> <span class="n">response_string</span> <span class="o">=</span> <span class="n">EntityUtils</span><span class="o">.</span><span class="na">toString</span><span class="o">(</span><span class="n">response</span>
+</span><span class='line'>                        <span class="o">.</span><span class="na">getEntity</span><span class="o">());</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="kd">final</span> <span class="n">JSONObject</span> <span class="n">json</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">JSONObject</span><span class="o">(</span><span class="n">response_string</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">&quot;tag&quot;</span><span class="o">,</span> <span class="n">json</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="n">JSONObject</span> <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="na">optJSONObject</span><span class="o">(</span><span class="s">&quot;data&quot;</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">uploadedImageUrl</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">optString</span><span class="o">(</span><span class="s">&quot;link&quot;</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">Log</span><span class="o">.</span><span class="na">d</span><span class="o">(</span><span class="s">&quot;tag&quot;</span><span class="o">,</span> <span class="s">&quot;uploaded image url : &quot;</span> <span class="o">+</span> <span class="n">uploadedImageUrl</span><span class="o">);</span>
+</span><span class='line'>
+</span><span class='line'>                <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>            <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">Exception</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nd">@Override</span>
+</span><span class='line'>        <span class="kd">protected</span> <span class="kt">void</span> <span class="nf">onPostExecute</span><span class="o">(</span><span class="n">Boolean</span> <span class="n">aBoolean</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="kd">super</span><span class="o">.</span><span class="na">onPostExecute</span><span class="o">(</span><span class="n">aBoolean</span><span class="o">);</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">aBoolean</span><span class="o">.</span><span class="na">booleanValue</span><span class="o">())</span> <span class="o">{</span> <span class="c1">// after sucessful uploading, show the image in web browser</span>
+</span><span class='line'>                <span class="n">Button</span> <span class="n">openBrowser</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Button</span><span class="o">(</span><span class="n">OAuthTestActivity</span><span class="o">.</span><span class="na">this</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">rootView</span><span class="o">.</span><span class="na">addView</span><span class="o">(</span><span class="n">openBrowser</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">openBrowser</span><span class="o">.</span><span class="na">setText</span><span class="o">(</span><span class="s">&quot;Open Browser&quot;</span><span class="o">);</span>
+</span><span class='line'>                <span class="n">openBrowser</span><span class="o">.</span><span class="na">setOnClickListener</span><span class="o">(</span><span class="k">new</span> <span class="n">View</span><span class="o">.</span><span class="na">OnClickListener</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>                    <span class="nd">@Override</span>
+</span><span class='line'>                    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onClick</span><span class="o">(</span><span class="n">View</span> <span class="n">v</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>                        <span class="n">Intent</span> <span class="n">intent</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">Intent</span><span class="o">();</span>
+</span><span class='line'>                        <span class="n">intent</span><span class="o">.</span><span class="na">setData</span><span class="o">(</span><span class="n">Uri</span><span class="o">.</span><span class="na">parse</span><span class="o">(</span><span class="n">uploadedImageUrl</span><span class="o">));</span>
+</span><span class='line'>                        <span class="n">intent</span><span class="o">.</span><span class="na">setFlags</span><span class="o">(</span><span class="n">Intent</span><span class="o">.</span><span class="na">FLAG_ACTIVITY_NEW_TASK</span><span class="o">);</span>
+</span><span class='line'>                        <span class="n">startActivity</span><span class="o">(</span><span class="n">intent</span><span class="o">);</span>
+</span><span class='line'>                    <span class="o">}</span>
+</span><span class='line'>                <span class="o">});</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Learning Swift Part 13 - ARC]]></title>
@@ -6813,76 +7241,6 @@ But in this problem, after we sort edges in <em>x</em> and <em>y</em>, we can do
 
 <p>Each <code>fastPartition</code> cost O(N) time, and we do log(10000 * 10000) times. So the total time is O(N * log(10000 * 10000). There is no X and Y occurs. <br/>
 Note that even a traditional O(N<sup>2</sup>) time partition could pass system test. :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Mozc for iOS]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/07/11/mozc-for-ios/"/>
-    <updated>2014-07-11T18:10:34+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/07/11/mozc-for-ios</id>
-    <content type="html"><![CDATA[<h2>はじめに</h2>
-
-<p>iOS 8ではサードパーティIMEが開発できるようになったので、mozcのiOS版を作ってみたい。<br/>
-まだ初期段階ですが、JUST KEEP BUILDING!</p>
-
-<h2>環境について</h2>
-
-<p>今回は、android版を参考し、mozcのコア機能が含まれるライブラリを作りたいですね。<br/>
-使うmozcソースのリビジョンは</p>
-
-<pre><code>18:06 zhenghongwang@viennakanon:projects/mozc/src (svn)[src:266]$ svn log -r COMMITTED
-------------------------------------------------------------------------
-r266 | yukawa@google.com | 2014-07-06 16:49:48 +0900 (日, 06  7 2014) | 11 lines
-
-Use Ninja to build Android, NaCl, and Linux Desktop binaries
-
-With this CL, Mozc starts using Ninja instead of Make to build Android, NaCl, and Linux Desktop binaries.  Note that Windows binaries have already been built with Ninja for one and a half years.
-
-This CL is supposed not to change any user-visible behavior.
-
-Closes Issue 222.
-
-BUG=Issue mozc:222
-TEST=unittest
-</code></pre>
-
-<p>ninjaを使い始めたみたいです。まあ、iOSやMACならxcodeでビルドするからあんまり関係ないよね。</p>
-
-<p>ビルドマシンはMBP, OSX 10.9, xcode 5。</p>
-
-<p>他の注意点</p>
-
-<ul>
-<li>変換のコアライブラリだけをビルドする。androidのnative側と同じです。</li>
-<li>gypは事前にインストールした。</li>
-<li>protobufをiOS向けにビルドすると、<code>target specifies product type 'com.apple.product-type.tool', but there's no such product type for the 'iphoneos' platform</code>が出てしまうので、protobufも事前にインストール。</li>
-<li>ソースの中のprotobufをarm64にビルドするために、patchが必要みたい。まだ未解決なので、今回はarmv7とarmv7sにビルドする。</li>
-</ul>
-
-
-<h2>ソースの変更点</h2>
-
-<ol>
-<li>src/iosのフォルダを新規。中はgypの設定、ビルドのターゲットなどが書かれている。</li>
-<li>src/build_ios.pyを新規。ビルドのスクリプトです。</li>
-<li>一部のソールを変更した。srcの中で、<code>svn diff</code>を見ればわかる。</li>
-</ol>
-
-
-<!-- more -->
-
-
-<h2>ビルド</h2>
-
-<p>srcの中で<code>python build_ios.py</code>を叩くだけ。<br/>
-ビルドしたファイルはout_iosに入っている。</p>
-
-<p>結果はこちらです。</p>
-
-<pre><code>11:37 zhenghongwang@viennakanon:projects/mozc_ios/src (git)[master|✚ 9]$ lipo -info out_ios/Default-iphoneos/libiMozc.a
-Architectures in the fat file: out_ios/Default-iphoneos/libiMozc.a are: armv7 armv7s
-</code></pre>
 ]]></content>
   </entry>
   
