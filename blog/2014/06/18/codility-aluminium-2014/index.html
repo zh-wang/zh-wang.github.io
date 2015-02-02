@@ -145,36 +145,50 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 </ul>
 
 
-<p>For a given array $a_0, a_1, \cdots, a_n-1$,</p>
+<p>For a given array <script type="math/tex"> a_0, a_1, \cdots, a_n-1 </script>,</p>
 
-<p><p>
-The maximum sum of a compact subsequence can be expressed by the following formula.</p>
+<p>The maximum sum of a compact subsequence can be expressed by the following formula.</p>
 
-<p>$$ \max \{ \sum_{k=i}^j a_k, 0 \leq i &lt; j \leq n - 1 \} $$
-</p></p>
+<script type="math/tex; mode=display">
+    \max \{ \sum_{k=i}^j a_k, 0 \leq i < j \leq n - 1 \}
+</script>
 
-<p><p>
-Because we want the maximal part from $i$ to $j$, by thinking reversely, we can calculate the minimal <a href="http://mathworld.wolfram.com/PartialSum.html">partial sum</a> of sub array $a_0, a_1, \cdots, a_x-1$ as $f(x)$, minimal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-1$ as $g(x)$. Then use the whole sum to subtract them if them are minus values.</p>
 
-<p>let S to be the accumulation of the given array.</p>
+<p>Because we want the maximal part from <script type="math/tex"> i </script> to <script type="math/tex"> j </script>, by thinking reversely, we can calculate the minimal <a href="http://mathworld.wolfram.com/PartialSum.html">partial sum</a> of sub array <script type="math/tex"> a_0, a_1, \cdots, a_x-1 </script> as <script type="math/tex"> f(x) </script>, minimal partial sum of sub array <script type="math/tex"> a_x+1, a_x+2, \cdots, a_n-1 </script> as <script type="math/tex"> g(x) </script>. Then use the whole sum to subtract them if them are minus values.</p>
 
-<p>let $$
-  f(x) = \min \{ \min \{ partial_sum(p), 0 \leq p \leq x - 1 \} , 0 \}
-$$ to be the minimal partial sum of sub array $a_0, a_1, \cdots, a_x-1$.</p>
+<p>let <script type="math/tex"> S </script> to be the accumulation of the given array.</p>
 
-<p>let $$
-g(x) = \min \{ \min \{ partial_sum(q), x + 1 \leq q \leq n - 1 \} , 0 \}
-$$ to be the minimal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-w$.</p>
+<p>let</p>
 
-<p>then we calculate the following formula. $$ \max \{ S - f(x) - g(x), 0 \leq x \leq n - 1 \} $$
-</p></p>
+<script type="math/tex; mode=display">
+    f(x) = \min \{ \min \{ partial\_sum(p), 0 \leq p \leq x - 1 \} , 0 \}
+</script>
+
+
+<p>to be the minimal partial sum of sub array <script type="math/tex"> a_0, a_1, \cdots, a_x-1 </script>.</p>
+
+<p>let</p>
+
+<script type="math/tex; mode=display">
+    g(x) = \min \{ \min \{ partial\_sum(q), x + 1 \leq q \leq n - 1 \} , 0 \}
+</script>
+
+
+<p>to be the minimal partial sum of sub array <script type="math/tex"> a_x+1, a_x+2, \cdots, a_n-w </script>.</p>
+
+<p>Then we calculate the following formula.</p>
+
+<script type="math/tex; mode=display"> 
+    \max \{ S - f(x) - g(x), 0 \leq x \leq n - 1 \}
+</script>
+
 
 <ul>
 <li>OK, then write above thought into Java, we get the following codes</li>
 </ul>
 
 
-<p><figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -298,11 +312,15 @@ $$ to be the minimal partial sum of sub array $a_x+1, a_x+2, \cdots, a_n-w$.</p>
 </span><span class='line'>            <span class="k">return</span> <span class="n">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">o1</span><span class="o">,</span> <span class="n">o2</span><span class="o">);</span>
 </span><span class='line'>        <span class="o">}</span>
 </span><span class='line'>    <span class="o">};</span>
-</span></code></pre></td></tr></table></div></figure></p>
+</span></code></pre></td></tr></table></div></figure>
 
-<p><script language="javaScript">
-$(document).ready( function () { $(&ldquo;a[href^=&lsquo;http&rsquo;]:not([href*=&lsquo;&rdquo; + location.hostname + &ldquo;&rsquo;])&rdquo;).attr(&lsquo;target&rsquo;, &lsquo;_blank&rsquo;); })
-</script></p>
+
+
+
+<script language="javaScript">
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
 </div>
 
 

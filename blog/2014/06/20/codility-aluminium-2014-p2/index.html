@@ -135,26 +135,30 @@ Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> versi
 
 <h2>Analysis</h2>
 
-<p>We still can split the whole given array $a_0, a_1, \cdots, a_n-1$ by index $i$.<br/>
-Now we have subarray $L_1 = \{a_0, a_1, \cdots, a_i\}$ and $L_2 = \{a_i+1, a_i+2, \cdots, a_n-1\}$.</p>
+<p>We still can split the whole given array <script type="math/tex"> a_0, a_1, \cdots, a_n-1 </script> by index <script type="math/tex"> i </script>.<br/>
+Now we have subarray <script type="math/tex"> L_1 = {a_0, a_1, \cdots, a_i} </script> and <script type="math/tex"> L_2 = {a_i+1, a_i+2, \cdots, a_n-1} </script>.</p>
 
-<ul>
-<li>We only consider that <strong>forward</strong> swapping of $a_j$ and $a_k$ only occurs in the former subarray, $a_0, a_1, \cdots, a_i$, for $0 \leq j &lt; k &lt; i$. For the case of <strong>backward</strong> swapping in the latter subarray, we do the same calculation on reversed given array. Note that, any element swapped forward will <strong>NOT</strong> be considered into maximal subarray. (Why?)</li>
-<li>As we argued in Part 1, we want to minimize sum of $L_1$ and sum of $L_2$. Because we don&rsquo;t consider swap in $L_2$, we can do the same calculation as in Part 1.</li>
-<li>How can we minimize the sum of $L_1$ after a single swap within it? Obviously, swapping an element with the largest element before it yields a largest decrease, by <strong>sum of subarray minus largest</strong>, and this is saved in $sub$ array in decreasing order.</li>
-<li>let the element which swaps with the largest element before it to be $a_x$, for each $0 \leq x \leq i$, we will calculate
+<p>We only consider that <strong>forward</strong> swapping of <script type="math/tex"> a_j </script> and <script type="math/tex"> a_k </script> only occurs in the former subarray, <script type="math/tex"> a_0, a_1, \cdots, a_i </script>, for</p>
 
-<ul>
-<li>Swap $a_x$ with the largest element. The subarray sum to index $x$ will be decreased again by value of $a_x$, based on $sub_x-1$.</li>
-<li>Not swap with $a_x$. Let swap occurs before index $x$, just use the value of index $x-1$ minimal value.
-We will choose the smaller. Then save results in an array.</li>
-</ul>
-</li>
-<li>Calculate results of $L_2$.</li>
-<li>Use the whole sum of given array to subtract results of $L_1$ and $L_2$. The largest one is the answer.</li>
-<li>Because calculation above is on 1-d array, time and space complexity are O(n).</li>
-</ul>
+<script type="math/tex"> 0 \leq j < k < i </script>
 
+
+<p>For the case of <strong>backward</strong> swapping in the latter subarray, we do the same calculation on reversed given array. Note that, any element swapped forward will <strong>NOT</strong> be considered into maximal subarray. (Why?)</p>
+
+<p>As we argued in Part 1, we want to minimize sum of <script type="math/tex"> L_1 </script> and sum of <script type="math/tex"> L_2 </script>. Because we don&rsquo;t consider swap in <script type="math/tex"> L_2 </script>, we can do the same calculation as in Part 1.</p>
+
+<p>How can we minimize the sum of <script type="math/tex"> L_1 </script> after a single swap within it? Obviously, swapping an element with the largest element before it yields a largest decrease, by <strong>sum of subarray minus largest</strong>, and this is saved in <script type="math/tex"> sub </script> array in decreasing order.</p>
+
+<p>Let the element which swaps with the largest element before it to be <script type="math/tex"> a_x </script>, for each <script type="math/tex"> 0 \leq x \leq i </script>, we will calculate
+  * Swap <script type="math/tex"> a_x </script> with the largest element. The subarray sum to index <script type="math/tex"> x </script> will be decreased again by value of <script type="math/tex"> a_x </script>, based on <script type="math/tex"> sub_x-1 </script>.
+  * Not swap with <script type="math/tex"> a_x </script>. Let swap occurs before index <script type="math/tex"> x </script>, just use the value of index <script type="math/tex"> x-1 </script> minimal value.
+  We will choose the smaller. Then save results in an array.</p>
+
+<p>Calculate results of <script type="math/tex"> L_2 </script>.</p>
+
+<p>Use the whole sum of given array to subtract results of <script type="math/tex"> L_1 </script> and <script type="math/tex"> L_2 </script>. The largest one is the answer.</p>
+
+<p>Because calculation above is on 1-d array, time and space complexity are O(n).</p>
 
 <p>Code</p>
 
