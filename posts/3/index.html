@@ -33,8 +33,16 @@
 
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"> </script> 
 
+<!-- open new tab for jumping -->
 <script language="javaScript">
 $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
+<!-- enable inline MathJax formula -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
 </script>
 
   
@@ -272,7 +280,7 @@ TEST=unittest
 <p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Aluminium 2014 Challenge</a>, Part 2.</p>
 
 <p>In <a href="http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014/">Part 1</a>, we introduced a solution for CLASSIC maximal subarray problem.<br/>
-Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> version.</p>
+Now we&rsquo;ll make a solution for the <strong>swap</strong> version.</p>
 
 </div>
   

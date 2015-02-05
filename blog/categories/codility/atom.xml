@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Codility | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/codility/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-02-02T18:58:59+09:00</updated>
+  <updated>2015-02-05T11:56:46+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -269,34 +269,66 @@ Note that even a traditional O(N<sup>2</sup>) time partition could pass system t
 <p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Aluminium 2014 Challenge</a>, Part 2.</p>
 
 <p>In <a href="http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014/">Part 1</a>, we introduced a solution for CLASSIC maximal subarray problem.<br/>
-Now we&rsquo;ll make a solution for the <strong>a single swapping</strong> version.</p>
+Now we&rsquo;ll make a solution for the <strong>swap</strong> version.</p>
 
 <!-- more -->
 
 
 <h2>Analysis</h2>
 
-<p>We still can split the whole given array <script type="math/tex"> a_0, a_1, \cdots, a_n-1 </script> by index <script type="math/tex"> i </script>.<br/>
-Now we have subarray <script type="math/tex"> L_1 = {a_0, a_1, \cdots, a_i} </script> and <script type="math/tex"> L_2 = {a_i+1, a_i+2, \cdots, a_n-1} </script>.</p>
+<p>We want to use the strategy described in <a href="http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014/">Part 1</a>.</p>
 
-<p>We only consider that <strong>forward</strong> swapping of <script type="math/tex"> a_j </script> and <script type="math/tex"> a_k </script> only occurs in the former subarray, <script type="math/tex"> a_0, a_1, \cdots, a_i </script>, for</p>
+<h3>1. Split input array</h3>
 
-<p><script type="math/tex"> 0 \leq j &lt; k &lt; i </script></p>
+<p>We split given array <script type="math/tex"> a_0, a_1, \cdots, a_n-1 </script> by index <script type="math/tex"> i </script>. Then we get subarray <script type="math/tex"> L_1 = {a_0, a_1, \cdots, a_i} </script> and <script type="math/tex"> L_2 = {a_i+1, a_i+2, \cdots, a_n-1} </script>.</p>
 
-<p>For the case of <strong>backward</strong> swapping in the latter subarray, we do the same calculation on reversed given array. Note that, any element swapped forward will <strong>NOT</strong> be considered into maximal subarray. (Why?)</p>
+<h3>2. Limited Swap</h3>
 
-<p>As we argued in Part 1, we want to minimize sum of <script type="math/tex"> L_1 </script> and sum of <script type="math/tex"> L_2 </script>. Because we don&rsquo;t consider swap in <script type="math/tex"> L_2 </script>, we can do the same calculation as in Part 1.</p>
+<p>Note that, we consider that a swap of $a_j$ and $a_k$ only occurs in array $L_1$, $0 \leq j &lt; k &lt; i$. Why? If such a swap occurs in $L_2$, we just reverse the input array, then do the same calculation on it again to get the result.</p>
 
-<p>How can we minimize the sum of <script type="math/tex"> L_1 </script> after a single swap within it? Obviously, swapping an element with the largest element before it yields a largest decrease, by <strong>sum of subarray minus largest</strong>, and this is saved in <script type="math/tex"> sub </script> array in decreasing order.</p>
+<p>Now we want to minimize partial sum of <script type="math/tex"> L_1 </script>(after a swap) and <script type="math/tex"> L_2 </script>, as we did in Part 1.</p>
 
-<p>Let the element which swaps with the largest element before it to be <script type="math/tex"> a_x </script>, for each <script type="math/tex"> 0 \leq x \leq i </script>, we will calculate
-  * Swap <script type="math/tex"> a_x </script> with the largest element. The subarray sum to index <script type="math/tex"> x </script> will be decreased again by value of <script type="math/tex"> a_x </script>, based on <script type="math/tex"> sub_x-1 </script>.
-  * Not swap with <script type="math/tex"> a_x </script>. Let swap occurs before index <script type="math/tex"> x </script>, just use the value of index <script type="math/tex"> x-1 </script> minimal value.
-  We will choose the smaller. Then save results in an array.</p>
+<h3>3. Calculation on $L_1$(after a swap)</h3>
 
-<p>Calculate results of <script type="math/tex"> L_2 </script>.</p>
+<p>The principle is, for each $a_k$, we should swap $a_k$ with $a_j$, which is the greatest member in $a_0, a_1, \cdots, a_k-1$. We can do this step by step.</p>
 
-<p>Use the whole sum of given array to subtract results of <script type="math/tex"> L_1 </script> and <script type="math/tex"> L_2 </script>. The largest one is the answer.</p>
+<p>● Calculate partial sum of $L_1$, stored in $psum$ array.</p>
+
+<p><script type="math/tex; mode=display">
+    psum_x = partial_sum(x) = \sum_{k=0}^x a_k , 0 \leq k \leq x &lt; i
+</script></p>
+
+<p>● Calculate the greatest member&rsquo;s value in $a_0, a_1, \cdots, a_x$</p>
+
+<p><script type="math/tex; mode=display">
+    pmax_x = \max { a_0, a_1, \cdots, a_x } , 0 \leq x &lt; i
+</script></p>
+
+<p>● We define $minsub(x)$ as the possible minimal partial sum we could get for $a_0, a_1, \cdots, a_x-1$, by remove(swap out) the greatest member.</p>
+
+<p><script type="math/tex; mode=display">
+    minsub(x) = \begin{cases}
+        0 &amp; (x = 0) \
+        \min { minsub(x-1), psum_x - pmax_x } &amp; (otherwise)
+    \end{cases}
+</script></p>
+
+<p>● Last, we define $L_1(x)$ as the possible minimal partial sum after swap in $a_x$. Note that for $x=0$, there is only one element in partial array $a_0$, so we cannot make a swap. We just store $a_0$&rsquo;s value as minimal partial sum.</p>
+
+<p><script type="math/tex; mode=display">
+    L_1(x) = \begin{cases}
+        a_0 &amp; (x = 0) \
+        \min { L_1(x-1), minsub(x) + a_x } &amp; (otherwise)
+    \end{cases}
+</script></p>
+
+<h3>Calculation on $L_2$</h3>
+
+<p>Calculation on $L_2$ is the same as we described in Part 1.</p>
+
+<h3>Merge</h3>
+
+<p>Use results of <script type="math/tex"> L_1 </script> and <script type="math/tex"> L_2 </script>. The largest one is the answer.</p>
 
 <p>Because calculation above is on 1-d array, time and space complexity are O(n).</p>
 
@@ -427,7 +459,7 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 <h2>Analysis</h2>
 
 <ul>
-<li>First, we should take a look at the solution of a CLASSIC maximal subarray problem, which means <strong>swapping is not allowed</strong>.</li>
+<li>First, we will take a look at the solution of a CLASSIC maximal subarray problem, which means <strong>swap is not allowed</strong>.</li>
 </ul>
 
 

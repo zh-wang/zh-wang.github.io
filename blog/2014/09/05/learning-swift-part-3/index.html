@@ -33,8 +33,16 @@ Most code are from the guide, with some modification by me. ===== Full Notes &he
 
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"> </script> 
 
+<!-- open new tab for jumping -->
 <script language="javaScript">
 $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
+<!-- enable inline MathJax formula -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
 </script>
 
   

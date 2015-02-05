@@ -32,8 +32,16 @@
 
 <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"> </script> 
 
+<!-- open new tab for jumping -->
 <script language="javaScript">
 $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
+<!-- enable inline MathJax formula -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
 </script>
 
   
@@ -141,7 +149,7 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 <h2>Analysis</h2>
 
 <ul>
-<li>First, we should take a look at the solution of a CLASSIC maximal subarray problem, which means <strong>swapping is not allowed</strong>.</li>
+<li>First, we will take a look at the solution of a CLASSIC maximal subarray problem, which means <strong>swap is not allowed</strong>.</li>
 </ul>
 
 
