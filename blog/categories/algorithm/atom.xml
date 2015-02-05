@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithm | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/algorithm/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-02-05T11:56:46+09:00</updated>
+  <updated>2015-02-05T12:22:58+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -304,7 +304,7 @@ Now we&rsquo;ll make a solution for the <strong>swap</strong> version.</p>
     pmax_x = \max { a_0, a_1, \cdots, a_x } , 0 \leq x &lt; i
 </script></p>
 
-<p>● We define $minsub(x)$ as the possible minimal partial sum we could get for $a_0, a_1, \cdots, a_x-1$, by remove(swap out) the greatest member.</p>
+<p>● We define $minsub(x)$ as the possible minimal partial sum we could get for $a_0, a_1, \cdots, a_x$, by remove(swap out) the greatest member.</p>
 
 <p><script type="math/tex; mode=display">
     minsub(x) = \begin{cases}
