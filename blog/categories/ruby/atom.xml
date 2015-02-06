@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-02-05T12:22:58+09:00</updated>
+  <updated>2015-02-06T12:50:01+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,131 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Upload Pics by Imgur Api in Ruby]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/02/06/upload-pics-to-imgur-by-ruby/"/>
+    <updated>2015-02-06T12:43:58+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/02/06/upload-pics-to-imgur-by-ruby</id>
+    <content type="html"><![CDATA[<h2>Introduction</h2>
+
+<p>Sample ruby script. Use Imgur&rsquo;s api to upload image, with OAuth2 authorization.</p>
+
+<h2>Source Code</h2>
+
+<pre><code class="ruby">
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+require 'httpclient'
+require 'json'
+
+class ImgurUploader
+
+  AUTH_URL = 'https://api.imgur.com/oauth2/authorize'
+  EXC_TOKEN_URL = 'https://api.imgur.com/oauth2/token'
+  UPLOAD_URL = 'https://api.imgur.com/3/image'
+  CLIENT_ID = '2420efcd770bbc5'
+  CLIENT_SE = '3361189005b9347b64eee055248709ec009963d1'
+
+  @file_path = ""
+  @access_token = ""
+
+  def initialize(file_path)
+    @file_path = file_path
+  end
+
+  def setAccessToken(access_token)
+    @access_token = access_token
+  end
+
+  def applyAccessToken
+    params = {
+      :client_id =&gt; CLIENT_ID,
+      :response_type =&gt; "pin",
+      :state =&gt; 'init'
+    }.map{ |x,v| "#{x}=#{v}" }.reduce{|x,v| "#{x}&amp;#{v}" }
+
+    system('open', AUTH_URL + "?" + params)
+
+    puts "input PIN here: "
+    mypin = STDIN.gets.chomp
+
+    body = {
+      :client_id =&gt; CLIENT_ID,
+      :client_secret =&gt; CLIENT_SE,
+      :grant_type =&gt; "pin",
+      :pin =&gt; mypin
+    }.map{ |x,v| "#{x}=#{v}" }.reduce{|x,v| "#{x}&amp;#{v}" }
+
+    client = HTTPClient.new
+    @res = client.post(EXC_TOKEN_URL, body)
+
+    puts @res.body
+
+    result = JSON.load(@res.body)
+
+    @access_token = result['access_token']
+    puts "access_token: " + @access_token
+
+    File.open("access_token.tmp", 'w') { # store access_token to local file,
+      # no need to authorize again if access_token is not expired
+      |f| f.write @access_token
+    }
+  end
+
+  def upload
+    auth_header = { 'Authorization' =&gt; 'Bearer ' + @access_token }
+    client = HTTPClient.new
+    File.open(@file_path) do |file|
+      body = { 'image' =&gt; file }
+      @res = client.post(UPLOAD_URL, body, auth_header)
+      end
+    begin
+      result = JSON.load(@res.body)
+      puts @res.body
+      result['status']
+    rescue =&gt; ex
+      puts ex.message
+      puts "upload failed on Authorization"
+      -1
+    end
+  end
+
+end
+
+if ARGV.length &lt; 1
+  puts "usage"
+  puts "ruby imgur.rb [image file path]"
+  exit
+end
+
+uploader = ImgurUploader.new(ARGV[0].chomp.strip)
+
+begin
+  File.open("access_token.tmp", 'r') { # read local access_token
+    |f| uploader.setAccessToken(f.gets)
+  }
+  if uploader.upload == 200 # if uploaded
+    puts "Upload ok"
+  else # if upload failed by expired token
+    puts "Upload failed, try to update access_token"
+    uploader.applyAccessToken
+    if uploader.upload == 200 # upload again
+      puts "Upload ok"
+    else # still fails
+      puts "Upload failed, need detail check"
+    end
+  end
+rescue =&gt; ex # local file not exists, apply for access_token and upload
+  puts ex.message
+  puts "No access_token is stored. Do Authorization again."
+  uploader.applyAccessToken
+  uploader.upload
+end
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Rubyでcsvをいじる]]></title>

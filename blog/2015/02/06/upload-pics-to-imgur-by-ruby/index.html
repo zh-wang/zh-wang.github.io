@@ -1,0 +1,639 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Upload Pics by Imgur Api in Ruby - Welcome to FutureAppLaboratory</title>
+  <meta name="author" content="viennakanon">
+
+  
+  <meta name="description" content="Introduction Sample ruby script. Use Imgur&rsquo;s api to upload image, with OAuth2 authorization. Source Code 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://zh-wang.github.io/blog/2015/02/06/upload-pics-to-imgur-by-ruby">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Welcome to FutureAppLaboratory" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!-- Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"> </script> 
+
+<!-- open new tab for jumping -->
+<script language="javaScript">
+$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
+</script>
+
+<!-- enable inline MathJax formula -->
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-50285032-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+  <meta property="og:title" content="Upload Pics by Imgur Api in Ruby - Welcome to FutureAppLaboratory" />
+<meta property="og:description" content="Introduction Sample ruby script. Use Imgur&rsquo;s api to upload image, with OAuth2 authorization. Source Code 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16 &hellip;" />
+<meta property="og:url" content="http://zh-wang.github.io/blog/2015/02/06/upload-pics-to-imgur-by-ruby/" />
+<meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
+<meta property="og:author" content="viennakanon" />
+<meta property="og:site_name" content="Welcome to FutureAppLaboratory" />
+<meta property="og:locale" content="ja_JP" />
+<meta property="og:type" content="article" />
+<meta property="fb:app_id" content="749935801705374" />
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Welcome to FutureAppLaboratory</a></h1>
+  
+    <h2>v=（*＾ワ＾*）=v</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:zh-wang.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/blog/categories/swift">Swift</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Upload Pics by Imgur Api in Ruby</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-06T12:43:58+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Introduction</h2>
+
+<p>Sample ruby script. Use Imgur&rsquo;s api to upload image, with OAuth2 authorization.</p>
+
+<h2>Source Code</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env ruby</span>
+</span><span class='line'><span class="c1"># encoding: utf-8</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;httpclient&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;json&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">ImgurUploader</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="no">AUTH_URL</span> <span class="o">=</span> <span class="s1">&#39;https://api.imgur.com/oauth2/authorize&#39;</span>
+</span><span class='line'>  <span class="no">EXC_TOKEN_URL</span> <span class="o">=</span> <span class="s1">&#39;https://api.imgur.com/oauth2/token&#39;</span>
+</span><span class='line'>  <span class="no">UPLOAD_URL</span> <span class="o">=</span> <span class="s1">&#39;https://api.imgur.com/3/image&#39;</span>
+</span><span class='line'>  <span class="no">CLIENT_ID</span> <span class="o">=</span> <span class="s1">&#39;2420efcd770bbc5&#39;</span>
+</span><span class='line'>  <span class="no">CLIENT_SE</span> <span class="o">=</span> <span class="s1">&#39;3361189005b9347b64eee055248709ec009963d1&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="vi">@file_path</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>  <span class="vi">@access_token</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@file_path</span> <span class="o">=</span> <span class="n">file_path</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">setAccessToken</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@access_token</span> <span class="o">=</span> <span class="n">access_token</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">applyAccessToken</span>
+</span><span class='line'>    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>      <span class="ss">:client_id</span> <span class="o">=&gt;</span> <span class="no">CLIENT_ID</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:response_type</span> <span class="o">=&gt;</span> <span class="s2">&quot;pin&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:state</span> <span class="o">=&gt;</span> <span class="s1">&#39;init&#39;</span>
+</span><span class='line'>    <span class="p">}</span><span class="o">.</span><span class="n">map</span><span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">v</span><span class="o">|</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">=</span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span><span class="o">.</span><span class="n">reduce</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">v</span><span class="o">|</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">&amp;</span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nb">system</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="no">AUTH_URL</span> <span class="o">+</span> <span class="s2">&quot;?&quot;</span> <span class="o">+</span> <span class="n">params</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;input PIN here: &quot;</span>
+</span><span class='line'>    <span class="n">mypin</span> <span class="o">=</span> <span class="no">STDIN</span><span class="o">.</span><span class="n">gets</span><span class="o">.</span><span class="n">chomp</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>      <span class="ss">:client_id</span> <span class="o">=&gt;</span> <span class="no">CLIENT_ID</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:client_secret</span> <span class="o">=&gt;</span> <span class="no">CLIENT_SE</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:grant_type</span> <span class="o">=&gt;</span> <span class="s2">&quot;pin&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:pin</span> <span class="o">=&gt;</span> <span class="n">mypin</span>
+</span><span class='line'>    <span class="p">}</span><span class="o">.</span><span class="n">map</span><span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">v</span><span class="o">|</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">=</span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span><span class="o">.</span><span class="n">reduce</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">v</span><span class="o">|</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">&amp;</span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">client</span> <span class="o">=</span> <span class="no">HTTPClient</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>    <span class="vi">@res</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="no">EXC_TOKEN_URL</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nb">puts</span> <span class="vi">@res</span><span class="o">.</span><span class="n">body</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">result</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="vi">@res</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="vi">@access_token</span> <span class="o">=</span> <span class="n">result</span><span class="o">[</span><span class="s1">&#39;access_token&#39;</span><span class="o">]</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;access_token: &quot;</span> <span class="o">+</span> <span class="vi">@access_token</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;access_token.tmp&quot;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># store access_token to local file,</span>
+</span><span class='line'>      <span class="c1"># no need to authorize again if access_token is not expired</span>
+</span><span class='line'>      <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span> <span class="vi">@access_token</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">upload</span>
+</span><span class='line'>    <span class="n">auth_header</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;Authorization&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Bearer &#39;</span> <span class="o">+</span> <span class="vi">@access_token</span> <span class="p">}</span>
+</span><span class='line'>    <span class="n">client</span> <span class="o">=</span> <span class="no">HTTPClient</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>    <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="vi">@file_path</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">body</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;image&#39;</span> <span class="o">=&gt;</span> <span class="n">file</span> <span class="p">}</span>
+</span><span class='line'>      <span class="vi">@res</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="no">UPLOAD_URL</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">auth_header</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">begin</span>
+</span><span class='line'>      <span class="n">result</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="vi">@res</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="vi">@res</span><span class="o">.</span><span class="n">body</span>
+</span><span class='line'>      <span class="n">result</span><span class="o">[</span><span class="s1">&#39;status&#39;</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">ex</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="n">ex</span><span class="o">.</span><span class="n">message</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;upload failed on Authorization&quot;</span>
+</span><span class='line'>      <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="no">ARGV</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="mi">1</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;usage&quot;</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;ruby imgur.rb [image file path]&quot;</span>
+</span><span class='line'>  <span class="nb">exit</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">uploader</span> <span class="o">=</span> <span class="no">ImgurUploader</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">ARGV</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">chomp</span><span class="o">.</span><span class="n">strip</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">begin</span>
+</span><span class='line'>  <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;access_token.tmp&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># read local access_token</span>
+</span><span class='line'>    <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">uploader</span><span class="o">.</span><span class="n">setAccessToken</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">gets</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">uploader</span><span class="o">.</span><span class="n">upload</span> <span class="o">==</span> <span class="mi">200</span> <span class="c1"># if uploaded</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;Upload ok&quot;</span>
+</span><span class='line'>  <span class="k">else</span> <span class="c1"># if upload failed by expired token</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;Upload failed, try to update access_token&quot;</span>
+</span><span class='line'>    <span class="n">uploader</span><span class="o">.</span><span class="n">applyAccessToken</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">uploader</span><span class="o">.</span><span class="n">upload</span> <span class="o">==</span> <span class="mi">200</span> <span class="c1"># upload again</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;Upload ok&quot;</span>
+</span><span class='line'>    <span class="k">else</span> <span class="c1"># still fails</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;Upload failed, need detail check&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">ex</span> <span class="c1"># local file not exists, apply for access_token and upload</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">ex</span><span class="o">.</span><span class="n">message</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;No access_token is stored. Do Authorization again.&quot;</span>
+</span><span class='line'>  <span class="n">uploader</span><span class="o">.</span><span class="n">applyAccessToken</span>
+</span><span class='line'>  <span class="n">uploader</span><span class="o">.</span><span class="n">upload</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">viennakanon</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-06T12:43:58+09:00" pubdate data-updated="true"></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ruby/'>ruby</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2015/02/06/upload-pics-to-imgur-by-ruby/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2015/02/06/upload-pics-to-imgur-by-ruby/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/01/28/upload-image-with-imgur-api-on-android/" title="Previous Post: Upload Pics by Imgur Api on Android">&laquo; Upload Pics by Imgur Api on Android</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/02/06/upload-pics-to-imgur-by-ruby/">Upload Pics by Imgur Api in Ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/28/upload-image-with-imgur-api-on-android/">Upload Pics by Imgur Api on Android</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/08/learning-swift-part-13/">Learning Swift Part 13 - ARC</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/01/06/learning-swift-part-12/">Learning Swift Part 12 - Deinitialization</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/12/19/android-asynctask-parallelexcution/">AsyncTask同士は非同期実行</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (4)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (2)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (1)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+</section>
+<section>
+  <h1>Tag Cloud</h1>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 83.07692307692308%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 78.46153846153845%'>android(4)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 69.23076923076923%'>ruby(2)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 64.61538461538461%'>vim(1)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
+</section>
+<section>
+      <h1>Latest Tweets</h1>
+      <div id="latest_tweets_seperator" style="clear: both; padding-top: 5px;"></div>
+      <a class="twitter-timeline" href="https://twitter.com/viennakanon" data-widget-id="458542348645830656">Tweets by @viennakanon</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+<section>
+  <h1>About Me</h1>
+  <div id="gravatar-aside-profile" style="clear: both; padding-top: 5px;"></div>
+  <div style="clear:both"></div>
+  <script type="text/javascript">
+    $(function(){
+      var url = "http://www.gravatar.com/23650956f68b532003138fb2bec1bbe6.json?callback=?";
+      var $box = $("#gravatar-aside-profile")
+      var $msg = $box.children().children()
+
+      var blink = function(a){a.fadeOut(400).fadeIn(400)};
+      var intervalID = window.setInterval(blink, 1500, $msg)
+
+      var setupProfile = function(data) {
+        var entry = data.entry[0]
+        $box
+          .empty()
+          .css("padding-top", 5)
+          .append($("<img>")
+            .attr("src", entry.thumbnailUrl)
+            .attr("alt", "thumbnail from Gravatar")
+            .css("float", "left")
+            .css("margin-right", 5)
+          )
+          .append($("<div>")
+            .css("padding", "5px 0px")
+            .append($("<h2>")
+              .css("margin-bottom", 5)
+              .append("(<a href='" + entry.profileUrl + "'>@" +
+                  entry.preferredUsername + "<\/a>)")
+            )
+            .append($("<p>")
+              .css("padding-left",90)
+              .css("margin", 0)
+              .css("font-size", "90%")
+              .html(entry.aboutMe.replace(/\n/g, "<br/>"))
+            )
+          )
+      }
+
+      var clearInterval = function(){window.clearInterval(intervalID)}
+      var updateMessageToError = function(){$msg.stop().fadeOut().text("profile load failed.").fadeIn()}
+
+      jQuery.getJSON(url)
+        .always(clearInterval)
+        .done(setupProfile)
+        .fail(updateMessageToError)
+    })
+  
+  </script>
+</section>
+<section>
+    <h1>License</h1>
+    <div id="license_seperator" style="clear: both; padding-top: 5px;"></div>
+    <div class="widget-content" style="font-size: 100%">
+        <img alt="クリエイティブ・コモンズ・ライセンス" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-nd/3.0/88x31.png">
+        <br>
+        <span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" property="dct:title" rel="dct:type"> The contents in this blog </span>
+        by 
+        <span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName"> viennakanon </span>
+        is licensed under a 
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/"> Creative Commons 表示 - 非営利 - 改変禁止 3.0 Unported License </a>
+        .
+    </div>
+</section>
+<section>
+  <h1>Find me on Github</h1>
+  <div id="github_profile_seperator" style="clear: both; padding-top: 5px;"></div>
+  <iframe src="http://lab.lepture.com/github-cards/card.html?user=zh-wang" frameborder="0" scrolling="1" width="300" height="200" allowtransparency></iframe>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - viennakanon -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'viennakanon';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://zh-wang.github.io/blog/2015/02/06/upload-pics-to-imgur-by-ruby/';
+        var disqus_url = 'http://zh-wang.github.io/blog/2015/02/06/upload-pics-to-imgur-by-ruby/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/ja_JP/all.js#appId=749935801705374&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

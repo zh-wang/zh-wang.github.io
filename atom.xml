@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-02-05T12:22:58+09:00</updated>
+  <updated>2015-02-06T12:50:01+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -14,7 +14,241 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Upload Image With Imgur Api on Android]]></title>
+    <title type="html"><![CDATA[Upload Pics by Imgur Api in Ruby]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/02/06/upload-pics-to-imgur-by-ruby/"/>
+    <updated>2015-02-06T12:43:58+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/02/06/upload-pics-to-imgur-by-ruby</id>
+    <content type="html"><![CDATA[<h2>Introduction</h2>
+
+<p>Sample ruby script. Use Imgur&rsquo;s api to upload image, with OAuth2 authorization.</p>
+
+<h2>Source Code</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env ruby</span>
+</span><span class='line'><span class="c1"># encoding: utf-8</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;httpclient&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;json&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">ImgurUploader</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="no">AUTH_URL</span> <span class="o">=</span> <span class="s1">&#39;https://api.imgur.com/oauth2/authorize&#39;</span>
+</span><span class='line'>  <span class="no">EXC_TOKEN_URL</span> <span class="o">=</span> <span class="s1">&#39;https://api.imgur.com/oauth2/token&#39;</span>
+</span><span class='line'>  <span class="no">UPLOAD_URL</span> <span class="o">=</span> <span class="s1">&#39;https://api.imgur.com/3/image&#39;</span>
+</span><span class='line'>  <span class="no">CLIENT_ID</span> <span class="o">=</span> <span class="s1">&#39;2420efcd770bbc5&#39;</span>
+</span><span class='line'>  <span class="no">CLIENT_SE</span> <span class="o">=</span> <span class="s1">&#39;3361189005b9347b64eee055248709ec009963d1&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="vi">@file_path</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>  <span class="vi">@access_token</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@file_path</span> <span class="o">=</span> <span class="n">file_path</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">setAccessToken</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@access_token</span> <span class="o">=</span> <span class="n">access_token</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">applyAccessToken</span>
+</span><span class='line'>    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>      <span class="ss">:client_id</span> <span class="o">=&gt;</span> <span class="no">CLIENT_ID</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:response_type</span> <span class="o">=&gt;</span> <span class="s2">&quot;pin&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:state</span> <span class="o">=&gt;</span> <span class="s1">&#39;init&#39;</span>
+</span><span class='line'>    <span class="p">}</span><span class="o">.</span><span class="n">map</span><span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">v</span><span class="o">|</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">=</span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span><span class="o">.</span><span class="n">reduce</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">v</span><span class="o">|</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">&amp;</span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nb">system</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="no">AUTH_URL</span> <span class="o">+</span> <span class="s2">&quot;?&quot;</span> <span class="o">+</span> <span class="n">params</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;input PIN here: &quot;</span>
+</span><span class='line'>    <span class="n">mypin</span> <span class="o">=</span> <span class="no">STDIN</span><span class="o">.</span><span class="n">gets</span><span class="o">.</span><span class="n">chomp</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>      <span class="ss">:client_id</span> <span class="o">=&gt;</span> <span class="no">CLIENT_ID</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:client_secret</span> <span class="o">=&gt;</span> <span class="no">CLIENT_SE</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:grant_type</span> <span class="o">=&gt;</span> <span class="s2">&quot;pin&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:pin</span> <span class="o">=&gt;</span> <span class="n">mypin</span>
+</span><span class='line'>    <span class="p">}</span><span class="o">.</span><span class="n">map</span><span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">v</span><span class="o">|</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">=</span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span><span class="o">.</span><span class="n">reduce</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">v</span><span class="o">|</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">&amp;</span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">client</span> <span class="o">=</span> <span class="no">HTTPClient</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>    <span class="vi">@res</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="no">EXC_TOKEN_URL</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nb">puts</span> <span class="vi">@res</span><span class="o">.</span><span class="n">body</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">result</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="vi">@res</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="vi">@access_token</span> <span class="o">=</span> <span class="n">result</span><span class="o">[</span><span class="s1">&#39;access_token&#39;</span><span class="o">]</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;access_token: &quot;</span> <span class="o">+</span> <span class="vi">@access_token</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;access_token.tmp&quot;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># store access_token to local file,</span>
+</span><span class='line'>      <span class="c1"># no need to authorize again if access_token is not expired</span>
+</span><span class='line'>      <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span> <span class="vi">@access_token</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">upload</span>
+</span><span class='line'>    <span class="n">auth_header</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;Authorization&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Bearer &#39;</span> <span class="o">+</span> <span class="vi">@access_token</span> <span class="p">}</span>
+</span><span class='line'>    <span class="n">client</span> <span class="o">=</span> <span class="no">HTTPClient</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>    <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="vi">@file_path</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">body</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;image&#39;</span> <span class="o">=&gt;</span> <span class="n">file</span> <span class="p">}</span>
+</span><span class='line'>      <span class="vi">@res</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="no">UPLOAD_URL</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">auth_header</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">begin</span>
+</span><span class='line'>      <span class="n">result</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="vi">@res</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="vi">@res</span><span class="o">.</span><span class="n">body</span>
+</span><span class='line'>      <span class="n">result</span><span class="o">[</span><span class="s1">&#39;status&#39;</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">ex</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="n">ex</span><span class="o">.</span><span class="n">message</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;upload failed on Authorization&quot;</span>
+</span><span class='line'>      <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="no">ARGV</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="mi">1</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;usage&quot;</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;ruby imgur.rb [image file path]&quot;</span>
+</span><span class='line'>  <span class="nb">exit</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">uploader</span> <span class="o">=</span> <span class="no">ImgurUploader</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">ARGV</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">chomp</span><span class="o">.</span><span class="n">strip</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">begin</span>
+</span><span class='line'>  <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;access_token.tmp&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># read local access_token</span>
+</span><span class='line'>    <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">uploader</span><span class="o">.</span><span class="n">setAccessToken</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">gets</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">uploader</span><span class="o">.</span><span class="n">upload</span> <span class="o">==</span> <span class="mi">200</span> <span class="c1"># if uploaded</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;Upload ok&quot;</span>
+</span><span class='line'>  <span class="k">else</span> <span class="c1"># if upload failed by expired token</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;Upload failed, try to update access_token&quot;</span>
+</span><span class='line'>    <span class="n">uploader</span><span class="o">.</span><span class="n">applyAccessToken</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">uploader</span><span class="o">.</span><span class="n">upload</span> <span class="o">==</span> <span class="mi">200</span> <span class="c1"># upload again</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;Upload ok&quot;</span>
+</span><span class='line'>    <span class="k">else</span> <span class="c1"># still fails</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;Upload failed, need detail check&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">ex</span> <span class="c1"># local file not exists, apply for access_token and upload</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="n">ex</span><span class="o">.</span><span class="n">message</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;No access_token is stored. Do Authorization again.&quot;</span>
+</span><span class='line'>  <span class="n">uploader</span><span class="o">.</span><span class="n">applyAccessToken</span>
+</span><span class='line'>  <span class="n">uploader</span><span class="o">.</span><span class="n">upload</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Upload Pics by Imgur Api on Android]]></title>
     <link href="http://zh-wang.github.io/blog/2015/01/28/upload-image-with-imgur-api-on-android/"/>
     <updated>2015-01-28T16:29:13+09:00</updated>
     <id>http://zh-wang.github.io/blog/2015/01/28/upload-image-with-imgur-api-on-android</id>
@@ -7042,205 +7276,6 @@ Most code are from the guide, with some modification by me.</p>
 </span><span class='line'>    }
 </span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Codility - Silicium - 2014]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/07/22/codility-silicium-2014/"/>
-    <updated>2014-07-22T17:02:26+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/07/22/codility-silicium-2014</id>
-    <content type="html"><![CDATA[<h2>Introduction</h2>
-
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Silicium 2014 Challenge</a>.</p>
-
-<ul>
-<li>The problem is, finding the k-th largest piece of cake after cutting a big cake with straight cuts.</li>
-<li>The longest edge of a cake piece is 10000.</li>
-<li>Time bound is O(N * log(N + X + Y)), where N is the number of cuts, X and Y are largest size of the cake.</li>
-<li>Space bound is O(N).</li>
-</ul>
-
-
-<h2>Analysis</h2>
-
-<p>In order to find the k-th element is an array of set of elements, we can always do binary search. Find a middle elements, calculate the rank, do partition if needed, recursively.</p>
-
-<ul>
-<li>First, we calculate length of each edges, the sort them by their length.</li>
-<li>Then do a traditional binary search.</li>
-</ul>
-
-
-<p>The only <strong>interesting</strong> thing is that, for calculating the rank of a element in 2-d array, we need O(N) time.<br/>
-But in this problem, after we sort edges in <em>x</em> and <em>y</em>, we can do rank calculation in O(N) time, as implemented in <code>fastPartition</code> method.</p>
-
-<p>(Hint: after we sort the edges, we can ensure that elements in left-bottom are always equal or smaller than elements in right-top. We just need to find the smallest element of each column, follow the red arrow, in O(N) time)</p>
-
-<p><img src="http://zh-wang.github.io/images/2014_07_22_illustration.png" title="hint" alt="hint" /></p>
-
-<!-- more -->
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">int</span> <span class="n">N</span><span class="o">;</span>
-</span><span class='line'><span class="kt">int</span><span class="o">[]</span> <span class="n">largerEqualList</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">private</span> <span class="kt">int</span> <span class="nf">fastPartition</span><span class="o">(</span><span class="kt">int</span> <span class="n">target</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">x</span><span class="o">,</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">y</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// find the element equal or larger than target in left-most column</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">nx</span> <span class="o">=</span> <span class="mi">0</span><span class="o">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">low</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">high</span> <span class="o">=</span> <span class="n">N</span><span class="o">;</span>
-</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">low</span> <span class="o">&lt;=</span> <span class="n">high</span> <span class="o">&amp;&amp;</span> <span class="n">low</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="o">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">high</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
-</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">x</span><span class="o">[</span><span class="n">nx</span><span class="o">]</span> <span class="o">*</span> <span class="n">y</span><span class="o">[</span><span class="n">mid</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">low</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">high</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>    <span class="n">ny</span> <span class="o">=</span> <span class="n">low</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">largerEqualList</span><span class="o">[</span><span class="n">nx</span><span class="o">]</span> <span class="o">=</span> <span class="n">ny</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// search elements&#39; index by red arrow mentioned above</span>
-</span><span class='line'>    <span class="k">while</span> <span class="o">(++</span><span class="n">nx</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">while</span> <span class="o">(</span><span class="n">ny</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">x</span><span class="o">[</span><span class="n">nx</span><span class="o">]</span> <span class="o">*</span> <span class="n">y</span><span class="o">[</span><span class="n">ny</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span> <span class="o">&gt;=</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="o">--</span><span class="n">ny</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="n">largerEqualList</span><span class="o">[</span><span class="n">nx</span><span class="o">]</span> <span class="o">=</span> <span class="n">ny</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// get the rank of target</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">rank</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">rank</span> <span class="o">+=</span> <span class="n">N</span> <span class="o">-</span> <span class="n">largerEqualList</span><span class="o">[</span><span class="n">i</span><span class="o">];</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="n">rank</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">(</span><span class="kt">int</span> <span class="n">X</span><span class="o">,</span> <span class="kt">int</span> <span class="n">Y</span><span class="o">,</span> <span class="kt">int</span> <span class="n">K</span><span class="o">,</span> <span class="kt">int</span> <span class="o">[]</span> <span class="n">A</span><span class="o">,</span> <span class="kt">int</span> <span class="o">[]</span> <span class="n">B</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kt">int</span> <span class="o">[]</span> <span class="n">x</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">+</span> <span class="mi">1</span><span class="o">];</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="o">[]</span> <span class="n">y</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">+</span> <span class="mi">1</span><span class="o">];</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">x</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">?</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">:</span> <span class="n">X</span><span class="o">)</span> <span class="o">-</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">A</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span> <span class="o">:</span> <span class="mi">0</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">y</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="o">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="n">A</span><span class="o">.</span><span class="na">length</span> <span class="o">?</span> <span class="n">B</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">:</span> <span class="n">Y</span><span class="o">)</span> <span class="o">-</span> <span class="o">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">B</span><span class="o">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span> <span class="o">:</span> <span class="mi">0</span><span class="o">);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">x</span><span class="o">);</span>
-</span><span class='line'>    <span class="n">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">y</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">N</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">largerEqualList</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="n">N</span><span class="o">];</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">low</span> <span class="o">=</span> <span class="n">x</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">*</span> <span class="n">y</span><span class="o">[</span><span class="mi">0</span><span class="o">];</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">high</span> <span class="o">=</span> <span class="n">x</span><span class="o">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="o">]</span> <span class="o">*</span> <span class="n">y</span><span class="o">[</span><span class="n">N</span> <span class="o">-</span> <span class="mi">1</span><span class="o">];</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">rank</span> <span class="o">=</span> <span class="n">K</span><span class="o">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// binary search</span>
-</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">low</span> <span class="o">&lt;=</span> <span class="n">high</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="o">(</span><span class="n">low</span> <span class="o">+</span> <span class="n">high</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">crank</span> <span class="o">=</span> <span class="n">fastPartition</span><span class="o">(</span><span class="n">mid</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">crank</span> <span class="o">&gt;=</span> <span class="n">rank</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">low</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">crank</span> <span class="o">&lt;</span> <span class="n">rank</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>            <span class="n">high</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="n">high</span><span class="o">;</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Each <code>fastPartition</code> cost O(N) time, and we do log(10000 * 10000) times. So the total time is O(N * log(10000 * 10000). There is no X and Y occurs. <br/>
-Note that even a traditional O(N<sup>2</sup>) time partition could pass system test. :)</p>
 ]]></content>
   </entry>
   
