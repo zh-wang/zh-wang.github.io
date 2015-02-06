@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-02-06T12:50:01+09:00</updated>
+  <updated>2015-02-06T12:53:36+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -144,8 +144,8 @@
 </span><span class='line'>  <span class="no">AUTH_URL</span> <span class="o">=</span> <span class="s1">&#39;https://api.imgur.com/oauth2/authorize&#39;</span>
 </span><span class='line'>  <span class="no">EXC_TOKEN_URL</span> <span class="o">=</span> <span class="s1">&#39;https://api.imgur.com/oauth2/token&#39;</span>
 </span><span class='line'>  <span class="no">UPLOAD_URL</span> <span class="o">=</span> <span class="s1">&#39;https://api.imgur.com/3/image&#39;</span>
-</span><span class='line'>  <span class="no">CLIENT_ID</span> <span class="o">=</span> <span class="s1">&#39;2420efcd770bbc5&#39;</span>
-</span><span class='line'>  <span class="no">CLIENT_SE</span> <span class="o">=</span> <span class="s1">&#39;3361189005b9347b64eee055248709ec009963d1&#39;</span>
+</span><span class='line'>  <span class="no">CLIENT_ID</span> <span class="o">=</span> <span class="s1">&#39;YOUR_CLIENT_ID&#39;</span>
+</span><span class='line'>  <span class="no">CLIENT_SE</span> <span class="o">=</span> <span class="s1">&#39;YOUR_CLIENT_SECRET_KEY&#39;</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="vi">@file_path</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
 </span><span class='line'>  <span class="vi">@access_token</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>

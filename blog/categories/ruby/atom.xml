@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-02-06T12:50:01+09:00</updated>
+  <updated>2015-02-06T12:53:36+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -36,8 +36,8 @@ class ImgurUploader
   AUTH_URL = 'https://api.imgur.com/oauth2/authorize'
   EXC_TOKEN_URL = 'https://api.imgur.com/oauth2/token'
   UPLOAD_URL = 'https://api.imgur.com/3/image'
-  CLIENT_ID = '2420efcd770bbc5'
-  CLIENT_SE = '3361189005b9347b64eee055248709ec009963d1'
+  CLIENT_ID = 'YOUR_CLIENT_ID'
+  CLIENT_SE = 'YOUR_CLIENT_SECRET_KEY'
 
   @file_path = ""
   @access_token = ""
