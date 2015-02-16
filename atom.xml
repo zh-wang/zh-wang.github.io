@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-02-16T21:11:44+09:00</updated>
+  <updated>2015-02-16T21:31:10+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,307 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Sample Script of AWS Ruby Api]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/02/16/sample-script-of-aws-ruby-api/"/>
+    <updated>2015-02-16T21:26:55+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/02/16/sample-script-of-aws-ruby-api</id>
+    <content type="html"><![CDATA[<h2>Introduction</h2>
+
+<p>Some ruby script working on AWS api.<br/>
+I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif sharing system later :)</p>
+
+<h2>Source Code</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env ruby</span>
+</span><span class='line'><span class="c1"># encoding: utf-8</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;AWS&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;active_support/all&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">SDB_TYPE_DEFAULT</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">AWSUtils</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="no">ACCESS_KEY_ID</span> <span class="o">=</span> <span class="s1">&#39;YOUR_ACCESS_KEY_ID&#39;</span>
+</span><span class='line'>  <span class="no">SECRET_ACCESS_KEY</span> <span class="o">=</span> <span class="s1">&#39;YOUR_SECRET_ACCESS_KEY&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">regions</span><span class="p">()</span>
+</span><span class='line'>    <span class="no">AWS</span><span class="o">::</span><span class="n">regions</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">region</span><span class="o">|</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="n">region</span><span class="o">.</span><span class="n">name</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">prepareSDB</span><span class="p">()</span>
+</span><span class='line'>    <span class="k">if</span> <span class="vi">@sdb</span><span class="o">.</span><span class="n">nil?</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;===&gt; prepare sdb&quot;</span>
+</span><span class='line'>      <span class="vi">@sdb</span> <span class="o">=</span> <span class="no">AWS</span><span class="o">::</span><span class="no">SimpleDB</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
+</span><span class='line'>        <span class="ss">:access_key_id</span> <span class="o">=&gt;</span> <span class="no">ACCESS_KEY_ID</span><span class="p">,</span>
+</span><span class='line'>        <span class="ss">:secret_access_key</span> <span class="o">=&gt;</span> <span class="no">SECRET_ACCESS_KEY</span><span class="p">,</span>
+</span><span class='line'>        <span class="ss">:region</span> <span class="o">=&gt;</span> <span class="s1">&#39;ap-northeast-1&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">createDomain</span><span class="p">(</span><span class="n">domain_name</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
+</span><span class='line'>    <span class="vi">@sdb</span><span class="o">.</span><span class="n">domains</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">domain_name</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;===&gt; initialize domain &quot;</span> <span class="o">+</span> <span class="n">domain_name</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">getDomain</span><span class="p">(</span><span class="n">domain_name</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
+</span><span class='line'>    <span class="vi">@sdb</span><span class="o">.</span><span class="n">domains</span><span class="o">[</span><span class="n">domain_name</span><span class="o">]</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># ==== Deletion ====</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">deleteEmptyDomain</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
+</span><span class='line'>    <span class="k">begin</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="n">domain</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; is deleted because empty&quot;</span>
+</span><span class='line'>      <span class="n">domain</span><span class="o">.</span><span class="n">delete</span>
+</span><span class='line'>    <span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">ex</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="n">domain</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; delete error -&gt; &quot;</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="n">to_s</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># ==== List ====</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">listDomainSDB</span><span class="p">(</span><span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
+</span><span class='line'>    <span class="vi">@sdb</span><span class="o">.</span><span class="n">domains</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">domain</span><span class="o">|</span>
+</span><span class='line'>        <span class="nb">puts</span> <span class="s2">&quot;===&gt; listing domain: &quot;</span> <span class="o">+</span> <span class="n">domain</span><span class="o">.</span><span class="n">name</span>
+</span><span class='line'>        <span class="k">unless</span> <span class="n">block</span><span class="o">.</span><span class="n">nil?</span>
+</span><span class='line'>          <span class="k">yield</span> <span class="n">domain</span>
+</span><span class='line'>        <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">listItemByDomainNameSDB</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
+</span><span class='line'>    <span class="c1">#domain = @sdb.domains.create(domain_name)</span>
+</span><span class='line'><span class="c1">#    puts domain.items.collect(&amp;:name) # list name</span>
+</span><span class='line'>    <span class="n">domain</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">item</span><span class="o">|</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;===&gt; listing item: &quot;</span> <span class="o">+</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span>
+</span><span class='line'>      <span class="k">unless</span> <span class="n">block</span><span class="o">.</span><span class="n">nil?</span>
+</span><span class='line'>        <span class="k">yield</span> <span class="n">item</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">listAttributesByItemSDB</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;===&gt; listing attributes: &quot;</span> <span class="o">+</span> <span class="n">item</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">to_h</span><span class="p">()</span><span class="o">.</span><span class="n">to_s</span><span class="p">()</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># ==== Insert ====</span>
+</span><span class='line'>  <span class="c1">#</span>
+</span><span class='line'>  <span class="c1"># item key -&gt; image&#39;s md5</span>
+</span><span class='line'>  <span class="c1">#</span>
+</span><span class='line'>  <span class="c1"># followed by a hash contains</span>
+</span><span class='line'>  <span class="c1">#</span>
+</span><span class='line'>  <span class="c1"># upload_time -&gt; ISO 8601 formatted time stamp</span>
+</span><span class='line'>  <span class="c1"># title -&gt; title in english</span>
+</span><span class='line'>  <span class="c1"># type -&gt; type string (Dog, Cat etc.)</span>
+</span><span class='line'>  <span class="c1"># group -&gt; [group id 1, group id 2, ...], may be nil</span>
+</span><span class='line'>  <span class="c1"># link -&gt; an Imgur link</span>
+</span><span class='line'>  <span class="c1"># json -&gt; response of uploaded image</span>
+</span><span class='line'>  <span class="c1"># comment -&gt; [], may be nil</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">insertItem</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">md5</span><span class="p">,</span> <span class="n">link</span><span class="p">,</span> <span class="n">json</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
+</span><span class='line'>    <span class="nb">hash</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>      <span class="ss">:upload_time</span> <span class="o">=&gt;</span> <span class="n">time2ISO8601</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:title</span> <span class="o">=&gt;</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:type</span> <span class="o">=&gt;</span> <span class="no">SDB_TYPE_DEFAULT</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:group</span> <span class="o">=&gt;</span> <span class="o">[]</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:link</span> <span class="o">=&gt;</span> <span class="n">link</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:json</span> <span class="o">=&gt;</span> <span class="n">json</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:comment</span> <span class="o">=&gt;</span> <span class="o">[]</span><span class="p">,</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;===&gt; inserting: </span><span class="si">#{</span><span class="n">md5</span><span class="si">}</span><span class="s2"> , </span><span class="si">#{</span><span class="nb">hash</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>    <span class="n">domain</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">md5</span><span class="p">,</span> <span class="nb">hash</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;===&gt; ok&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># item key -&gt; group id, this is auto-generated</span>
+</span><span class='line'>  <span class="c1">#</span>
+</span><span class='line'>  <span class="c1"># followed by a hash contains</span>
+</span><span class='line'>  <span class="c1">#</span>
+</span><span class='line'>  <span class="c1"># upload_time -&gt; ISO 8601 formatted time stamp</span>
+</span><span class='line'>  <span class="c1"># title -&gt; title in english</span>
+</span><span class='line'>  <span class="c1"># images_md5 -&gt; [md5_1, md5_2, ...]</span>
+</span><span class='line'>  <span class="c1"># type -&gt; type string (Dog, Cat etc.)</span>
+</span><span class='line'>  <span class="c1"># comment -&gt; [], may be nil</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">insertGroupInfoItem</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">upload_time</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">images_md5</span><span class="p">,</span> <span class="n">type</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
+</span><span class='line'>    <span class="n">uniq_id</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="p">(</span><span class="mi">65</span> <span class="o">+</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">26</span><span class="p">))</span><span class="o">.</span><span class="n">chr</span> <span class="p">}</span><span class="o">.</span><span class="n">join</span>
+</span><span class='line'>    <span class="nb">hash</span> <span class="o">=</span> <span class="p">{</span>
+</span><span class='line'>      <span class="ss">:upload_time</span> <span class="o">=&gt;</span> <span class="n">time2ISO8601</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:title</span> <span class="o">=&gt;</span> <span class="n">title</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:images_md5</span> <span class="o">=&gt;</span> <span class="n">images_md5</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:type</span> <span class="o">=&gt;</span> <span class="n">type</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:comment</span> <span class="o">=&gt;</span> <span class="n">comment</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;===&gt; inserting: </span><span class="si">#{</span><span class="n">uniq_id</span><span class="si">}</span><span class="s2"> , </span><span class="si">#{</span><span class="nb">hash</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span class='line'>    <span class="n">domain</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">uniq_id</span><span class="p">,</span> <span class="nb">hash</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">duplicated</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">md5</span><span class="p">)</span>
+</span><span class='line'>    <span class="o">!</span><span class="n">domain</span><span class="o">.</span><span class="n">items</span><span class="o">[</span><span class="n">md5</span><span class="o">].</span><span class="n">attributes</span><span class="o">.</span><span class="n">to_h</span><span class="o">.</span><span class="n">empty?</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kp">private</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">time2ISO8601</span>
+</span><span class='line'>    <span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">in_time_zone</span><span class="p">(</span><span class="s1">&#39;Asia/Tokyo&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">iso8601</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Upload Pics by Imgur Api in Ruby]]></title>
@@ -7105,176 +7406,6 @@ Most code are from the guide, with some modification by me.</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Noto - Fonts]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/07/23/noto-font/"/>
-    <updated>2014-07-23T18:25:58+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/07/23/noto-font</id>
-    <content type="html"><![CDATA[<p>最近<a href="http://www.google.com/get/noto/#/">Google Noto Fonts</a>はアジア系文字をサポートし始めたので、Octopressのデフォルトフォントを変えてみようと思いました。</p>
-
-<p>やり方<br/>
-1. <a href="http://www.google.com/get/noto/#/">Google Noto Fonts</a> ここからフォントをダンロード。<br/>
-2. /source/fontsを作ります。<br/>
-3. 先ダンロードしたファイルを解凍し、好きなフォントを/source/fontsに入れます。私の場合、日本語と英語を合わせて10個入れました。NotoSans系とNotoSerif系とNotoSansJP-Bold、NotoSansJP-Regular。<br/>
-4. ソースを修正。/sass/custom/_fonts.scssに、次のコードを追加します。完成。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>    $sans: "Noto Sans", sans-serif;
-</span><span class='line'>    $serif: "Noto Serif", "Noto Sans" serif;
-</span><span class='line'>    $heading-font-family: "Noto Serif", sans-serif;
-</span><span class='line'>    $header-title-font-family: "Noto Sans JP", "Noto Serif", sans-serif;
-</span><span class='line'>    $header-subtitle-font-family: "Noto Sans JP", "Noto Serif", sans-serif;
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 400;
-</span><span class='line'>        src: local('NotoSans-Regular') url(/fonts/NotoSans-Regular.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 700;
-</span><span class='line'>        src: local('NotoSans-Bold') url(/fonts/NotoSans-Bold.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans';
-</span><span class='line'>        font-style: italic;
-</span><span class='line'>        font-weight: 400;
-</span><span class='line'>        src: local('NotoSans-Italic') url(/fonts/NotoSans-Italic.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans';
-</span><span class='line'>        font-style: italic;
-</span><span class='line'>        font-weight: 700;
-</span><span class='line'>        src: local('NotoSans-BoldItalic') url(/fonts/NotoSans-BoldItalic.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans JP';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 400;
-</span><span class='line'>        src: local('NotoSansJP-Regular') url(/fonts/NotoSansJP-Regular.otf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans JP';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 700;
-</span><span class='line'>        src: local('NotoSansJP-Regular') url(/fonts/NotoSansJP-Bold.otf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Serif';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 400;
-</span><span class='line'>        src: local('NotoSerif-Regular') url(/fonts/NotoSerif-Regular.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Serif';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 700;
-</span><span class='line'>        src: local('NotoSerif-Bold') url(/fonts/NotoSerif-Bold.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Serif';
-</span><span class='line'>        font-style: italic;
-</span><span class='line'>        font-weight: 400;
-</span><span class='line'>        src: local('NotoSerif-Italic') url(/fonts/NotoSerif-Italic.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Serif';
-</span><span class='line'>        font-style: italic;
-</span><span class='line'>        font-weight: 700;
-</span><span class='line'>        src: local('NotoSerif-BoldItalic') url(/fonts/NotoSerif-BoldItalic.ttf) format('truetype');
-</span><span class='line'>    }
-</span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
   </entry>

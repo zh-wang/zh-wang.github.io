@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-02-16T21:11:44+09:00</updated>
+  <updated>2015-02-16T21:31:10+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,165 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Sample Script of AWS Ruby Api]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/02/16/sample-script-of-aws-ruby-api/"/>
+    <updated>2015-02-16T21:26:55+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/02/16/sample-script-of-aws-ruby-api</id>
+    <content type="html"><![CDATA[<h2>Introduction</h2>
+
+<p>Some ruby script working on AWS api.<br/>
+I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif sharing system later :)</p>
+
+<h2>Source Code</h2>
+
+<pre><code class="ruby">
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+require 'AWS'
+require 'active_support/all'
+
+SDB_TYPE_DEFAULT = "default"
+
+class AWSUtils
+
+  ACCESS_KEY_ID = 'YOUR_ACCESS_KEY_ID'
+  SECRET_ACCESS_KEY = 'YOUR_SECRET_ACCESS_KEY'
+
+  def regions()
+    AWS::regions.each do |region|
+      puts region.name
+    end
+  end
+
+  def prepareSDB()
+    if @sdb.nil?
+      puts "===&gt; prepare sdb"
+      @sdb = AWS::SimpleDB.new(
+        :access_key_id =&gt; ACCESS_KEY_ID,
+        :secret_access_key =&gt; SECRET_ACCESS_KEY,
+        :region =&gt; 'ap-northeast-1')
+    end
+  end
+
+  def createDomain(domain_name)
+    self.prepareSDB
+    @sdb.domains.create(domain_name)
+    puts "===&gt; initialize domain " + domain_name
+  end
+
+  def getDomain(domain_name)
+    self.prepareSDB
+    @sdb.domains[domain_name]
+  end
+
+  # ==== Deletion ====
+
+  def deleteEmptyDomain(domain)
+    self.prepareSDB
+    begin
+      puts domain.name + " is deleted because empty"
+      domain.delete
+    rescue =&gt; ex
+      puts domain.name + " delete error -&gt; " + ex.to_s
+    end
+  end
+
+  # ==== List ====
+
+  def listDomainSDB(&amp;block)
+    self.prepareSDB
+    @sdb.domains.each do |domain|
+        puts "===&gt; listing domain: " + domain.name
+        unless block.nil?
+          yield domain
+        end
+    end
+  end
+
+  def listItemByDomainNameSDB(domain, &amp;block)
+    self.prepareSDB
+    #domain = @sdb.domains.create(domain_name)
+#    puts domain.items.collect(&amp;:name) # list name
+    domain.items.each do |item|
+      puts "===&gt; listing item: " + item.name
+      unless block.nil?
+        yield item
+      end
+    end
+  end
+
+  def listAttributesByItemSDB(item)
+    puts "===&gt; listing attributes: " + item.attributes.to_h().to_s()
+  end
+
+  # ==== Insert ====
+  #
+  # item key -&gt; image's md5
+  #
+  # followed by a hash contains
+  #
+  # upload_time -&gt; ISO 8601 formatted time stamp
+  # title -&gt; title in english
+  # type -&gt; type string (Dog, Cat etc.)
+  # group -&gt; [group id 1, group id 2, ...], may be nil
+  # link -&gt; an Imgur link
+  # json -&gt; response of uploaded image
+  # comment -&gt; [], may be nil
+  def insertItem(domain, md5, link, json)
+    self.prepareSDB
+    hash = {
+      :upload_time =&gt; time2ISO8601,
+      :title =&gt; 'title',
+      :type =&gt; SDB_TYPE_DEFAULT,
+      :group =&gt; [],
+      :link =&gt; link,
+      :json =&gt; json,
+      :comment =&gt; [],
+    }
+    puts "===&gt; inserting: #{md5} , #{hash}"
+    domain.items.create(md5, hash)
+    puts "===&gt; ok"
+  end
+
+  # item key -&gt; group id, this is auto-generated
+  #
+  # followed by a hash contains
+  #
+  # upload_time -&gt; ISO 8601 formatted time stamp
+  # title -&gt; title in english
+  # images_md5 -&gt; [md5_1, md5_2, ...]
+  # type -&gt; type string (Dog, Cat etc.)
+  # comment -&gt; [], may be nil
+  def insertGroupInfoItem(domain, upload_time, title, images_md5, type)
+    self.prepareSDB
+    uniq_id = (0...8).map { (65 + rand(26)).chr }.join
+    hash = {
+      :upload_time =&gt; time2ISO8601,
+      :title =&gt; title,
+      :images_md5 =&gt; images_md5,
+      :type =&gt; type,
+      :comment =&gt; comment
+    }
+    puts "===&gt; inserting: #{uniq_id} , #{hash}"
+    domain.items.create(uniq_id, hash)
+  end
+
+  def duplicated(domain, md5)
+    !domain.items[md5].attributes.to_h.empty?
+  end
+
+  private
+  def time2ISO8601
+    Time.now.in_time_zone('Asia/Tokyo').iso8601
+  end
+
+end
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Upload Pics by Imgur Api in Ruby]]></title>
