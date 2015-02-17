@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Jni - Welcome to FutureAppLaboratory</title>
+  <title>Welcome to FutureAppLaboratory</title>
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Category: jni">
+  <meta name="description" content="What is mozc? Mozc is a Japanese Input Method Editor (IME) designed for multi-platform such
+as Chromium OS, Android, Windows, Mac and Linux. This &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://zh-wang.github.io/blog/categories/jni">
+  <link rel="canonical" href="http://zh-wang.github.io/posts/4">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Welcome to FutureAppLaboratory" type="application/atom+xml">
@@ -58,9 +59,10 @@ MathJax.Hub.Config({
   </script>
 
 
-  <meta property="og:title" content="Category: jni - Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Category: jni" />
-<meta property="og:url" content="http://zh-wang.github.io/blog/categories/jni/" />
+  <meta property="og:title" content="Welcome to FutureAppLaboratory" />
+<meta property="og:description" content="What is mozc? Mozc is a Japanese Input Method Editor (IME) designed for multi-platform such
+as Chromium OS, Android, Windows, Mac and Linux. This &hellip;" />
+<meta property="og:url" content="http://zh-wang.github.io/posts/4/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
 <meta property="og:site_name" content="Welcome to FutureAppLaboratory" />
@@ -100,40 +102,117 @@ MathJax.Hub.Config({
 </nav>
   <div id="main">
     <div id="content">
-      <div>
-<article role="article">
+      <div class="blog-index">
   
+  
+  
+    <article>
+      
   <header>
-    <h1 class="entry-title">Category: Jni</h1>
+    
+      <h1 class="entry-title"><a href="/blog/2014/04/22/mozc-analysis-01/">Mozc完全解説01</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-22T12:20:06+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/04/22/mozc-analysis-01/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/04/22/mozc-analysis-01/">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+  <div class="entry-content"><h2>What is mozc?</h2>
 
-  
-  <h2>2014</h2>
+<blockquote><p>Mozc is a Japanese Input Method Editor (IME) designed for multi-platform such
+as Chromium OS, Android, Windows, Mac and Linux. This open-source project
+originates from Google Japanese Input.</p></blockquote>
 
-<article>
-  
-<h1><a href="/blog/2014/05/01/mozc-analysis-02/">Mozc完全解説02</a></h1>
-<time datetime="2014-05-01T15:18:39+09:00" pubdate><span class='month'>May</span> <span class='day'>01</span> <span class='year'>2014</span></time>
+<h2>(1) ソースを手に入れよう</h2>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/android/'>android</a>, <a class='category' href='/blog/categories/jni/'>jni</a>, <a class='category' href='/blog/categories/mozc/'>mozc</a></span>
-</footer>
+<p>ここからダウンロード　<a href="https://code.google.com/p/mozc/">mozc project from google code</a></p>
+
+<p>今回使うmozcのバージョンは</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>MAJOR=1
+</span><span class='line'>MINOR=10
+</span><span class='line'>BUILD=1390
+</span><span class='line'>REVISION=103
+</span><span class='line'>ANDROID_VERSION_CODE=1794
+</span><span class='line'>FLAG=RELEASE
+</span><span class='line'>TARGET_PLATFORM=Android
+</span><span class='line'>ANDROID_APPLICATION_ID=org.mozc.android.inputmethod.japanese
+</span><span class='line'>ANDROID_SERVICE_NAME=org.mozc.android.inputmethod.japanese.MozcService</span></code></pre></td></tr></table></div></figure>
 
 
-</article>
+<p>android版のビルドはMac非対応なので、vagrantを通してVMのubuntuでビルドします。<br/>
+こちらのリポジトリを使えば楽です。
+<a href="https://github.com/niw/mozc">https://github.com/niw/mozc</a></p>
+
+<p>デフォルトでビルドすると、eclipseで開けるプロジェクトは作ってくれないので、手動で作りました。こちらからダウンロードできます。<br/>
+<a href="https://dl.dropboxusercontent.com/u/40868784/mozc_android.zip  ">https://dl.dropboxusercontent.com/u/40868784/mozc_android.zip  </a>
+フォルダ自体とその中のprotobuff, resources_ossをeclipseにインポートすればOK。後はMozcProxyPreferenceActivityというプロジェクトを実行するだけ。</p>
+
+<p>※ ビルドする際に、&#8221;SDK does not have any Build Tools installed.&ldquo;が表示されたら、Build Toolsをダウンロードする必要があります。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ /usr/bin/curl -L -O 'http://dl.google.com/android/repository/build-tools_r19-linux.zip' && unzip build-tools_r19-linux.zip -d /opt/android/android-sdk-linux/build-tools/ 
+</span><span class='line'>$ mv /opt/android/android-sdk-linux/build-tools/android-4.4 /opt/android/android-sdk-linux/build-tools/19.0.0
+</span><span class='line'>
+</span><span class='line'>or
+</span><span class='line'>
+</span><span class='line'>$ /opt/android/android-sdk-linux/tools/android update sdk -u -t build-tools-20.0.0</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>(2) キーのタッチから、変換候補がもらうまで、簡単な解析をやります</h2>
 
 </div>
-
   
-</article>
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/04/22/mozc-analysis-01/">Read on &rarr;</a>
+    </footer>
+  
 
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="3">Newer &rarr;</a>
+    
+  </div>
 </div>
-
 <aside class="sidebar">
   
     <section>
@@ -253,7 +332,6 @@ MathJax.Hub.Config({
 
   
 </aside>
-
 
     </div>
   </div>

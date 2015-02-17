@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Vim | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-02-16T21:31:10+09:00</updated>
+  <updated>2015-02-17T14:38:53+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,65 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Auto 'Set Paste' on Demand]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/02/17/auto-set-paste-on-demand/"/>
+    <updated>2015-02-17T12:47:51+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/02/17/auto-set-paste-on-demand</id>
+    <content type="html"><![CDATA[<p>Insertモードで編集している間にソースコードを貼付けたい時に、毎回&#8217;set paste&#8217;と&#8217;set nopaste&#8217;をやらないといけない、ちょっと面倒くさいです。<br/>
+更に、&#8217;set paste&#8217;抜きで貼付けた場合、内容の長さによりvimが一時的にフリーズしちゃいますので大変です。<br/>
+コマンドマッピングを導入しても、結局自分でコマンドを入れないといけないですね。</p>
+
+<p>なので今日は移動的に&#8217;set paste&#8217;と&#8217;set nopaste&#8217;をしてくれる便利なプラグインを紹介します。</p>
+
+<h2>Installation</h2>
+
+<p>リポはこちらです。<a href="https://github.com/ConradIrwin/vim-bracketed-paste">https://github.com/ConradIrwin/vim-bracketed-paste</a><br/>
+バンドル管理ツール経由でインストールします。私の場合は</p>
+
+<pre><code>Bundle 'ConradIrwin/vim-bracketed-paste'
+</code></pre>
+
+<h2>Make a step deeper</h2>
+
+<p>基本的なアイディアはシステムのbracketed paste挙動を探知して、コマンドマッピングを自動で実行されます。</p>
+
+<pre><code>if &amp;term =~ "xterm.*"
+    let &amp;t_ti = &amp;t_ti . "\e[?2004h"                " alternate screenに入る時、bracketed pasteを有効にする( ESC[?2004h] )
+    let &amp;t_te = "\e[?2004l" . &amp;t_te                " alternate screenから戻る時、bracketed pasteを無効にする( ESC[?2004l] )
+
+    function XTermPasteBegin(ret)                  " mode change &amp; set paste方法
+        set pastetoggle=&lt;Esc&gt;[201~                 " bracketed pasteを終了識別子を検出する時、pasteモードをtoggle
+        set paste                                  " mode changeする前に、set paste実行
+        return a:ret                               " パラメータでどのモードに入るのをコントロールする
+    endfunction
+    map &lt;expr&gt; &lt;Esc&gt;[200~ XTermPasteBegin("i")     " normal modeでbracketed pasteの開始識別子(ESC[200~])を検出する時、insert modeになる
+    imap &lt;expr&gt; &lt;Esc&gt;[200~ XTermPasteBegin("")     " insert modeならモードがそのまま
+    cmap &lt;Esc&gt;[200~ &lt;nop&gt;                          " command modeなら以上のコードを使うとおかしくなるので、回避
+    cmap &lt;Esc&gt;[201~ &lt;nop&gt;                          " 同じく回避
+endif
+</code></pre>
+
+<h2>Reference</h2>
+
+<ul>
+<li>What is alternate screen? <a href="http://superuser.com/questions/321204/what-does-terminal-apps-show-alternate-screen-do-os-x">http://superuser.com/questions/321204/what-does-terminal-apps-show-alternate-screen-do-os-x</a></li>
+</ul>
+
+
+<p>以下はプラグインのソースから抜きました。</p>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/5585129/pasting-code-into-terminal-window-into-vim-on-mac-os-x">http://stackoverflow.com/questions/5585129/pasting-code-into-terminal-window-into-vim-on-mac-os-x</a></li>
+<li><a href="https://coderwall.com/p/if9mda">https://coderwall.com/p/if9mda</a></li>
+<li><a href="https://github.com/aaronjensen/vimfiles/blob/59a7019b1f2d08c70c28a41ef4e2612470ea0549/plugin/terminaltweaks.vim">https://github.com/aaronjensen/vimfiles/blob/59a7019b1f2d08c70c28a41ef4e2612470ea0549/plugin/terminaltweaks.vim</a> to fix the escape time problem with insert mode.</li>
+<li>Docs on bracketed paste mode. <a href="http://www.xfree86.org/current/ctlseqs.html">http://www.xfree86.org/current/ctlseqs.html</a></li>
+<li>Docs on mapping fast escape codes in vim. <a href="http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim">http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Vim-quickrun Config]]></title>
