@@ -282,18 +282,75 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 <span class='line-number'>140</span>
 <span class='line-number'>141</span>
 <span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env ruby</span>
 </span><span class='line'><span class="c1"># encoding: utf-8</span>
 </span><span class='line'>
 </span><span class='line'><span class="nb">require</span> <span class="s1">&#39;AWS&#39;</span>
 </span><span class='line'><span class="nb">require</span> <span class="s1">&#39;active_support/all&#39;</span>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;./StringColorize.rb&#39;</span>
 </span><span class='line'>
-</span><span class='line'><span class="no">SDB_TYPE_DEFAULT</span> <span class="o">=</span> <span class="s2">&quot;default&quot;</span>
+</span><span class='line'><span class="no">GIF_TYPE_DEFAULT</span> <span class="o">=</span> <span class="s1">&#39;GIF_TYPE_DEFAULT&#39;</span>
+</span><span class='line'><span class="no">GIF_TYPE_ANIMAL</span> <span class="o">=</span> <span class="s1">&#39;GIF_TYPE_ANIMAL&#39;</span>
+</span><span class='line'><span class="no">GIF_TYPE_DOG</span> <span class="o">=</span> <span class="s1">&#39;GIF_TYPE_DOG&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">IMAGE_INFO_DOMAIN_NAME</span> <span class="o">=</span> <span class="s2">&quot;IMAGE_INFO_DOMAIN_NAME&quot;</span>
+</span><span class='line'><span class="no">GROUP_INFO_DOMAIN_NAME</span> <span class="o">=</span> <span class="s2">&quot;GROUP_INFO_DOMAIN_NAME&quot;</span>
 </span><span class='line'>
 </span><span class='line'><span class="k">class</span> <span class="nc">AWSUtils</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="no">ACCESS_KEY_ID</span> <span class="o">=</span> <span class="s1">&#39;YOUR_ACCESS_KEY_ID&#39;</span>
-</span><span class='line'>  <span class="no">SECRET_ACCESS_KEY</span> <span class="o">=</span> <span class="s1">&#39;YOUR_SECRET_ACCESS_KEY&#39;</span>
+</span><span class='line'>  <span class="no">ACCESS_KEY_ID</span> <span class="o">=</span> <span class="s1">&#39;MY_ACCESS_KEY_ID&#39;</span>
+</span><span class='line'>  <span class="no">SECRET_ACCESS_KEY</span> <span class="o">=</span> <span class="s1">&#39;MY_SECRET_ACCESS_KEY&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareDomainSDB</span><span class="p">(</span><span class="no">IMAGE_INFO_DOMAIN_NAME</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareDomainSDB</span><span class="p">(</span><span class="no">GROUP_INFO_DOMAIN_NAME</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">listImageInfos</span>
+</span><span class='line'>    <span class="n">imageDomain</span> <span class="o">=</span> <span class="n">getDomain</span><span class="p">(</span><span class="no">IMAGE_INFO_DOMAIN_NAME</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">list_item_by_domain_name</span><span class="p">(</span><span class="n">imageDomain</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">item</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">list_attributes_by_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">listGroupInfos</span>
+</span><span class='line'>    <span class="n">groupDomain</span> <span class="o">=</span> <span class="n">getDomain</span><span class="p">(</span><span class="no">GROUP_INFO_DOMAIN_NAME</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">list_item_by_domain_name</span><span class="p">(</span><span class="n">groupDomain</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">item</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">list_attributes_by_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">def</span> <span class="nf">regions</span><span class="p">()</span>
 </span><span class='line'>    <span class="no">AWS</span><span class="o">::</span><span class="n">regions</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">region</span><span class="o">|</span>
@@ -311,10 +368,10 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">createDomain</span><span class="p">(</span><span class="n">domain_name</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">prepareDomainSDB</span><span class="p">(</span><span class="n">domain_name</span><span class="p">)</span>
 </span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
-</span><span class='line'>    <span class="vi">@sdb</span><span class="o">.</span><span class="n">domains</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">domain_name</span><span class="p">)</span>
 </span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;===&gt; initialize domain &quot;</span> <span class="o">+</span> <span class="n">domain_name</span>
+</span><span class='line'>    <span class="vi">@sdb</span><span class="o">.</span><span class="n">domains</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">domain_name</span><span class="p">)</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
 </span><span class='line'>  <span class="k">def</span> <span class="nf">getDomain</span><span class="p">(</span><span class="n">domain_name</span><span class="p">)</span>
@@ -346,7 +403,7 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">listItemByDomainNameSDB</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">list_item_by_domain_name</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
 </span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
 </span><span class='line'>    <span class="c1">#domain = @sdb.domains.create(domain_name)</span>
 </span><span class='line'><span class="c1">#    puts domain.items.collect(&amp;:name) # list name</span>
@@ -358,7 +415,7 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 </span><span class='line'>    <span class="k">end</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">listAttributesByItemSDB</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">list_attributes_by_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
 </span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;===&gt; listing attributes: &quot;</span> <span class="o">+</span> <span class="n">item</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">to_h</span><span class="p">()</span><span class="o">.</span><span class="n">to_s</span><span class="p">()</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
@@ -369,25 +426,26 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 </span><span class='line'>  <span class="c1"># followed by a hash contains</span>
 </span><span class='line'>  <span class="c1">#</span>
 </span><span class='line'>  <span class="c1"># upload_time -&gt; ISO 8601 formatted time stamp</span>
-</span><span class='line'>  <span class="c1"># title -&gt; title in english</span>
+</span><span class='line'>  <span class="c1"># title -&gt; [title_en, title_ja, ...]</span>
 </span><span class='line'>  <span class="c1"># type -&gt; type string (Dog, Cat etc.)</span>
 </span><span class='line'>  <span class="c1"># group -&gt; [group id 1, group id 2, ...], may be nil</span>
 </span><span class='line'>  <span class="c1"># link -&gt; an Imgur link</span>
 </span><span class='line'>  <span class="c1"># json -&gt; response of uploaded image</span>
 </span><span class='line'>  <span class="c1"># comment -&gt; [], may be nil</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">insertItem</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">md5</span><span class="p">,</span> <span class="n">link</span><span class="p">,</span> <span class="n">json</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">insert_image_info_item</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">type</span><span class="p">,</span> <span class="n">md5</span><span class="p">,</span> <span class="n">link</span><span class="p">,</span> <span class="n">json</span><span class="p">)</span>
 </span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
+</span><span class='line'>    <span class="n">image_domain</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">getDomain</span><span class="p">(</span><span class="no">IMAGE_INFO_DOMAIN_NAME</span><span class="p">)</span>
 </span><span class='line'>    <span class="nb">hash</span> <span class="o">=</span> <span class="p">{</span>
 </span><span class='line'>      <span class="ss">:upload_time</span> <span class="o">=&gt;</span> <span class="n">time2ISO8601</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:title</span> <span class="o">=&gt;</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:type</span> <span class="o">=&gt;</span> <span class="no">SDB_TYPE_DEFAULT</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:title</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="n">title</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:type</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="n">type</span><span class="o">]</span><span class="p">,</span>
 </span><span class='line'>      <span class="ss">:group</span> <span class="o">=&gt;</span> <span class="o">[]</span><span class="p">,</span>
 </span><span class='line'>      <span class="ss">:link</span> <span class="o">=&gt;</span> <span class="n">link</span><span class="p">,</span>
 </span><span class='line'>      <span class="ss">:json</span> <span class="o">=&gt;</span> <span class="n">json</span><span class="p">,</span>
 </span><span class='line'>      <span class="ss">:comment</span> <span class="o">=&gt;</span> <span class="o">[]</span><span class="p">,</span>
 </span><span class='line'>    <span class="p">}</span>
 </span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;===&gt; inserting: </span><span class="si">#{</span><span class="n">md5</span><span class="si">}</span><span class="s2"> , </span><span class="si">#{</span><span class="nb">hash</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span class='line'>    <span class="n">domain</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">md5</span><span class="p">,</span> <span class="nb">hash</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">image_domain</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">md5</span><span class="p">,</span> <span class="nb">hash</span><span class="p">)</span>
 </span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;===&gt; ok&quot;</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
@@ -396,29 +454,33 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 </span><span class='line'>  <span class="c1"># followed by a hash contains</span>
 </span><span class='line'>  <span class="c1">#</span>
 </span><span class='line'>  <span class="c1"># upload_time -&gt; ISO 8601 formatted time stamp</span>
-</span><span class='line'>  <span class="c1"># title -&gt; title in english</span>
+</span><span class='line'>  <span class="c1"># title -&gt; [title_en, title_ja, ...]</span>
 </span><span class='line'>  <span class="c1"># images_md5 -&gt; [md5_1, md5_2, ...]</span>
 </span><span class='line'>  <span class="c1"># type -&gt; type string (Dog, Cat etc.)</span>
 </span><span class='line'>  <span class="c1"># comment -&gt; [], may be nil</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">insertGroupInfoItem</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">upload_time</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">images_md5</span><span class="p">,</span> <span class="n">type</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">insert_group_info_item</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">images_md5</span><span class="p">,</span> <span class="n">type</span><span class="p">)</span>
 </span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
+</span><span class='line'>    <span class="n">group_domian</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">getDomain</span><span class="p">(</span><span class="no">GROUP_INFO_DOMAIN_NAME</span><span class="p">)</span>
 </span><span class='line'>    <span class="n">uniq_id</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="p">(</span><span class="mi">65</span> <span class="o">+</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">26</span><span class="p">))</span><span class="o">.</span><span class="n">chr</span> <span class="p">}</span><span class="o">.</span><span class="n">join</span>
 </span><span class='line'>    <span class="nb">hash</span> <span class="o">=</span> <span class="p">{</span>
 </span><span class='line'>      <span class="ss">:upload_time</span> <span class="o">=&gt;</span> <span class="n">time2ISO8601</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:title</span> <span class="o">=&gt;</span> <span class="n">title</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">:title</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="n">title</span><span class="o">]</span><span class="p">,</span>
 </span><span class='line'>      <span class="ss">:images_md5</span> <span class="o">=&gt;</span> <span class="n">images_md5</span><span class="p">,</span>
 </span><span class='line'>      <span class="ss">:type</span> <span class="o">=&gt;</span> <span class="n">type</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:comment</span> <span class="o">=&gt;</span> <span class="n">comment</span>
+</span><span class='line'>      <span class="ss">:comment</span> <span class="o">=&gt;</span> <span class="o">[]</span>
 </span><span class='line'>    <span class="p">}</span>
 </span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;===&gt; inserting: </span><span class="si">#{</span><span class="n">uniq_id</span><span class="si">}</span><span class="s2"> , </span><span class="si">#{</span><span class="nb">hash</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span class='line'>    <span class="n">domain</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">uniq_id</span><span class="p">,</span> <span class="nb">hash</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">group_domian</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">uniq_id</span><span class="p">,</span> <span class="nb">hash</span><span class="p">)</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">duplicated</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">md5</span><span class="p">)</span>
-</span><span class='line'>    <span class="o">!</span><span class="n">domain</span><span class="o">.</span><span class="n">items</span><span class="o">[</span><span class="n">md5</span><span class="o">].</span><span class="n">attributes</span><span class="o">.</span><span class="n">to_h</span><span class="o">.</span><span class="n">empty?</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">duplicated</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+</span><span class='line'>    <span class="o">!</span><span class="n">domain</span><span class="o">.</span><span class="n">items</span><span class="o">[</span><span class="n">key</span><span class="o">].</span><span class="n">attributes</span><span class="o">.</span><span class="n">to_h</span><span class="o">.</span><span class="n">empty?</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'>  <span class="kp">private</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">duplicated_in_domain_name</span><span class="p">(</span><span class="n">domain_name</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">duplicated</span><span class="p">(</span><span class="n">getDomain</span><span class="p">(</span><span class="n">domain_name</span><span class="p">),</span> <span class="n">key</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
 </span><span class='line'>  <span class="k">def</span> <span class="nf">time2ISO8601</span>
 </span><span class='line'>    <span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">in_time_zone</span><span class="p">(</span><span class="s1">&#39;Asia/Tokyo&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">iso8601</span>
 </span><span class='line'>  <span class="k">end</span>

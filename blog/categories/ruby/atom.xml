@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-02-17T14:38:53+09:00</updated>
+  <updated>2015-02-19T20:41:20+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -31,13 +31,39 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 
 require 'AWS'
 require 'active_support/all'
+require './StringColorize.rb'
 
-SDB_TYPE_DEFAULT = "default"
+GIF_TYPE_DEFAULT = 'GIF_TYPE_DEFAULT'
+GIF_TYPE_ANIMAL = 'GIF_TYPE_ANIMAL'
+GIF_TYPE_DOG = 'GIF_TYPE_DOG'
+
+IMAGE_INFO_DOMAIN_NAME = "IMAGE_INFO_DOMAIN_NAME"
+GROUP_INFO_DOMAIN_NAME = "GROUP_INFO_DOMAIN_NAME"
 
 class AWSUtils
 
-  ACCESS_KEY_ID = 'YOUR_ACCESS_KEY_ID'
-  SECRET_ACCESS_KEY = 'YOUR_SECRET_ACCESS_KEY'
+  ACCESS_KEY_ID = 'MY_ACCESS_KEY_ID'
+  SECRET_ACCESS_KEY = 'MY_SECRET_ACCESS_KEY'
+
+  def initialize
+    self.prepareSDB
+    self.prepareDomainSDB(IMAGE_INFO_DOMAIN_NAME)
+    self.prepareDomainSDB(GROUP_INFO_DOMAIN_NAME)
+  end
+
+  def listImageInfos
+    imageDomain = getDomain(IMAGE_INFO_DOMAIN_NAME)
+    list_item_by_domain_name(imageDomain) do |item|
+      list_attributes_by_item(item)
+    end
+  end
+
+  def listGroupInfos
+    groupDomain = getDomain(GROUP_INFO_DOMAIN_NAME)
+    list_item_by_domain_name(groupDomain) do |item|
+      list_attributes_by_item(item)
+    end
+  end
 
   def regions()
     AWS::regions.each do |region|
@@ -55,10 +81,10 @@ class AWSUtils
     end
   end
 
-  def createDomain(domain_name)
+  def prepareDomainSDB(domain_name)
     self.prepareSDB
-    @sdb.domains.create(domain_name)
     puts "===&gt; initialize domain " + domain_name
+    @sdb.domains.create(domain_name)
   end
 
   def getDomain(domain_name)
@@ -90,7 +116,7 @@ class AWSUtils
     end
   end
 
-  def listItemByDomainNameSDB(domain, &amp;block)
+  def list_item_by_domain_name(domain, &amp;block)
     self.prepareSDB
     #domain = @sdb.domains.create(domain_name)
 #    puts domain.items.collect(&amp;:name) # list name
@@ -102,7 +128,7 @@ class AWSUtils
     end
   end
 
-  def listAttributesByItemSDB(item)
+  def list_attributes_by_item(item)
     puts "===&gt; listing attributes: " + item.attributes.to_h().to_s()
   end
 
@@ -113,25 +139,26 @@ class AWSUtils
   # followed by a hash contains
   #
   # upload_time -&gt; ISO 8601 formatted time stamp
-  # title -&gt; title in english
+  # title -&gt; [title_en, title_ja, ...]
   # type -&gt; type string (Dog, Cat etc.)
   # group -&gt; [group id 1, group id 2, ...], may be nil
   # link -&gt; an Imgur link
   # json -&gt; response of uploaded image
   # comment -&gt; [], may be nil
-  def insertItem(domain, md5, link, json)
+  def insert_image_info_item(title, type, md5, link, json)
     self.prepareSDB
+    image_domain = self.getDomain(IMAGE_INFO_DOMAIN_NAME)
     hash = {
       :upload_time =&gt; time2ISO8601,
-      :title =&gt; 'title',
-      :type =&gt; SDB_TYPE_DEFAULT,
+      :title =&gt; [title],
+      :type =&gt; [type],
       :group =&gt; [],
       :link =&gt; link,
       :json =&gt; json,
       :comment =&gt; [],
     }
     puts "===&gt; inserting: #{md5} , #{hash}"
-    domain.items.create(md5, hash)
+    image_domain.items.create(md5, hash)
     puts "===&gt; ok"
   end
 
@@ -140,29 +167,33 @@ class AWSUtils
   # followed by a hash contains
   #
   # upload_time -&gt; ISO 8601 formatted time stamp
-  # title -&gt; title in english
+  # title -&gt; [title_en, title_ja, ...]
   # images_md5 -&gt; [md5_1, md5_2, ...]
   # type -&gt; type string (Dog, Cat etc.)
   # comment -&gt; [], may be nil
-  def insertGroupInfoItem(domain, upload_time, title, images_md5, type)
+  def insert_group_info_item(title, images_md5, type)
     self.prepareSDB
+    group_domian = self.getDomain(GROUP_INFO_DOMAIN_NAME)
     uniq_id = (0...8).map { (65 + rand(26)).chr }.join
     hash = {
       :upload_time =&gt; time2ISO8601,
-      :title =&gt; title,
+      :title =&gt; [title],
       :images_md5 =&gt; images_md5,
       :type =&gt; type,
-      :comment =&gt; comment
+      :comment =&gt; []
     }
     puts "===&gt; inserting: #{uniq_id} , #{hash}"
-    domain.items.create(uniq_id, hash)
+    group_domian.items.create(uniq_id, hash)
   end
 
-  def duplicated(domain, md5)
-    !domain.items[md5].attributes.to_h.empty?
+  def duplicated(domain, key)
+    !domain.items[key].attributes.to_h.empty?
   end
 
-  private
+  def duplicated_in_domain_name(domain_name, key)
+    duplicated(getDomain(domain_name), key)
+  end
+
   def time2ISO8601
     Time.now.in_time_zone('Asia/Tokyo').iso8601
   end
