@@ -9,7 +9,8 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Introduction This is an analysis of Codility - Prosphorus 2014 Challenge. This problem is, finding the minimal number of guards to set in a tree &hellip;">
+  <meta name="description" content="Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me. Modified some code in &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -59,7 +60,8 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Introduction This is an analysis of Codility - Prosphorus 2014 Challenge. This problem is, finding the minimal number of guards to set in a tree &hellip;" />
+<meta property="og:description" content="Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me. Modified some code in &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/posts/3/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -102,6 +104,127 @@ MathJax.Hub.Config({
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/09/02/learning-swift-part-1/">Learning Swift Part 1 - a Swift Tour</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-02T18:28:36+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/09/02/learning-swift-part-1/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/09/02/learning-swift-part-1/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me.</p>
+
+<p>Modified some code in the following parts. Some better example or fixing in new Xcode.</p>
+
+<ul>
+<li>Function as parameter (like Comparator)</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// Bubble sort with a custom comparator</span>
+</span><span class='line'><span class="k">func</span> <span class="nf">sort</span><span class="p">(</span><span class="k">inout</span> <span class="nl">list</span><span class="p">:</span> <span class="p">[</span><span class="n">Int</span><span class="p">],</span> <span class="nl">sorter</span><span class="p">:</span> <span class="p">((</span><span class="n">Int</span><span class="p">,</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">i</span> <span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">list</span><span class="p">.</span><span class="n">count</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">j</span> <span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">list</span><span class="p">.</span><span class="n">count</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">sorter</span><span class="p">(</span><span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">var</span> <span class="n">temp</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</span><span class='line'>            <span class="n">list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+</span><span class='line'>            <span class="n">list</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="n">i</span><span class="o">++</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">var</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class='line'><span class="k">func</span> <span class="n">sorter</span><span class="p">(</span><span class="nl">a</span> <span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">b</span> <span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="n">sort</span><span class="p">(</span><span class="o">&amp;</span><span class="n">list</span><span class="p">,</span> <span class="n">sorter</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Closure</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">numbers</span><span class="p">.</span><span class="n">map</span><span class="p">({</span>
+</span><span class='line'>    <span class="p">(</span><span class="nl">number</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="k">in</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">result</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">result</span>
+</span><span class='line'><span class="p">})</span>
+</span><span class='line'><span class="c1">// can be simplied to</span>
+</span><span class='line'><span class="n">numbers</span><span class="p">.</span><span class="n">map</span><span class="p">({</span> <span class="n">number</span> <span class="k">in</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">number</span> <span class="p">})</span>
+</span><span class='line'><span class="c1">// sort a array</span>
+</span><span class='line'><span class="k">var</span> <span class="n">list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+</span><span class='line'><span class="n">sort</span><span class="p">(</span><span class="o">&amp;</span><span class="n">list</span><span class="p">)</span> <span class="c1">// NOT sort(list), this function only accept a reference</span>
+</span><span class='line'><span class="k">var</span> <span class="n">listSorted</span> <span class="o">=</span> <span class="n">sorted</span><span class="p">(</span><span class="n">list</span><span class="p">)</span> <span class="c1">// This is OK</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/02/learning-swift-part-1/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -994,72 +1117,6 @@ Now we&rsquo;ll make a solution for the <strong>swap</strong> version.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/04/24/vcs-info-for-zsh/">Zshのpromptにvcsを表示する</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-24T10:38:49+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/04/24/vcs-info-for-zsh/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/04/24/vcs-info-for-zsh/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>What is vcs?</h2>
-
-<blockquote><p>バージョン管理システム(Version Control System)。</p></blockquote>
-
-<p>zshというshellを使い始めたので、便利なカスタマイズプラグインを紹介します。<br/>
-今回はこちらのプラグイン<a href="https://github.com/yonchu/zsh-vcs-prompt">zsh-vcs-prompt</a>を使って、zshのpromptにバージョン管理システム(git/svn/hg
-)の情報を表示ます。<br/>
-現在作業中branchは一目瞭然ですね。<br/>
-<img src="/images/2014_04_24_zsh_vcs_snapshot.png" title="zsh_vcs" alt="zsh_vcs_snapshot" /></p>
-
-<p>各図形の意味は</p>
-
-<blockquote><p>Remote status:<br/>
-  ↑ n : ahead<br/>
-  ↓ n : behind<br/>
-Local status:<br/>
-  ✔ : repository clean<br/>
-  ● n : there are n staged files<br/>
-  ✖ n : there are n unmerged files<br/>
-  ✚ n : there are n changed but unstaged files<br/>
-  … n : there are n untracked files<br/>
-  ⚑n : there are n stashed<br/>
-  branch(n) : there are n unmerged commits to master</p></blockquote>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/04/24/vcs-info-for-zsh/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="4">&larr; Older</a>
@@ -1077,6 +1134,10 @@ Local status:<br/>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/02/25/usaco-prob-broken-necklace/">Analysis of PROB Broken Necklace</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/02/17/auto-set-paste-on-demand/">Auto &#8216;Set Paste&#8217; on Demand</a>
       </li>
     
@@ -1092,10 +1153,6 @@ Local status:<br/>
         <a href="/blog/2015/01/28/upload-image-with-imgur-api-on-android/">Upload Pics by Imgur Api on Android</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/01/08/learning-swift-part-13/">Learning Swift Part 13 - ARC</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1104,11 +1161,11 @@ Local status:<br/>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (4)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (3)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (6)</a></li><li><a href='/blog/categories/android/'>android (4)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (3)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 83.07692307692308%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 78.46153846153845%'>android(4)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 73.84615384615384%'>ruby(3)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.6923076923077%'>algorithm(6)</a> <a href='/blog/categories/android' style='font-size: 78.46153846153845%'>android(4)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 73.84615384615384%'>ruby(3)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

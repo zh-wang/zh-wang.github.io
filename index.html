@@ -9,8 +9,8 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Insertモードで編集している間にソースコードを貼付けたい時に、毎回'set paste'と'set nopaste'をやらないといけない、ちょっと面倒くさいです。
-更に、'set paste'抜きで貼付けた場合、内容の長さによりvimが一時的にフリーズしちゃいますので大変です。 &hellip;">
+  <meta name="description" content="Introduction This is an analysis of PROB Broken Necklace, one of USA Computer Olympiad&rsquo;s training problems.
+I&rsquo;m just doing some disposal &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -60,8 +60,8 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Insertモードで編集している間にソースコードを貼付けたい時に、毎回'set paste'と'set nopaste'をやらないといけない、ちょっと面倒くさいです。
-更に、'set paste'抜きで貼付けた場合、内容の長さによりvimが一時的にフリーズしちゃいますので大変です。 &hellip;" />
+<meta property="og:description" content="Introduction This is an analysis of PROB Broken Necklace, one of USA Computer Olympiad&rsquo;s training problems.
+I&rsquo;m just doing some disposal &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -104,6 +104,94 @@ MathJax.Hub.Config({
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/25/usaco-prob-broken-necklace/">Analysis of PROB Broken Necklace</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-25T17:58:16+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/02/25/usaco-prob-broken-necklace/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/02/25/usaco-prob-broken-necklace/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Introduction</h2>
+
+<p>This is an analysis of PROB Broken Necklace, one of USA Computer Olympiad&rsquo;s training problems.<br/>
+I&rsquo;m just doing some disposal on my old stuff.</p>
+
+<h2>Description</h2>
+
+<p>You have a necklace of N red, white, or blue beads (3&lt;=N&lt;=350) some of which are red, others blue, and others white, arranged at random. Here are two examples for n=29:</p>
+
+<pre><code>            1 2                               1 2
+        r b b r                           b r r b
+      r         b                       b         b
+     r           r                     b           r
+    r             r                   w             r
+   b               r                 w               w
+  b                 b               r                 r
+  b                 b               b                 b
+  b                 b               r                 b
+   r               r                 b               r
+    b             r                   r             r
+     b           r                     r           r
+       r       r                         r       b
+         r b r                             r r w
+        Figure A                         Figure B
+                    r red bead
+                    b blue bead
+                    w white bead
+</code></pre>
+
+<p>The beads considered first and second in the text that follows have been marked in the picture.</p>
+
+<p>The configuration in Figure A may be represented as a string of b&rsquo;s and r&rsquo;s, where b represents a blue bead and r represents a red one, as follows: brbrrrbbbrrrrrbrrbbrbbbbrrrrb .</p>
+
+<p>Suppose you are to break the necklace at some point, lay it out straight, and then collect beads of the same color from one end until you reach a bead of a different color, and do the same for the other end (which might not be of the same color as the beads collected before this).</p>
+
+<p>Determine the point where the necklace should be broken so that the most number of beads can be collected.</p>
+
+<h2>Analysis</h2>
+
+<p>Given an input string &lsquo;wwwbbrwrbrbrrbrbrwrwwrbwrwrrb&rsquo;, we concatenate it with itself, result in &lsquo;wwwbbrwrbrbrrbrbrwrwwrbwrwrrbwwwbbrwrbrbrrbrbrwrwwrbwrwrrb&rsquo;. This trick breaks index circling.</p>
+
+<p>Then problem is now that, given an input string composed by &lsquo;r&rsquo;, &lsquo;b&rsquo; and &lsquo;w&rsquo;, find the length of the longest path which composed by successive &lsquo;r&rsquo; and &lsquo;b&rsquo;, while &lsquo;w&rsquo; can be treated either &lsquo;r&rsquo; or &lsquo;b&rsquo;. For convenience, we define input string as $s_1, s_2, cdots, s_k$.</p>
+
+<ol>
+<li><p>A brute force solution.</p>
+
+<pre><code> &lt;TODO&gt;
+</code></pre></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -2394,112 +2482,6 @@ File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理した
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/20/learning-swift-part-11/">Learning Swift Part 11 - Inheritance</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-20T19:10:05+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/11/20/learning-swift-part-11/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/11/20/learning-swift-part-11/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>===== Full Notes =====</h2>
-
-<h3>Inheritance</h3>
-
-<ul>
-<li>A base class, Vehicle</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>    class Vehicle {
-</span><span class='line'>        var currentSpeed = 0.0
-</span><span class='line'>        var description: String {
-</span><span class='line'>                return "traveling at \(currentSpeed) miles per hour"
-</span><span class='line'>        }
-</span><span class='line'>        func makeNoise() {
-</span><span class='line'>                // do nothing - an arbitrary vehicle doesn't necessarily make a noise
-</span><span class='line'>        }
-</span><span class='line'>    }</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Subclass, Bicycle and Tandem</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>    class Bicycle: Vehicle {
-</span><span class='line'>        var hasBasket = false
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    class Tandem: Bicycle {
-</span><span class='line'>        var currentNumberOfPassengers = 0
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    let tandem = Tandem()
-</span><span class='line'>    tandem.hasBasket = true
-</span><span class='line'>    tandem.currentNumberOfPassengers = 2
-</span><span class='line'>    tandem.currentSpeed = 22.0
-</span><span class='line'>    println("Tandem: \(tandem.description)")
-</span><span class='line'>    // Tandem: traveling at 22.0 miles per hour</span></code></pre></td></tr></table></div></figure>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/11/20/learning-swift-part-11/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -2513,6 +2495,10 @@ File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理した
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/02/25/usaco-prob-broken-necklace/">Analysis of PROB Broken Necklace</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/02/17/auto-set-paste-on-demand/">Auto &#8216;Set Paste&#8217; on Demand</a>
@@ -2530,10 +2516,6 @@ File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理した
         <a href="/blog/2015/01/28/upload-image-with-imgur-api-on-android/">Upload Pics by Imgur Api on Android</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/01/08/learning-swift-part-13/">Learning Swift Part 13 - ARC</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -2542,11 +2524,11 @@ File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理した
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (5)</a></li><li><a href='/blog/categories/android/'>android (4)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (3)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (6)</a></li><li><a href='/blog/categories/android/'>android (4)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (3)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 83.07692307692308%'>algorithm(5)</a> <a href='/blog/categories/android' style='font-size: 78.46153846153845%'>android(4)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 73.84615384615384%'>ruby(3)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.6923076923077%'>algorithm(6)</a> <a href='/blog/categories/android' style='font-size: 78.46153846153845%'>android(4)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 73.84615384615384%'>ruby(3)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>
