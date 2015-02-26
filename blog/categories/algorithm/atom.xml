@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithm | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/algorithm/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-02-26T10:32:54+09:00</updated>
+  <updated>2015-02-27T00:06:51+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -21,7 +21,7 @@
     <content type="html"><![CDATA[<h2>Introduction</h2>
 
 <p>This is an analysis of PROB Broken Necklace, one of USA Computer Olympiad&rsquo;s training problems.<br/>
-I&rsquo;m just doing some disposal on my old stuff.</p>
+Just doing some disposal on my old stuff.</p>
 
 <h2>Description</h2>
 
@@ -55,19 +55,122 @@ I&rsquo;m just doing some disposal on my old stuff.</p>
 
 <p>Determine the point where the necklace should be broken so that the most number of beads can be collected.</p>
 
+<!--more-->
+
+
 <h2>Analysis</h2>
 
-<p>Given an input string &lsquo;wwwbbrwrbrbrrbrbrwrwwrbwrwrrb&rsquo;, we concatenate it with itself, result in &lsquo;wwwbbrwrbrbrrbrbrwrwwrbwrwrrbwwwbbrwrbrbrrbrbrwrwwrbwrwrrb&rsquo;. This trick breaks index circling.</p>
-
-<p>Then problem is now that, given an input string composed by &lsquo;r&rsquo;, &lsquo;b&rsquo; and &lsquo;w&rsquo;, find the length of the longest path which composed by successive &lsquo;r&rsquo; and &lsquo;b&rsquo;, while &lsquo;w&rsquo; can be treated either &lsquo;r&rsquo; or &lsquo;b&rsquo;. For convenience, we define input string as $s_1, s_2, cdots, s_k$.</p>
+<p>Given an input string &lsquo;wwwbbrwrbrbrrbrbrwrwwrbwrwrrb&rsquo;, we concatenate it with itself, result in &lsquo;wwwbbrwrbrbrrbrbrwrwwrbwrwrrbwwwbbrwrbrbrrbrbrwrwwrbwrwrrb&rsquo;. This trick, working on handling minus or over-length index is easier.</p>
 
 <ol>
-<li><p>A brute force solution.</p>
+<li><p>Brute force solution.</p>
 
-<pre><code> &lt;TODO&gt;
-</code></pre></li>
+<p> For each index $a_i$ as a start, if $a_{i+1}$ can be picked into the longest substring, we pick it then do this again on $a_{i+1}$. Note that, if $a_i$ is w, we must treat it as b and r, one by one. We do N times of picking attempt for each $a_i$. Therefore complexity is O(N<sup>2</sup>). Just a straight forward solution.</p></li>
+<li><p>DP solution.</p>
+
+<p> We denote substring composed by successive r, which <strong>ends</strong> at index $i$ to $t_{i,r}$.</p></li>
 </ol>
 
+
+<p><script type="math/tex; mode=display">
+    t<em>{i,r} = \begin{cases}
+        t</em>{i-1,r} + 1 &amp; \text{if $a_i$ is r or w} \
+        0 &amp; \text{if $a_i$ is b or $i$ > N}
+    \end{cases}
+</script></p>
+
+<p>Similarly, we denote substring composed by successive b, which <strong>ends</strong> at index $i$ to $t_{i,b}$.</p>
+
+<p><script type="math/tex; mode=display">
+    t<em>{i,b} = \begin{cases}
+        t</em>{i-1,b} + 1 &amp; \text{if $a_i$ is b or w} \
+        0 &amp; \text{if $a_i$ is r or $i$ > N}
+    \end{cases}
+</script></p>
+
+<p>On the other hand, we denote substring composed by successive r, which <strong>starts</strong> at index $i$ to $s_{i,r}$.</p>
+
+<p><script type="math/tex; mode=display">
+    s<em>{i,r} = \begin{cases}
+        s</em>{i+1,r} + 1 &amp; \text{if $a_i$ is r or w} \
+        0 &amp; \text{if $a_{i-1}$ is b or $i = 0$}
+    \end{cases}
+</script></p>
+
+<p>And substring composed by successive b, which <strong>starts</strong> at index $i$ to $t_{i,b}$.</p>
+
+<p><script type="math/tex; mode=display">
+    s<em>{i,b} = \begin{cases}
+        s</em>{i+1,b} + 1 &amp; \text{if $a_i$ is b or w} \
+        0 &amp; \text{if $a_{i-1}$ is r or $i = 0$}
+    \end{cases}
+</script></p>
+
+<p>For each index $a_i$, $\max \{s_{i,r}, s_{i,b} \} + \max \{t_{i,r}, t_{i,b} \}$ is the length of longest substring if we break it at index $i$. We do this for N times, the greatest one is the answer. Complexity of this algorithm is O(n).</p>
+
+<h2>Source Code of DP Solution</h2>
+
+<pre><code class="cpp">/*
+ID: viennak1
+PROB: beads
+LANG: C++
+*/
+
+// Section 1.1 PROB Broken Necklace
+
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+#include &lt;climits&gt;
+#include &lt;cassert&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;map&gt;
+#include &lt;set&gt;
+#include &lt;queue&gt;
+#include &lt;sstream&gt;
+#include &lt;numeric&gt;
+#include &lt;fstream&gt;
+#include &lt;iostream&gt;
+#include &lt;utility&gt;
+#include &lt;iomanip&gt;
+#include &lt;stack&gt;
+using namespace std;
+
+int N,res;
+int LEFT[700][2],RIGHT[700][2];
+string s;
+int main(){
+    ofstream fout ("beads.out");
+    ifstream fin ("beads.in");
+    fin&gt;&gt;N; fin&gt;&gt;s;
+    int L=s.length();
+    s=s+s;
+    if(s[0]=='r') LEFT[0][0]=1;
+    else if(s[0]=='b') LEFT[0][1]=1;
+    else LEFT[0][0]=LEFT[0][1]=1;
+    for(int i=1;i&lt;L*2;i++){ 
+        if(s[i]=='r') LEFT[i][0]=LEFT[i-1][0]+1;
+        if(s[i]=='b') LEFT[i][1]=LEFT[i-1][1]+1;
+        if(s[i]=='w') LEFT[i][0]=LEFT[i-1][0]+1,LEFT[i][1]=LEFT[i-1][1]+1;
+    }
+    if(s[2*L-1]=='r') RIGHT[2*L-1][0]=1;
+    else if(s[2*L-1]=='b') RIGHT[2*L-1][1]=1;
+    else RIGHT[2*L-1][0]=RIGHT[2*L-1][1]=1;
+    for(int i=2*L-2;i&gt;=0;i--){
+        if(s[i]=='r') RIGHT[i][0]=RIGHT[i+1][0]+1;
+        if(s[i]=='b') RIGHT[i][1]=RIGHT[i+1][1]+1;
+        if(s[i]=='w') RIGHT[i][0]=RIGHT[i+1][0]+1,RIGHT[i][1]=RIGHT[i+1][1]+1;
+    }
+    for(int i=0;i&lt;2*L-1;i++)
+        res=max(res, max(LEFT[i][0],LEFT[i][1])+max(RIGHT[i+1][0],RIGHT[i+1][1]));
+    if(res&gt;L) fout&lt;&lt;L&lt;&lt;endl;
+    else fout&lt;&lt;res&lt;&lt;endl;
+    return 0;
+}
+</code></pre>
 ]]></content>
   </entry>
   
@@ -529,7 +632,7 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
     \max { \sum_{k=i}^j a_k, 0 \leq i &lt; j \leq n - 1 }
 </script></p>
 
-<p>Because we want the maximal part from <script type="math/tex"> i </script> to <script type="math/tex"> j </script>, by thinking reversely, we can calculate the minimal <a href="http://mathworld.wolfram.com/PartialSum.html">partial sum</a> of sub array <script type="math/tex"> a_0, a_1, \cdots, a_x-1 </script> as <script type="math/tex"> f(x) </script>, minimal partial sum of sub array <script type="math/tex"> a_x+1, a_x+2, \cdots, a_n-1 </script> as <script type="math/tex"> g(x) </script>. Then use the whole sum to subtract them if them are minus values.</p>
+<p>Beca$use we want the maximal part from <script type="math/tex"> i </script> to <script type="math/tex"> j </script>, by thinking reversely, we can calculate the minimal <a href="http://mathworld.wolfram.com/PartialSum.html">partial sum</a> of sub array <script type="math/tex"> a_0, a_1, \cdots, a_x-1 </script> as <script type="math/tex"> f(x) </script>, minimal partial sum of sub array <script type="math/tex"> a_x+1, a_x+2, \cdots, a_n-1 </script> as <script type="math/tex"> g(x) </script>. Then use the whole sum to subtract them if them are minus values.</p>
 
 <p>let <script type="math/tex"> S </script> to be the accumulation of the given array.</p>
 
