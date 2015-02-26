@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Mac | Welcome to FutureAppLaboratory]]></title>
+  <link href="http://zh-wang.github.io/blog/categories/mac/atom.xml" rel="self"/>
+  <link href="http://zh-wang.github.io/"/>
+  <updated>2015-02-26T10:32:54+09:00</updated>
+  <id>http://zh-wang.github.io/</id>
+  <author>
+    <name><![CDATA[viennakanon]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Macbook-proは外付けディスプレイの配置を忘れてしまう]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/02/26/macbook-pro-lost-external-moniters-arrangement/"/>
+    <updated>2015-02-26T10:15:45+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/02/26/macbook-pro-lost-external-moniters-arrangement</id>
+    <content type="html"><![CDATA[<p>最近Macbook-proを外付けディスプレイに接続した後、もともとトップ&amp;ダウンに設定されたディスプレイの配置は必ず左&amp;右になってしまう。最初は再起動したらなんとなく直るだろうと思ったので、一旦この問題を無視した。<br/>
+しかし、なかなか直らないので、グーグル先生から解決方法を聞いた。</p>
+
+<p><a href="http://apple.stackexchange.com/questions/85472/external-monitor-resolution-setting-is-lost-after-macbook-wakes-up-from-sleep">external-monitor-resolution-setting-is-lost-after-macbook-wakes-up-from-sleep</a></p>
+
+<p>ちょっと違う問題なんですが、一応効く。要は再起動する時に[cmd] + [opt] + [P] + [R]でNVRAMをリセットするということです。</p>
+
+<p>NVRAMに関する紹介はこちらにあります。<br/>
+<a href="http://support.apple.com/en-us/HT204063">How to Reset NVRAM on your Mac</a></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -9,8 +9,8 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="What is vcs? バージョン管理システム(Version Control System)。 zshというshellを使い始めたので、便利なカスタマイズプラグインを紹介します。
-今回はこちらのプラグインzsh-vcs-promptを使って、zshのpromptにバージョン管理システム(git &hellip;">
+  <meta name="description" content="はじめに 前回では、android側からタッチ反応を発生してから、jniを通して変換エンジンのnative側が候補を返すまでを説明した。
+今回ではjni部分のコードを少し説明する。 What is jni? 言わばjavaとc, cppとの間のインターフェイスですね。cやcppを使って、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -60,8 +60,8 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="What is vcs? バージョン管理システム(Version Control System)。 zshというshellを使い始めたので、便利なカスタマイズプラグインを紹介します。
-今回はこちらのプラグインzsh-vcs-promptを使って、zshのpromptにバージョン管理システム(git &hellip;" />
+<meta property="og:description" content="はじめに 前回では、android側からタッチ反応を発生してから、jniを通して変換エンジンのnative側が候補を返すまでを説明した。
+今回ではjni部分のコードを少し説明する。 What is jni? 言わばjavaとc, cppとの間のインターフェイスですね。cやcppを使って、 &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/posts/4/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -104,6 +104,76 @@ MathJax.Hub.Config({
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/01/mozc-analysis-02/">Mozc完全解説02</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-01T15:18:39+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/05/01/mozc-analysis-02/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/05/01/mozc-analysis-02/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>はじめに</h2>
+
+<p><a href="/blog/2014/04/22/mozc-analysis-01/">前回</a>では、android側からタッチ反応を発生してから、jniを通して変換エンジンのnative側が候補を返すまでを説明した。<br/>
+今回ではjni部分のコードを少し説明する。</p>
+
+<h2>What is jni?</h2>
+
+<p>言わばjavaとc, cppとの間のインターフェイスですね。cやcppを使って、java側とデータのやり取りができる。<br/>
+<a href="http://ja.wikipedia.org/wiki/Java_Native_Interface">Java Native Interface</a></p>
+
+<h2>mozcに使われているjni</h2>
+
+<p>java側ではMozcJNI.javaというラッパーがある。メソッドはこの通り。</p>
+
+<ul>
+<li><code>load(String, Buffer, Buffer, String)</code><br/>
+  初期化用のメソッド、apkの中に入っている辞書データなどをnative側に渡す</li>
+<li><code>evalCommand(byte[])</code><br/>
+  native側と通信するメソッド、jniで実装</li>
+<li><code>onPostLoad(String, Buffer, Buffer)</code><br/>
+  loadメソッドに使われている、jniで実装</li>
+<li><code>getVersion()</code><br/>
+  native側のバージョン情報をjava側に渡す。loadメソッドに使われている、jniで実装</li>
+</ul>
+
+
+<p>jniの実装ファイルはjni/mozcjni.cc。では、<code>evalCommand(byte[])</code>を詳しく見てみよう。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/05/01/mozc-analysis-02/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -286,6 +356,10 @@ originates from Google Japanese Input.</p></blockquote>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/02/26/macbook-pro-lost-external-moniters-arrangement/">Macbook-proは外付けディスプレイの配置を忘れてしまう</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/02/25/usaco-prob-broken-necklace/">Analysis of PROB Broken Necklace</a>
       </li>
     
@@ -301,10 +375,6 @@ originates from Google Japanese Input.</p></blockquote>
         <a href="/blog/2015/02/06/upload-pics-to-imgur-by-ruby/">Upload Pics by Imgur Api in Ruby</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/01/28/upload-image-with-imgur-api-on-android/">Upload Pics by Imgur Api on Android</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -313,11 +383,11 @@ originates from Google Japanese Input.</p></blockquote>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (6)</a></li><li><a href='/blog/categories/android/'>android (4)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (3)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (6)</a></li><li><a href='/blog/categories/android/'>android (4)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (3)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.6923076923077%'>algorithm(6)</a> <a href='/blog/categories/android' style='font-size: 78.46153846153845%'>android(4)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 73.84615384615384%'>ruby(3)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.6923076923077%'>algorithm(6)</a> <a href='/blog/categories/android' style='font-size: 78.46153846153845%'>android(4)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.61538461538461%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 73.84615384615384%'>ruby(3)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

@@ -9,8 +9,8 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Introduction This is an analysis of PROB Broken Necklace, one of USA Computer Olympiad&rsquo;s training problems.
-I&rsquo;m just doing some disposal &hellip;">
+  <meta name="description" content="最近Macbook-proを外付けディスプレイに接続した後、もともとトップ&amp;ダウンに設定されたディスプレイの配置は必ず左&amp;右になってしまう。最初は再起動したらなんとなく直るだろうと思ったので、一旦この問題を無視した。
+しかし、なかなか直らないので、グーグル先生から解決方法を聞いた &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -60,8 +60,8 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Introduction This is an analysis of PROB Broken Necklace, one of USA Computer Olympiad&rsquo;s training problems.
-I&rsquo;m just doing some disposal &hellip;" />
+<meta property="og:description" content="最近Macbook-proを外付けディスプレイに接続した後、もともとトップ&amp;ダウンに設定されたディスプレイの配置は必ず左&amp;右になってしまう。最初は再起動したらなんとなく直るだろうと思ったので、一旦この問題を無視した。
+しかし、なかなか直らないので、グーグル先生から解決方法を聞いた &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -104,6 +104,53 @@ I&rsquo;m just doing some disposal &hellip;" />
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/26/macbook-pro-lost-external-moniters-arrangement/">Macbook-proは外付けディスプレイの配置を忘れてしまう</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-26T10:15:45+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/02/26/macbook-pro-lost-external-moniters-arrangement/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/02/26/macbook-pro-lost-external-moniters-arrangement/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近Macbook-proを外付けディスプレイに接続した後、もともとトップ&amp;ダウンに設定されたディスプレイの配置は必ず左&amp;右になってしまう。最初は再起動したらなんとなく直るだろうと思ったので、一旦この問題を無視した。<br/>
+しかし、なかなか直らないので、グーグル先生から解決方法を聞いた。</p>
+
+<p><a href="http://apple.stackexchange.com/questions/85472/external-monitor-resolution-setting-is-lost-after-macbook-wakes-up-from-sleep">external-monitor-resolution-setting-is-lost-after-macbook-wakes-up-from-sleep</a></p>
+
+<p>ちょっと違う問題なんですが、一応効く。要は再起動する時に[cmd] + [opt] + [P] + [R]でNVRAMをリセットするということです。</p>
+
+<p>NVRAMに関する紹介はこちらにあります。<br/>
+<a href="http://support.apple.com/en-us/HT204063">How to Reset NVRAM on your Mac</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -2408,80 +2455,6 @@ cmap qc QC
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/25/ruby-csv/">Rubyでcsvをいじる</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-25T18:04:08+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/11/25/ruby-csv/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/11/25/ruby-csv/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>仕事の関係で、Google Playからユーザーレビューをエクスポート（csvファイル）して、特定なレビューを収集するタスクがあった。rubyで割と簡単にできたので、一応手順をメモしようと思った。</p>
-
-<h3>Google Play Developer Consoleからcsvをエクスポート</h3>
-
-<p>こちらのリンクを参考した。 <br/>
-<a href="http://qiita.com/punchdrunker/items/e97248428d19cfa7fb08">http://qiita.com/punchdrunker/items/e97248428d19cfa7fb08</a></p>
-
-<pre><code>gsutil cp -r gs://&lt;バケットID&gt;/reviews/reviews_&lt;アプリのパッケージ名&gt;_2013\* /path/to/directory
-gsutil cp -r gs://&lt;バケットID&gt;/reviews/reviews_&lt;アプリのパッケージ名&gt;_2014\* /path/to/directory
-</code></pre>
-
-<p>こんな感じで2013と2014年分のレビューをcsvファイルとしてエクスポートすることが出来た。</p>
-
-<p>UTF-16でエンコーディングされたファイルなんで、一応処理しやすいためUTF-8にしながら、一つのファイルに合体した。</p>
-
-<pre><code>iconv -f UTF-16 -t UTF-8 reviews_YOUR.PACKAGE.NAME_201308.csv &gt;&gt; 201308_201406_review.csv
-iconv -f UTF-16 -t UTF-8 reviews_YOUR.PACKAGE.NAME_201308.csv &gt;&gt; 201308_201406_review.csv | sed -n '1!p' &gt;&gt; 201308_201406_review.csv # 一行目はcsvの項目なので要らない
-...
-</code></pre>
-
-<ul>
-<li>Google Playの仕様変更により、2014年半ばまでのデータには<strong>review_link</strong>という項目か見つからないかもしれないので、注意しよう。</li>
-</ul>
-
-
-<h3>rubyで読み込んで処理する</h3>
-
-<pre><code>#!/usr/bin/ruby
-require 'csv'
-
-table = CSV.table('201308_201406_review.csv') # 読み込み
-table.delete_if { |row| row[:star_rating] &gt;= 3 } # 処理する。ここでは★２つ以下のレビューをselect。
-File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理したデータをcsvといて書き出す。
-</code></pre>
-
-<p>意外と簡単だね。(・∀・)</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -2495,6 +2468,10 @@ File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理した
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/02/26/macbook-pro-lost-external-moniters-arrangement/">Macbook-proは外付けディスプレイの配置を忘れてしまう</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/02/25/usaco-prob-broken-necklace/">Analysis of PROB Broken Necklace</a>
@@ -2512,10 +2489,6 @@ File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理した
         <a href="/blog/2015/02/06/upload-pics-to-imgur-by-ruby/">Upload Pics by Imgur Api in Ruby</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/01/28/upload-image-with-imgur-api-on-android/">Upload Pics by Imgur Api on Android</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -2524,11 +2497,11 @@ File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理した
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (6)</a></li><li><a href='/blog/categories/android/'>android (4)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (3)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (6)</a></li><li><a href='/blog/categories/android/'>android (4)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (3)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.6923076923077%'>algorithm(6)</a> <a href='/blog/categories/android' style='font-size: 78.46153846153845%'>android(4)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 73.84615384615384%'>ruby(3)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.6923076923077%'>algorithm(6)</a> <a href='/blog/categories/android' style='font-size: 78.46153846153845%'>android(4)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.61538461538461%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 73.84615384615384%'>ruby(3)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>
