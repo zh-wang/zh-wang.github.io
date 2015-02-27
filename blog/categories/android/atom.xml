@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-02-27T00:06:51+09:00</updated>
+  <updated>2015-02-27T10:15:46+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -51,6 +51,9 @@
 
 
 <h2>Source Code</h2>
+
+<!-- more -->
+
 
 <pre><code class="java">
 public class OAuthTestActivity extends Activity {
@@ -266,6 +269,9 @@ public class OAuthTestActivity extends Activity {
 <h2>ほんとに非同期なの？</h2>
 
 <p>AsyncTaskはUIThreadと非同期処理を行うが、AsyncTask同士の間ではデフォルトで<strong>同期</strong>的に行っているみたいね。</p>
+
+<!-- more -->
+
 
 <pre><code class="java">     private class TestTask extends AsyncTask&lt;Void, Void, Void&gt; /* Params, Progress, Result */ {
 

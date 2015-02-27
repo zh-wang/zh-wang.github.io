@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithm | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/algorithm/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-02-27T00:06:51+09:00</updated>
+  <updated>2015-02-27T10:15:46+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -140,7 +140,7 @@ LANG: C++
 using namespace std;
 
 int N,res;
-int LEFT[700][2],RIGHT[700][2];
+int ENDS[700][2],STARTS[700][2];
 string s;
 int main(){
     ofstream fout ("beads.out");
@@ -148,24 +148,24 @@ int main(){
     fin&gt;&gt;N; fin&gt;&gt;s;
     int L=s.length();
     s=s+s;
-    if(s[0]=='r') LEFT[0][0]=1;
-    else if(s[0]=='b') LEFT[0][1]=1;
-    else LEFT[0][0]=LEFT[0][1]=1;
+    if(s[0]=='r') ENDS[0][0]=1;
+    else if(s[0]=='b') ENDS[0][1]=1;
+    else ENDS[0][0]=ENDS[0][1]=1;
     for(int i=1;i&lt;L*2;i++){ 
-        if(s[i]=='r') LEFT[i][0]=LEFT[i-1][0]+1;
-        if(s[i]=='b') LEFT[i][1]=LEFT[i-1][1]+1;
-        if(s[i]=='w') LEFT[i][0]=LEFT[i-1][0]+1,LEFT[i][1]=LEFT[i-1][1]+1;
+        if(s[i]=='r') ENDS[i][0]=ENDS[i-1][0]+1;
+        if(s[i]=='b') ENDS[i][1]=ENDS[i-1][1]+1;
+        if(s[i]=='w') ENDS[i][0]=ENDS[i-1][0]+1,ENDS[i][1]=ENDS[i-1][1]+1;
     }
-    if(s[2*L-1]=='r') RIGHT[2*L-1][0]=1;
-    else if(s[2*L-1]=='b') RIGHT[2*L-1][1]=1;
-    else RIGHT[2*L-1][0]=RIGHT[2*L-1][1]=1;
+    if(s[2*L-1]=='r') STARTS[2*L-1][0]=1;
+    else if(s[2*L-1]=='b') STARTS[2*L-1][1]=1;
+    else STARTS[2*L-1][0]=STARTS[2*L-1][1]=1;
     for(int i=2*L-2;i&gt;=0;i--){
-        if(s[i]=='r') RIGHT[i][0]=RIGHT[i+1][0]+1;
-        if(s[i]=='b') RIGHT[i][1]=RIGHT[i+1][1]+1;
-        if(s[i]=='w') RIGHT[i][0]=RIGHT[i+1][0]+1,RIGHT[i][1]=RIGHT[i+1][1]+1;
+        if(s[i]=='r') STARTS[i][0]=STARTS[i+1][0]+1;
+        if(s[i]=='b') STARTS[i][1]=STARTS[i+1][1]+1;
+        if(s[i]=='w') STARTS[i][0]=STARTS[i+1][0]+1,STARTS[i][1]=STARTS[i+1][1]+1;
     }
     for(int i=0;i&lt;2*L-1;i++)
-        res=max(res, max(LEFT[i][0],LEFT[i][1])+max(RIGHT[i+1][0],RIGHT[i+1][1]));
+        res=max(res, max(ENDS[i][0],ENDS[i][1])+max(STARTS[i+1][0],STARTS[i+1][1]));
     if(res&gt;L) fout&lt;&lt;L&lt;&lt;endl;
     else fout&lt;&lt;res&lt;&lt;endl;
     return 0;
