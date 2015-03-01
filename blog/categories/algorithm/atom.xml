@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithm | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/algorithm/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-02-27T10:15:46+09:00</updated>
+  <updated>2015-03-01T21:50:13+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -151,7 +151,7 @@ int main(){
     if(s[0]=='r') ENDS[0][0]=1;
     else if(s[0]=='b') ENDS[0][1]=1;
     else ENDS[0][0]=ENDS[0][1]=1;
-    for(int i=1;i&lt;L*2;i++){ 
+    for(int i=1;i&lt;L*2;i++){
         if(s[i]=='r') ENDS[i][0]=ENDS[i-1][0]+1;
         if(s[i]=='b') ENDS[i][1]=ENDS[i-1][1]+1;
         if(s[i]=='w') ENDS[i][0]=ENDS[i-1][0]+1,ENDS[i][1]=ENDS[i-1][1]+1;
