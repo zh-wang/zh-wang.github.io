@@ -110,6 +110,122 @@ Most code are from the guide, with some modification by me. ===== Full Notes &he
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/09/05/learning-swift-part-3/">Learning Swift Part 3 - Basic Operators</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-05T17:59:28+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/09/05/learning-swift-part-3/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/09/05/learning-swift-part-3/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me.</p>
+
+<h2>===== Full Notes =====</h2>
+
+<h3>Basic Operators</h3>
+
+<ul>
+<li>Terminology</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="o">-</span> <span class="n">Unary</span>
+</span><span class='line'>    <span class="o">-</span> <span class="n">Binary</span>
+</span><span class='line'>    <span class="o">-</span> <span class="n">Ternary</span> <span class="p">(</span><span class="n">There</span> <span class="kt">is</span> <span class="n">only</span> <span class="n">one</span> <span class="k">in</span> <span class="n">a</span> <span class="o">?</span> <span class="nl">b</span> <span class="p">:</span><span class="n">c</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Assignment Operator</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="c1">// Not a vaild assignment</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">x</span> <span class="o">=</span> <span class="n">y</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Arithmetic Operators
+
+<ul>
+<li>Not allow overflow.</li>
+<li>You can opt in to value overflow behavior by using Swift&rsquo;s overflow operators (such as a &amp;+ b).</li>
+<li>The addition operator is also supported for <strong>String</strong> concatenation.</li>
+</ul>
+</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">let</span> <span class="nl">dog</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;🐶&quot;</span>
+</span><span class='line'>        <span class="k">let</span> <span class="nl">cow</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;🐮&quot;</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">dogCow</span> <span class="o">=</span> <span class="n">dog</span> <span class="o">+</span> <span class="n">cow</span>
+</span><span class='line'>        <span class="c1">// dogCow is equal to &quot;🐶🐮&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Remainder Operator</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="mi">9</span> <span class="o">%</span> <span class="mi">4</span> <span class="c1">// equals 1</span>
+</span><span class='line'>    <span class="o">-</span><span class="mi">9</span> <span class="o">%</span> <span class="mi">4</span> <span class="c1">// equals -1</span>
+</span><span class='line'>    <span class="o">-</span><span class="mi">9</span> <span class="o">%</span> <span class="mi">4</span> <span class="c1">// equals -9 % -4</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/05/learning-swift-part-3/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/09/05/learning-swift-part-2/">Learning Swift Part 2 - Basics</a></h1>
     
     
@@ -1088,60 +1204,6 @@ Now we&rsquo;ll make a solution for the <strong>swap</strong> version.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/05/27/codility-magnesium-2014-challenge-report/">Codility - Magnesium 2014</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-05-27T19:05:37+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/05/27/codility-magnesium-2014-challenge-report/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/05/27/codility-magnesium-2014-challenge-report/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Introduction</h2>
-
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Magnesium 2014 Challenge</a>.</p>
-
-<ul>
-<li>The problem is that, finding the longest path in a weighted graph in which the weights are ascending. Vertices can be visited multiple times.</li>
-<li>Here, <strong>length of a path</strong> means the number of vertices the path visits, not the weight sum of all edges that compose the path.</li>
-<li>Therefore, <strong>longest path</strong> means a path that visits more vertices than any other paths for the given graph.</li>
-<li>Time bound is O(V+E*log(E)).</li>
-</ul>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/05/27/codility-magnesium-2014-challenge-report/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="4">&larr; Older</a>
@@ -1159,6 +1221,10 @@ Now we&rsquo;ll make a solution for the <strong>swap</strong> version.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/02/gif-animation-of-android/">Gif Animation of Android</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/02/26/macbook-pro-lost-external-moniters-arrangement/">Macbook-proは外付けディスプレイの配置を忘れてしまう</a>
       </li>
     
@@ -1172,10 +1238,6 @@ Now we&rsquo;ll make a solution for the <strong>swap</strong> version.</p>
     
       <li class="post">
         <a href="/blog/2015/02/16/sample-script-of-aws-ruby-api/">Sample Script of AWS Ruby Api</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/02/06/upload-pics-to-imgur-by-ruby/">Upload Pics by Imgur Api in Ruby</a>
       </li>
     
   </ul>

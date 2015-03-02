@@ -9,8 +9,8 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="最近Macbook-proを外付けディスプレイに接続した後、もともとトップ&amp;ダウンに設定されたディスプレイの配置は必ず左&amp;右になってしまう。最初は再起動したらなんとなく直るだろうと思ったので、一旦この問題を無視した。
-しかし、なかなか直らないので、グーグル先生から解決方法を聞いた &hellip;">
+  <meta name="description" content="
+">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -60,8 +60,8 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="最近Macbook-proを外付けディスプレイに接続した後、もともとトップ&amp;ダウンに設定されたディスプレイの配置は必ず左&amp;右になってしまう。最初は再起動したらなんとなく直るだろうと思ったので、一旦この問題を無視した。
-しかし、なかなか直らないので、グーグル先生から解決方法を聞いた &hellip;" />
+<meta property="og:description" content="
+" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -104,6 +104,45 @@ MathJax.Hub.Config({
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/03/02/gif-animation-of-android/">Gif Animation of Android</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-02T18:23:47+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/03/02/gif-animation-of-android/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/03/02/gif-animation-of-android/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1368,98 +1407,6 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/28/vim-quickrun-config/">Vim-quickrun Config</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-28T10:51:39+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/11/28/vim-quickrun-config/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/11/28/vim-quickrun-config/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Vim-quickrunの設定を書いたので、一応メモする。</p>
-
-<h3>必要なバンドル</h3>
-
-<pre><code>" これがないと意味ないだろう
-Bundle 'thinca/vim-quickrun'
-
-" vimから非同期実行。quickrunが実行中でも、ファイル編集が出来るようになる。
-Bundle 'Shougo/vimproc.git'
-
-" hookが使えるようになる
-Bundle 'osyo-manga/shabadou.vim'
-
-" uniteのウィンドウにquickfixを開く"
-Bundle 'osyo-manga/unite-quickfix'
-</code></pre>
-
-<p>まず以上のバンドルを入れる。</p>
-
-<h3>設定</h3>
-
-<pre><code>" 出力がないやエラーの場合はquickfixに出力。それ以外は普通にバッファへ。
-" vimprocの非同期設定。
-" ウィンドウのサイズなど
-let g:quickrun_config = {
-\   "_" : {
-\       "hook/close_unite_quickfix/enable_hook_loaded" : 1,
-\       "hook/unite_quickfix/enable_failure" : 1,
-\       "hook/close_quickfix/enable_exit" : 1,
-\       "hook/close_buffer/enable_failure" : 1,
-\       "hook/close_buffer/enable_empty_data" : 1,
-\       "runner" : "vimproc",
-\       "runner/vimproc/updatetime" : 60,
-\       "outputter" : "multi:buffer:quickfix",
-\       "outputter/buffer/split" : ":botright 8sp",
-\   },
-\}
-
-" quickrunを強制終了
-nnoremap &lt;expr&gt;&lt;silent&gt; &lt;C-c&gt; quickrun#is_running() ? quickrun#sweep_sessions() : "\&lt;C-c&gt;"
-
-" 簡単起動
-cmap qr QuickRun
-cmap QR QuickRun
-
-" 簡単終了
-command! -nargs=0 QC call CloseQuickRunWindow()
-function! CloseQuickRunWindow()
-    execute "normal \&lt;c-c&gt;\&lt;c-w&gt;jZZ"
-endfunction
-cmap qc QC
-</code></pre>
-
-<p>これで快適快適(・ω&lt;)</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -1475,6 +1422,10 @@ cmap qc QC
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/02/gif-animation-of-android/">Gif Animation of Android</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/02/26/macbook-pro-lost-external-moniters-arrangement/">Macbook-proは外付けディスプレイの配置を忘れてしまう</a>
       </li>
     
@@ -1488,10 +1439,6 @@ cmap qc QC
     
       <li class="post">
         <a href="/blog/2015/02/16/sample-script-of-aws-ruby-api/">Sample Script of AWS Ruby Api</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/02/06/upload-pics-to-imgur-by-ruby/">Upload Pics by Imgur Api in Ruby</a>
       </li>
     
   </ul>

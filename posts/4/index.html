@@ -9,8 +9,7 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="はじめに 前回では、android側からタッチ反応を発生してから、jniを通して変換エンジンのnative側が候補を返すまでを説明した。
-今回ではjni部分のコードを少し説明する。 What is jni? 言わばjavaとc, cppとの間のインターフェイスですね。cやcppを使って、 &hellip;">
+  <meta name="description" content="Introduction This is an analysis of Codility - Magnesium 2014 Challenge. The problem is that, finding the longest path in a weighted graph in which &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -60,8 +59,7 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="はじめに 前回では、android側からタッチ反応を発生してから、jniを通して変換エンジンのnative側が候補を返すまでを説明した。
-今回ではjni部分のコードを少し説明する。 What is jni? 言わばjavaとc, cppとの間のインターフェイスですね。cやcppを使って、 &hellip;" />
+<meta property="og:description" content="Introduction This is an analysis of Codility - Magnesium 2014 Challenge. The problem is that, finding the longest path in a weighted graph in which &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/posts/4/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -104,6 +102,60 @@ MathJax.Hub.Config({
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/05/27/codility-magnesium-2014-challenge-report/">Codility - Magnesium 2014</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-05-27T19:05:37+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/05/27/codility-magnesium-2014-challenge-report/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/05/27/codility-magnesium-2014-challenge-report/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Introduction</h2>
+
+<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Magnesium 2014 Challenge</a>.</p>
+
+<ul>
+<li>The problem is that, finding the longest path in a weighted graph in which the weights are ascending. Vertices can be visited multiple times.</li>
+<li>Here, <strong>length of a path</strong> means the number of vertices the path visits, not the weight sum of all edges that compose the path.</li>
+<li>Therefore, <strong>longest path</strong> means a path that visits more vertices than any other paths for the given graph.</li>
+<li>Time bound is O(V+E*log(E)).</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/05/27/codility-magnesium-2014-challenge-report/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -356,6 +408,10 @@ originates from Google Japanese Input.</p></blockquote>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/02/gif-animation-of-android/">Gif Animation of Android</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/02/26/macbook-pro-lost-external-moniters-arrangement/">Macbook-proは外付けディスプレイの配置を忘れてしまう</a>
       </li>
     
@@ -369,10 +425,6 @@ originates from Google Japanese Input.</p></blockquote>
     
       <li class="post">
         <a href="/blog/2015/02/16/sample-script-of-aws-ruby-api/">Sample Script of AWS Ruby Api</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/02/06/upload-pics-to-imgur-by-ruby/">Upload Pics by Imgur Api in Ruby</a>
       </li>
     
   </ul>
