@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-03-02T23:44:57+09:00</updated>
+  <updated>2015-03-03T00:30:58+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -14,11 +14,72 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Gif Animation of Android]]></title>
-    <link href="http://zh-wang.github.io/blog/2015/03/02/gif-animation-of-android/"/>
+    <title type="html"><![CDATA[Copy Screenshots Easier]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/03/02/copy-screenshot-easier/"/>
     <updated>2015-03-02T18:23:47+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2015/03/02/gif-animation-of-android</id>
-    <content type="html"><![CDATA[
+    <id>http://zh-wang.github.io/blog/2015/03/02/copy-screenshot-easier</id>
+    <content type="html"><![CDATA[<p>When I need screenshot for blog post, I always use Mac&rsquo;s default shortcuts to take them.<br/>
+It&rsquo;s just a piece of cake to do so, but I have to copy it from Desktop folder to Octopress&rsquo;s image folder. And the default name for the screenshot is a bit complicated to be managed.<br/>
+So I write some script to make it easier.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env ruby</span>
+</span><span class='line'><span class="c1"># encoding: utf-8</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;fileutils&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="no">ARGV</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="mi">1</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Usage&quot;</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;1. ruby tools.rb cp_ss -&gt; (Copy screenshot on Desktop to source/images and named with prefix of newest post&#39;s date)&quot;</span>
+</span><span class='line'>  <span class="nb">exit</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">prefix</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="no">Dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;source/_posts/*.*&quot;</span><span class="p">)</span><span class="o">[-</span><span class="mi">1</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sr">/-/</span><span class="p">)</span><span class="o">[</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">2</span><span class="o">].</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">desktop</span> <span class="o">=</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;HOME&#39;</span><span class="o">]</span> <span class="o">+</span> <span class="s2">&quot;/Desktop/&quot;</span>
+</span><span class='line'><span class="no">Dir</span><span class="o">.</span><span class="n">entries</span><span class="p">(</span><span class="n">desktop</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+</span><span class='line'>  <span class="k">if</span> <span class="no">File</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">start_with?</span><span class="p">(</span><span class="s2">&quot;Screen Shot&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">origin</span> <span class="o">=</span> <span class="n">desktop</span> <span class="o">+</span> <span class="no">File</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span> <span class="k">while</span> <span class="no">File</span><span class="o">.</span><span class="n">exist?</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="s2">&quot;source/images/%s_image%02d.png&quot;</span> <span class="o">%</span> <span class="o">[</span><span class="n">prefix</span><span class="p">,</span> <span class="n">index</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;Copy %s -&gt; source/images/\%s. Yes[Y] or No[N]&quot;</span> <span class="o">%</span> <span class="o">[</span><span class="n">origin</span><span class="p">,</span> <span class="n">target</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="sr">/[yY]/</span> <span class="o">=~</span> <span class="no">STDIN</span><span class="o">.</span><span class="n">gets</span><span class="o">.</span><span class="n">chomp</span><span class="p">)</span>
+</span><span class='line'>      <span class="no">FileUtils</span><span class="o">.</span><span class="n">mv</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;Done.&quot;</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;Skip.&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
 ]]></content>
   </entry>
   

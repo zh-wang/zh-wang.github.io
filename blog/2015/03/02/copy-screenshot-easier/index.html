@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Gif Animation of Android - Welcome to FutureAppLaboratory</title>
+  <title>Copy Screenshots Easier - Welcome to FutureAppLaboratory</title>
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="
-">
+  <meta name="description" content="When I need screenshot for blog post, I always use Mac&rsquo;s default shortcuts to take them.
+It&rsquo;s just a piece of cake to do so, but I have &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://zh-wang.github.io/blog/2015/03/02/gif-animation-of-android">
+  <link rel="canonical" href="http://zh-wang.github.io/blog/2015/03/02/copy-screenshot-easier">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Welcome to FutureAppLaboratory" type="application/atom+xml">
@@ -59,10 +59,10 @@ MathJax.Hub.Config({
   </script>
 
 
-  <meta property="og:title" content="Gif Animation of Android - Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="
-" />
-<meta property="og:url" content="http://zh-wang.github.io/blog/2015/03/02/gif-animation-of-android/" />
+  <meta property="og:title" content="Copy Screenshots Easier - Welcome to FutureAppLaboratory" />
+<meta property="og:description" content="When I need screenshot for blog post, I always use Mac&rsquo;s default shortcuts to take them.
+It&rsquo;s just a piece of cake to do so, but I have &hellip;" />
+<meta property="og:url" content="http://zh-wang.github.io/blog/2015/03/02/copy-screenshot-easier/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
 <meta property="og:site_name" content="Welcome to FutureAppLaboratory" />
@@ -107,7 +107,7 @@ MathJax.Hub.Config({
   
   <header>
     
-      <h1 class="entry-title">Gif Animation of Android</h1>
+      <h1 class="entry-title">Copy Screenshots Easier</h1>
     
     
       <p class="meta">
@@ -133,7 +133,68 @@ MathJax.Hub.Config({
   </header>
 
 
-<div class="entry-content">
+<div class="entry-content"><p>When I need screenshot for blog post, I always use Mac&rsquo;s default shortcuts to take them.<br/>
+It&rsquo;s just a piece of cake to do so, but I have to copy it from Desktop folder to Octopress&rsquo;s image folder. And the default name for the screenshot is a bit complicated to be managed.<br/>
+So I write some script to make it easier.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env ruby</span>
+</span><span class='line'><span class="c1"># encoding: utf-8</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;fileutils&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">if</span> <span class="no">ARGV</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="mi">1</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;Usage&quot;</span>
+</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;1. ruby tools.rb cp_ss -&gt; (Copy screenshot on Desktop to source/images and named with prefix of newest post&#39;s date)&quot;</span>
+</span><span class='line'>  <span class="nb">exit</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">prefix</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="no">Dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;source/_posts/*.*&quot;</span><span class="p">)</span><span class="o">[-</span><span class="mi">1</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="sr">/-/</span><span class="p">)</span><span class="o">[</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">2</span><span class="o">].</span><span class="n">join</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">desktop</span> <span class="o">=</span> <span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;HOME&#39;</span><span class="o">]</span> <span class="o">+</span> <span class="s2">&quot;/Desktop/&quot;</span>
+</span><span class='line'><span class="no">Dir</span><span class="o">.</span><span class="n">entries</span><span class="p">(</span><span class="n">desktop</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
+</span><span class='line'>  <span class="k">if</span> <span class="no">File</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="o">.</span><span class="n">start_with?</span><span class="p">(</span><span class="s2">&quot;Screen Shot&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">origin</span> <span class="o">=</span> <span class="n">desktop</span> <span class="o">+</span> <span class="no">File</span><span class="o">.</span><span class="n">path</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>    <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span> <span class="k">while</span> <span class="no">File</span><span class="o">.</span><span class="n">exist?</span><span class="p">(</span><span class="n">target</span> <span class="o">=</span> <span class="s2">&quot;source/images/%s_image%02d.png&quot;</span> <span class="o">%</span> <span class="o">[</span><span class="n">prefix</span><span class="p">,</span> <span class="n">index</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;Copy %s -&gt; source/images/\%s. Yes[Y] or No[N]&quot;</span> <span class="o">%</span> <span class="o">[</span><span class="n">origin</span><span class="p">,</span> <span class="n">target</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="sr">/[yY]/</span> <span class="o">=~</span> <span class="no">STDIN</span><span class="o">.</span><span class="n">gets</span><span class="o">.</span><span class="n">chomp</span><span class="p">)</span>
+</span><span class='line'>      <span class="no">FileUtils</span><span class="o">.</span><span class="n">mv</span><span class="p">(</span><span class="n">origin</span><span class="p">,</span> <span class="n">target</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;Done.&quot;</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;Skip.&quot;</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 
@@ -159,12 +220,18 @@ MathJax.Hub.Config({
 <time datetime="2015-03-02T18:23:47+09:00" pubdate data-updated="true"></time>
       
 
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ruby/'>ruby</a>
+  
+</span>
+
 
     </p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2015/03/02/gif-animation-of-android/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2015/03/02/gif-animation-of-android/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2015/03/02/copy-screenshot-easier/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2015/03/02/copy-screenshot-easier/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -199,7 +266,7 @@ MathJax.Hub.Config({
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/blog/2015/03/02/gif-animation-of-android/">Gif Animation of Android</a>
+        <a href="/blog/2015/03/02/copy-screenshot-easier/">Copy Screenshots Easier</a>
       </li>
     
       <li class="post">
@@ -226,11 +293,11 @@ MathJax.Hub.Config({
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (6)</a></li><li><a href='/blog/categories/android/'>android (4)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (3)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (6)</a></li><li><a href='/blog/categories/android/'>android (4)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (4)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.6923076923077%'>algorithm(6)</a> <a href='/blog/categories/android' style='font-size: 78.46153846153845%'>android(4)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.61538461538461%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 73.84615384615384%'>ruby(3)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.6923076923077%'>algorithm(6)</a> <a href='/blog/categories/android' style='font-size: 78.46153846153845%'>android(4)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.61538461538461%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 78.46153846153845%'>ruby(4)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>
@@ -328,8 +395,8 @@ MathJax.Hub.Config({
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://zh-wang.github.io/blog/2015/03/02/gif-animation-of-android/';
-        var disqus_url = 'http://zh-wang.github.io/blog/2015/03/02/gif-animation-of-android/';
+        var disqus_identifier = 'http://zh-wang.github.io/blog/2015/03/02/copy-screenshot-easier/';
+        var disqus_url = 'http://zh-wang.github.io/blog/2015/03/02/copy-screenshot-easier/';
         var disqus_script = 'embed.js';
       
     (function () {

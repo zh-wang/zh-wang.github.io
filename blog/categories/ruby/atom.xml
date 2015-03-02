@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-03-02T23:44:57+09:00</updated>
+  <updated>2015-03-03T00:30:58+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,47 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Copy Screenshots Easier]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/03/02/copy-screenshot-easier/"/>
+    <updated>2015-03-02T18:23:47+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/03/02/copy-screenshot-easier</id>
+    <content type="html"><![CDATA[<p>When I need screenshot for blog post, I always use Mac&rsquo;s default shortcuts to take them.<br/>
+It&rsquo;s just a piece of cake to do so, but I have to copy it from Desktop folder to Octopress&rsquo;s image folder. And the default name for the screenshot is a bit complicated to be managed.<br/>
+So I write some script to make it easier.</p>
+
+<pre><code class="ruby">#!/usr/bin/env ruby
+# encoding: utf-8
+
+require 'fileutils'
+
+if ARGV.length &lt; 1
+  puts "Usage"
+  puts "1. ruby tools.rb cp_ss -&gt; (Copy screenshot on Desktop to source/images and named with prefix of newest post's date)"
+  exit
+end
+
+prefix = File.basename(Dir.glob("source/_posts/*.*")[-1]).split(/-/)[0..2].join("_")
+
+desktop = ENV['HOME'] + "/Desktop/"
+Dir.entries(desktop).each do |file|
+  if File.path(file).start_with?("Screen Shot")
+    origin = desktop + File.path(file)
+    index = 1
+    index += 1 while File.exist?(target = "source/images/%s_image%02d.png" % [prefix, index])
+    puts "Copy %s -&gt; source/images/\%s. Yes[Y] or No[N]" % [origin, target]
+    if (/[yY]/ =~ STDIN.gets.chomp)
+      FileUtils.mv(origin, target)
+      puts "Done."
+    else
+      puts "Skip."
+    end
+  end
+end
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Sample Script of AWS Ruby Api]]></title>
