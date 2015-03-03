@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-03-03T00:30:58+09:00</updated>
+  <updated>2015-03-03T10:24:36+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -19,7 +19,7 @@
     <updated>2015-03-02T18:23:47+09:00</updated>
     <id>http://zh-wang.github.io/blog/2015/03/02/copy-screenshot-easier</id>
     <content type="html"><![CDATA[<p>When I need screenshot for blog post, I always use Mac&rsquo;s default shortcuts to take them.<br/>
-It&rsquo;s just a piece of cake to do so, but I have to copy it from Desktop folder to Octopress&rsquo;s image folder. And the default name for the screenshot is a bit complicated to be managed.<br/>
+It&rsquo;s super easy to do so. But Mac always store them on Desktop folder. So I have to copy it from Desktop folder to Octopress&rsquo;s image folder. And the default name for the screenshot is a bit complicated to be managed.<br/>
 So I write some script to make it easier.</p>
 
 <pre><code class="ruby">#!/usr/bin/env ruby
