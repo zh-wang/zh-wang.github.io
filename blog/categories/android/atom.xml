@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-03-06T23:49:19+09:00</updated>
+  <updated>2015-03-10T23:51:33+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,54 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[GIF View for Android]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/03/10/gif-view-for-android/"/>
+    <updated>2015-03-10T23:25:52+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/03/10/gif-view-for-android</id>
+    <content type="html"><![CDATA[<h2>Movie view does not work sometimes</h2>
+
+<p>There are several ways to decode and show GIF format image on android.<br/>
+I tried using framework&rsquo;s <code>Movie</code> class to decode GIF, but it crashes on device which runs 4.1 or later.<br/>
+Don&rsquo;t know why that occurs but I need to show animated GIF on all OS version.<br/>
+So I write a custom view to do that, and in a simple way.</p>
+
+<p>Source can be found on <a href="https://github.com/zh-wang/AndroidGifView">Github</a>.</p>
+
+<h2>Something Wired</h2>
+
+<p>GIF&rsquo;s document says that it is encoded in little-endian<a href="http://www.w3.org/Graphics/GIF/spec-gif89a.txt">GIF Specification</a>.<br/>
+But sometimes the HEADER part is in big-endian, like this.</p>
+
+<p><img src="/images/2015_03_10_image01.png" title="GIF image bytes in hex" alt="Image 01" /></p>
+
+<p>The first 6 bytes <code>47 49 46 38 39 61</code> is <code>GIF89a</code>, in big-endian. But sometimes in little-endian.<br/>
+So I should read bytes first in <code>BIG_ENDIAN</code>, then turn byte order into <code>LITTLE_ENDIAN</code>.</p>
+
+<pre><code class="java">    /**
+     * Reads GIF file header information.
+     */
+    protected void readHeader() {
+        String id = "";
+        rawData.order(ByteOrder.BIG_ENDIAN);
+        for (int i = 0; i &lt; 6; i++) {
+            id += (char) read();
+        }
+        rawData.order(ByteOrder.LITTLE_ENDIAN);
+        if (!id.startsWith("GIF")) {
+            status = STATUS_FORMAT_ERROR;
+            return;
+        }
+        readLSD();
+        if (gctFlag &amp;&amp; !err()) {
+            gct = readColorTable(gctSize);
+            bgColor = gct[bgIndex];
+        }
+    }
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Upload Pics by Imgur Api on Android]]></title>

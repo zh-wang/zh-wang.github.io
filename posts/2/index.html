@@ -9,9 +9,7 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Vim-quickrunの設定を書いたので、一応メモする。 必要なバンドル " これがないと意味ないだろう
-Bundle 'thinca/vim-quickrun' " vimから非同期実行。quickrunが実行中でも、ファイル編集が出来るようになる。
-Bundle 'Shougo/ &hellip;">
+  <meta name="description" content="AsyncTaskはなに？ http://developer.android.com/reference/android/os/AsyncTask.html AsyncTask enables proper and easy use of the UI thread. This class &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -61,9 +59,7 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Vim-quickrunの設定を書いたので、一応メモする。 必要なバンドル " これがないと意味ないだろう
-Bundle 'thinca/vim-quickrun' " vimから非同期実行。quickrunが実行中でも、ファイル編集が出来るようになる。
-Bundle 'Shougo/ &hellip;" />
+<meta property="og:description" content="AsyncTaskはなに？ http://developer.android.com/reference/android/os/AsyncTask.html AsyncTask enables proper and easy use of the UI thread. This class &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/posts/2/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -106,6 +102,61 @@ Bundle 'Shougo/ &hellip;" />
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/12/19/android-asynctask-parallelexcution/">AsyncTask同士は非同期実行</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-19T12:25:51+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/12/19/android-asynctask-parallelexcution/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/12/19/android-asynctask-parallelexcution/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>AsyncTaskはなに？</h2>
+
+<p><a href="http://developer.android.com/reference/android/os/AsyncTask.html">http://developer.android.com/reference/android/os/AsyncTask.html</a></p>
+
+<ul>
+<li>AsyncTask enables proper and easy use of the UI thread. This class allows to perform background operations and publish results on the UI thread without having to manipulate threads and/or handlers.</li>
+</ul>
+
+
+<h2>ほんとに非同期なの？</h2>
+
+<p>AsyncTaskはUIThreadと非同期処理を行うが、AsyncTask同士の間ではデフォルトで<strong>同期</strong>的に行っているみたいね。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/12/19/android-asynctask-parallelexcution/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -1206,120 +1257,6 @@ Most code are from the guide, with some modification by me.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/08/learning-swift-part-4/">Learning Swift Part 4 - Strings and Characters</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-08T18:03:31+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/09/08/learning-swift-part-4/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
-Most code are from the guide, with some modification by me.</p>
-
-<h2>===== Full Notes =====</h2>
-
-<h3>Strings and Characters</h3>
-
-<ul>
-<li>String Literals</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">someString</span> <span class="o">=</span> <span class="s">&quot;...&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Initializing an Empty String</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">var</span> <span class="n">emptyString</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>               <span class="c1">// empty string literal</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">anotherEmptyString</span> <span class="o">=</span> <span class="n">String</span><span class="p">()</span>  <span class="c1">// initializer syntax</span>
-</span><span class='line'>    <span class="c1">// these two strings are both empty, and are equivalent to each other</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="n">emptyString</span><span class="p">.</span><span class="n">isEmpty</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Nothing to see here&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>String Mutability</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">var</span> <span class="n">variableString</span> <span class="o">=</span> <span class="s">&quot;Horse&quot;</span>
-</span><span class='line'>    <span class="n">variableString</span> <span class="o">+=</span> <span class="s">&quot; and carriage&quot;</span>
-</span><span class='line'>    <span class="c1">// variableString is now &quot;Horse and carriage&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">let</span> <span class="n">constantString</span> <span class="o">=</span> <span class="s">&quot;Highlander&quot;</span>
-</span><span class='line'>    <span class="n">constantString</span> <span class="o">+=</span> <span class="s">&quot; and another Highlander&quot;</span>
-</span><span class='line'>    <span class="c1">// this reports a compile-time error - a constant string cannot be modified</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><p>Strings Are Value Types</p>
-
-<ul>
-<li><p>Swift’s String type is a value type. If you create a new String value, that String value is copied when it is passed to a function or method, or when it is assigned to a constant or variable. In each case, a new copy of the existing String value is created, and the new copy is passed or assigned, not the original version.</p></li>
-<li><p>NSString in obj-c is NOT value type.</p></li>
-</ul>
-</li>
-</ul>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/09/08/learning-swift-part-4/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="3">&larr; Older</a>
@@ -1337,6 +1274,10 @@ Most code are from the guide, with some modification by me.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/10/gif-view-for-android/">GIF View for Android</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/03/02/copy-screenshot-easier/">Copy Screenshots Easier</a>
       </li>
     
@@ -1352,10 +1293,6 @@ Most code are from the guide, with some modification by me.</p>
         <a href="/blog/2015/02/17/auto-set-paste-on-demand/">Auto &#8216;Set Paste&#8217; on Demand</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/02/16/sample-script-of-aws-ruby-api/">Sample Script of AWS Ruby Api</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1364,11 +1301,11 @@ Most code are from the guide, with some modification by me.</p>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (6)</a></li><li><a href='/blog/categories/android/'>android (4)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (4)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (6)</a></li><li><a href='/blog/categories/android/'>android (5)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (4)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.6923076923077%'>algorithm(6)</a> <a href='/blog/categories/android' style='font-size: 78.46153846153845%'>android(4)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.61538461538461%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 78.46153846153845%'>ruby(4)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 87.6923076923077%'>algorithm(6)</a> <a href='/blog/categories/android' style='font-size: 83.07692307692308%'>android(5)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.61538461538461%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 78.46153846153845%'>ruby(4)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

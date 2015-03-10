@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-03-06T23:49:19+09:00</updated>
+  <updated>2015-03-10T23:51:33+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,75 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[GIF View for Android]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/03/10/gif-view-for-android/"/>
+    <updated>2015-03-10T23:25:52+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/03/10/gif-view-for-android</id>
+    <content type="html"><![CDATA[<h2>Movie view does not work sometimes</h2>
+
+<p>There are several ways to decode and show GIF format image on android.<br/>
+I tried using framework&rsquo;s <code>Movie</code> class to decode GIF, but it crashes on device which runs 4.1 or later.<br/>
+Don&rsquo;t know why that occurs but I need to show animated GIF on all OS version.<br/>
+So I write a custom view to do that, and in a simple way.</p>
+
+<p>Source can be found on <a href="https://github.com/zh-wang/AndroidGifView">Github</a>.</p>
+
+<h2>Something Wired</h2>
+
+<p>GIF&rsquo;s document says that it is encoded in little-endian<a href="http://www.w3.org/Graphics/GIF/spec-gif89a.txt">GIF Specification</a>.<br/>
+But sometimes the HEADER part is in big-endian, like this.</p>
+
+<p><img src="http://zh-wang.github.io/images/2015_03_10_image01.png" title="GIF image bytes in hex" alt="Image 01" /></p>
+
+<p>The first 6 bytes <code>47 49 46 38 39 61</code> is <code>GIF89a</code>, in big-endian. But sometimes in little-endian.<br/>
+So I should read bytes first in <code>BIG_ENDIAN</code>, then turn byte order into <code>LITTLE_ENDIAN</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Reads GIF file header information.</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">readHeader</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">rawData</span><span class="o">.</span><span class="na">order</span><span class="o">(</span><span class="n">ByteOrder</span><span class="o">.</span><span class="na">BIG_ENDIAN</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">id</span> <span class="o">+=</span> <span class="o">(</span><span class="kt">char</span><span class="o">)</span> <span class="n">read</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">rawData</span><span class="o">.</span><span class="na">order</span><span class="o">(</span><span class="n">ByteOrder</span><span class="o">.</span><span class="na">LITTLE_ENDIAN</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(!</span><span class="n">id</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s">&quot;GIF&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">status</span> <span class="o">=</span> <span class="n">STATUS_FORMAT_ERROR</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">return</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">readLSD</span><span class="o">();</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">gctFlag</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">err</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">gct</span> <span class="o">=</span> <span class="n">readColorTable</span><span class="o">(</span><span class="n">gctSize</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">bgColor</span> <span class="o">=</span> <span class="n">gct</span><span class="o">[</span><span class="n">bgIndex</span><span class="o">];</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Copy Screenshots Easier]]></title>
@@ -5395,460 +5464,6 @@ The fallthrough keyword does not check the case conditions for the switch case t
 </span><span class='line'>            <span class="p">}</span>
 </span><span class='line'>        <span class="p">}</span>
 </span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Game over!&quot;</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Swift Part 4 - Strings and Characters]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4/"/>
-    <updated>2014-09-08T18:03:31+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/09/08/learning-swift-part-4</id>
-    <content type="html"><![CDATA[<p>Just some notes after reading Apple&rsquo;s official online guide.
-Most code are from the guide, with some modification by me.</p>
-
-<h2>===== Full Notes =====</h2>
-
-<h3>Strings and Characters</h3>
-
-<ul>
-<li>String Literals</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">someString</span> <span class="o">=</span> <span class="s">&quot;...&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Initializing an Empty String</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">var</span> <span class="n">emptyString</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>               <span class="c1">// empty string literal</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">anotherEmptyString</span> <span class="o">=</span> <span class="n">String</span><span class="p">()</span>  <span class="c1">// initializer syntax</span>
-</span><span class='line'>    <span class="c1">// these two strings are both empty, and are equivalent to each other</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="n">emptyString</span><span class="p">.</span><span class="n">isEmpty</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Nothing to see here&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>String Mutability</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">var</span> <span class="n">variableString</span> <span class="o">=</span> <span class="s">&quot;Horse&quot;</span>
-</span><span class='line'>    <span class="n">variableString</span> <span class="o">+=</span> <span class="s">&quot; and carriage&quot;</span>
-</span><span class='line'>    <span class="c1">// variableString is now &quot;Horse and carriage&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">let</span> <span class="n">constantString</span> <span class="o">=</span> <span class="s">&quot;Highlander&quot;</span>
-</span><span class='line'>    <span class="n">constantString</span> <span class="o">+=</span> <span class="s">&quot; and another Highlander&quot;</span>
-</span><span class='line'>    <span class="c1">// this reports a compile-time error - a constant string cannot be modified</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><p>Strings Are Value Types</p>
-
-<ul>
-<li><p>Swift’s String type is a value type. If you create a new String value, that String value is copied when it is passed to a function or method, or when it is assigned to a constant or variable. In each case, a new copy of the existing String value is created, and the new copy is passed or assigned, not the original version.</p></li>
-<li><p>NSString in obj-c is NOT value type.</p></li>
-</ul>
-</li>
-</ul>
-
-
-<!-- more -->
-
-
-<ul>
-<li>Working with Characters</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">for</span> <span class="n">character</span> <span class="k">in</span> <span class="s">&quot;Dog!🐶&quot;</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="n">character</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// a single character</span>
-</span><span class='line'>    <span class="k">let</span> <span class="nl">yenSign</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;¥&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Concatenating Strings and Characters</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">string1</span> <span class="o">=</span> <span class="s">&quot;hello&quot;</span>
-</span><span class='line'>    <span class="k">let</span> <span class="n">string2</span> <span class="o">=</span> <span class="s">&quot; there&quot;</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">welcome</span> <span class="o">=</span> <span class="n">string1</span> <span class="o">+</span> <span class="n">string2</span>
-</span><span class='line'>    <span class="c1">// welcome now equals &quot;hello there&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">var</span> <span class="n">instruction</span> <span class="o">=</span> <span class="s">&quot;look over&quot;</span>
-</span><span class='line'>    <span class="n">instruction</span> <span class="o">+=</span> <span class="n">string2</span>
-</span><span class='line'>    <span class="c1">// instruction now equals &quot;look over there&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">let</span> <span class="nl">exclamationMark</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;!&quot;</span>
-</span><span class='line'>    <span class="n">welcome</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">exclamationMark</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1">// welcome now equals &quot;hello there!&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>String Interpolation</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">multiplier</span> <span class="o">=</span> <span class="mi">3</span>
-</span><span class='line'>    <span class="k">let</span> <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;\(multiplier) times 2.5 is \(Double(multiplier) * 2.5)&quot;</span>
-</span><span class='line'>    <span class="c1">// message is &quot;3 times 2.5 is 7.5&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><p>Unicode Scalars</p></li>
-<li><p>Special Unicode Characters in String Literals</p></li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">wiseWords</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\&quot;</span><span class="s">Imagination is more important than knowledge</span><span class="se">\&quot;</span><span class="s"> - Einstein&quot;</span>
-</span><span class='line'>    <span class="c1">// &quot;Imagination is more important than knowledge&quot; - Einstein</span>
-</span><span class='line'>    <span class="k">let</span> <span class="n">dollarSign</span> <span class="o">=</span> <span class="s">&quot;\u{24}&quot;</span>        <span class="c1">// $,  Unicode scalar U+0024</span>
-</span><span class='line'>    <span class="k">let</span> <span class="n">blackHeart</span> <span class="o">=</span> <span class="s">&quot;\u{2665}&quot;</span>      <span class="c1">// ♥,  Unicode scalar U+2665</span>
-</span><span class='line'>    <span class="k">let</span> <span class="n">sparklingHeart</span> <span class="o">=</span> <span class="s">&quot;\u{1F496}&quot;</span> <span class="c1">// 💖, Unicode scalar U+1F496</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Extended Grapheme Clusters</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="nl">eAcute</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;\u{E9}&quot;</span>                         <span class="c1">// é</span>
-</span><span class='line'>    <span class="k">let</span> <span class="nl">combinedEAcute</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;\u{65}\u{301}&quot;</span>          <span class="c1">// e followed by ́</span>
-</span><span class='line'>    <span class="c1">// eAcute is é, combinedEAcute is é</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">let</span> <span class="nl">precomposed</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;\u{D55C}&quot;</span>                  <span class="c1">// 한</span>
-</span><span class='line'>    <span class="k">let</span> <span class="nl">decomposed</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;\u{1112}\u{1161}\u{11AB}&quot;</span>   <span class="c1">// ᄒ, ᅡ, ᆫ</span>
-</span><span class='line'>    <span class="c1">// precomposed is 한, decomposed is 한</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">let</span> <span class="nl">enclosedEAcute</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;\u{E9}\u{20DD}&quot;</span>
-</span><span class='line'>    <span class="c1">// enclosedEAcute is é⃝</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Counting Characters</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">unusualMenagerie</span> <span class="o">=</span> <span class="s">&quot;Koala 🐨, Snail 🐌, Penguin 🐧, Dromedary 🐪&quot;</span>
-</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;unusualMenagerie has \(countElements(unusualMenagerie)) characters&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1">// prints &quot;unusualMenagerie has 40 characters&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">var</span> <span class="n">word</span> <span class="o">=</span> <span class="s">&quot;cafe&quot;</span>
-</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;the number of characters in \(word) is \(countElements(word))</span>
-</span><span class='line'>    <span class="c1">// prints &quot;the number of characters in cafe is 4&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">word</span> <span class="o">+=</span> <span class="s">&quot;\u{301}&quot;</span>    <span class="c1">// COMBINING ACUTE ACCENT, U+0301</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;the number of characters in \(word) is \(countElements(word))</span>
-</span><span class='line'>    <span class="c1">// prints &quot;the number of characters in café is 4&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>String and Character Equality</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">quotation</span> <span class="o">=</span> <span class="s">&quot;We&#39;re a lot alike, you and I.&quot;</span>
-</span><span class='line'>    <span class="k">let</span> <span class="n">sameQuotation</span> <span class="o">=</span> <span class="s">&quot;We&#39;re a lot alike, you and I.&quot;</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">quotation</span> <span class="o">==</span> <span class="n">sameQuotation</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;These two strings are considered equal&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="c1">// prints &quot;These two strings are considered equal&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Two String values (or two Character values) are considered equal if their extended grapheme clusters are canonically equivalent.</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="c1">// &quot;Voulez-vous un café?&quot; using LATIN SMALL LETTER E WITH ACUTE</span>
-</span><span class='line'>    <span class="k">let</span> <span class="n">eAcuteQuestion</span> <span class="o">=</span> <span class="s">&quot;Voulez-vous un caf\u{E9}?&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// &quot;Voulez-vous un café?&quot; using LATIN SMALL LETTER E and COMBINING ACUTE ACCENT</span>
-</span><span class='line'>    <span class="k">let</span> <span class="n">combinedEAcuteQuestion</span> <span class="o">=</span> <span class="s">&quot;Voulez-vous un caf\u{65}\u{301}?&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="n">eAcuteQuestion</span> <span class="o">==</span> <span class="n">combinedEAcuteQuestion</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;These two strings are considered equal&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="c1">// prints &quot;These two strings are considered equal&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Conversely, LATIN CAPITAL LETTER A (U+0041, or &ldquo;A&rdquo;), as used in English, is not equivalent to CYRILLIC CAPITAL LETTER A (U+0410, or &ldquo;А&rdquo;).</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="nl">latinCapitalLetterA</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;\u{41}&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">let</span> <span class="nl">cyrillicCapitalLetterA</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;\u{0410}&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="n">latinCapitalLetterA</span> <span class="o">!=</span> <span class="n">cyrillicCapitalLetterA</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;These two characters are not equivalent&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="c1">// prints &quot;These two characters are not equivalent&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Prefix and Suffix Equality</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">romeoAndJuliet</span> <span class="o">=</span> <span class="p">[</span>
-</span><span class='line'>        <span class="s">&quot;Act 1 Scene 1: Verona, A public place&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="s">&quot;Act 1 Scene 2: Capulet&#39;s mansion&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="s">&quot;Act 1 Scene 3: A room in Capulet&#39;s mansion&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="s">&quot;Act 1 Scene 4: A street outside Capulet&#39;s mansion&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="s">&quot;Act 1 Scene 5: The Great Hall in Capulet&#39;s mansion&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="s">&quot;Act 2 Scene 1: Outside Capulet&#39;s mansion&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="s">&quot;Act 2 Scene 2: Capulet&#39;s orchard&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="s">&quot;Act 2 Scene 3: Outside Friar Lawrence&#39;s cell&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="s">&quot;Act 2 Scene 4: A street in Verona&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="s">&quot;Act 2 Scene 5: Capulet&#39;s mansion&quot;</span><span class="p">,</span>
-</span><span class='line'>        <span class="s">&quot;Act 2 Scene 6: Friar Lawrence&#39;s cell&quot;</span>
-</span><span class='line'>    <span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">var</span> <span class="n">act1SceneCount</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">scene</span> <span class="k">in</span> <span class="n">romeoAndJuliet</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">if</span> <span class="n">scene</span><span class="p">.</span><span class="n">hasPrefix</span><span class="p">(</span><span class="s">&quot;Act 1 &quot;</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="o">++</span><span class="n">act1SceneCount</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;There are \(act1SceneCount) scenes in Act 1&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1">// prints &quot;There are 5 scenes in Act 1&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">var</span> <span class="n">mansionCount</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">cellCount</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>    <span class="k">for</span> <span class="n">scene</span> <span class="k">in</span> <span class="n">romeoAndJuliet</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">if</span> <span class="n">scene</span><span class="p">.</span><span class="n">hasSuffix</span><span class="p">(</span><span class="s">&quot;Capulet&#39;s mansion&quot;</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="o">++</span><span class="n">mansionCount</span>
-</span><span class='line'>        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="n">scene</span><span class="p">.</span><span class="n">hasSuffix</span><span class="p">(</span><span class="s">&quot;Friar Lawrence&#39;s cell&quot;</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="o">++</span><span class="n">cellCount</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(mansionCount) mansion scenes; \(cellCount) cell scenes&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1">// prints &quot;6 mansion scenes; 2 cell scenes&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><p>A collection of UTF-8 code units (accessed with the string’s utf8 property)</p></li>
-<li><p>A collection of UTF-16 code units (accessed with the string’s utf16 property)</p></li>
-<li><p>A collection of 21-bit Unicode scalar values, equivalent to the string’s UTF-32 encoding form (accessed with the string’s unicodeScalars property)</p></li>
-<li><p>UTF-8 Representation</p></li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">let</span> <span class="n">dogString</span> <span class="o">=</span> <span class="s">&quot;Dog‼🐶&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">for</span> <span class="n">codeUnit</span> <span class="k">in</span> <span class="n">dogString</span><span class="p">.</span><span class="n">utf8</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">print</span><span class="p">(</span><span class="s">&quot;\(codeUnit) &quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1">// 68 111 103 226 128 188 240 159 144 182</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>UTF-16 Representation</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">for</span> <span class="n">codeUnit</span> <span class="k">in</span> <span class="n">dogString</span><span class="p">.</span><span class="n">utf16</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">print</span><span class="p">(</span><span class="s">&quot;\(codeUnit) &quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1">// 68 111 103 8252 55357 56374</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Unicode Scalar Representation</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">for</span> <span class="n">scalar</span> <span class="k">in</span> <span class="n">dogString</span><span class="p">.</span><span class="n">unicodeScalars</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">print</span><span class="p">(</span><span class="s">&quot;\(scalar.value) &quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">print</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1">// 68 111 103 8252 128054</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">for</span> <span class="n">scalar</span> <span class="k">in</span> <span class="n">dogString</span><span class="p">.</span><span class="n">unicodeScalars</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(scalar) &quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="c1">// D</span>
-</span><span class='line'>    <span class="c1">// o</span>
-</span><span class='line'>    <span class="c1">// g</span>
-</span><span class='line'>    <span class="c1">// ‼</span>
-</span><span class='line'>    <span class="c1">// 🐶</span>
 </span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
