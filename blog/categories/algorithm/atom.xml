@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithm | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/algorithm/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-03-12T23:23:54+09:00</updated>
+  <updated>2015-03-15T21:32:41+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,112 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Analysis of PROB Milking Cows]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/03/15/analysis-of-prob-milking-cows/"/>
+    <updated>2015-03-15T21:14:14+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/03/15/analysis-of-prob-milking-cows</id>
+    <content type="html"><![CDATA[<h2>Description</h2>
+
+<p>(From train.usaco.org) Three farmers rise at 5 am each morning and head for the barn to milk three cows. The first farmer begins milking his cow at time 300 (measured in seconds after 5 am) and ends at time 1000. The second farmer begins at time 700 and ends at time 1200. The third farmer begins at time 1500 and ends at time 2100. The longest continuous time during which at least one farmer was milking a cow was 900 seconds (from 300 to 1200). The longest time no milking was done, between the beginning and the ending of all milking, was 300 seconds (1500 minus 1200).</p>
+
+<p>Your job is to write a program that will examine a list of beginning and ending times for N (1 &lt;= N &lt;= 5000) farmers milking N cows and compute (in seconds):</p>
+
+<p>The longest time interval at least one cow was milked.
+The longest time interval (after milking starts) during which no cows were being milked.</p>
+
+<pre><code>SAMPLE INPUT (file milk2.in)
+3
+300 1000
+700 1200
+1500 2100
+</code></pre>
+
+<pre><code>SAMPLE OUTPUT (file milk2.out)
+900 300
+</code></pre>
+
+<h2>Analysis</h2>
+
+<p>A straight-forward, brute-force solution is to keep a large array $k$, with each element $k_i$ is a boolean value indicates whether at least one cow is being milked at time $i$. Then travel from the start to the end to get the answer.</p>
+
+<!-- more -->
+
+
+<h2>Source</h2>
+
+<pre><code class="cpp">/*
+ID: viennak1
+PROB: milk2
+LANG: C++
+*/
+
+// Section 1.2 PROB Milking Cows
+
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+#include &lt;climits&gt;
+#include &lt;cassert&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;map&gt;
+#include &lt;set&gt;
+#include &lt;queue&gt;
+#include &lt;sstream&gt;
+#include &lt;numeric&gt;
+#include &lt;fstream&gt;
+#include &lt;iostream&gt;
+#include &lt;utility&gt;
+#include &lt;iomanip&gt;
+#include &lt;stack&gt;
+using namespace std;
+
+int N;
+int s[5000],t[5000];
+bool k[1000005];
+int res1,res2;
+int main(){
+    ofstream fout ("milk2.out");
+    ifstream fin ("milk2.in");
+    fin&gt;&gt;N;
+    for(int i=0;i&lt;N;i++) fin&gt;&gt;s[i]&gt;&gt;t[i];
+    for(int i=N-1;i&gt;0;i--) for(int j=0;j&lt;i;j++){
+        if(s[j]&gt;s[j+1]) swap(s[j],s[j+1]),swap(t[j],t[j+1]);
+        else if(s[j]==s[j+1] &amp;&amp; t[j]&lt;t[j+1]) swap(t[j],t[j+1]);
+    }
+    int last=0;
+    for(int i=0;i&lt;N;i++){
+        if(s[i]&lt;=last){
+            if(t[i]&lt;=last) continue;
+            for(int j=last;j&lt;t[i];j++) k[j]=true;
+            last=t[i];
+        }
+        else{
+            for(int j=s[i];j&lt;t[i];j++) k[j]=true;
+            last=t[i];
+        }
+    }
+    bool mark=false;
+    int end=0; for(int i=0;i&lt;N;i++) end=max(end,t[i]);
+    int start=0;
+    if(s[0]&gt;500) start=last=500, res2=s[0]-500;
+    else start=last=s[0],mark=true;
+    for(int i=start;i&lt;=end+1;i++){
+        if(mark==k[i]) continue;
+        if(!mark) res2=max(res2,i-last), last=i, mark=true;
+        else res1=max(res1,i-last), last=i, mark=false;
+    }
+    fout&lt;&lt;res1&lt;&lt;" "&lt;&lt;res2&lt;&lt;endl;
+    //for(int i=0;i&lt;21;i++) cout&lt;&lt;k[i]&lt;&lt;" ";
+    return 0;
+}
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Analysis of PROB Broken Necklace]]></title>
@@ -589,142 +695,6 @@ Comparator&lt;Integer&gt; compMin = new Comparator&lt;Integer&gt;() {
 </code></pre>
 
 <p>&#8220;`</p>
-
-<script language="javaScript">
-$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
-</script>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Codility - Aluminium 2014 - Part 1]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014/"/>
-    <updated>2014-06-18T15:54:12+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014</id>
-    <content type="html"><![CDATA[<h2>Introduction</h2>
-
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Aluminium 2014 Challenge</a>, Part 1.</p>
-
-<ul>
-<li>The problem is, finding the maximum sum of a compact subsequence of array elements after performing a single swap operation. It&rsquo;s a little tricky <a href="http://en.wikipedia.org/wiki/Maximum_subarray_problem">maximal subarray</a> problem.</li>
-<li>For example, given an array {3, -10, 4, 5}, we can swap 3 and -10 to get a compact subsequence {3, 4, 5}, which has the maximum sum 12</li>
-<li>Time bound and space bound are both O(n)</li>
-<li>There exists many algorithms to solve maximal subarray problems, but they cannot directly applied to this problem.</li>
-</ul>
-
-
-<!-- more -->
-
-
-<h2>Analysis</h2>
-
-<ul>
-<li>First, we will take a look at the solution of a CLASSIC maximal subarray problem, which means <strong>swap is not allowed</strong>.</li>
-</ul>
-
-
-<p>For a given array <script type="math/tex"> a_0, a_1, \cdots, a_n-1 </script>,</p>
-
-<p>The maximum sum of a compact subsequence can be expressed by the following formula.</p>
-
-<p><script type="math/tex; mode=display">
-    \max { \sum_{k=i}^j a_k, 0 \leq i &lt; j \leq n - 1 }
-</script></p>
-
-<p>Beca$use we want the maximal part from <script type="math/tex"> i </script> to <script type="math/tex"> j </script>, by thinking reversely, we can calculate the minimal <a href="http://mathworld.wolfram.com/PartialSum.html">partial sum</a> of sub array <script type="math/tex"> a_0, a_1, \cdots, a_x-1 </script> as <script type="math/tex"> f(x) </script>, minimal partial sum of sub array <script type="math/tex"> a_x+1, a_x+2, \cdots, a_n-1 </script> as <script type="math/tex"> g(x) </script>. Then use the whole sum to subtract them if them are minus values.</p>
-
-<p>let <script type="math/tex"> S </script> to be the accumulation of the given array.</p>
-
-<p>let
-<script type="math/tex; mode=display">
-    f(x) = \min { \min { partial_sum(p), 0 \leq p \leq x - 1 } , 0 }
-</script></p>
-
-<p>to be the minimal partial sum of sub array <script type="math/tex"> a_0, a_1, \cdots, a_x-1 </script>.</p>
-
-<p>let
-<script type="math/tex; mode=display">
-    g(x) = \min { \min { partial_sum(q), x + 1 \leq q \leq n - 1 } , 0 }
-</script></p>
-
-<p>to be the minimal partial sum of sub array <script type="math/tex"> a_x+1, a_x+2, \cdots, a_n-w </script>.</p>
-
-<p>Then we calculate the following formula.</p>
-
-<p><script type="math/tex; mode=display">
-    \max { S - f(x) - g(x), 0 \leq x \leq n - 1 }
-</script></p>
-
-<ul>
-<li>OK, then write above thought into Java, we get the following codes</li>
-</ul>
-
-
-<pre><code class="java">
-    public int solution(int[] inputs) {
-        List&lt;Integer&gt;data = new ArrayList&lt;Integer&gt;();
-        for (int i = 0; i &lt; inputs.length; i++) data.add(inputs[i]);
-        return cal(data);
-    }
-
-    private int cal(List&lt;Integer&gt; A) {
-        int n = A.size();
-        int S = 0;
-        for (Integer integer : A) S += integer;
-        List&lt;Integer&gt; B = partial_sum(A, compAdd);
-        List&lt;Integer&gt; F = partial_sum(B, compMin);
-
-        Collections.reverse(A);
-        List&lt;Integer&gt; D = partial_sum(A, compAdd);
-        List&lt;Integer&gt; G = partial_sum(D, compMin);
-        Collections.reverse(A);
-        Collections.reverse(G);
-
-        int res = 0;
-        for (int i = 0; i &lt; n; i++) {
-            int f = i - 1 &lt; 0 ? 0 : F.get(i - 1); 
-            int g = (i + 1 &gt;= n ? 0 : G.get(i + 1));
-            res = Math.max(res, S - (f &lt; 0 ? f : 0) - (g &lt; 0 ? g :0));
-        }
-        return res;
-    }
-
-    private List&lt;Integer&gt; partial_sum(List&lt;Integer&gt; data, Comparator&lt;Integer&gt; comparator) {
-        List&lt;Integer&gt; res = new ArrayList&lt;Integer&gt;();
-        if (data.size() == 0) {
-            return res;
-        }
-        res.add(data.get(0));
-        for (int i = 1; i &lt; data.size(); i++) {
-            Integer lastValue = res.get(i - 1);
-            Integer currentValue = data.get(i);
-            res.add(comparator.compare(lastValue, currentValue));
-        }
-        return res;
-    }
-
-    Comparator&lt;Integer&gt; compAdd = new Comparator&lt;Integer&gt;() {
-        @Override
-        public int compare(Integer o1, Integer o2) {
-            return o1 + o2;
-        }
-    };
-
-    Comparator&lt;Integer&gt; compMax = new Comparator&lt;Integer&gt;() {
-        @Override
-        public int compare(Integer o1, Integer o2) {
-            return Math.max(o1, o2);
-        }
-    };
-
-    Comparator&lt;Integer&gt; compMin = new Comparator&lt;Integer&gt;() {
-        @Override
-        public int compare(Integer o1, Integer o2) {
-            return Math.min(o1, o2);
-        }
-    };
-</code></pre>
 
 <script language="javaScript">
 $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
