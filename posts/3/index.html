@@ -110,6 +110,128 @@ Most code are from the guide, with some modification by me. Tuple in switch &hel
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2014/09/25/learning-swift-part-6/">Learning Swift Part 6 - Functions</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-25T18:54:45+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/09/25/learning-swift-part-6/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/09/25/learning-swift-part-6/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
+Most code are from the guide, with some modification by me.</p>
+
+<p>Tuple in switch statement is interesting.</p>
+
+<h2>===== Full Notes =====</h2>
+
+<h3>Functions</h3>
+
+<ul>
+<li>Defining and Calling Functions</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">sayHello</span><span class="p">(</span><span class="nl">personName</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">let</span> <span class="n">greeting</span> <span class="o">=</span> <span class="s">&quot;Hello, &quot;</span> <span class="o">+</span> <span class="n">personName</span> <span class="o">+</span> <span class="s">&quot;!&quot;</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">greeting</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Function Parameters and Return Values</li>
+<li>Multiple Input Parameters</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">halfOpenRangeLength</span><span class="p">(</span><span class="nl">start</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">end</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="n">halfOpenRangeLength</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+</span><span class='line'>    <span class="c1">// prints &quot;9&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Functions Without Parameters</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="n">sayHelloWorld</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="s">&quot;hello, world&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="n">sayHelloWorld</span><span class="p">())</span>
+</span><span class='line'>    <span class="c1">// prints &quot;hello, world&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Function Without Return Values</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="nf">sayGoodbye</span><span class="p">(</span><span class="nl">personName</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;Goodbye, \(personName)!&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">sayGoodbye</span><span class="p">(</span><span class="s">&quot;Dave&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="c1">// prints &quot;Goodbye, Dave!&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/09/25/learning-swift-part-6/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2014/09/19/learning-swift-part-5/">Learning Swift Part 5 - Control Flow</a></h1>
     
     
@@ -1344,54 +1466,6 @@ TEST=unittest
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/06/27/import-mathjax-to-octopress/">Import MathJax to Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-06-27T20:26:41+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/06/27/import-mathjax-to-octopress/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/06/27/import-mathjax-to-octopress/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>What is MathJax?</h2>
-
-<blockquote><p>MathJax is an open source JavaScript display engine for mathematics that works in all browsers.</p></blockquote>
-
-<p>By importing MathJax to Octopress(Jekeyll), you can write formulars in Latex style. That&rsquo;s cool!</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/06/27/import-mathjax-to-octopress/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="4">&larr; Older</a>
@@ -1409,6 +1483,10 @@ TEST=unittest
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/23/enable-hide-and-internal-classes-in-android-sdk/">Enable Hide and Internal Classes in Android SDK</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/03/15/analysis-of-prob-milking-cows/">Analysis of PROB Milking Cows</a>
       </li>
     
@@ -1424,10 +1502,6 @@ TEST=unittest
         <a href="/blog/2015/02/26/macbook-pro-lost-external-moniters-arrangement/">Macbook-proは外付けディスプレイの配置を忘れてしまう</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/02/25/usaco-prob-broken-necklace/">Analysis of PROB Broken Necklace</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1436,11 +1510,11 @@ TEST=unittest
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (7)</a></li><li><a href='/blog/categories/android/'>android (5)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (4)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (7)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (4)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 92.3076923076923%'>algorithm(7)</a> <a href='/blog/categories/android' style='font-size: 83.07692307692308%'>android(5)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.61538461538461%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 78.46153846153845%'>ruby(4)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 92.3076923076923%'>algorithm(7)</a> <a href='/blog/categories/android' style='font-size: 87.6923076923077%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.61538461538461%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 78.46153846153845%'>ruby(4)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

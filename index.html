@@ -9,7 +9,8 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Description (From train.usaco.org) Three farmers rise at 5 am each morning and head for the barn to milk three cows. The first farmer begins milking &hellip;">
+  <meta name="description" content="Hide and Internal Classes During android development, you may need to access some method or classes which is not contained in official SDK.
+For &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -59,7 +60,8 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Description (From train.usaco.org) Three farmers rise at 5 am each morning and head for the barn to milk three cows. The first farmer begins milking &hellip;" />
+<meta property="og:description" content="Hide and Internal Classes During android development, you may need to access some method or classes which is not contained in official SDK.
+For &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -102,6 +104,184 @@ MathJax.Hub.Config({
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/03/23/enable-hide-and-internal-classes-in-android-sdk/">Enable Hide and Internal Classes in Android SDK</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-23T14:36:26+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/03/23/enable-hide-and-internal-classes-in-android-sdk/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/03/23/enable-hide-and-internal-classes-in-android-sdk/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Hide and Internal Classes</h2>
+
+<p>During android development, you may need to access some method or classes which is not contained in official SDK.<br/>
+For example, <code>dalvik.system.VMRuntime</code>, <code>com.android.internal.app.AlertController</code>, etc.<br/>
+Although you can done with Java&rsquo;s reflection, it is not developer friendly.<br/>
+Here is a more friendly way to do this.</p>
+
+<h2>Preparation</h2>
+
+<p>(I&rsquo;m working on a Mac. But I think procedure is similar if working on other OS.)</p>
+
+<ol>
+<li>Android&rsquo;s official SDK. We use android-17(4.2.2) here.</li>
+<li>Android emulator.</li>
+<li>Can run ruby.</li>
+</ol>
+
+
+<h2>Steps</h2>
+
+<ol>
+<li>Create an emulator for 4.2.2 OS. Name it as &ldquo;android422&rdquo;. (by command line or Eclipse)</li>
+<li><p>Pull all framework libraries to working machine, which contains all hide and internal classes.</p>
+
+<pre><code> emulator -avd android422
+ adb pull /system/framework/* framework
+</code></pre></li>
+<li><p>Get decompiling tools for odex. Download <code>smali-2.0.3.jar</code> and <code>baksmali-2.0.3.jar</code>. <a href="https://code.google.com/p/smali/">https://code.google.com/p/smali/</a></p></li>
+<li>Put them in same directory, run <code>./create_custom_sdk.rb</code></li>
+</ol>
+
+
+<h2>Source</h2>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># -- create_custom_sdk.rb --</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">#!/usr/bin/env ruby</span>
+</span><span class='line'><span class="c1"># encoding: utf-8</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># clear &#39;out&#39; directory</span>
+</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;rm -rf out&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;mkdir out&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="no">Dir</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;out&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># core.odex(optimized dex) file -&gt; dex file</span>
+</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;java -jar ../baksmali-2.0.3.jar -a 17 -d ../framework -x ../framework/core.odex -o internal_core_smali&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;java -jar ../smali-2.0.3.jar -x -o core.dex internal_core_smali&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="c1"># framework.odex(optimized dex) file -&gt; dex file</span>
+</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;java -jar ../baksmali-2.0.3.jar -a 17 -d ../framework -x ../framework/framework.odex -o internal_framework_smali&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;java -jar ../smali-2.0.3.jar -x -o framework.dex internal_framework_smali&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># .dex -&gt; .class, which contains all symbols including hide and internal</span>
+</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;dex2jar core.dex&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;unzip core_dex2jar.jar -d full-symbol-android&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;dex2jar framework.dex&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;unzip framework_dex2jar.jar -d full-symbol-android&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># copy offical sdk here</span>
+</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;cp -r ~/sdk/android-sdk-macosx/platforms/android-17 android422&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># unzip offical android.jar, merge full-symbol-android into it</span>
+</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;unzip android422/android.jar -d custom-android&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;cp -r full-symbol-android/* custom-android&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="no">Dir</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;custom-android&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;zip -r9 internal-android.zip *&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="no">Dir</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;mv custom-android/internal-android.zip android422/android.jar&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Fix some properties to enable custom sdk shown in Eclipse</span>
+</span><span class='line'><span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;android422/build.prop&quot;</span>
+</span><span class='line'><span class="n">text</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</span><span class='line'><span class="nb">puts</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/ro\.build\.id=.*/</span><span class="p">,</span> <span class="s2">&quot;ro.build.id=Custom422&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/ro\.build\.version\.sdk=17/</span><span class="p">,</span> <span class="s2">&quot;ro.build.version.sdk=422&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/ro\.build\.version\.release=.*/</span><span class="p">,</span> <span class="s2">&quot;ro.build.version.release=4.2.2.c&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span> <span class="n">file</span> <span class="o">&lt;&lt;</span> <span class="nb">puts</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;android422/source.properties&quot;</span>
+</span><span class='line'><span class="n">text</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</span><span class='line'><span class="nb">puts</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/AndroidVersion\.ApiLevel=17/</span><span class="p">,</span> <span class="s2">&quot;AndroidVersion.ApiLevel=422&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/Pkg\.Desc=Android SDK Platform 4\.2\.2/</span><span class="p">,</span> <span class="s2">&quot;Pkg.Desc=Android SDK Platform Custom422&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span> <span class="n">file</span> <span class="o">&lt;&lt;</span> <span class="nb">puts</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Copy custom sdk to offical sdk&#39;s directory</span>
+</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;cp -r android422 ~/sdk/android-sdk-macosx/platforms&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;Done&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1340,115 +1520,6 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/08/learning-swift-part-13/">Learning Swift Part 13 - ARC</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-08T10:13:30+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2015/01/08/learning-swift-part-13/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2015/01/08/learning-swift-part-13/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>===== Full Notes =====</h2>
-
-<h3>Automatic Reference Counting</h3>
-
-<ul>
-<li><p>Swift uses Automatic Reference Counting (ARC) to track and manage your app’s memory usage. In most cases, this means that memory management “just works” in Swift, and you do not need to think about memory management yourself.</p></li>
-<li><p>Reference counting only applies to instances of classes. Structures and enumerations are value types, not reference types, and are not stored and passed by reference.</p></li>
-<li><p>How ARC Works</p>
-
-<p>  To make this possible, whenever you assign a class instance to a property, constant, or variable, that property, constant, or variable makes a strong reference to the instance. The reference is called a “strong“ reference because it keeps a firm hold on that instance, and does not allow it to be deallocated for as long as that strong reference remains.</p></li>
-<li><p>ARC in Action</p></li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">class</span> <span class="n">Person</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">let</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span>
-</span><span class='line'>        <span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nb">self</span><span class="p">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-</span><span class='line'>            <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(name) is being initialized&quot;</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">deinit</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">println</span><span class="p">(</span><span class="s">&quot;\(name) is being deinitialized&quot;</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// The next code snippet defines three variables of type Person?, which are used to set up multiple references to a new Person instance in subsequent code snippets. Because these variables are of an optional type (Person?, not Person), they are automatically initialized with a value of nil, and do not currently reference a Person instance.</span>
-</span><span class='line'>    <span class="k">var</span> <span class="nl">reference1</span><span class="p">:</span> <span class="n">Person</span><span class="o">?</span>
-</span><span class='line'>    <span class="k">var</span> <span class="nl">reference2</span><span class="p">:</span> <span class="n">Person</span><span class="o">?</span>
-</span><span class='line'>    <span class="k">var</span> <span class="nl">reference3</span><span class="p">:</span> <span class="n">Person</span><span class="o">?</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">reference2</span> <span class="o">=</span> <span class="n">reference1</span>
-</span><span class='line'>    <span class="n">reference3</span> <span class="o">=</span> <span class="n">reference1</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">reference1</span> <span class="o">=</span> <span class="nb">nil</span>
-</span><span class='line'>    <span class="n">reference2</span> <span class="o">=</span> <span class="nb">nil</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">reference3</span> <span class="o">=</span> <span class="nb">nil</span>
-</span><span class='line'>    <span class="c1">// prints &quot;John Appleseed is being deinitialized&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/01/08/learning-swift-part-13/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -1462,6 +1533,10 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/03/23/enable-hide-and-internal-classes-in-android-sdk/">Enable Hide and Internal Classes in Android SDK</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/03/15/analysis-of-prob-milking-cows/">Analysis of PROB Milking Cows</a>
@@ -1479,10 +1554,6 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
         <a href="/blog/2015/02/26/macbook-pro-lost-external-moniters-arrangement/">Macbook-proは外付けディスプレイの配置を忘れてしまう</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/02/25/usaco-prob-broken-necklace/">Analysis of PROB Broken Necklace</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1491,11 +1562,11 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (7)</a></li><li><a href='/blog/categories/android/'>android (5)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (4)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (7)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (4)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 92.3076923076923%'>algorithm(7)</a> <a href='/blog/categories/android' style='font-size: 83.07692307692308%'>android(5)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.61538461538461%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 78.46153846153845%'>ruby(4)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 92.3076923076923%'>algorithm(7)</a> <a href='/blog/categories/android' style='font-size: 87.6923076923077%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.61538461538461%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 78.46153846153845%'>ruby(4)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>
