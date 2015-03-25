@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://zh-wang.github.io/blog/2015/03/25/resize-gif-by-rmagick/</loc>
+    <lastmod>2015-03-25T18:31:47+09:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://zh-wang.github.io/blog/2015/03/23/enable-hide-and-internal-classes-in-android-sdk/</loc>
     <lastmod>2015-03-23T14:36:26+09:00</lastmod>
     <priority>0.8</priority>
@@ -227,21 +233,21 @@
   
   <url>
     <loc>http://zh-wang.github.io/blog/archives/</loc>
-    <lastmod>2015-03-23T15:22:21+09:00</lastmod>
+    <lastmod>2015-03-25T18:33:37+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://zh-wang.github.io/</loc>
-    <lastmod>2015-03-23T15:22:21+09:00</lastmod>
+    <lastmod>2015-03-25T18:33:37+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://zh-wang.github.io/about/</loc>
-    <lastmod>2015-03-23T15:22:21+09:00</lastmod>
+    <lastmod>2015-03-25T18:33:37+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

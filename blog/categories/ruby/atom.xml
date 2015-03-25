@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-03-23T15:22:21+09:00</updated>
+  <updated>2015-03-25T18:33:37+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,27 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Resize Gif by RMagick]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/03/25/resize-gif-by-rmagick/"/>
+    <updated>2015-03-25T18:31:47+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/03/25/resize-gif-by-rmagick</id>
+    <content type="html"><![CDATA[<p>Only source code :)</p>
+
+<pre><code class="ruby">#!/usr/bin/env ruby
+# encoding: utf-8
+
+require 'RMagick'
+
+img = Magick::ImageList.new("FILENAME.gif")
+img.each do |frame|
+  frame.resize!(0.5)
+end
+img.write("FILENAME_s.gif")
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Copy Screenshots Easier]]></title>
