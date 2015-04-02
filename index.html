@@ -9,18 +9,8 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Only source code :) 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-#!/usr/bin/env ruby
-# encoding: utf-8 require &#39;RMagick&#39; img = Magick::ImageList.new(&quot;FILENAME. &hellip;">
+  <meta name="description" content="Problem definition can be found here.
+This is a basic problem which can be solved directly by a Tri-tree. Do NOT use recursion in accessing the Tri- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -70,18 +60,8 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Only source code :) 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-#!/usr/bin/env ruby
-# encoding: utf-8 require &#39;RMagick&#39; img = Magick::ImageList.new(&quot;FILENAME. &hellip;" />
+<meta property="og:description" content="Problem definition can be found here.
+This is a basic problem which can be solved directly by a Tri-tree. Do NOT use recursion in accessing the Tri- &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -124,6 +104,198 @@ MathJax.Hub.Config({
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete/">FB HackerCup 2015 R1 25:Autocomplete</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-02T18:16:03+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Problem definition can be found <a href="https://www.facebook.com/hackercup/problems.php?pid=313229895540583&amp;round=344496159068801">here</a>.<br/>
+This is a basic problem which can be solved directly by a Tri-tree.</p>
+
+<ul>
+<li>Do NOT use recursion in accessing the Tri-tree because the longest test case has 1 million long string, which will cause STACKOVERFLOW.</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;cstdio&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cstdlib&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cstring&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cmath&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;climits&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cassert&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;algorithm&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;map&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;set&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;queue&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;sstream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;numeric&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;fstream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;utility&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iomanip&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stack&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;list&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;sstream&gt;</span>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'><span class="cp">#define PB push_back</span>
+</span><span class='line'><span class="cp">#define MP make_pair</span>
+</span><span class='line'><span class="cp">#define REP(i, n) for (int i(0); i &lt; n; ++i)</span>
+</span><span class='line'><span class="cp">#define REP1(i, n) for (int i(1); i &lt; n; ++i)</span>
+</span><span class='line'><span class="cp">#define FOR(i, a, b) for (int i(a); i &lt;= b; ++i)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">struct</span> <span class="n">node</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">node</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">childs</span> <span class="o">=</span> <span class="k">new</span> <span class="n">node</span><span class="o">*</span><span class="p">[</span><span class="mi">26</span><span class="p">];</span>
+</span><span class='line'>        <span class="n">REP</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">26</span><span class="p">)</span> <span class="n">childs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">node</span><span class="o">**</span> <span class="n">childs</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">tc</span><span class="p">;</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+</span><span class='line'><span class="n">string</span> <span class="n">word</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">findWordAndBuildTree</span><span class="p">(</span><span class="n">node</span><span class="o">*</span> <span class="n">root</span><span class="p">,</span> <span class="n">string</span> <span class="n">word</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">node</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="n">root</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">bool</span> <span class="n">found</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">REP</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">word</span><span class="p">.</span><span class="n">length</span><span class="p">())</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">childs</span><span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="sc">&#39;a&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">found</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">res</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>                <span class="n">found</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="n">p</span><span class="o">-&gt;</span><span class="n">childs</span><span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="sc">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">node</span><span class="p">();</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">childs</span><span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="sc">&#39;a&#39;</span><span class="p">];</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">tc</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">REP</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">tc</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">node</span><span class="o">*</span> <span class="n">root</span> <span class="o">=</span> <span class="k">new</span> <span class="n">node</span><span class="p">();</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">REP</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">word</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">res</span> <span class="o">+=</span> <span class="n">findWordAndBuildTree</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">word</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">res</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1265,270 +1437,6 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/02/06/upload-pics-to-imgur-by-ruby/">Upload Pics by Imgur Api in Ruby</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-02-06T12:43:58+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2015/02/06/upload-pics-to-imgur-by-ruby/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2015/02/06/upload-pics-to-imgur-by-ruby/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Introduction</h2>
-
-<p>Sample ruby script. Use Imgur&rsquo;s api to upload image, with OAuth2 authorization.</p>
-
-<h2>Source Code</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env ruby</span>
-</span><span class='line'><span class="c1"># encoding: utf-8</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;httpclient&#39;</span>
-</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;json&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">ImgurUploader</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="no">AUTH_URL</span> <span class="o">=</span> <span class="s1">&#39;https://api.imgur.com/oauth2/authorize&#39;</span>
-</span><span class='line'>  <span class="no">EXC_TOKEN_URL</span> <span class="o">=</span> <span class="s1">&#39;https://api.imgur.com/oauth2/token&#39;</span>
-</span><span class='line'>  <span class="no">UPLOAD_URL</span> <span class="o">=</span> <span class="s1">&#39;https://api.imgur.com/3/image&#39;</span>
-</span><span class='line'>  <span class="no">CLIENT_ID</span> <span class="o">=</span> <span class="s1">&#39;YOUR_CLIENT_ID&#39;</span>
-</span><span class='line'>  <span class="no">CLIENT_SE</span> <span class="o">=</span> <span class="s1">&#39;YOUR_CLIENT_SECRET_KEY&#39;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="vi">@file_path</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span class='line'>  <span class="vi">@access_token</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@file_path</span> <span class="o">=</span> <span class="n">file_path</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">setAccessToken</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@access_token</span> <span class="o">=</span> <span class="n">access_token</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">applyAccessToken</span>
-</span><span class='line'>    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>      <span class="ss">:client_id</span> <span class="o">=&gt;</span> <span class="no">CLIENT_ID</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:response_type</span> <span class="o">=&gt;</span> <span class="s2">&quot;pin&quot;</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:state</span> <span class="o">=&gt;</span> <span class="s1">&#39;init&#39;</span>
-</span><span class='line'>    <span class="p">}</span><span class="o">.</span><span class="n">map</span><span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">v</span><span class="o">|</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">=</span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span><span class="o">.</span><span class="n">reduce</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">v</span><span class="o">|</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">&amp;</span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nb">system</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="no">AUTH_URL</span> <span class="o">+</span> <span class="s2">&quot;?&quot;</span> <span class="o">+</span> <span class="n">params</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;input PIN here: &quot;</span>
-</span><span class='line'>    <span class="n">mypin</span> <span class="o">=</span> <span class="no">STDIN</span><span class="o">.</span><span class="n">gets</span><span class="o">.</span><span class="n">chomp</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>      <span class="ss">:client_id</span> <span class="o">=&gt;</span> <span class="no">CLIENT_ID</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:client_secret</span> <span class="o">=&gt;</span> <span class="no">CLIENT_SE</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:grant_type</span> <span class="o">=&gt;</span> <span class="s2">&quot;pin&quot;</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:pin</span> <span class="o">=&gt;</span> <span class="n">mypin</span>
-</span><span class='line'>    <span class="p">}</span><span class="o">.</span><span class="n">map</span><span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">v</span><span class="o">|</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">=</span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span><span class="o">.</span><span class="n">reduce</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">v</span><span class="o">|</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">&amp;</span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">client</span> <span class="o">=</span> <span class="no">HTTPClient</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'>    <span class="vi">@res</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="no">EXC_TOKEN_URL</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nb">puts</span> <span class="vi">@res</span><span class="o">.</span><span class="n">body</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">result</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="vi">@res</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="vi">@access_token</span> <span class="o">=</span> <span class="n">result</span><span class="o">[</span><span class="s1">&#39;access_token&#39;</span><span class="o">]</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;access_token: &quot;</span> <span class="o">+</span> <span class="vi">@access_token</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;access_token.tmp&quot;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># store access_token to local file,</span>
-</span><span class='line'>      <span class="c1"># no need to authorize again if access_token is not expired</span>
-</span><span class='line'>      <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span> <span class="vi">@access_token</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">upload</span>
-</span><span class='line'>    <span class="n">auth_header</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;Authorization&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Bearer &#39;</span> <span class="o">+</span> <span class="vi">@access_token</span> <span class="p">}</span>
-</span><span class='line'>    <span class="n">client</span> <span class="o">=</span> <span class="no">HTTPClient</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'>    <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="vi">@file_path</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
-</span><span class='line'>      <span class="n">body</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;image&#39;</span> <span class="o">=&gt;</span> <span class="n">file</span> <span class="p">}</span>
-</span><span class='line'>      <span class="vi">@res</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="no">UPLOAD_URL</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">auth_header</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">end</span>
-</span><span class='line'>    <span class="k">begin</span>
-</span><span class='line'>      <span class="n">result</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="vi">@res</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
-</span><span class='line'>      <span class="nb">puts</span> <span class="vi">@res</span><span class="o">.</span><span class="n">body</span>
-</span><span class='line'>      <span class="n">result</span><span class="o">[</span><span class="s1">&#39;status&#39;</span><span class="o">]</span>
-</span><span class='line'>    <span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">ex</span>
-</span><span class='line'>      <span class="nb">puts</span> <span class="n">ex</span><span class="o">.</span><span class="n">message</span>
-</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;upload failed on Authorization&quot;</span>
-</span><span class='line'>      <span class="o">-</span><span class="mi">1</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="no">ARGV</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="mi">1</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;usage&quot;</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;ruby imgur.rb [image file path]&quot;</span>
-</span><span class='line'>  <span class="nb">exit</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">uploader</span> <span class="o">=</span> <span class="no">ImgurUploader</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">ARGV</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">chomp</span><span class="o">.</span><span class="n">strip</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">begin</span>
-</span><span class='line'>  <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;access_token.tmp&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># read local access_token</span>
-</span><span class='line'>    <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">uploader</span><span class="o">.</span><span class="n">setAccessToken</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">gets</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">if</span> <span class="n">uploader</span><span class="o">.</span><span class="n">upload</span> <span class="o">==</span> <span class="mi">200</span> <span class="c1"># if uploaded</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;Upload ok&quot;</span>
-</span><span class='line'>  <span class="k">else</span> <span class="c1"># if upload failed by expired token</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;Upload failed, try to update access_token&quot;</span>
-</span><span class='line'>    <span class="n">uploader</span><span class="o">.</span><span class="n">applyAccessToken</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">uploader</span><span class="o">.</span><span class="n">upload</span> <span class="o">==</span> <span class="mi">200</span> <span class="c1"># upload again</span>
-</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;Upload ok&quot;</span>
-</span><span class='line'>    <span class="k">else</span> <span class="c1"># still fails</span>
-</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;Upload failed, need detail check&quot;</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">ex</span> <span class="c1"># local file not exists, apply for access_token and upload</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="n">ex</span><span class="o">.</span><span class="n">message</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;No access_token is stored. Do Authorization again.&quot;</span>
-</span><span class='line'>  <span class="n">uploader</span><span class="o">.</span><span class="n">applyAccessToken</span>
-</span><span class='line'>  <span class="n">uploader</span><span class="o">.</span><span class="n">upload</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -1542,6 +1450,10 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete/">FB HackerCup 2015 R1 25:Autocomplete</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/03/25/resize-gif-by-rmagick/">Resize Gif by RMagick</a>
@@ -1559,10 +1471,6 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
         <a href="/blog/2015/03/10/gif-view-for-android/">GIF View for Android</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/03/02/copy-screenshot-easier/">Copy Screenshots Easier</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1571,11 +1479,11 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (7)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (5)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (8)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (5)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 92.3076923076923%'>algorithm(7)</a> <a href='/blog/categories/android' style='font-size: 87.6923076923077%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.61538461538461%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 83.07692307692308%'>ruby(5)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 96.92307692307692%'>algorithm(8)</a> <a href='/blog/categories/android' style='font-size: 87.6923076923077%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.61538461538461%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 83.07692307692308%'>ruby(5)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

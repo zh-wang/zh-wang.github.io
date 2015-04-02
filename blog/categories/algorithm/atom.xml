@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithm | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/algorithm/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-04-02T18:14:56+09:00</updated>
+  <updated>2015-04-02T18:28:45+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,95 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[FB HackerCup 2015 R1 25:Autocomplete]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete/"/>
+    <updated>2015-04-02T18:16:03+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete</id>
+    <content type="html"><![CDATA[<p>Problem definition can be found <a href="https://www.facebook.com/hackercup/problems.php?pid=313229895540583&amp;round=344496159068801">here</a>.<br/>
+This is a basic problem which can be solved directly by a Tri-tree.</p>
+
+<ul>
+<li>Do NOT use recursion in accessing the Tri-tree because the longest test case has 1 million long string, which will cause STACKOVERFLOW.</li>
+</ul>
+
+
+<pre><code class="cpp">#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+#include &lt;climits&gt;
+#include &lt;cassert&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;map&gt;
+#include &lt;set&gt;
+#include &lt;queue&gt;
+#include &lt;sstream&gt;
+#include &lt;numeric&gt;
+#include &lt;fstream&gt;
+#include &lt;iostream&gt;
+#include &lt;utility&gt;
+#include &lt;iomanip&gt;
+#include &lt;stack&gt;
+#include &lt;list&gt;
+#include &lt;sstream&gt;
+using namespace std;
+#define PB push_back
+#define MP make_pair
+#define REP(i, n) for (int i(0); i &lt; n; ++i)
+#define REP1(i, n) for (int i(1); i &lt; n; ++i)
+#define FOR(i, a, b) for (int i(a); i &lt;= b; ++i)
+
+struct node {
+    node() {
+        childs = new node*[26];
+        REP(i, 26) childs[i] = NULL;
+    }
+    node** childs;
+};
+
+int tc;
+int n;
+string word;
+
+int findWordAndBuildTree(node* root, string word) {
+    node* p = root;
+    int i = 0;
+    int res = 0;
+    bool found = false;
+    REP(i, word.length()) {
+        if (p-&gt;childs[word[i]-'a'] == NULL) {
+            if (!found) {
+                res = i + 1;
+                found = true;
+            }
+            p-&gt;childs[word[i]-'a'] = new node();
+        }
+        p = p-&gt;childs[word[i]-'a'];
+    }
+    return res;
+}
+
+int main(int argc, char* argv[]) {
+    cin &gt;&gt; tc;
+    REP(i, tc) {
+        cin &gt;&gt; n;
+        node* root = new node();
+        int res = 0;
+        REP(j, n) {
+            cin &gt;&gt; word;
+            res += findWordAndBuildTree(root, word);
+        }
+        cout &lt;&lt; res &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Analysis of PROB Milking Cows]]></title>
@@ -523,183 +612,6 @@ But in this problem, after we sort edges in <em>x</em> and <em>y</em>, we can do
 
 <p>Each <code>fastPartition</code> cost O(N) time, and we do log(10000 * 10000) times. So the total time is O(N * log(10000 * 10000). There is no X and Y occurs. <br/>
 Note that even a traditional O(N<sup>2</sup>) time partition could pass system test. :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Codility - Aluminium 2014 - Part 2]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/06/20/codility-aluminium-2014-p2/"/>
-    <updated>2014-06-20T11:17:21+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/06/20/codility-aluminium-2014-p2</id>
-    <content type="html"><![CDATA[<h2>Introduction</h2>
-
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Aluminium 2014 Challenge</a>, Part 2.</p>
-
-<p>In <a href="http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014/">Part 1</a>, we introduced a solution for CLASSIC maximal subarray problem.<br/>
-Now we&rsquo;ll make a solution for the <strong>swap</strong> version.</p>
-
-<!-- more -->
-
-
-<h2>Analysis</h2>
-
-<p>We want to use the strategy described in <a href="http://zh-wang.github.io/blog/2014/06/18/codility-aluminium-2014/">Part 1</a>.</p>
-
-<h3>1. Split input array</h3>
-
-<p>We split given array <script type="math/tex"> a_0, a_1, \cdots, a_n-1 </script> by index <script type="math/tex"> i </script>. Then we get subarray <script type="math/tex"> L_1 = {a_0, a_1, \cdots, a_i} </script> and <script type="math/tex"> L_2 = {a_i+1, a_i+2, \cdots, a_n-1} </script>.</p>
-
-<h3>2. Limited Swap</h3>
-
-<p>Note that, we consider that a swap of $a_j$ and $a_k$ only occurs in array $L_1$, $0 \leq j &lt; k &lt; i$. Why? If such a swap occurs in $L_2$, we just reverse the input array, then do the same calculation on it again to get the result.</p>
-
-<p>Now we want to minimize partial sum of <script type="math/tex"> L_1 </script>(after a swap) and <script type="math/tex"> L_2 </script>, as we did in Part 1.</p>
-
-<h3>3. Calculation on $L_1$(after a swap)</h3>
-
-<p>The principle is, for each $a_k$, we should swap $a_k$ with $a_j$, which is the greatest member in $a_0, a_1, \cdots, a_k-1$. We can do this step by step.</p>
-
-<p>● Calculate partial sum of $L_1$, stored in $psum$ array.</p>
-
-<p><script type="math/tex; mode=display">
-    psum_x = partial_sum(x) = \sum_{k=0}^x a_k , 0 \leq k \leq x &lt; i
-</script></p>
-
-<p>● Calculate the greatest member&rsquo;s value in $a_0, a_1, \cdots, a_x$</p>
-
-<p><script type="math/tex; mode=display">
-    pmax_x = \max { a_0, a_1, \cdots, a_x } , 0 \leq x &lt; i
-</script></p>
-
-<p>● We define $minsub(x)$ as the possible minimal partial sum we could get for $a_0, a_1, \cdots, a_x$, by remove(swap out) the greatest member.</p>
-
-<p><script type="math/tex; mode=display">
-    minsub(x) = \begin{cases}
-        0 &amp; (x = 0) \
-        \min { minsub(x-1), psum_x - pmax_x } &amp; (otherwise)
-    \end{cases}
-</script></p>
-
-<p>● Last, we define $L_1(x)$ as the possible minimal partial sum after swap in $a_x$. Note that for $x=0$, there is only one element in partial array $a_0$, so we cannot make a swap. We just store $a_0$&rsquo;s value as minimal partial sum.</p>
-
-<p><script type="math/tex; mode=display">
-    L_1(x) = \begin{cases}
-        a_0 &amp; (x = 0) \
-        \min { L_1(x-1), minsub(x) + a_x } &amp; (otherwise)
-    \end{cases}
-</script></p>
-
-<h3>Calculation on $L_2$</h3>
-
-<p>Calculation on $L_2$ is the same as we described in Part 1.</p>
-
-<h3>Merge</h3>
-
-<p>Use results of <script type="math/tex"> L_1 </script> and <script type="math/tex"> L_2 </script>. The largest one is the answer.</p>
-
-<p>Because calculation above is on 1-d array, time and space complexity are O(n).</p>
-
-<p>Code
-&#8220;`java</p>
-
-<pre><code>public int solution(int[] inputs) {
-
-    List&lt;Integer&gt;data = new ArrayList&lt;Integer&gt;();
-    List&lt;Integer&gt; rdata = new ArrayList&lt;Integer&gt;();
-    for (int i = 0; i &lt; inputs.length; i++) data.add(inputs[i]);
-    for (int i = 0; i &lt; inputs.length; i++) rdata.add(inputs[inputs.length - 1 - i]);
-
-    int r1 = cal(data);
-    int r2 = cal(rdata);
-
-    int result = Math.max(r1, r2);
-    // result equals 0 means no subarray have sum larger than 0,
-    // we need to choose a largest negative element.
-    if (result == 0) {
-        return Collections.max(data);
-    } else {
-        return result;
-    }
-}
-
-private int cal(List&lt;Integer&gt; data) {
-    int n = data.size();
-    int sum = 0;
-    for (Integer integer : data) sum += integer;
-
-    List&lt;Integer&gt; psum = partial_sum(data, compAdd);
-    List&lt;Integer&gt; pmax = partial_sum(data, compMax);
-    List&lt;Integer&gt; sub = new ArrayList&lt;Integer&gt;();
-    for (int i = 0; i &lt; n; i++) {
-        sub.add(psum.get(i) - pmax.get(i));
-    }
-
-    List&lt;Integer&gt; min_sub = partial_sum(sub, compMin);
-    List&lt;Integer&gt; L1 = new ArrayList&lt;Integer&gt;();
-    for (int i = 0; i &lt; n; i++) {
-        L1.add(
-                Math.min(
-                        (i - 1 &gt;= 0 ? min_sub.get(i - 1) : 0) + data.get(i), 
-                        (i - 1 &gt;= 0 ? L1.get(i - 1) : 0)
-                        )
-                );
-    }
-
-    Collections.reverse(data);
-    List&lt;Integer&gt; r_psum = partial_sum(data, compAdd);
-    List&lt;Integer&gt; L2 = partial_sum(r_psum, compMin);
-    Collections.reverse(L2);
-
-    // We can split array into L1 and L2 at index i form 0 to n - 1. We just take the largest.
-    int best = 0;
-    for (int i = 0; i &lt; n; i++) {
-        best = Math.max(best, sum - L1.get(i) - (i + 1 &gt;= n ? 0 : L2.get(i+1)) );
-    }
-    return best;
-}
-
-private List&lt;Integer&gt; partial_sum(List&lt;Integer&gt; data, Comparator&lt;Integer&gt; comparator) {
-    List&lt;Integer&gt; res = new ArrayList&lt;Integer&gt;();
-    if (data.size() == 0) {
-        return null;
-    }
-    res.add(data.get(0));
-    for (int i = 1; i &lt; data.size(); i++) {
-        Integer lastValue = res.get(i - 1);
-        Integer currentValue = data.get(i);
-        res.add(comparator.compare(lastValue, currentValue));
-    }
-    return res;
-}
-
-Comparator&lt;Integer&gt; compAdd = new Comparator&lt;Integer&gt;() {
-    @Override
-    public int compare(Integer o1, Integer o2) {
-        return o1 + o2;
-    }
-};
-
-Comparator&lt;Integer&gt; compMax = new Comparator&lt;Integer&gt;() {
-    @Override
-    public int compare(Integer o1, Integer o2) {
-        return Math.max(o1, o2);
-    }
-};
-
-Comparator&lt;Integer&gt; compMin = new Comparator&lt;Integer&gt;() {
-    @Override
-    public int compare(Integer o1, Integer o2) {
-        return Math.min(o1, o2);
-    }
-};
-</code></pre>
-
-<p>&#8220;`</p>
-
-<script language="javaScript">
-$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
-</script>
-
 ]]></content>
   </entry>
   
