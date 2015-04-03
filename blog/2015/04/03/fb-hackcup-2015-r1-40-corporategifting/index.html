@@ -5,28 +5,13 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>FB HackerCup 2015 R1 25:Autocomplete - Welcome to FutureAppLaboratory</title>
+  <title>FB Hackcup 2015 R1 40:CorporateGifting - Welcome to FutureAppLaboratory</title>
   <meta name="author" content="viennakanon">
 
   
   <meta name="description" content="Problem definition can be found here.
-This is a basic problem which can be solved directly by a Tri-tree. 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17 &hellip;">
+Need some tricks on recursion.
+And if keep dp size for about $$sqrt{N}$$ will cause the program run too LONG! 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -35,7 +20,7 @@ This is a basic problem which can be solved directly by a Tri-tree. 1
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://zh-wang.github.io/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete">
+  <link rel="canonical" href="http://zh-wang.github.io/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Welcome to FutureAppLaboratory" type="application/atom+xml">
@@ -75,26 +60,11 @@ MathJax.Hub.Config({
   </script>
 
 
-  <meta property="og:title" content="FB HackerCup 2015 R1 25:Autocomplete - Welcome to FutureAppLaboratory" />
+  <meta property="og:title" content="FB Hackcup 2015 R1 40:CorporateGifting - Welcome to FutureAppLaboratory" />
 <meta property="og:description" content="Problem definition can be found here.
-This is a basic problem which can be solved directly by a Tri-tree. 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17 &hellip;" />
-<meta property="og:url" content="http://zh-wang.github.io/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete/" />
+Need some tricks on recursion.
+And if keep dp size for about $$sqrt{N}$$ will cause the program run too LONG! 1 &hellip;" />
+<meta property="og:url" content="http://zh-wang.github.io/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
 <meta property="og:site_name" content="Welcome to FutureAppLaboratory" />
@@ -139,7 +109,7 @@ This is a basic problem which can be solved directly by a Tri-tree. 1
   
   <header>
     
-      <h1 class="entry-title">FB HackerCup 2015 R1 25:Autocomplete</h1>
+      <h1 class="entry-title">FB Hackcup 2015 R1 40:CorporateGifting</h1>
     
     
       <p class="meta">
@@ -155,7 +125,7 @@ This is a basic problem which can be solved directly by a Tri-tree. 1
   
 
 
-<time datetime="2015-04-02T18:16:03+09:00" pubdate data-updated="true"></time>
+<time datetime="2015-04-03T23:48:59+09:00" pubdate data-updated="true"></time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://zh-wang.github.io">Comments</a>
@@ -165,8 +135,9 @@ This is a basic problem which can be solved directly by a Tri-tree. 1
   </header>
 
 
-<div class="entry-content"><p>Problem definition can be found <a href="https://www.facebook.com/hackercup/problems.php?pid=313229895540583&amp;round=344496159068801">here</a>.<br/>
-This is a basic problem which can be solved directly by a Tri-tree.</p>
+<div class="entry-content"><p>Problem definition can be found <a href="https://www.facebook.com/hackercup/problems.php?pid=759650454070547&amp;round=344496159068801">here</a>.<br/>
+Need some tricks on recursion.<br/>
+And if keep dp size for about $$sqrt{N}$$ will cause the program run too LONG!</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -240,6 +211,45 @@ This is a basic problem which can be solved directly by a Tri-tree.</p>
 <span class='line-number'>70</span>
 <span class='line-number'>71</span>
 <span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
 </pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;cstdio&gt;</span>
 </span><span class='line'><span class="cp">#include &lt;cstdlib&gt;</span>
 </span><span class='line'><span class="cp">#include &lt;cstring&gt;</span>
@@ -261,53 +271,92 @@ This is a basic problem which can be solved directly by a Tri-tree.</p>
 </span><span class='line'><span class="cp">#include &lt;stack&gt;</span>
 </span><span class='line'><span class="cp">#include &lt;list&gt;</span>
 </span><span class='line'><span class="cp">#include &lt;sstream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
 </span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 </span><span class='line'><span class="cp">#define PB push_back</span>
 </span><span class='line'><span class="cp">#define MP make_pair</span>
 </span><span class='line'><span class="cp">#define REP(i, n) for (int i(0); i &lt; n; ++i)</span>
 </span><span class='line'><span class="cp">#define REP1(i, n) for (int i(1); i &lt; n; ++i)</span>
+</span><span class='line'><span class="cp">#define REP1N(i, n) for (int i(1); i &lt;= n; ++i)</span>
 </span><span class='line'><span class="cp">#define FOR(i, a, b) for (int i(a); i &lt;= b; ++i)</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">struct</span> <span class="n">node</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">node</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">childs</span> <span class="o">=</span> <span class="k">new</span> <span class="n">node</span><span class="o">*</span><span class="p">[</span><span class="mi">26</span><span class="p">];</span>
-</span><span class='line'>        <span class="n">REP</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">26</span><span class="p">)</span> <span class="n">childs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">node</span><span class="o">**</span> <span class="n">childs</span><span class="p">;</span>
-</span><span class='line'><span class="p">};</span>
+</span><span class='line'><span class="k">typedef</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">ll</span><span class="p">;</span>
+</span><span class='line'><span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">ll</span><span class="o">&gt;</span> <span class="n">vll</span><span class="p">;</span>
+</span><span class='line'><span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vi</span><span class="p">;</span>
+</span><span class='line'><span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vi</span><span class="o">&gt;</span> <span class="n">vvi</span><span class="p">;</span>
+</span><span class='line'><span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">vb</span><span class="p">;</span>
+</span><span class='line'><span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vb</span><span class="o">&gt;</span> <span class="n">vvb</span><span class="p">;</span>
+</span><span class='line'><span class="k">typedef</span> <span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">pii</span><span class="p">;</span>
 </span><span class='line'>
 </span><span class='line'><span class="kt">int</span> <span class="n">tc</span><span class="p">;</span>
 </span><span class='line'><span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
-</span><span class='line'><span class="n">string</span> <span class="n">word</span><span class="p">;</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">parentIndex</span><span class="p">;</span>
 </span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">findWordAndBuildTree</span><span class="p">(</span><span class="n">node</span><span class="o">*</span> <span class="n">root</span><span class="p">,</span> <span class="n">string</span> <span class="n">word</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">node</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="n">root</span><span class="p">;</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>    <span class="kt">bool</span> <span class="n">found</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">REP</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">word</span><span class="p">.</span><span class="n">length</span><span class="p">())</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">childs</span><span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="sc">&#39;a&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">found</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                <span class="n">res</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>                <span class="n">found</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>            <span class="n">p</span><span class="o">-&gt;</span><span class="n">childs</span><span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="sc">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">node</span><span class="p">();</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">childs</span><span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="sc">&#39;a&#39;</span><span class="p">];</span>
+</span><span class='line'><span class="k">struct</span> <span class="n">node</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">node</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">child</span> <span class="o">=</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">();</span>
 </span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">child</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">node</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">200001</span><span class="p">];</span>
+</span><span class='line'><span class="n">pii</span> <span class="n">best1</span><span class="p">[</span><span class="mi">200001</span><span class="p">];</span>
+</span><span class='line'><span class="n">pii</span> <span class="n">best2</span><span class="p">[</span><span class="mi">200001</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">bool</span> <span class="nf">sort_bests</span><span class="p">(</span><span class="k">const</span> <span class="n">pii</span><span class="o">&amp;</span> <span class="n">left</span><span class="p">,</span> <span class="k">const</span> <span class="n">pii</span><span class="o">&amp;</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">left</span><span class="p">.</span><span class="n">second</span> <span class="o">==</span> <span class="n">right</span><span class="p">.</span><span class="n">second</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">left</span><span class="p">.</span><span class="n">first</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">left</span><span class="p">.</span><span class="n">second</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">solve</span><span class="p">(</span><span class="kt">int</span> <span class="n">depth</span><span class="p">,</span> <span class="kt">int</span> <span class="n">rootIndex</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">node</span><span class="o">*</span> <span class="n">root</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">nodes</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">];</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">csize</span> <span class="o">=</span> <span class="n">root</span><span class="o">-&gt;</span><span class="n">child</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">REP</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">csize</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">solve</span><span class="p">(</span><span class="o">++</span><span class="n">depth</span><span class="p">,</span> <span class="n">root</span><span class="o">-&gt;</span><span class="n">child</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">maxColor</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">));</span>
+</span><span class='line'>    <span class="n">REP1N</span><span class="p">(</span><span class="n">rootColor</span><span class="p">,</span> <span class="n">maxColor</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// find color should be choosen for root</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">_res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// subtree sum of root, when picking rootColor</span>
+</span><span class='line'>        <span class="n">REP</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">csize</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// for each child</span>
+</span><span class='line'>            <span class="kt">int</span> <span class="n">childIndex</span> <span class="o">=</span> <span class="n">root</span><span class="o">-&gt;</span><span class="n">child</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+</span><span class='line'>            <span class="n">node</span><span class="o">*</span> <span class="n">child</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">nodes</span><span class="p">[</span><span class="n">childIndex</span><span class="p">];</span>
+</span><span class='line'>            <span class="kt">int</span> <span class="n">__res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="n">rootColor</span> <span class="o">==</span> <span class="n">best1</span><span class="p">[</span><span class="n">childIndex</span><span class="p">].</span><span class="n">first</span><span class="p">)</span>
+</span><span class='line'>                <span class="n">__res</span> <span class="o">+=</span> <span class="n">best2</span><span class="p">[</span><span class="n">childIndex</span><span class="p">].</span><span class="n">second</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">else</span>
+</span><span class='line'>                <span class="n">__res</span> <span class="o">+=</span> <span class="n">best1</span><span class="p">[</span><span class="n">childIndex</span><span class="p">].</span><span class="n">second</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">_res</span> <span class="o">+=</span> <span class="n">__res</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="n">_res</span> <span class="o">+=</span> <span class="n">rootColor</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">pii</span> <span class="n">new_best</span> <span class="o">=</span> <span class="n">MP</span><span class="p">(</span><span class="n">rootColor</span><span class="p">,</span> <span class="n">_res</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">sort_bests</span><span class="p">(</span><span class="n">new_best</span><span class="p">,</span> <span class="n">best1</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">]))</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">best2</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">]</span> <span class="o">=</span> <span class="n">best1</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">];</span>
+</span><span class='line'>            <span class="n">best1</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_best</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">sort_bests</span><span class="p">(</span><span class="n">new_best</span><span class="p">,</span> <span class="n">best2</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">]))</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">best2</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_best</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
 </span><span class='line'>    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">tc</span><span class="p">;</span>
 </span><span class='line'>    <span class="n">REP</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">tc</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>        <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">node</span><span class="o">*</span> <span class="n">root</span> <span class="o">=</span> <span class="k">new</span> <span class="n">node</span><span class="p">();</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">REP</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">word</span><span class="p">;</span>
-</span><span class='line'>            <span class="n">res</span> <span class="o">+=</span> <span class="n">findWordAndBuildTree</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">word</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">REP</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="mi">200001</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">nodes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="p">();</span>
+</span><span class='line'>            <span class="n">best1</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">MP</span><span class="p">(</span><span class="n">INT_MAX</span><span class="p">,</span> <span class="n">INT_MAX</span><span class="p">);</span>
+</span><span class='line'>            <span class="n">best2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">MP</span><span class="p">(</span><span class="n">INT_MAX</span><span class="p">,</span> <span class="n">INT_MAX</span><span class="p">);</span>
 </span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="n">REP</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">parentIndex</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">nodes</span><span class="p">[</span><span class="n">parentIndex</span><span class="p">].</span><span class="n">child</span><span class="p">.</span><span class="n">PB</span><span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="n">solve</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="n">best1</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">second</span> <span class="o">&gt;</span> <span class="n">best2</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">second</span> <span class="o">?</span> <span class="n">best2</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nl">second</span> <span class="p">:</span> <span class="n">best1</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">second</span><span class="p">;</span>
 </span><span class='line'>        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">res</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
 </span><span class='line'>    <span class="p">}</span>
 </span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
@@ -336,7 +385,7 @@ This is a basic problem which can be solved directly by a Tri-tree.</p>
   
 
 
-<time datetime="2015-04-02T18:16:03+09:00" pubdate data-updated="true"></time>
+<time datetime="2015-04-03T23:48:59+09:00" pubdate data-updated="true"></time>
       
 
 <span class="categories">
@@ -350,7 +399,7 @@ This is a basic problem which can be solved directly by a Tri-tree.</p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -363,10 +412,8 @@ This is a basic problem which can be solved directly by a Tri-tree.</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2015/03/25/resize-gif-by-rmagick/" title="Previous Post: Resize Gif by RMagick">&laquo; Resize Gif by RMagick</a>
+        <a class="basic-alignment left" href="/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete/" title="Previous Post: FB HackerCup 2015 R1 25:Autocomplete">&laquo; FB HackerCup 2015 R1 25:Autocomplete</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting/" title="Next Post: FB Hackcup 2015 R1 40:CorporateGifting">FB Hackcup 2015 R1 40:CorporateGifting &raquo;</a>
       
     </p>
   </footer>
@@ -516,8 +563,8 @@ This is a basic problem which can be solved directly by a Tri-tree.</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://zh-wang.github.io/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete/';
-        var disqus_url = 'http://zh-wang.github.io/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete/';
+        var disqus_identifier = 'http://zh-wang.github.io/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting/';
+        var disqus_url = 'http://zh-wang.github.io/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting/';
         var disqus_script = 'embed.js';
       
     (function () {

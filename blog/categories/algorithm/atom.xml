@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithm | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/algorithm/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-04-03T19:02:59+09:00</updated>
+  <updated>2015-04-03T23:56:18+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,130 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[FB Hackcup 2015 R1 40:CorporateGifting]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting/"/>
+    <updated>2015-04-03T23:48:59+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting</id>
+    <content type="html"><![CDATA[<p>Problem definition can be found <a href="https://www.facebook.com/hackercup/problems.php?pid=759650454070547&amp;round=344496159068801">here</a>.<br/>
+Need some tricks on recursion.<br/>
+And if keep dp size for about $$sqrt{N}$$ will cause the program run too LONG!</p>
+
+<pre><code class="cpp">#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+#include &lt;climits&gt;
+#include &lt;cassert&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+#include &lt;map&gt;
+#include &lt;set&gt;
+#include &lt;queue&gt;
+#include &lt;sstream&gt;
+#include &lt;numeric&gt;
+#include &lt;fstream&gt;
+#include &lt;iostream&gt;
+#include &lt;utility&gt;
+#include &lt;iomanip&gt;
+#include &lt;stack&gt;
+#include &lt;list&gt;
+#include &lt;sstream&gt;
+#include &lt;vector&gt;
+using namespace std;
+#define PB push_back
+#define MP make_pair
+#define REP(i, n) for (int i(0); i &lt; n; ++i)
+#define REP1(i, n) for (int i(1); i &lt; n; ++i)
+#define REP1N(i, n) for (int i(1); i &lt;= n; ++i)
+#define FOR(i, a, b) for (int i(a); i &lt;= b; ++i)
+
+typedef long long ll;
+typedef vector&lt;ll&gt; vll;
+typedef vector&lt;int&gt; vi;
+typedef vector&lt;vi&gt; vvi;
+typedef vector&lt;bool&gt; vb;
+typedef vector&lt;vb&gt; vvb;
+typedef pair&lt;int, int&gt; pii;
+
+int tc;
+int n;
+int parentIndex;
+
+struct node {
+    node() {
+        child = vector&lt;int&gt;();
+    }
+    vector&lt;int&gt; child;
+};
+
+node nodes[200001];
+pii best1[200001];
+pii best2[200001];
+
+bool sort_bests(const pii&amp; left, const pii&amp; right) {
+    if (left.second == right.second) {
+        return left.first &lt; right.first;
+    } else {
+        return left.second &lt; right.second;
+    }
+}
+
+void solve(int depth, int rootIndex) {
+    node* root = &amp;nodes[rootIndex];
+    int csize = root-&gt;child.size();
+    REP(j, csize) {
+        solve(++depth, root-&gt;child[j]);
+    }
+
+    int maxColor = ceil(sqrt(n));
+    REP1N(rootColor, maxColor) { // find color should be choosen for root
+        int _res = 0; // subtree sum of root, when picking rootColor
+        REP(j, csize) { // for each child
+            int childIndex = root-&gt;child[j];
+            node* child = &amp;nodes[childIndex];
+            int __res = 0;
+            if (rootColor == best1[childIndex].first)
+                __res += best2[childIndex].second;
+            else
+                __res += best1[childIndex].second;
+            _res += __res;
+        }
+        _res += rootColor;
+        pii new_best = MP(rootColor, _res);
+        if (sort_bests(new_best, best1[rootIndex])) {
+            best2[rootIndex] = best1[rootIndex];
+            best1[rootIndex] = new_best;
+        } else if (sort_bests(new_best, best2[rootIndex])) {
+            best2[rootIndex] = new_best;
+        }
+    }
+}
+
+int main(int argc, char* argv[]) {
+    cin &gt;&gt; tc;
+    REP(i, tc) {
+        cin &gt;&gt; n;
+        REP(j, 200001) {
+            nodes[j] = node();
+            best1[j] = MP(INT_MAX, INT_MAX);
+            best2[j] = MP(INT_MAX, INT_MAX);
+        }
+        REP(j, n) {
+            cin &gt;&gt; parentIndex;
+            nodes[parentIndex].child.PB(j + 1);
+        }
+        solve(1, 1);
+        int res = best1[1].second &gt; best2[1].second ? best2[1].second : best1[1].second;
+        cout &lt;&lt; res &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[FB HackerCup 2015 R1 25:Autocomplete]]></title>
@@ -487,126 +611,6 @@ int main(){
         List&lt;Integer&gt; tlist = new ArrayList&lt;Integer&gt;();
     }
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Codility - Silicium - 2014]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/07/22/codility-silicium-2014/"/>
-    <updated>2014-07-22T17:02:26+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/07/22/codility-silicium-2014</id>
-    <content type="html"><![CDATA[<h2>Introduction</h2>
-
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Silicium 2014 Challenge</a>.</p>
-
-<ul>
-<li>The problem is, finding the k-th largest piece of cake after cutting a big cake with straight cuts.</li>
-<li>The longest edge of a cake piece is 10000.</li>
-<li>Time bound is O(N * log(N + X + Y)), where N is the number of cuts, X and Y are largest size of the cake.</li>
-<li>Space bound is O(N).</li>
-</ul>
-
-
-<h2>Analysis</h2>
-
-<p>In order to find the k-th element is an array of set of elements, we can always do binary search. Find a middle elements, calculate the rank, do partition if needed, recursively.</p>
-
-<ul>
-<li>First, we calculate length of each edges, the sort them by their length.</li>
-<li>Then do a traditional binary search.</li>
-</ul>
-
-
-<p>The only <strong>interesting</strong> thing is that, for calculating the rank of a element in 2-d array, we need O(N) time.<br/>
-But in this problem, after we sort edges in <em>x</em> and <em>y</em>, we can do rank calculation in O(N) time, as implemented in <code>fastPartition</code> method.</p>
-
-<p>(Hint: after we sort the edges, we can ensure that elements in left-bottom are always equal or smaller than elements in right-top. We just need to find the smallest element of each column, follow the red arrow, in O(N) time)</p>
-
-<p><img src="/images/2014_07_22_illustration.png" title="hint" alt="hint" /></p>
-
-<!-- more -->
-
-
-<pre><code class="java">    int N;
-    int[] largerEqualList;
-
-    private int fastPartition(int target, int[] x, int[] y) {
-
-        // find the element equal or larger than target in left-most column
-        int nx = 0, ny = 0;
-        int low = 0;
-        int high = N;
-        while (low &lt;= high &amp;&amp; low &lt; N) {
-            int mid = (low + high) / 2;
-            if (x[nx] * y[mid] &lt; target) {
-                low = mid + 1;
-            } else {
-                high = mid - 1;
-            }
-        }
-        ny = low;
-
-        largerEqualList[nx] = ny;
-
-        // search elements' index by red arrow mentioned above
-        while (++nx &lt; N) {
-            while (ny - 1 &gt;= 0 &amp;&amp; x[nx] * y[ny - 1] &gt;= target) {
-                --ny;
-            }
-            largerEqualList[nx] = ny;
-        }
-
-        // get the rank of target
-        int rank = 0;
-        for (int i = 0; i &lt; N; i++) {
-            rank += N - largerEqualList[i];
-        }
-
-        return rank;
-    }
-
-    public int solution(int X, int Y, int K, int [] A, int [] B) {
-
-        int [] x = new int[A.length + 1];
-        int [] y = new int[A.length + 1];
-
-        for (int i = 0; i &lt; A.length + 1; i++) {
-            x[i] = (i &lt; A.length ? A[i] : X) - (i &gt; 0 ? A[i - 1] : 0);
-        }
-
-        for (int i = 0; i &lt; A.length + 1; i++) {
-            y[i] = (i &lt; A.length ? B[i] : Y) - (i &gt; 0 ? B[i - 1] : 0);
-        }
-
-        Arrays.sort(x);
-        Arrays.sort(y);
-
-        N = x.length; 
-
-        largerEqualList = new int[N];
-
-        int low = x[0] * y[0];
-        int high = x[N - 1] * y[N - 1];
-        int rank = K;
-
-        // binary search
-        while (low &lt;= high) {
-            int mid = (low + high) / 2;
-            int crank = fastPartition(mid, x, y);
-
-            if (crank &gt;= rank) {
-                low = mid + 1;
-            } else if (crank &lt; rank) {
-                high = mid - 1;
-            }
-        }
-
-        return high;
-    }
-</code></pre>
-
-<p>Each <code>fastPartition</code> cost O(N) time, and we do log(10000 * 10000) times. So the total time is O(N * log(10000 * 10000). There is no X and Y occurs. <br/>
-Note that even a traditional O(N<sup>2</sup>) time partition could pass system test. :)</p>
 ]]></content>
   </entry>
   
