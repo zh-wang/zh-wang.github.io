@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithm | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/algorithm/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-04-02T18:28:45+09:00</updated>
+  <updated>2015-04-03T19:02:59+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -20,11 +20,6 @@
     <id>http://zh-wang.github.io/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete</id>
     <content type="html"><![CDATA[<p>Problem definition can be found <a href="https://www.facebook.com/hackercup/problems.php?pid=313229895540583&amp;round=344496159068801">here</a>.<br/>
 This is a basic problem which can be solved directly by a Tri-tree.</p>
-
-<ul>
-<li>Do NOT use recursion in accessing the Tri-tree because the longest test case has 1 million long string, which will cause STACKOVERFLOW.</li>
-</ul>
-
 
 <pre><code class="cpp">#include &lt;cstdio&gt;
 #include &lt;cstdlib&gt;
