@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-04-03T23:56:18+09:00</updated>
+  <updated>2015-04-05T09:53:28+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -20,7 +20,7 @@
     <id>http://zh-wang.github.io/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting</id>
     <content type="html"><![CDATA[<p>Problem definition can be found <a href="https://www.facebook.com/hackercup/problems.php?pid=759650454070547&amp;round=344496159068801">here</a>.<br/>
 Need some tricks on recursion.<br/>
-And if keep dp size for about $$sqrt{N}$$ will cause the program run too LONG!</p>
+And if keep dp size for about $\sqrt{N}$ will cause the program run too LONG!</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
