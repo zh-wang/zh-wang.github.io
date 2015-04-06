@@ -149,7 +149,8 @@ But sometimes the HEADER part is in big-endian, like this.</p>
 
 <p><img src="/images/2015_03_10_image01.png" title="GIF image bytes in hex" alt="Image 01" /></p>
 
-<p>The first 6 bytes <code>47 49 46 38 39 61</code> is <code>GIF89a</code>, in big-endian. But sometimes in little-endian.<br/>
+<p>The first 6 bytes <code>47 49 46 38 39 61</code> is <code>GIF89a</code>, in big-endian. But sometimes in little-endian.(Not confirmed but I found some open source libraries read them by little-endian).<br/>
+Note that, the following image size sector <code>7c02 fa00</code> (width: 636, height: 250) is little-endian.<br/>
 So I should read bytes first in <code>BIG_ENDIAN</code>, then turn byte order into <code>LITTLE_ENDIAN</code>.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
