@@ -213,73 +213,15 @@ MathJax.Hub.Config({
           }
       }
 </code></pre></li>
-<li><p>Calling Properties Through Optional Chaining</p>
-
-<ul>
-<li><p>It is the same as above</p>
-
-<pre><code>    let john = Person()
-    if let roomCount = john.residence?.numberOfRooms {
-        println("John's residence has \(roomCount) room(s).")
-    } else {
-        println("Unable to retrieve the number of rooms.")
-    }
-</code></pre></li>
 </ul>
-</li>
-<li><p>Calling Methods Through Optional Chaining</p>
 
-<pre><code>      func printNumberOfRooms() {
-          println("The number of rooms is \(numberOfRooms)")
-      }
-
-      “if john.residence?.printNumberOfRooms() {
-          println("It was possible to print the number of rooms.")
-      } else {
-          println("It was not possible to print the number of rooms.")
-      }
-      // prints "It was not possible to print the number of rooms.
-</code></pre></li>
-<li><p>Calling Subscripts Through Optional Chaining</p>
-
-<pre><code>      if let firstRoomName = john.residence?[0].name {
-          println("The first room name is \(firstRoomName).")
-      } else {
-          println("Unable to retrieve the first room name.")
-      }
-      // prints "Unable to retrieve the first room name.
-</code></pre></li>
-<li><p>Linking Multiple Levels of Chaining</p>
-
-<ul>
-<li>If the type you are trying to retrieve is not optional, it will become optional because of the optional chaining.</li>
-<li><p>If the type you are trying to retrieve is already optional, it will not become more optional because of the chaining.</p>
-
-<pre><code>    “if let johnsStreet = john.residence?.address?.street {
-        println("John's street name is \(johnsStreet).")
-    } else {
-        println("Unable to retrieve the address.")
-    }
-    // prints "Unable to retrieve the address.”
-</code></pre></li>
-</ul>
-</li>
-<li><p>Chaining on Methods With Optional Return Values</p>
-
-<pre><code>      if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
-          println("John's building identifier is \(buildingIdentifier).")
-      }
-      // prints "John's building identifier is The Larches.
-
-      “if let upper = john.residence?.address?.buildingIdentifier()?.uppercaseString {
-          println("John's uppercase building identifier is \(upper).")
-      }
-      // prints "John's uppercase building identifier is THE LARCHES.”
-</code></pre></li>
-</ul>
 
 </div>
   
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/05/12/learning-swift-part-14/">Read on &rarr;</a>
+    </footer>
   
 
 
