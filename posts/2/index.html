@@ -9,8 +9,8 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Introduction Some ruby script working on AWS api.
-I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif sharing system later &hellip;">
+  <meta name="description" content="Insertモードで編集している間にソースコードを貼付けたい時に、毎回'set paste'と'set nopaste'をやらないといけない、ちょっと面倒くさいです。
+更に、'set paste'抜きで貼付けた場合、内容の長さによりvimが一時的にフリーズしちゃいますので大変です。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -60,8 +60,8 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Introduction Some ruby script working on AWS api.
-I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif sharing system later &hellip;" />
+<meta property="og:description" content="Insertモードで編集している間にソースコードを貼付けたい時に、毎回'set paste'と'set nopaste'をやらないといけない、ちょっと面倒くさいです。
+更に、'set paste'抜きで貼付けた場合、内容の長さによりvimが一時的にフリーズしちゃいますので大変です。 &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/posts/2/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -104,6 +104,110 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/17/auto-set-paste-on-demand/">Auto &#8216;Set Paste&#8217; on Demand</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-17T12:47:51+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/02/17/auto-set-paste-on-demand/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/02/17/auto-set-paste-on-demand/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Insertモードで編集している間にソースコードを貼付けたい時に、毎回&#8217;set paste&#8217;と&#8217;set nopaste&#8217;をやらないといけない、ちょっと面倒くさいです。<br/>
+更に、&#8217;set paste&#8217;抜きで貼付けた場合、内容の長さによりvimが一時的にフリーズしちゃいますので大変です。<br/>
+コマンドマッピングを導入しても、結局自分でコマンドを入れないといけないですね。</p>
+
+<p>なので今日は移動的に&#8217;set paste&#8217;と&#8217;set nopaste&#8217;をしてくれる便利なプラグインを紹介します。</p>
+
+<h2>Installation</h2>
+
+<p>リポはこちらです。<a href="https://github.com/ConradIrwin/vim-bracketed-paste">https://github.com/ConradIrwin/vim-bracketed-paste</a><br/>
+バンドル管理ツール経由でインストールします。私の環境では</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Bundle 'ConradIrwin/vim-bracketed-paste'</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Make a step deeper</h2>
+
+<p>基本的なアイディアはシステムのbracketed paste挙動を探知して、コマンドマッピングを自動で実行されます。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if &term =~ "xterm.*"
+</span><span class='line'>    let &t_ti = &t_ti . "\e[?2004h"                " alternate screenに入る時、bracketed pasteを有効にする( ESC[?2004h] )
+</span><span class='line'>    let &t_te = "\e[?2004l" . &t_te                " alternate screenから戻る時、bracketed pasteを無効にする( ESC[?2004l] )
+</span><span class='line'>
+</span><span class='line'>    function XTermPasteBegin(ret)                  " mode change & set paste方法
+</span><span class='line'>        set pastetoggle=&lt;Esc&gt;[201~                 " bracketed pasteを終了識別子を検出する時、pasteモードをtoggle
+</span><span class='line'>        set paste                                  " mode changeする前に、set paste実行
+</span><span class='line'>        return a:ret                               " パラメータでどのモードに入るのをコントロールする
+</span><span class='line'>    endfunction
+</span><span class='line'>    map &lt;expr&gt; &lt;Esc&gt;[200~ XTermPasteBegin("i")     " normal modeでbracketed pasteの開始識別子(ESC[200~])を検出する時、insert modeになる
+</span><span class='line'>    imap &lt;expr&gt; &lt;Esc&gt;[200~ XTermPasteBegin("")     " insert modeならモードがそのまま
+</span><span class='line'>    cmap &lt;Esc&gt;[200~ &lt;nop&gt;                          " command modeなら以上のコードを使うとおかしくなるので、回避
+</span><span class='line'>    cmap &lt;Esc&gt;[201~ &lt;nop&gt;                          " 同じく回避
+</span><span class='line'>endif</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Reference</h2>
+
+<ul>
+<li>What is alternate screen? <a href="http://superuser.com/questions/321204/what-does-terminal-apps-show-alternate-screen-do-os-x">http://superuser.com/questions/321204/what-does-terminal-apps-show-alternate-screen-do-os-x</a></li>
+</ul>
+
+
+<p>以下はプラグインのソースから抜きました。</p>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/5585129/pasting-code-into-terminal-window-into-vim-on-mac-os-x">http://stackoverflow.com/questions/5585129/pasting-code-into-terminal-window-into-vim-on-mac-os-x</a></li>
+<li><a href="https://coderwall.com/p/if9mda">https://coderwall.com/p/if9mda</a></li>
+<li><a href="https://github.com/aaronjensen/vimfiles/blob/59a7019b1f2d08c70c28a41ef4e2612470ea0549/plugin/terminaltweaks.vim">https://github.com/aaronjensen/vimfiles/blob/59a7019b1f2d08c70c28a41ef4e2612470ea0549/plugin/terminaltweaks.vim</a> to fix the escape time problem with insert mode.</li>
+<li>Docs on bracketed paste mode. <a href="http://www.xfree86.org/current/ctlseqs.html">http://www.xfree86.org/current/ctlseqs.html</a></li>
+<li>Docs on mapping fast escape codes in vim. <a href="http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim">http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim</a></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1410,158 +1514,6 @@ File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理した
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/10/24/learning-swift-part-10/">Learning Swift Part 10 - Methods</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-10-24T18:51:55+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/10/24/learning-swift-part-10/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>===== Full Notes =====</h2>
-
-<h3>Methods</h3>
-
-<ul>
-<li>Instance Methods</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">class</span> <span class="n">Counter</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>        <span class="k">func</span> <span class="n">increment</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">count</span><span class="o">++</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">func</span> <span class="n">reset</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">let</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
-</span><span class='line'>    <span class="c1">// the initial counter value is 0</span>
-</span><span class='line'>    <span class="n">counter</span><span class="p">.</span><span class="n">increment</span><span class="p">()</span>
-</span><span class='line'>    <span class="c1">// the counter&#39;s value is now 1</span>
-</span><span class='line'>    <span class="n">counter</span><span class="p">.</span><span class="n">incrementBy</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1">// the counter&#39;s value is now 6</span>
-</span><span class='line'>    <span class="n">counter</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
-</span><span class='line'>    <span class="c1">// the counter&#39;s value is now 0</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Local and External Parameter Names for Methods</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="c1">// Specifically, Swift gives the first parameter name in a method a local parameter name by default, and gives the second and subsequent parameter names both local and external parameter names by default.</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">class</span> <span class="n">Counter</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">var</span> <span class="nl">count</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>        <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">numberOfTimes</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">numberOfTimes</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">let</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
-</span><span class='line'>    <span class="n">counter</span><span class="p">.</span><span class="n">incrementBy</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nl">numberOfTimes</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1">// counter value is now 15</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// It is behaved as the same as putting a &#39;#&#39; symbol before the name</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="err">#</span><span class="nl">numberOfTimes</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">numberOfTimes</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// This will not allow external name</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">_</span> <span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">numberOfTimes</span>
-</span><span class='line'>    <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/10/24/learning-swift-part-10/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="3">&larr; Older</a>
@@ -1579,6 +1531,10 @@ File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理した
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/05/12/learning-swift-part-14/">Learning Swift Part 14</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting/">FB HackerCup 2015 R1 40:CorporateGifting</a>
       </li>
     
@@ -1594,10 +1550,6 @@ File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理した
         <a href="/blog/2015/03/23/enable-hide-and-internal-classes-in-android-sdk/">Enable Hide and Internal Classes in Android SDK</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/03/15/analysis-of-prob-milking-cows/">Analysis of PROB Milking Cows</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1606,11 +1558,11 @@ File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理した
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (9)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (5)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (9)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (5)</a></li><li><a href='/blog/categories/swift/'>swift (14)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 101.53846153846155%'>algorithm(9)</a> <a href='/blog/categories/android' style='font-size: 87.6923076923077%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.61538461538461%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 83.07692307692308%'>ruby(5)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 98.57142857142857%'>algorithm(9)</a> <a href='/blog/categories/android' style='font-size: 85.71428571428572%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 81.42857142857143%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.28571428571429%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.28571428571429%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.28571428571429%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.28571428571429%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 72.85714285714286%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 68.57142857142857%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 81.42857142857143%'>ruby(5)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(14)</a> <a href='/blog/categories/vim' style='font-size: 68.57142857142857%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.28571428571429%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

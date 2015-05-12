@@ -9,9 +9,7 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Problem definition can be found here.
-Need some tricks on recursion.
-And if keep dp size for about $\sqrt{N}$ will cause the program run too LONG! 1 &hellip;">
+  <meta name="description" content="===== Full Notes ===== Optional Chaining Optional chaining is a process for querying and calling properties, methods, and subscripts on an optional &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -61,9 +59,7 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Problem definition can be found here.
-Need some tricks on recursion.
-And if keep dp size for about $\sqrt{N}$ will cause the program run too LONG! 1 &hellip;" />
+<meta property="og:description" content="===== Full Notes ===== Optional Chaining Optional chaining is a process for querying and calling properties, methods, and subscripts on an optional &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -106,6 +102,188 @@ And if keep dp size for about $\sqrt{N}$ will cause the program run too LONG! 1 
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/12/learning-swift-part-14/">Learning Swift Part 14</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-05-12T12:20:35+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/05/12/learning-swift-part-14/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/05/12/learning-swift-part-14/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>===== Full Notes =====</h2>
+
+<h3>Optional Chaining</h3>
+
+<ul>
+<li><p><em>Optional chaining</em> is a process for querying and calling properties, methods, and subscripts on an optional that might currently be nil.</p>
+
+<ul>
+<li>If the optional contains a value, the property, method, or subscript call succeeds; if the optional is nil, the property, method, or subscript call returns nil.</li>
+<li>Multiple queries can be chained together, and the entire chain fails gracefully if any link in the chain is nil.</li>
+<li>Optional chaining in Swift is similar to messaging nil in Objective-C, but in a way that works for any type, and that can be checked for success or failure.</li>
+</ul>
+</li>
+<li><p>Optional Chaining as an Alternative to Forced Unwrapping</p>
+
+<ul>
+<li><p>Sample of Forced Unwarpping
+        class Person {
+            var residence: Residence?
+        }</p>
+
+<pre><code>    class Residence {
+        var numberOfRooms = 1
+    }
+
+    let john = Persion()
+
+    let roomCount = john.residence!.numberOfRooms
+    // this triggers a runtime error, because residence maybe nil
+</code></pre></li>
+<li><p>Optional chaining provides an alternative way to access the value of numberOfRooms.</p>
+
+<pre><code>    if let roomCount = john.residence?.numberOfRooms {
+        println("John's residence has \(roomCount) room(s).")
+    } else {
+        println("Unable to retrieve the number of rooms.")
+    }
+    // prints "Unable to retrieve the number of rooms.
+
+    // Even numberOfRooms is Int, optional chaining will always return it as Int?
+</code></pre></li>
+</ul>
+</li>
+<li><p>Defining Model Classes for Optional Chaining</p>
+
+<pre><code>      class Residence {
+          var rooms = Room[]()
+          var numberOfRooms: Int {
+          return rooms.count
+          }
+          subscript(i: Int) -&gt; Room {
+              return rooms[i]
+          }
+          func printNumberOfRooms() {
+              println("The number of rooms is \(numberOfRooms)")
+          }
+          var address: Address?
+      }
+
+      class Room {
+          let name: String
+          init(name: String) { self.name = name }
+      }
+
+      class Address {
+          var buildingName: String?
+          var buildingNumber: String?
+          var street: String?
+          func buildingIdentifier() -&gt; String? {
+              if buildingName {
+                  return buildingName
+              } else if buildingNumber {
+                  return buildingNumber
+              } else {
+                  return nil
+              }
+          }
+      }
+</code></pre></li>
+<li><p>Calling Properties Through Optional Chaining</p>
+
+<ul>
+<li><p>It is the same as above</p>
+
+<pre><code>    let john = Person()
+    if let roomCount = john.residence?.numberOfRooms {
+        println("John's residence has \(roomCount) room(s).")
+    } else {
+        println("Unable to retrieve the number of rooms.")
+    }
+</code></pre></li>
+</ul>
+</li>
+<li><p>Calling Methods Through Optional Chaining</p>
+
+<pre><code>      func printNumberOfRooms() {
+          println("The number of rooms is \(numberOfRooms)")
+      }
+
+      “if john.residence?.printNumberOfRooms() {
+          println("It was possible to print the number of rooms.")
+      } else {
+          println("It was not possible to print the number of rooms.")
+      }
+      // prints "It was not possible to print the number of rooms.
+</code></pre></li>
+<li><p>Calling Subscripts Through Optional Chaining</p>
+
+<pre><code>      if let firstRoomName = john.residence?[0].name {
+          println("The first room name is \(firstRoomName).")
+      } else {
+          println("Unable to retrieve the first room name.")
+      }
+      // prints "Unable to retrieve the first room name.
+</code></pre></li>
+<li><p>Linking Multiple Levels of Chaining</p>
+
+<ul>
+<li>If the type you are trying to retrieve is not optional, it will become optional because of the optional chaining.</li>
+<li><p>If the type you are trying to retrieve is already optional, it will not become more optional because of the chaining.</p>
+
+<pre><code>    “if let johnsStreet = john.residence?.address?.street {
+        println("John's street name is \(johnsStreet).")
+    } else {
+        println("Unable to retrieve the address.")
+    }
+    // prints "Unable to retrieve the address.”
+</code></pre></li>
+</ul>
+</li>
+<li><p>Chaining on Methods With Optional Return Values</p>
+
+<pre><code>      if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
+          println("John's building identifier is \(buildingIdentifier).")
+      }
+      // prints "John's building identifier is The Larches.
+
+      “if let upper = john.residence?.address?.buildingIdentifier()?.uppercaseString {
+          println("John's uppercase building identifier is \(upper).")
+      }
+      // prints "John's uppercase building identifier is THE LARCHES.”
+</code></pre></li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1204,110 +1382,6 @@ Just doing some disposal on my old stuff.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/02/17/auto-set-paste-on-demand/">Auto &#8216;Set Paste&#8217; on Demand</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-02-17T12:47:51+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2015/02/17/auto-set-paste-on-demand/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2015/02/17/auto-set-paste-on-demand/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Insertモードで編集している間にソースコードを貼付けたい時に、毎回&#8217;set paste&#8217;と&#8217;set nopaste&#8217;をやらないといけない、ちょっと面倒くさいです。<br/>
-更に、&#8217;set paste&#8217;抜きで貼付けた場合、内容の長さによりvimが一時的にフリーズしちゃいますので大変です。<br/>
-コマンドマッピングを導入しても、結局自分でコマンドを入れないといけないですね。</p>
-
-<p>なので今日は移動的に&#8217;set paste&#8217;と&#8217;set nopaste&#8217;をしてくれる便利なプラグインを紹介します。</p>
-
-<h2>Installation</h2>
-
-<p>リポはこちらです。<a href="https://github.com/ConradIrwin/vim-bracketed-paste">https://github.com/ConradIrwin/vim-bracketed-paste</a><br/>
-バンドル管理ツール経由でインストールします。私の環境では</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Bundle 'ConradIrwin/vim-bracketed-paste'</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Make a step deeper</h2>
-
-<p>基本的なアイディアはシステムのbracketed paste挙動を探知して、コマンドマッピングを自動で実行されます。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>if &term =~ "xterm.*"
-</span><span class='line'>    let &t_ti = &t_ti . "\e[?2004h"                " alternate screenに入る時、bracketed pasteを有効にする( ESC[?2004h] )
-</span><span class='line'>    let &t_te = "\e[?2004l" . &t_te                " alternate screenから戻る時、bracketed pasteを無効にする( ESC[?2004l] )
-</span><span class='line'>
-</span><span class='line'>    function XTermPasteBegin(ret)                  " mode change & set paste方法
-</span><span class='line'>        set pastetoggle=&lt;Esc&gt;[201~                 " bracketed pasteを終了識別子を検出する時、pasteモードをtoggle
-</span><span class='line'>        set paste                                  " mode changeする前に、set paste実行
-</span><span class='line'>        return a:ret                               " パラメータでどのモードに入るのをコントロールする
-</span><span class='line'>    endfunction
-</span><span class='line'>    map &lt;expr&gt; &lt;Esc&gt;[200~ XTermPasteBegin("i")     " normal modeでbracketed pasteの開始識別子(ESC[200~])を検出する時、insert modeになる
-</span><span class='line'>    imap &lt;expr&gt; &lt;Esc&gt;[200~ XTermPasteBegin("")     " insert modeならモードがそのまま
-</span><span class='line'>    cmap &lt;Esc&gt;[200~ &lt;nop&gt;                          " command modeなら以上のコードを使うとおかしくなるので、回避
-</span><span class='line'>    cmap &lt;Esc&gt;[201~ &lt;nop&gt;                          " 同じく回避
-</span><span class='line'>endif</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Reference</h2>
-
-<ul>
-<li>What is alternate screen? <a href="http://superuser.com/questions/321204/what-does-terminal-apps-show-alternate-screen-do-os-x">http://superuser.com/questions/321204/what-does-terminal-apps-show-alternate-screen-do-os-x</a></li>
-</ul>
-
-
-<p>以下はプラグインのソースから抜きました。</p>
-
-<ul>
-<li><a href="http://stackoverflow.com/questions/5585129/pasting-code-into-terminal-window-into-vim-on-mac-os-x">http://stackoverflow.com/questions/5585129/pasting-code-into-terminal-window-into-vim-on-mac-os-x</a></li>
-<li><a href="https://coderwall.com/p/if9mda">https://coderwall.com/p/if9mda</a></li>
-<li><a href="https://github.com/aaronjensen/vimfiles/blob/59a7019b1f2d08c70c28a41ef4e2612470ea0549/plugin/terminaltweaks.vim">https://github.com/aaronjensen/vimfiles/blob/59a7019b1f2d08c70c28a41ef4e2612470ea0549/plugin/terminaltweaks.vim</a> to fix the escape time problem with insert mode.</li>
-<li>Docs on bracketed paste mode. <a href="http://www.xfree86.org/current/ctlseqs.html">http://www.xfree86.org/current/ctlseqs.html</a></li>
-<li>Docs on mapping fast escape codes in vim. <a href="http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim">http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim</a></li>
-</ul>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -1321,6 +1395,10 @@ Just doing some disposal on my old stuff.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/05/12/learning-swift-part-14/">Learning Swift Part 14</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting/">FB HackerCup 2015 R1 40:CorporateGifting</a>
@@ -1338,10 +1416,6 @@ Just doing some disposal on my old stuff.</p>
         <a href="/blog/2015/03/23/enable-hide-and-internal-classes-in-android-sdk/">Enable Hide and Internal Classes in Android SDK</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/03/15/analysis-of-prob-milking-cows/">Analysis of PROB Milking Cows</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1350,11 +1424,11 @@ Just doing some disposal on my old stuff.</p>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (9)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (5)</a></li><li><a href='/blog/categories/swift/'>swift (13)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (9)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (5)</a></li><li><a href='/blog/categories/swift/'>swift (14)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 101.53846153846155%'>algorithm(9)</a> <a href='/blog/categories/android' style='font-size: 87.6923076923077%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 83.07692307692308%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.61538461538461%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.61538461538461%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.61538461538461%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.61538461538461%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 73.84615384615384%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 69.23076923076923%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 83.07692307692308%'>ruby(5)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(13)</a> <a href='/blog/categories/vim' style='font-size: 69.23076923076923%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.61538461538461%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 98.57142857142857%'>algorithm(9)</a> <a href='/blog/categories/android' style='font-size: 85.71428571428572%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 81.42857142857143%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.28571428571429%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.28571428571429%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.28571428571429%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.28571428571429%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 72.85714285714286%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 68.57142857142857%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 81.42857142857143%'>ruby(5)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(14)</a> <a href='/blog/categories/vim' style='font-size: 68.57142857142857%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.28571428571429%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

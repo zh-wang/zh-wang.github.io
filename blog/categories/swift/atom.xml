@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-04-13T10:49:26+09:00</updated>
+  <updated>2015-05-12T14:44:15+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,158 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Learning Swift Part 14]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/05/12/learning-swift-part-14/"/>
+    <updated>2015-05-12T12:20:35+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/05/12/learning-swift-part-14</id>
+    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
+
+<h3>Optional Chaining</h3>
+
+<ul>
+<li><p><em>Optional chaining</em> is a process for querying and calling properties, methods, and subscripts on an optional that might currently be nil.</p>
+
+<ul>
+<li>If the optional contains a value, the property, method, or subscript call succeeds; if the optional is nil, the property, method, or subscript call returns nil.</li>
+<li>Multiple queries can be chained together, and the entire chain fails gracefully if any link in the chain is nil.</li>
+<li>Optional chaining in Swift is similar to messaging nil in Objective-C, but in a way that works for any type, and that can be checked for success or failure.</li>
+</ul>
+</li>
+<li><p>Optional Chaining as an Alternative to Forced Unwrapping</p>
+
+<ul>
+<li><p>Sample of Forced Unwarpping
+        class Person {
+            var residence: Residence?
+        }</p>
+
+<pre><code>    class Residence {
+        var numberOfRooms = 1
+    }
+
+    let john = Persion()
+
+    let roomCount = john.residence!.numberOfRooms
+    // this triggers a runtime error, because residence maybe nil
+</code></pre></li>
+<li><p>Optional chaining provides an alternative way to access the value of numberOfRooms.</p>
+
+<pre><code>    if let roomCount = john.residence?.numberOfRooms {
+        println("John's residence has \(roomCount) room(s).")
+    } else {
+        println("Unable to retrieve the number of rooms.")
+    }
+    // prints "Unable to retrieve the number of rooms.
+
+    // Even numberOfRooms is Int, optional chaining will always return it as Int?
+</code></pre></li>
+</ul>
+</li>
+<li><p>Defining Model Classes for Optional Chaining</p>
+
+<pre><code>      class Residence {
+          var rooms = Room[]()
+          var numberOfRooms: Int {
+          return rooms.count
+          }
+          subscript(i: Int) -&gt; Room {
+              return rooms[i]
+          }
+          func printNumberOfRooms() {
+              println("The number of rooms is \(numberOfRooms)")
+          }
+          var address: Address?
+      }
+
+      class Room {
+          let name: String
+          init(name: String) { self.name = name }
+      }
+
+      class Address {
+          var buildingName: String?
+          var buildingNumber: String?
+          var street: String?
+          func buildingIdentifier() -&gt; String? {
+              if buildingName {
+                  return buildingName
+              } else if buildingNumber {
+                  return buildingNumber
+              } else {
+                  return nil
+              }
+          }
+      }
+</code></pre></li>
+<li><p>Calling Properties Through Optional Chaining</p>
+
+<ul>
+<li><p>It is the same as above</p>
+
+<pre><code>    let john = Person()
+    if let roomCount = john.residence?.numberOfRooms {
+        println("John's residence has \(roomCount) room(s).")
+    } else {
+        println("Unable to retrieve the number of rooms.")
+    }
+</code></pre></li>
+</ul>
+</li>
+<li><p>Calling Methods Through Optional Chaining</p>
+
+<pre><code>      func printNumberOfRooms() {
+          println("The number of rooms is \(numberOfRooms)")
+      }
+
+      “if john.residence?.printNumberOfRooms() {
+          println("It was possible to print the number of rooms.")
+      } else {
+          println("It was not possible to print the number of rooms.")
+      }
+      // prints "It was not possible to print the number of rooms.
+</code></pre></li>
+<li><p>Calling Subscripts Through Optional Chaining</p>
+
+<pre><code>      if let firstRoomName = john.residence?[0].name {
+          println("The first room name is \(firstRoomName).")
+      } else {
+          println("Unable to retrieve the first room name.")
+      }
+      // prints "Unable to retrieve the first room name.
+</code></pre></li>
+<li><p>Linking Multiple Levels of Chaining</p>
+
+<ul>
+<li>If the type you are trying to retrieve is not optional, it will become optional because of the optional chaining.</li>
+<li><p>If the type you are trying to retrieve is already optional, it will not become more optional because of the chaining.</p>
+
+<pre><code>    “if let johnsStreet = john.residence?.address?.street {
+        println("John's street name is \(johnsStreet).")
+    } else {
+        println("Unable to retrieve the address.")
+    }
+    // prints "Unable to retrieve the address.”
+</code></pre></li>
+</ul>
+</li>
+<li><p>Chaining on Methods With Optional Return Values</p>
+
+<pre><code>      if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
+          println("John's building identifier is \(buildingIdentifier).")
+      }
+      // prints "John's building identifier is The Larches.
+
+      “if let upper = john.residence?.address?.buildingIdentifier()?.uppercaseString {
+          println("John's uppercase building identifier is \(upper).")
+      }
+      // prints "John's uppercase building identifier is THE LARCHES.”
+</code></pre></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Learning Swift Part 13 - ARC]]></title>
@@ -942,476 +1094,59 @@
 
 <p>&#8220;`</p></li>
 <li><p>Type Methods
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  class SomeClass {
-</span><span class='line'>      class func someTypeMethod() {
-</span><span class='line'>          // type method implementation goes here
-</span><span class='line'>      }
-</span><span class='line'>  }
-</span><span class='line'>  SomeClass.someTypeMethod()&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  // Within the body of a type method, the implicit self property refers to the type itself, rather than an instance of that type. For structures and enumerations, this means that you can use self to disambiguate between static properties and static method parameters, just as you do for instance properties and instance method parameters.
-</span><span class='line'>
-</span><span class='line'>  struct LevelTracker {
-</span><span class='line'>  static var highestUnlockedLevel = 1
-</span><span class='line'>  static func unlockLevel(level: Int) {
-</span><span class='line'>      if level &gt; highestUnlockedLevel { highestUnlockedLevel = level }
-</span><span class='line'>  }
-</span><span class='line'>  static func levelIsUnlocked(level: Int) -&gt; Bool {
-</span><span class='line'>      return level &lt;= highestUnlockedLevel
-</span><span class='line'>  }
-</span><span class='line'>  var currentLevel = 1
-</span><span class='line'>  mutating func advanceToLevel(level: Int) -&gt; Bool {
-</span><span class='line'>      if LevelTracker.levelIsUnlocked(level) {
-</span><span class='line'>          currentLevel = level
-</span><span class='line'>          return true
-</span><span class='line'>      } else {
-</span><span class='line'>          return false
-</span><span class='line'>      }
-</span><span class='line'>  }
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>  class Player {
-</span><span class='line'>  var tracker = LevelTracker()
-</span><span class='line'>  let playerName: String
-</span><span class='line'>  func completedLevel(level: Int) {
-</span><span class='line'>      LevelTracker.unlockLevel(level + 1)
-</span><span class='line'>      tracker.advanceToLevel(level + 1)
-</span><span class='line'>  }
-</span><span class='line'>  init(name: String) {
-</span><span class='line'>      playerName = name
-</span><span class='line'>  }
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>  var player = Player(name: "Argyrios")
-</span><span class='line'>  player.completedLevel(1)
-</span><span class='line'>  println("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
-</span><span class='line'>  // prints "highest unlocked level is now 2"
-</span><span class='line'>
-</span><span class='line'>  player = Player(name: "Beto")
-</span><span class='line'>  if player.tracker.advanceToLevel(6) {
-</span><span class='line'>  println("player is now on level 6")
-</span><span class='line'>  } else {
-</span><span class='line'>  println("level 6 has not yet been unlocked")
-</span><span class='line'>  }
-</span><span class='line'>  // prints "level 6 has not yet been unlocked"
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;/ul&gt;
-</span><span class='line'>
-</span><span class='line'>]]&gt;&lt;/content&gt;
-</span><span class='line'>  &lt;/entry&gt;
-</span><span class='line'>  
-</span><span class='line'>  &lt;entry&gt;
-</span><span class='line'>&lt;title type="html"&gt;&lt;![CDATA[Learning Swift Part 9 - Properties, Subscripts]]&gt;&lt;/title&gt;
-</span><span class='line'>&lt;link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-9/"/&gt;
-</span><span class='line'>&lt;updated&gt;2014-10-24T18:46:57+09:00&lt;/updated&gt;
-</span><span class='line'>&lt;id&gt;http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-9&lt;/id&gt;
-</span><span class='line'>&lt;content type="html"&gt;&lt;![CDATA[&lt;h2&gt;===== Full Notes =====&lt;/h2&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h3&gt;Properties&lt;/h3&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;ul&gt;
-</span><span class='line'>&lt;li&gt;Stored Properties
-</span><span class='line'>&lt;code&gt;swift
-</span><span class='line'>  struct FixedLengthRange {
-</span><span class='line'>      var firstValue: Int
-</span><span class='line'>      let length: Int
-</span><span class='line'>  }
-</span><span class='line'>  var rangeOfThreeItems = FixedLengthRange(firstValue: 0, length: 3)
-</span><span class='line'>  // the range represents integer values 0, 1, and 2
-</span><span class='line'>  rangeOfThreeItems.firstValue = 6
-</span><span class='line'>  // the range now represents integer values 6, 7, and 8
-</span><span class='line'>&lt;/code&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;Stored Properties of Constant Structure Instances
-</span><span class='line'>&lt;code&gt;
-</span><span class='line'>  let rangeOfFourItems = FixedLengthRange(firstValue: 0, length: 4)
-</span><span class='line'>  // this range represents integer values 0, 1, 2, and 3
-</span><span class='line'>  rangeOfFourItems.firstValue = 6
-</span><span class='line'>  // this will report an error, even though firstValue is a variable property
-</span><span class='line'>  // This behavior is due to structures being value types. When an instance of a value type is marked as a constant, so are all of its properties.
-</span><span class='line'>  // The same is not true for classes, which are reference types. If you assign an instance of a reference type to a constant, you can still change that instance’s variable properties.
-</span><span class='line'>&lt;/code&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Lazy Stored Properties&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;  A lazy stored property is a property whose initial value is not calculated until the first time it is used. You indicate a lazy stored property by writing the lazy modifier before its declaration.</span></code></pre></td></tr></table></div></figure>
-      class DataImporter {
-          /<em>
-          DataImporter is a class to import data from an external file.
-          The class is assumed to take a non-trivial amount of time to initialize.
-          </em>/
-          var fileName = &ldquo;data.txt&rdquo;
-          // the DataImporter class would provide data importing functionality here
-      }</p>
-
-<pre><code>  class DataManager {
-      lazy var importer = DataImporter()
-      var data = [String]()
-      // the DataManager class would provide data management functionality here
-  }
-
-  let manager = DataManager()
-  manager.data.append("Some data")
-  manager.data.append("Some more data")
-  // the DataImporter instance for the importer property has not yet been created
-
-  println(manager.importer.fileName)
-  // the DataImporter instance for the importer property has now been created
-  // prints "data.txt"
-</code></pre>
-
-<p>&#8220;`</p></li>
-</ul>
-
-
-<!-- more -->
-
-
-<ul>
-<li><p>Stored Properties and Instance Variables</p></li>
-<li><p>Computed Properties
-<code>
-      struct Point {
-          var x = 0.0, y = 0.0
-      }
-      struct Size {
-          var width = 0.0, height = 0.0
-      }
-      struct Rect {
-          var origin = Point()
-          var size = Size()
-          var center: Point {
-              get {
-                  let centerX = origin.x + (size.width / 2)
-                  let centerY = origin.y + (size.height / 2)
-                  return Point(x: centerX, y: centerY)
-              }
-              set(newCenter) {
-                  origin.x = newCenter.x - (size.width / 2)
-                  origin.y = newCenter.y - (size.height / 2)
-              }
-          }
-      }
-      var square = Rect(origin: Point(x: 0.0, y: 0.0),
-          size: Size(width: 10.0, height: 10.0))
-      let initialSquareCenter = square.center
-      square.center = Point(x: 15.0, y: 15.0)
-      println("square.origin is now at (\(square.origin.x), \(square.origin.y))")
-      // prints "square.origin is now at (10.0, 10.0)"
-</code></p></li>
-<li><p>Read-Only Computed Properties</p>
-
-<p>  A computed property with a getter but no setter is known as a read-only computed property. A read-only computed property always returns a value, and can be accessed through dot syntax, but cannot be set to a different value.
-<code>
-      struct Cuboid {
-          var width = 0.0, height = 0.0, depth = 0.0
-          var volume: Double {
-              return width * height * depth
-          }
-      }
-      let fourByFiveByTwo = Cuboid(width: 4.0, height: 5.0, depth: 2.0)
-      println("the volume of fourByFiveByTwo is \(fourByFiveByTwo.volume)")
-      // prints "the volume of fourByFiveByTwo is 40.0"
-</code></p></li>
-<li>Property Observers
-<code>
-      class StepCounter {
-          var totalSteps: Int = 0 {
-              willSet(newTotalSteps) {
-                  println("About to set totalSteps to \(newTotalSteps)")
-              }
-              didSet {
-                  if totalSteps &gt; oldValue  {
-                      println("Added \(totalSteps - oldValue) steps")
-                  }
-              }
-          }
-      }
-      let stepCounter = StepCounter()
-      stepCounter.totalSteps = 200
-      // About to set totalSteps to 200
-      // Added 200 steps
-      stepCounter.totalSteps = 360
-      // About to set totalSteps to 360
-      // Added 160 steps
-      stepCounter.totalSteps = 896
-      // About to set totalSteps to 896
-      // Added 536 steps
-</code></li>
-<li><p>Global and Local Variables</p></li>
-<li><p>Type Properties (Like C static variables)
-<code>
-      struct SomeStructure {
-          static var storedTypeProperty = "Some value."
-          static var computedTypeProperty: Int {
-              // return an Int value here
-          }
-      }
-      enum SomeEnumeration {
-          static var storedTypeProperty = "Some value."
-          static var computedTypeProperty: Int {
-              // return an Int value here
-          }
-      }
-      class SomeClass {
-          class var computedTypeProperty: Int {
-              // return an Int value here
-          }
-      }
-</code></p></li>
-<li><p>Querying and Setting Type Properties
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  println(SomeClass.computedTypeProperty)
-</span><span class='line'>  // prints &ldquo;42&rdquo;&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  println(SomeStructure.storedTypeProperty)
-</span><span class='line'>  // prints "Some value."
-</span><span class='line'>  SomeStructure.storedTypeProperty = "Another value."
-</span><span class='line'>  println(SomeStructure.storedTypeProperty)
-</span><span class='line'>  // prints "Another value."
-</span><span class='line'>
-</span><span class='line'>  struct AudioChannel {
-</span><span class='line'>  static let thresholdLevel = 10
-</span><span class='line'>  static var maxInputLevelForAllChannels = 0
-</span><span class='line'>  var currentLevel: Int = 0 {
-</span><span class='line'>      didSet {
-</span><span class='line'>          if currentLevel &gt; AudioChannel.thresholdLevel {
-</span><span class='line'>              // cap the new audio level to the threshold level
-</span><span class='line'>              currentLevel = AudioChannel.thresholdLevel
-</span><span class='line'>          }
-</span><span class='line'>          if currentLevel &gt; AudioChannel.maxInputLevelForAllChannels {
-</span><span class='line'>              // store this as the new overall maximum input level
-</span><span class='line'>              AudioChannel.maxInputLevelForAllChannels = currentLevel
-</span><span class='line'>          }
-</span><span class='line'>      }
-</span><span class='line'>  }
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>  var leftChannel = AudioChannel()
-</span><span class='line'>  var rightChannel = AudioChannel()
-</span><span class='line'>
-</span><span class='line'>  leftChannel.currentLevel = 7
-</span><span class='line'>  println(leftChannel.currentLevel)
-</span><span class='line'>  // prints "7"
-</span><span class='line'>  println(AudioChannel.maxInputLevelForAllChannels)
-</span><span class='line'>  // prints "7"
-</span><span class='line'>
-</span><span class='line'>  rightChannel.currentLevel = 11
-</span><span class='line'>  println(rightChannel.currentLevel)
-</span><span class='line'>  // prints "10"
-</span><span class='line'>  println(AudioChannel.maxInputLevelForAllChannels)
-</span><span class='line'>  // prints "10"
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;/ul&gt;
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>&lt;h3&gt;Subscripts&lt;/h3&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;ul&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Classes, structures, and enumerations can define subscripts, which are shortcuts for accessing the member elements of a collection, list, or sequence. You use subscripts to set and retrieve values by index without needing separate methods for setting and retrieval. For example, you access elements in an Array instance as someArray[index] and elements in a Dictionary instance as someDictionary[key].&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Subscript Syntax</span></code></pre></td></tr></table></div></figure>
-      subscript(index: Int) -> Int {
-          get {
-              // return an appropriate subscript value here
-          }
-          set(newValue) {
-              // perform a suitable setting action here
-          }
-      }</p>
-
-<pre><code>  // if you want a subscript to be read-only
-  subscript(index: Int) -&gt; Int {
-      // return an appropriate subscript value here
-  }
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li>A sample, an array to output multiplied index
-<code>
-      struct TimesTable {
-          let multiplier: Int
-          subscript(index: Int) -&gt; Int {
-              return multiplier * index
-          }
-      }
-      let threeTimesTable = TimesTable(multiplier: 3)
-      println("six times three is \(threeTimesTable[6])")
-      // prints "six times three is 18"
-</code></li>
-<li><p>A sample, a matrix-like structure
 &#8220;`
-      struct Matrix {
-          let rows: Int, columns: Int
-          var grid: [Double]
-          init(rows: Int, columns: Int) {
-              self.rows = rows
-              self.columns = columns
-              grid = Array(count: rows * columns, repeatedValue: 0.0)
+      class SomeClass {
+          class func someTypeMethod() {
+              // type method implementation goes here
           }
-          func indexIsValidForRow(row: Int, column: Int) -> Bool {
-              return row >= 0 &amp;&amp; row &lt; rows &amp;&amp; column >= 0 &amp;&amp; column &lt; columns
-          }
-          subscript(row: Int, column: Int) -> Double {
-              get {
-                  assert(indexIsValidForRow(row, column: column), &ldquo;Index out of range&rdquo;)
-                  return grid[(row * columns) + column]
-              }
-              set {
-                  assert(indexIsValidForRow(row, column: column), &ldquo;Index out of range&rdquo;)
-                  grid[(row * columns) + column] = newValue
-              }
-          }
-      }</p>
+      }
+      SomeClass.someTypeMethod()</p>
 
-<pre><code>  // Usage
-  var matrix = Matrix(rows: 2, columns: 2)
-  matrix[0, 1] = 1.5
-  matrix[1, 0] = 3.2
+<pre><code>  // Within the body of a type method, the implicit self property refers to the type itself, rather than an instance of that type. For structures and enumerations, this means that you can use self to disambiguate between static properties and static method parameters, just as you do for instance properties and instance method parameters.
+
+  struct LevelTracker {
+      static var highestUnlockedLevel = 1
+      static func unlockLevel(level: Int) {
+          if level &gt; highestUnlockedLevel { highestUnlockedLevel = level }
+      }
+      static func levelIsUnlocked(level: Int) -&gt; Bool {
+          return level &lt;= highestUnlockedLevel
+      }
+      var currentLevel = 1
+      mutating func advanceToLevel(level: Int) -&gt; Bool {
+          if LevelTracker.levelIsUnlocked(level) {
+              currentLevel = level
+              return true
+          } else {
+              return false
+          }
+      }
+  }
+
+  class Player {
+      var tracker = LevelTracker()
+      let playerName: String
+      func completedLevel(level: Int) {
+          LevelTracker.unlockLevel(level + 1)
+          tracker.advanceToLevel(level + 1)
+      }
+      init(name: String) {
+          playerName = name
+      }
+  }
+
+  var player = Player(name: "Argyrios")
+  player.completedLevel(1)
+  println("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
+  // prints "highest unlocked level is now 2"
+
+  player = Player(name: "Beto")
+  if player.tracker.advanceToLevel(6) {
+      println("player is now on level 6")
+  } else {
+      println("level 6 has not yet been unlocked")
+  }
+  // prints "level 6 has not yet been unlocked"
 </code></pre>
 
 <p>&#8220;`</p></li>

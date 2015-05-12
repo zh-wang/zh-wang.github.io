@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-04-13T10:49:26+09:00</updated>
+  <updated>2015-05-12T14:44:15+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,158 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Learning Swift Part 14]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/05/12/learning-swift-part-14/"/>
+    <updated>2015-05-12T12:20:35+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/05/12/learning-swift-part-14</id>
+    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
+
+<h3>Optional Chaining</h3>
+
+<ul>
+<li><p><em>Optional chaining</em> is a process for querying and calling properties, methods, and subscripts on an optional that might currently be nil.</p>
+
+<ul>
+<li>If the optional contains a value, the property, method, or subscript call succeeds; if the optional is nil, the property, method, or subscript call returns nil.</li>
+<li>Multiple queries can be chained together, and the entire chain fails gracefully if any link in the chain is nil.</li>
+<li>Optional chaining in Swift is similar to messaging nil in Objective-C, but in a way that works for any type, and that can be checked for success or failure.</li>
+</ul>
+</li>
+<li><p>Optional Chaining as an Alternative to Forced Unwrapping</p>
+
+<ul>
+<li><p>Sample of Forced Unwarpping
+        class Person {
+            var residence: Residence?
+        }</p>
+
+<pre><code>    class Residence {
+        var numberOfRooms = 1
+    }
+
+    let john = Persion()
+
+    let roomCount = john.residence!.numberOfRooms
+    // this triggers a runtime error, because residence maybe nil
+</code></pre></li>
+<li><p>Optional chaining provides an alternative way to access the value of numberOfRooms.</p>
+
+<pre><code>    if let roomCount = john.residence?.numberOfRooms {
+        println("John's residence has \(roomCount) room(s).")
+    } else {
+        println("Unable to retrieve the number of rooms.")
+    }
+    // prints "Unable to retrieve the number of rooms.
+
+    // Even numberOfRooms is Int, optional chaining will always return it as Int?
+</code></pre></li>
+</ul>
+</li>
+<li><p>Defining Model Classes for Optional Chaining</p>
+
+<pre><code>      class Residence {
+          var rooms = Room[]()
+          var numberOfRooms: Int {
+          return rooms.count
+          }
+          subscript(i: Int) -&gt; Room {
+              return rooms[i]
+          }
+          func printNumberOfRooms() {
+              println("The number of rooms is \(numberOfRooms)")
+          }
+          var address: Address?
+      }
+
+      class Room {
+          let name: String
+          init(name: String) { self.name = name }
+      }
+
+      class Address {
+          var buildingName: String?
+          var buildingNumber: String?
+          var street: String?
+          func buildingIdentifier() -&gt; String? {
+              if buildingName {
+                  return buildingName
+              } else if buildingNumber {
+                  return buildingNumber
+              } else {
+                  return nil
+              }
+          }
+      }
+</code></pre></li>
+<li><p>Calling Properties Through Optional Chaining</p>
+
+<ul>
+<li><p>It is the same as above</p>
+
+<pre><code>    let john = Person()
+    if let roomCount = john.residence?.numberOfRooms {
+        println("John's residence has \(roomCount) room(s).")
+    } else {
+        println("Unable to retrieve the number of rooms.")
+    }
+</code></pre></li>
+</ul>
+</li>
+<li><p>Calling Methods Through Optional Chaining</p>
+
+<pre><code>      func printNumberOfRooms() {
+          println("The number of rooms is \(numberOfRooms)")
+      }
+
+      “if john.residence?.printNumberOfRooms() {
+          println("It was possible to print the number of rooms.")
+      } else {
+          println("It was not possible to print the number of rooms.")
+      }
+      // prints "It was not possible to print the number of rooms.
+</code></pre></li>
+<li><p>Calling Subscripts Through Optional Chaining</p>
+
+<pre><code>      if let firstRoomName = john.residence?[0].name {
+          println("The first room name is \(firstRoomName).")
+      } else {
+          println("Unable to retrieve the first room name.")
+      }
+      // prints "Unable to retrieve the first room name.
+</code></pre></li>
+<li><p>Linking Multiple Levels of Chaining</p>
+
+<ul>
+<li>If the type you are trying to retrieve is not optional, it will become optional because of the optional chaining.</li>
+<li><p>If the type you are trying to retrieve is already optional, it will not become more optional because of the chaining.</p>
+
+<pre><code>    “if let johnsStreet = john.residence?.address?.street {
+        println("John's street name is \(johnsStreet).")
+    } else {
+        println("Unable to retrieve the address.")
+    }
+    // prints "Unable to retrieve the address.”
+</code></pre></li>
+</ul>
+</li>
+<li><p>Chaining on Methods With Optional Return Values</p>
+
+<pre><code>      if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
+          println("John's building identifier is \(buildingIdentifier).")
+      }
+      // prints "John's building identifier is The Larches.
+
+      “if let upper = john.residence?.address?.buildingIdentifier()?.uppercaseString {
+          println("John's uppercase building identifier is \(upper).")
+      }
+      // prints "John's uppercase building identifier is THE LARCHES.”
+</code></pre></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[FB HackerCup 2015 R1 40:CorporateGifting]]></title>
@@ -3389,376 +3541,6 @@ File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理した
 </ul>
 </li>
 </ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Swift Part 10 - Methods]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10/"/>
-    <updated>2014-10-24T18:51:55+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10</id>
-    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
-
-<h3>Methods</h3>
-
-<ul>
-<li>Instance Methods</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">class</span> <span class="n">Counter</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>        <span class="k">func</span> <span class="n">increment</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">count</span><span class="o">++</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">func</span> <span class="n">reset</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">let</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
-</span><span class='line'>    <span class="c1">// the initial counter value is 0</span>
-</span><span class='line'>    <span class="n">counter</span><span class="p">.</span><span class="n">increment</span><span class="p">()</span>
-</span><span class='line'>    <span class="c1">// the counter&#39;s value is now 1</span>
-</span><span class='line'>    <span class="n">counter</span><span class="p">.</span><span class="n">incrementBy</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1">// the counter&#39;s value is now 6</span>
-</span><span class='line'>    <span class="n">counter</span><span class="p">.</span><span class="n">reset</span><span class="p">()</span>
-</span><span class='line'>    <span class="c1">// the counter&#39;s value is now 0</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Local and External Parameter Names for Methods</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="c1">// Specifically, Swift gives the first parameter name in a method a local parameter name by default, and gives the second and subsequent parameter names both local and external parameter names by default.</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">class</span> <span class="n">Counter</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">var</span> <span class="nl">count</span><span class="p">:</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>        <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">numberOfTimes</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">numberOfTimes</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">let</span> <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
-</span><span class='line'>    <span class="n">counter</span><span class="p">.</span><span class="n">incrementBy</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nl">numberOfTimes</span><span class="p">:</span> <span class="mi">3</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1">// counter value is now 15</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// It is behaved as the same as putting a &#39;#&#39; symbol before the name</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="err">#</span><span class="nl">numberOfTimes</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">numberOfTimes</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// This will not allow external name</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">func</span> <span class="n">incrementBy</span><span class="p">(</span><span class="nl">amount</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">_</span> <span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">count</span> <span class="o">+=</span> <span class="n">amount</span> <span class="o">*</span> <span class="n">numberOfTimes</span>
-</span><span class='line'>    <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<!-- more -->
-
-
-<ul>
-<li>The self Property</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">func</span> <span class="nf">increment</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">count</span><span class="o">++</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
-</span><span class='line'>        <span class="k">func</span> <span class="n">isToTheRightOfX</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="n">Double</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="nb">self</span><span class="p">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">x</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">let</span> <span class="n">somePoint</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mf">4.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">somePoint</span><span class="p">.</span><span class="n">isToTheRightOfX</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;This point is to the right of the line where x == 1.0&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="c1">// prints &quot;This point is to the right of the line where x == 1.0&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Modifying Value Types from Within Instance Methods</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
-</span><span class='line'>        <span class="kr">mutating</span> <span class="k">func</span> <span class="n">moveByX</span><span class="p">(</span><span class="nl">deltaX</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="n">y</span> <span class="nl">deltaY</span><span class="p">:</span> <span class="n">Double</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">x</span> <span class="o">+=</span> <span class="n">deltaX</span>
-</span><span class='line'>            <span class="n">y</span> <span class="o">+=</span> <span class="n">deltaY</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">somePoint</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">somePoint</span><span class="p">.</span><span class="n">moveByX</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;The point is now at (\(somePoint.x), \(somePoint.y))&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1">// prints &quot;The point is now at (3.0, 4.0)&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// constant instance&#39;s properties cannot be modified</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">let</span> <span class="n">fixedPoint</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">fixedPoint</span><span class="p">.</span><span class="n">moveByX</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1">// this will report an error</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Assigning to self Within a Mutating Method</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="mf">0.0</span>
-</span><span class='line'>        <span class="kr">mutating</span> <span class="k">func</span> <span class="n">moveByX</span><span class="p">(</span><span class="nl">deltaX</span><span class="p">:</span> <span class="n">Double</span><span class="p">,</span> <span class="n">y</span> <span class="nl">deltaY</span><span class="p">:</span> <span class="n">Double</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nb">self</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">deltaX</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="n">y</span> <span class="o">+</span> <span class="n">deltaY</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">enum</span> <span class="n">TriStateSwitch</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">case</span> <span class="n">Off</span><span class="p">,</span> <span class="n">Low</span><span class="p">,</span> <span class="n">High</span>
-</span><span class='line'>        <span class="kr">mutating</span> <span class="k">func</span> <span class="n">next</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">switch</span> <span class="nb">self</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">case</span> <span class="nl">Off</span><span class="p">:</span>
-</span><span class='line'>                <span class="nb">self</span> <span class="o">=</span> <span class="n">Low</span>
-</span><span class='line'>            <span class="k">case</span> <span class="nl">Low</span><span class="p">:</span>
-</span><span class='line'>                <span class="nb">self</span> <span class="o">=</span> <span class="n">High</span>
-</span><span class='line'>            <span class="k">case</span> <span class="nl">High</span><span class="p">:</span>
-</span><span class='line'>                <span class="nb">self</span> <span class="o">=</span> <span class="n">Off</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">ovenLight</span> <span class="o">=</span> <span class="n">TriStateSwitch</span><span class="p">.</span><span class="n">Low</span>
-</span><span class='line'>    <span class="n">ovenLight</span><span class="p">.</span><span class="n">next</span><span class="p">()</span>
-</span><span class='line'>    <span class="c1">// ovenLight is now equal to .High</span>
-</span><span class='line'>    <span class="n">ovenLight</span><span class="p">.</span><span class="n">next</span><span class="p">()</span>
-</span><span class='line'>    <span class="c1">// ovenLight is now equal to .Off</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Type Methods</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">class</span> <span class="n">SomeClass</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">class</span> <span class="k">func</span> <span class="n">someTypeMethod</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>            <span class="c1">// type method implementation goes here</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">SomeClass</span><span class="p">.</span><span class="n">someTypeMethod</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// Within the body of a type method, the implicit self property refers to the type itself, rather than an instance of that type. For structures and enumerations, this means that you can use self to disambiguate between static properties and static method parameters, just as you do for instance properties and instance method parameters.</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">struct</span> <span class="n">LevelTracker</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">static</span> <span class="k">var</span> <span class="n">highestUnlockedLevel</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span class='line'>        <span class="k">static</span> <span class="k">func</span> <span class="n">unlockLevel</span><span class="p">(</span><span class="nl">level</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">if</span> <span class="n">level</span> <span class="o">&gt;</span> <span class="n">highestUnlockedLevel</span> <span class="p">{</span> <span class="n">highestUnlockedLevel</span> <span class="o">=</span> <span class="n">level</span> <span class="p">}</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">static</span> <span class="k">func</span> <span class="n">levelIsUnlocked</span><span class="p">(</span><span class="nl">level</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="n">level</span> <span class="o">&lt;=</span> <span class="n">highestUnlockedLevel</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">currentLevel</span> <span class="o">=</span> <span class="mi">1</span>
-</span><span class='line'>        <span class="kr">mutating</span> <span class="k">func</span> <span class="n">advanceToLevel</span><span class="p">(</span><span class="nl">level</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Bool</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">if</span> <span class="n">LevelTracker</span><span class="p">.</span><span class="n">levelIsUnlocked</span><span class="p">(</span><span class="n">level</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                <span class="n">currentLevel</span> <span class="o">=</span> <span class="n">level</span>
-</span><span class='line'>                <span class="k">return</span> <span class="nb">true</span>
-</span><span class='line'>            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>                <span class="k">return</span> <span class="nb">false</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">class</span> <span class="n">Player</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">tracker</span> <span class="o">=</span> <span class="n">LevelTracker</span><span class="p">()</span>
-</span><span class='line'>        <span class="k">let</span> <span class="nl">playerName</span><span class="p">:</span> <span class="n">String</span>
-</span><span class='line'>        <span class="k">func</span> <span class="n">completedLevel</span><span class="p">(</span><span class="nl">level</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">LevelTracker</span><span class="p">.</span><span class="n">unlockLevel</span><span class="p">(</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>            <span class="n">tracker</span><span class="p">.</span><span class="n">advanceToLevel</span><span class="p">(</span><span class="n">level</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">init</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">playerName</span> <span class="o">=</span> <span class="n">name</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">var</span> <span class="n">player</span> <span class="o">=</span> <span class="n">Player</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="s">&quot;Argyrios&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">player</span><span class="p">.</span><span class="n">completedLevel</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">println</span><span class="p">(</span><span class="s">&quot;highest unlocked level is now \(LevelTracker.highestUnlockedLevel)&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="c1">// prints &quot;highest unlocked level is now 2&quot;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">player</span> <span class="o">=</span> <span class="n">Player</span><span class="p">(</span><span class="nl">name</span><span class="p">:</span> <span class="s">&quot;Beto&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">player</span><span class="p">.</span><span class="n">tracker</span><span class="p">.</span><span class="n">advanceToLevel</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;player is now on level 6&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">println</span><span class="p">(</span><span class="s">&quot;level 6 has not yet been unlocked&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="c1">// prints &quot;level 6 has not yet been unlocked&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
   </entry>
