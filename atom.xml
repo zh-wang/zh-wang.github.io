@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-05-13T16:12:40+09:00</updated>
+  <updated>2015-05-13T17:07:54+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,82 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Popcount in Ruby]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/05/13/popcount-in-ruby/"/>
+    <updated>2015-05-13T16:14:27+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/05/13/popcount-in-ruby</id>
+    <content type="html"><![CDATA[<h3>Source</h3>
+
+<pre><code># Assume v is 32-bit long
+def popcount(v)
+    v = v - ((v &gt;&gt; 1) &amp; 0x55555555)
+    v = (v &amp; 0x33333333) + ((v &gt;&gt; 2) &amp; 0x33333333)
+    ((v + (v &gt;&gt; 4) &amp; 0xF0F0F0F) * 0x1010101) &gt;&gt; 24
+end
+
+puts popcount(8)
+</code></pre>
+
+<h3>Analysis</h3>
+
+<p>For example, let v = 01001110 (lowest 8 bits, others are all 0, in binary)</p>
+
+<h4>Step 1</h4>
+
+<pre><code>v = v - ((v &gt;&gt; 1) &amp; 0x55555555)
+</code></pre>
+
+<p>This step count 1&rsquo;s appearance in each 2bits.</p>
+
+<pre><code>0x5 = 0101
+
+In binary,
+00 - 00 &amp; 01 = 00 (0 1s in 00)
+01 - 00 &amp; 01 = 01 (1 1s in 01)
+10 - 01 &amp; 01 = 01 (1 1s in 10)
+11 - 01 &amp; 01 = 10 (2 1s in 11)
+
+01001110 -&gt; 01001001
+</code></pre>
+
+<h4>Step 2</h4>
+
+<pre><code>v = (v &amp; 0x33333333) + ((v &gt;&gt; 2) &amp; 0x33333333)
+</code></pre>
+
+<p>This step mask high 2 bits to 0 in each 4 bits, then add low 2 bits in each 4 bits.</p>
+
+<pre><code>In binary,
+0100 -&gt; 0000 + 0001 -&gt; 0001
+1001 -&gt; 0001 + 0010 -&gt; 0011
+
+01001110 -&gt; 00010011
+</code></pre>
+
+<h4>Step 3</h4>
+
+<pre><code>((v + (v &gt;&gt; 4) &amp; 0xF0F0F0F) * 0x1010101) &gt;&gt; 24
+</code></pre>
+
+<p>This step <code>(v + (v &gt;&gt; 4) &amp; 0xF0F0F0F)</code> add high 4 bits to low 4 bits, then <code>&amp; 0xF0F0F0F</code> mask high 4 bit to 0 in each 8 bits.</p>
+
+<p><code>* 0x1010101</code> can be treaded as <code>* (0x01000000 + 0x00010000 + 0x00000100 + 0x00000001)</code>.</p>
+
+<p><code>* 0x0100000</code> means left shift 24 times.</p>
+
+<p><code>* 0x0001000</code> means left shift 16 times.</p>
+
+<p><code>* 0x0000010</code> means left shift 8 times.</p>
+
+<p><code>* 0x0000000</code> do nothing.</p>
+
+<p>Then we add them up. Now we have the sum of 1s&#8217; count in each 8 bits, stored in a 32-bits data&rsquo;s highest 8 bits.</p>
+
+<p><code>&gt;&gt; 24</code> outputs the sum.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Learning Swift Part 14]]></title>
@@ -3348,207 +3424,6 @@ File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理した
 </code></pre>
 
 <p>意外と簡単だね。(・∀・)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Swift Part 11 - Inheritance]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/11/20/learning-swift-part-11/"/>
-    <updated>2014-11-20T19:10:05+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/11/20/learning-swift-part-11</id>
-    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
-
-<h3>Inheritance</h3>
-
-<ul>
-<li>A base class, Vehicle</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>    class Vehicle {
-</span><span class='line'>        var currentSpeed = 0.0
-</span><span class='line'>        var description: String {
-</span><span class='line'>                return "traveling at \(currentSpeed) miles per hour"
-</span><span class='line'>        }
-</span><span class='line'>        func makeNoise() {
-</span><span class='line'>                // do nothing - an arbitrary vehicle doesn't necessarily make a noise
-</span><span class='line'>        }
-</span><span class='line'>    }</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Subclass, Bicycle and Tandem</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>    class Bicycle: Vehicle {
-</span><span class='line'>        var hasBasket = false
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    class Tandem: Bicycle {
-</span><span class='line'>        var currentNumberOfPassengers = 0
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    let tandem = Tandem()
-</span><span class='line'>    tandem.hasBasket = true
-</span><span class='line'>    tandem.currentNumberOfPassengers = 2
-</span><span class='line'>    tandem.currentSpeed = 22.0
-</span><span class='line'>    println("Tandem: \(tandem.description)")
-</span><span class='line'>    // Tandem: traveling at 22.0 miles per hour</span></code></pre></td></tr></table></div></figure>
-
-
-<!-- more -->
-
-
-<ul>
-<li><p>Overriding</p>
-
-<ul>
-<li>A subclass can provide its own custom implementation of an instance method, class method, instance property, class property, or subscript that it would otherwise inherit from a superclass. This is known as overriding.</li>
-<li>To override a characteristic that would otherwise be inherited, you prefix your overriding definition with the override keyword. Doing so clarifies that you intend to provide an override and have not provided a matching definition by mistake. Overriding by accident can cause unexpected behavior, and any overrides without the override keyword are diagnosed as an error when your code is compiled.</li>
-<li>The override keyword also prompts the Swift compiler to check that your overriding class’s superclass (or one of its parents) has a declaration that matches the one you provided for the override. This check ensures that your overriding definition is correct.</li>
-</ul>
-</li>
-<li><p>Accessing Superclass Methods, Properties, and Subscripts</p>
-
-<ul>
-<li>An overridden method named someMethod can call the superclass version of someMethod by calling super.someMethod() within the overriding method implementation.</li>
-<li>An overridden property called someProperty can access the superclass version of someProperty as super.someProperty within the overriding getter or setter implementation.</li>
-<li>An overridden subscript for someIndex can access the superclass version of the same subscript as super[someIndex] from within the overriding subscript implementation.</li>
-</ul>
-</li>
-<li><p>Overriding Methods</p></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>    class Train: Vehicle {
-</span><span class='line'>        override func makeNoise() {
-</span><span class='line'>            println("Choo Choo")
-</span><span class='line'>        }
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    let train = Train()
-</span><span class='line'>    train.makeNoise()
-</span><span class='line'>    // prints "Choo Choo"</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><p>Overriding Properties</p>
-
-<ul>
-<li>You can override an inherited instance or class property to provide your own custom getter and setter for that property, or to add property observers to enable the overriding property to observe when the underlying property value changes.</li>
-</ul>
-</li>
-<li><p>Overriding Property Getters and Setters</p>
-
-<ul>
-<li>You can present an inherited read-only property as a read-write property by providing both a getter and a setter in your subclass property override. You cannot, however, present an inherited read-write property as a read-only property.</li>
-<li>If you provide a setter as part of a property override, you must also provide a getter for that override. If you don’t want to modify the inherited property’s value within the overriding getter, you can simply pass through the inherited value by returning super.someProperty from the getter, where someProperty is the name of the property you are overriding.</li>
-</ul>
-</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>    class Car: Vehicle {
-</span><span class='line'>        var gear = 1
-</span><span class='line'>        override var description: String {
-</span><span class='line'>            return super.description + " in gear \(gear)"
-</span><span class='line'>        }
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    let car = Car()
-</span><span class='line'>    car.currentSpeed = 25.0
-</span><span class='line'>    car.gear = 3
-</span><span class='line'>    println("Car: \(car.description)")
-</span><span class='line'>    // Car: traveling at 25.0 miles per hour in gear 3</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Overriding Property Observers</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>    class AutomaticCar: Car {
-</span><span class='line'>        override var currentSpeed: Double {
-</span><span class='line'>            didSet {
-</span><span class='line'>                gear = Int(currentSpeed / 10.0) + 1
-</span><span class='line'>            }
-</span><span class='line'>        }
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    let automatic = AutomaticCar()
-</span><span class='line'>    automatic.currentSpeed = 35.0
-</span><span class='line'>    println("AutomaticCar: \(automatic.description)")
-</span><span class='line'>    // AutomaticCar: traveling at 35.0 miles per hour in gear 4</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Preventing Overrides
-
-<ul>
-<li>You can prevent a method, property, or subscript from being overridden by marking it as final. Do this by writing the final modifier before the method, property, or subscript’s introducer keyword (such as final var, final func, final class func, and final subscript).</li>
-<li>Any attempt to override a final method, property, or subscript in a subclass is reported as a compile-time error. Methods, properties, or subscripts that you add to a class in an extension can also be marked as final within the extension’s definition.</li>
-<li>You can mark an entire class as final by writing the final modifier before the class keyword in its class definition (final class). Any attempt to subclass a final class is reported as a compile-time error.</li>
-</ul>
-</li>
-</ul>
-
 ]]></content>
   </entry>
   
