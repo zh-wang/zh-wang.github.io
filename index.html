@@ -9,8 +9,16 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Source # Assume v is 32-bit long
-def popcount(v) v = v - ((v &gt;&gt; 1) &amp; 0x55555555) v = (v &amp; 0x33333333) + ((v &gt;&gt; 2) &amp; &hellip;">
+  <meta name="description" content="Source 1
+2
+3
+4
+5
+6
+7
+8
+# Assume v is 32-bit long
+def popcount(v) v = v - ((v &gt;&gt; 1) &amp; 0x55555555) v = (v &amp; 0x33333333) + ((v &gt;&gt; 2 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -60,8 +68,16 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Source # Assume v is 32-bit long
-def popcount(v) v = v - ((v &gt;&gt; 1) &amp; 0x55555555) v = (v &amp; 0x33333333) + ((v &gt;&gt; 2) &amp; &hellip;" />
+<meta property="og:description" content="Source 1
+2
+3
+4
+5
+6
+7
+8
+# Assume v is 32-bit long
+def popcount(v) v = v - ((v &gt;&gt; 1) &amp; 0x55555555) v = (v &amp; 0x33333333) + ((v &gt;&gt; 2 &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -138,15 +154,24 @@ def popcount(v) v = v - ((v &gt;&gt; 1) &amp; 0x55555555) v = (v &amp; 0x3333333
 
   <div class="entry-content"><h3>Source</h3>
 
-<pre><code># Assume v is 32-bit long
-def popcount(v)
-    v = v - ((v &gt;&gt; 1) &amp; 0x55555555)
-    v = (v &amp; 0x33333333) + ((v &gt;&gt; 2) &amp; 0x33333333)
-    ((v + (v &gt;&gt; 4) &amp; 0xF0F0F0F) * 0x1010101) &gt;&gt; 24
-end
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Assume v is 32-bit long</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">popcount</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">v</span> <span class="o">=</span> <span class="n">v</span> <span class="o">-</span> <span class="p">((</span><span class="n">v</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x55555555</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span> <span class="o">&amp;</span> <span class="mh">0x33333333</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="n">v</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x33333333</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">((</span><span class="n">v</span> <span class="o">+</span> <span class="p">(</span><span class="n">v</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xF0F0F0F</span><span class="p">)</span> <span class="o">*</span> <span class="mh">0x1010101</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">24</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">puts</span> <span class="n">popcount</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
 
-puts popcount(8)
-</code></pre>
 
 <h3>Analysis</h3>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-05-13T17:07:54+09:00</updated>
+  <updated>2015-05-13T17:16:26+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -20,14 +20,14 @@
     <id>http://zh-wang.github.io/blog/2015/05/13/popcount-in-ruby</id>
     <content type="html"><![CDATA[<h3>Source</h3>
 
-<pre><code># Assume v is 32-bit long
-def popcount(v)
-    v = v - ((v &gt;&gt; 1) &amp; 0x55555555)
-    v = (v &amp; 0x33333333) + ((v &gt;&gt; 2) &amp; 0x33333333)
-    ((v + (v &gt;&gt; 4) &amp; 0xF0F0F0F) * 0x1010101) &gt;&gt; 24
-end
+<pre><code class="ruby">    # Assume v is 32-bit long
+    def popcount(v)
+        v = v - ((v &gt;&gt; 1) &amp; 0x55555555)
+        v = (v &amp; 0x33333333) + ((v &gt;&gt; 2) &amp; 0x33333333)
+        ((v + (v &gt;&gt; 4) &amp; 0xF0F0F0F) * 0x1010101) &gt;&gt; 24
+    end
 
-puts popcount(8)
+    puts popcount(8)
 </code></pre>
 
 <h3>Analysis</h3>
