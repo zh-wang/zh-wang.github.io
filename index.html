@@ -9,16 +9,7 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Source 1
-2
-3
-4
-5
-6
-7
-8
-# Assume v is 32-bit long
-def popcount(v) v = v - ((v &gt;&gt; 1) &amp; 0x55555555) v = (v &amp; 0x33333333) + ((v &gt;&gt; 2 &hellip;">
+  <meta name="description" content="偶には再帰メソッドの消費メモリーが気になるので、 どうやって調べるのを調べたら、Linux OSに付いているcheckstack.plを見つけた。 ソースをgistに上げました。checkstack.pl ちなみに、154行目のnext if ($size &lt; 100);をコメントアウト済み &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -68,16 +59,7 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Source 1
-2
-3
-4
-5
-6
-7
-8
-# Assume v is 32-bit long
-def popcount(v) v = v - ((v &gt;&gt; 1) &amp; 0x55555555) v = (v &amp; 0x33333333) + ((v &gt;&gt; 2 &hellip;" />
+<meta property="og:description" content="偶には再帰メソッドの消費メモリーが気になるので、 どうやって調べるのを調べたら、Linux OSに付いているcheckstack.plを見つけた。 ソースをgistに上げました。checkstack.pl ちなみに、154行目のnext if ($size &lt; 100);をコメントアウト済み &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -120,6 +102,195 @@ def popcount(v) v = v - ((v &gt;&gt; 1) &amp; 0x55555555) v = (v &amp; 0x3333333
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/14/check-stack-usage-of-cpp-code/">checkstack.plを遊んでみた</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-05-14T15:45:31+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/05/14/check-stack-usage-of-cpp-code/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/05/14/check-stack-usage-of-cpp-code/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>偶には再帰メソッドの消費メモリーが気になるので、</p>
+
+<p>どうやって調べるのを調べたら、Linux OSに付いている<code>checkstack.pl</code>を見つけた。</p>
+
+<p>ソースをgistに上げました。<a href="https://gist.github.com/zh-wang/64ff3e65dbcab0096f92">checkstack.pl</a></p>
+
+<p>ちなみに、154行目の<code>next if ($size &lt; 100);</code>をコメントアウト済み。</p>
+
+<p>そうすれば、スタックサイズが100以下のメソッドもリストアップしてくれた。</p>
+
+<h3>テスト用のソース</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">struct</span> <span class="n">Point</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">float</span> <span class="n">px</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">float</span> <span class="n">py</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">Point</span><span class="p">(</span><span class="kt">float</span> <span class="n">_x</span><span class="p">,</span> <span class="kt">float</span> <span class="n">_y</span><span class="p">)</span><span class="o">:</span><span class="n">px</span><span class="p">(</span><span class="n">_x</span><span class="p">),</span><span class="n">py</span><span class="p">(</span><span class="n">_y</span><span class="p">)</span> <span class="p">{}</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">func</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">func_arr_int_1</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0xFFFFFFFF</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">func_arr_int_2</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">arr</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">func_arr_int_3</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">arr</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">func_arr_int_4</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">arr</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">func_point</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">Point</span> <span class="n">p</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">func</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">func_arr_int_1</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">func_arr_int_2</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">func_arr_int_3</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">func_arr_int_4</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">func_point</span><span class="p">();</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>使う</h3>
+
+<p>macなのでobjdumpではなくgobjdumpを使う。homebrewでインストールすると便利</p>
+
+<pre><code>g++ stack_test.cpp
+gobjdump -d a.out | checkstack
+</code></pre>
+
+<h3>結果</h3>
+
+<pre><code>0x000100000e14 __Z14func_arr_int_2v []:   16
+0x000100000e33 __Z14func_arr_int_2v []:   16
+0x000100000e44 __Z14func_arr_int_3v []:   32
+0x000100000e63 __Z14func_arr_int_3v []:   32
+0x000100000e74 __Z14func_arr_int_4v []:   32
+0x000100000e93 __Z14func_arr_int_4v []:   32
+0x000100000ea4 __Z10func_pointv []:   16
+0x000100000ebe __Z10func_pointv []:   16
+0x000100000ed4 _main []:    32
+0x000100000f09 _main []:    32
+0x000100000f14 __ZN5PointC1Eff []:   16
+0x000100000f39 __ZN5PointC1Eff []:   16
+</code></pre>
+
+<p>今のコンパイラって結構やってくれるな。</p>
+
+<p><code>func1</code>ではレジストで操作したからスタック消費はなし。</p>
+
+<p><code>func_arr_int_1</code>がスタック消費がないのは驚いた。size = 1のarrayは最適化されてなくなったみたい。</p>
+
+<p>x64マシンなので、メモリー最小単位は16byteになるのか？</p>
+
+<p><code>func_arr_int_2</code>は16byte。<code>func_arr_int_3</code>は実際24byteだと思うが、スタックサイズは32byteになった。メモリーは２単位取ったね。</p>
+
+<h3>checkstack.plの原理</h3>
+
+<pre><code> elsif ($arch =~ /^x86(_64)?$/ || $arch =~ /^i[3456]86$/) {
+    #c0105234:       81 ec ac 05 00 00       sub    $0x5ac,%esp
+    # or
+    #    2f60:    48 81 ec e8 05 00 00       sub    $0x5e8,%rsp
+    $re = qr/^.*[as][du][db]    \$(0x$x{1,8}),\%(e|r)sp$/o;
+    $dre = qr/^.*[as][du][db]    (%.*),\%(e|r)sp$/o;
+}
+</code></pre>
+
+<p>逆コンパイルされたコードの中の<code>add</code>, <code>sub</code>, <code>esp</code>, <code>rsp</code>を探して、スタックサイズを計算するらしい。</p>
+
+<p>参考：<a href="http://0xcc.net/blog/archives/000115.html">http://0xcc.net/blog/archives/000115.html</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1331,53 +1502,6 @@ So I write some script to make it easier.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/02/26/macbook-pro-lost-external-moniters-arrangement/">Macbook-proは外付けディスプレイの配置を忘れてしまう</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-02-26T10:15:45+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2015/02/26/macbook-pro-lost-external-moniters-arrangement/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2015/02/26/macbook-pro-lost-external-moniters-arrangement/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近Macbook-proを外付けディスプレイに接続した後、もともとトップ&amp;ダウンに設定されたディスプレイの配置は必ず左&amp;右になってしまう。最初は再起動したらなんとなく直るだろうと思ったので、一旦この問題を無視した。<br/>
-しかし、なかなか直らないので、グーグル先生から解決方法を聞いた。</p>
-
-<p><a href="http://apple.stackexchange.com/questions/85472/external-monitor-resolution-setting-is-lost-after-macbook-wakes-up-from-sleep">external-monitor-resolution-setting-is-lost-after-macbook-wakes-up-from-sleep</a></p>
-
-<p>ちょっと違う問題なんですが、一応効く。要は再起動する時に[cmd] + [opt] + [P] + [R]でNVRAMをリセットするということです。</p>
-
-<p>NVRAMに関する紹介はこちらにあります。<br/>
-<a href="http://support.apple.com/en-us/HT204063">How to Reset NVRAM on your Mac</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -1391,6 +1515,10 @@ So I write some script to make it easier.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/05/14/check-stack-usage-of-cpp-code/">checkstack.plを遊んでみた</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/05/13/popcount-in-ruby/">Popcount in Ruby</a>
@@ -1408,10 +1536,6 @@ So I write some script to make it easier.</p>
         <a href="/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete/">FB HackerCup 2015 R1 25:Autocomplete</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/03/25/resize-gif-by-rmagick/">Resize Gif by RMagick</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1420,11 +1544,11 @@ So I write some script to make it easier.</p>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (9)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (14)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (9)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (14)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 98.57142857142857%'>algorithm(9)</a> <a href='/blog/categories/android' style='font-size: 85.71428571428572%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 81.42857142857143%'>codility(5)</a> <a href='/blog/categories/csv' style='font-size: 64.28571428571429%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.28571428571429%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.28571428571429%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.28571428571429%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 72.85714285714286%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 68.57142857142857%'>octopress(2)</a> <a href='/blog/categories/ruby' style='font-size: 85.71428571428572%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(14)</a> <a href='/blog/categories/vim' style='font-size: 68.57142857142857%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.28571428571429%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 98.57142857142857%'>algorithm(9)</a> <a href='/blog/categories/android' style='font-size: 85.71428571428572%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 81.42857142857143%'>codility(5)</a> <a href='/blog/categories/cpp' style='font-size: 64.28571428571429%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 64.28571428571429%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.28571428571429%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.28571428571429%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.28571428571429%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 72.85714285714286%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 68.57142857142857%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 64.28571428571429%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 85.71428571428572%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(14)</a> <a href='/blog/categories/vim' style='font-size: 68.57142857142857%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.28571428571429%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

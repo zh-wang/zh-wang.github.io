@@ -5,14 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Noto - Fonts - Welcome to FutureAppLaboratory</title>
+  <title>Category: Cpp - Welcome to FutureAppLaboratory</title>
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="最近Google Noto Fontsはアジア系文字をサポートし始めたので、Octopressのデフォルトフォントを変えてみようと思いました。 やり方
-1. Google Noto Fonts ここからフォントをダンロード。
-2. /source/fontsを作ります。
-3. &hellip;">
+  <meta name="description" content="Category: cpp">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -21,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://zh-wang.github.io/blog/2014/07/23/noto-font">
+  <link rel="canonical" href="http://zh-wang.github.io/blog/categories/cpp">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Welcome to FutureAppLaboratory" type="application/atom+xml">
@@ -61,12 +58,9 @@ MathJax.Hub.Config({
   </script>
 
 
-  <meta property="og:title" content="Noto - fonts - Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="最近Google Noto Fontsはアジア系文字をサポートし始めたので、Octopressのデフォルトフォントを変えてみようと思いました。 やり方
-1. Google Noto Fonts ここからフォントをダンロード。
-2. /source/fontsを作ります。
-3. &hellip;" />
-<meta property="og:url" content="http://zh-wang.github.io/blog/2014/07/23/noto-font/" />
+  <meta property="og:title" content="Category: cpp - Welcome to FutureAppLaboratory" />
+<meta property="og:description" content="Category: cpp" />
+<meta property="og:url" content="http://zh-wang.github.io/blog/categories/cpp/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
 <meta property="og:site_name" content="Welcome to FutureAppLaboratory" />
@@ -107,261 +101,36 @@ MathJax.Hub.Config({
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry" role="article">
+<article role="article">
   
   <header>
-    
-      <h1 class="entry-title">Noto - Fonts</h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-23T18:25:58+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io">Comments</a>
-        
-      </p>
+    <h1 class="entry-title">Category: Cpp</h1>
     
   </header>
-
-
-<div class="entry-content"><p>最近<a href="http://www.google.com/get/noto/#/">Google Noto Fonts</a>はアジア系文字をサポートし始めたので、Octopressのデフォルトフォントを変えてみようと思いました。</p>
-
-<p>やり方<br/>
-1. <a href="http://www.google.com/get/noto/#/">Google Noto Fonts</a> ここからフォントをダンロード。<br/>
-2. /source/fontsを作ります。<br/>
-3. 先ダンロードしたファイルを解凍し、好きなフォントを/source/fontsに入れます。私の場合、日本語と英語を合わせて10個入れました。NotoSans系とNotoSerif系とNotoSansJP-Bold、NotoSansJP-Regular。<br/>
-4. ソースを修正。/sass/custom/_fonts.scssに、次のコードを追加します。完成。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>    $sans: "Noto Sans", sans-serif;
-</span><span class='line'>    $serif: "Noto Serif", "Noto Sans" serif;
-</span><span class='line'>    $heading-font-family: "Noto Serif", sans-serif;
-</span><span class='line'>    $header-title-font-family: "Noto Sans JP", "Noto Serif", sans-serif;
-</span><span class='line'>    $header-subtitle-font-family: "Noto Sans JP", "Noto Serif", sans-serif;
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 400;
-</span><span class='line'>        src: local('NotoSans-Regular') url(/fonts/NotoSans-Regular.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 700;
-</span><span class='line'>        src: local('NotoSans-Bold') url(/fonts/NotoSans-Bold.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans';
-</span><span class='line'>        font-style: italic;
-</span><span class='line'>        font-weight: 400;
-</span><span class='line'>        src: local('NotoSans-Italic') url(/fonts/NotoSans-Italic.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans';
-</span><span class='line'>        font-style: italic;
-</span><span class='line'>        font-weight: 700;
-</span><span class='line'>        src: local('NotoSans-BoldItalic') url(/fonts/NotoSans-BoldItalic.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans JP';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 400;
-</span><span class='line'>        src: local('NotoSansJP-Regular') url(/fonts/NotoSansJP-Regular.otf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Sans JP';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 700;
-</span><span class='line'>        src: local('NotoSansJP-Regular') url(/fonts/NotoSansJP-Bold.otf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Serif';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 400;
-</span><span class='line'>        src: local('NotoSerif-Regular') url(/fonts/NotoSerif-Regular.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Serif';
-</span><span class='line'>        font-style: normal;
-</span><span class='line'>        font-weight: 700;
-</span><span class='line'>        src: local('NotoSerif-Bold') url(/fonts/NotoSerif-Bold.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Serif';
-</span><span class='line'>        font-style: italic;
-</span><span class='line'>        font-weight: 400;
-</span><span class='line'>        src: local('NotoSerif-Italic') url(/fonts/NotoSerif-Italic.ttf) format('truetype');
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    @font-face {
-</span><span class='line'>        font-family: 'Noto Serif';
-</span><span class='line'>        font-style: italic;
-</span><span class='line'>        font-weight: 700;
-</span><span class='line'>        src: local('NotoSerif-BoldItalic') url(/fonts/NotoSerif-BoldItalic.ttf) format('truetype');
-</span><span class='line'>    }
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">viennakanon</span></span>
-
-      
-
-
-
-
-
+  <div id="blog-archives" class="category">
 
 
 
   
+  <h2>2015</h2>
+
+<article>
+  
+<h1><a href="/blog/2015/05/14/check-stack-usage-of-cpp-code/">checkstack.plを遊んでみた</a></h1>
+<time datetime="2015-05-14T15:45:31+09:00" pubdate><span class='month'>May</span> <span class='day'>14</span> <span class='year'>2015</span></time>
+
+<footer>
+  <span class="categories">posted in <a class='category' href='/blog/categories/cpp/'>cpp</a>, <a class='category' href='/blog/categories/perl/'>perl</a></span>
+</footer>
 
 
-<time datetime="2014-07-23T18:25:58+09:00" pubdate data-updated="true"></time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/octopress/'>octopress</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2014/07/23/noto-font/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2014/07/23/noto-font/" >Tweet</a>
-  
-  
-  <div class="g-plusone" data-size="medium"></div>
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2014/07/22/codility-silicium-2014/" title="Previous Post: Codility - Silicium - 2014">&laquo; Codility - Silicium - 2014</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2014/08/14/codility-phosphorus-2014/" title="Next Post: Codility - Phosphorus - 2014">Codility - Phosphorus - 2014 &raquo;</a>
-      
-    </p>
-  </footer>
 </article>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-  </section>
+
+  
+</article>
 
 </div>
 
@@ -500,10 +269,7 @@ MathJax.Hub.Config({
       var disqus_shortname = 'viennakanon';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://zh-wang.github.io/blog/2014/07/23/noto-font/';
-        var disqus_url = 'http://zh-wang.github.io/blog/2014/07/23/noto-font/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
