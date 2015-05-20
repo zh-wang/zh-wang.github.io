@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-05-14T17:04:28+09:00</updated>
+  <updated>2015-05-20T17:05:14+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -14,7 +14,138 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Learning Swift Part 14]]></title>
+    <title type="html"><![CDATA[Generics Enum in Swift]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/05/20/generics-enum-in-swift/"/>
+    <updated>2015-05-20T15:27:01+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/05/20/generics-enum-in-swift</id>
+    <content type="html"><![CDATA[<p>If we want handle different data type, according to the result of calling some APIs. We may need the code like this.</p>
+
+<pre><code class="swift">    enum APIResponse&lt;JsonType, ErrorMsgType&gt; {
+        case Success(JsonType)
+        case Fail(ErrorMsgType)
+    } // compile error
+</code></pre>
+
+<p>But the code above cannot be compiled.</p>
+
+<pre><code>    // integer overflows when converted from 'Builtin.Int32' to 'Builtin.Int8'MyPlayground.playground:148:6: error: unimplemented IR generation feature non-fixed multi-payload enum layout
+    //     enum APIResponse&lt;JsonType, ErrorMsgType&gt; {
+</code></pre>
+
+<h3>How can we actually do this</h3>
+
+<p>We can use <code>Container Class</code>.</p>
+
+<pre><code>    class SuccessContainer&lt;T&gt; {
+        init (t : T) {
+            // ...
+        }
+    }
+
+    class ErrorContainer&lt;T&gt; {
+        init (t : T) {
+            // ...
+        }
+    }
+
+    enum APIResponse&lt;JsonType, ErrorMsgType&gt; {
+        case Success(SuccessContainer&lt;JsonType&gt;)
+        case Fail(ErrorContainer&lt;ErrorMsgType&gt;)
+    }
+
+    // usage
+
+    func GenAPIResponseSuccess&lt;JsonType, ErrorMsgType&gt;(json : JsonType) -&gt; APIResponse&lt;JsonType, ErrorMsgType&gt; {
+        return .Success(SuccessContainer&lt;JsonType&gt;(t: json))
+    }
+
+    func GenAPIResponseFail&lt;JsonType, ErrorMsgType&gt;(errorMsg : ErrorMsgType) -&gt; APIResponse&lt;JsonType, ErrorMsgType&gt; {
+        return .Fail(ErrorContainer&lt;ErrorMsgType&gt;(t: errorMsg))
+    }
+
+    func callbackFromAPI(response: String) -&gt; APIResponse&lt;String, String&gt; {
+        if (response.hasPrefix("success")) {
+            return GenAPIResponseSuccess(response) // can be parsed to json
+        } else {
+            return GenAPIResponseFail(response) // just a plain error msg
+        }
+    }
+
+    callbackFromAPI("success. I'm Json")
+    callbackFromAPI("404 or something else")
+</code></pre>
+
+<p>But it is awful to write bunch of code for creating container classes, for each type you need.</p>
+
+<h3>Better Solution?</h3>
+
+<p>Here is a very useful lib. <a href="https://github.com/robrix/Box">https://github.com/robrix/Box</a></p>
+
+<p>It provide a container class called <code>Box</code></p>
+
+<pre><code>    public final class Box&lt;T&gt;: BoxType, Printable {
+        /// Initializes a `Box` with the given value.
+        public init(_ value: T) {
+            self.value = value
+        }
+
+
+        /// Constructs a `Box` with the given `value`.
+        public class func unit(value: T) -&gt; Box&lt;T&gt; {
+            return Box(value)
+        }
+
+
+        /// The (immutable) value wrapped by the receiver.
+        public let value: T
+
+        /// Constructs a new Box by transforming `value` by `f`.
+        public func map&lt;U&gt;(@noescape f: T -&gt; U) -&gt; Box&lt;U&gt; {
+            return Box&lt;U&gt;(f(value))
+        }
+
+
+        // MARK: Printable
+
+        public var description: String {
+            return toString(value)
+        }
+    }
+</code></pre>
+
+<h3>Finally</h3>
+
+<p>We can rewrite above code into this. Much more elegant.</p>
+
+<pre><code>    enum APIResponse2&lt;JsonType, ErrorMsgType&gt; {
+        case Success(Box&lt;JsonType&gt;)
+        case Fail(Box&lt;ErrorMsgType&gt;)
+    }
+
+    func GenAPIResponseSuccess2&lt;JsonType, ErrorMsgType&gt;(json : JsonType) -&gt; APIResponse2&lt;JsonType, ErrorMsgType&gt; {
+        return .Success(Box&lt;JsonType&gt;(json))
+    }
+
+    func GenAPIResponseFail2&lt;JsonType, ErrorMsgType&gt;(errorMsg : ErrorMsgType) -&gt; APIResponse2&lt;JsonType, ErrorMsgType&gt; {
+        return .Fail(Box&lt;ErrorMsgType&gt;(errorMsg))
+    }
+
+    func callbackFromAPI2(response: String) -&gt; APIResponse2&lt;String, String&gt; {
+        if (response.hasPrefix("success")) {
+            return GenAPIResponseSuccess2(response) // can be parsed to json
+        } else {
+            return GenAPIResponseFail2(response) // just a plain error msg
+        }
+    }
+
+    callbackFromAPI2("success. I'm Json")
+    callbackFromAPI2("404 or something else")
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Learning Swift Part 14 - Optional Chaining]]></title>
     <link href="http://zh-wang.github.io/blog/2015/05/12/learning-swift-part-14/"/>
     <updated>2015-05-12T12:20:35+09:00</updated>
     <id>http://zh-wang.github.io/blog/2015/05/12/learning-swift-part-14</id>
@@ -838,325 +969,30 @@
 </ul>
 </li>
 <li><p>Overriding Property Observers
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  class AutomaticCar: Car {
-</span><span class='line'>      override var currentSpeed: Double {
-</span><span class='line'>          didSet {
-</span><span class='line'>              gear = Int(currentSpeed / 10.0) + 1
-</span><span class='line'>          }
-</span><span class='line'>      }
-</span><span class='line'>  }&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  let automatic = AutomaticCar()
-</span><span class='line'>  automatic.currentSpeed = 35.0
-</span><span class='line'>  println("AutomaticCar: \(automatic.description)")
-</span><span class='line'>  // AutomaticCar: traveling at 35.0 miles per hour in gear 4
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;Preventing Overrides
-</span><span class='line'>
-</span><span class='line'>&lt;ul&gt;
-</span><span class='line'>&lt;li&gt;You can prevent a method, property, or subscript from being overridden by marking it as final. Do this by writing the final modifier before the method, property, or subscript’s introducer keyword (such as final var, final func, final class func, and final subscript).&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;Any attempt to override a final method, property, or subscript in a subclass is reported as a compile-time error. Methods, properties, or subscripts that you add to a class in an extension can also be marked as final within the extension’s definition.&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;You can mark an entire class as final by writing the final modifier before the class keyword in its class definition (final class). Any attempt to subclass a final class is reported as a compile-time error.&lt;/li&gt;
-</span><span class='line'>&lt;/ul&gt;
-</span><span class='line'>&lt;/li&gt;
-</span><span class='line'>&lt;/ul&gt;
-</span><span class='line'>
-</span><span class='line'>]]&gt;&lt;/content&gt;
-</span><span class='line'>  &lt;/entry&gt;
-</span><span class='line'>  
-</span><span class='line'>  &lt;entry&gt;
-</span><span class='line'>&lt;title type="html"&gt;&lt;![CDATA[Learning Swift Part 10 - Methods]]&gt;&lt;/title&gt;
-</span><span class='line'>&lt;link href="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10/"/&gt;
-</span><span class='line'>&lt;updated&gt;2014-10-24T18:51:55+09:00&lt;/updated&gt;
-</span><span class='line'>&lt;id&gt;http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-10&lt;/id&gt;
-</span><span class='line'>&lt;content type="html"&gt;&lt;![CDATA[&lt;h2&gt;===== Full Notes =====&lt;/h2&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;h3&gt;Methods&lt;/h3&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;ul&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Instance Methods</span></code></pre></td></tr></table></div></figure>swift
-      class Counter {
-          var count = 0
-          func increment() {
-              count++
-          }
-          func incrementBy(amount: Int) {
-              count += amount
-          }
-          func reset() {
-              count = 0
-          }
-      }</p>
-
-<pre><code>  let counter = Counter()
-  // the initial counter value is 0
-  counter.increment()
-  // the counter's value is now 1
-  counter.incrementBy(5)
-  // the counter's value is now 6
-  counter.reset()
-  // the counter's value is now 0
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Local and External Parameter Names for Methods<br/>
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  // Specifically, Swift gives the first parameter name in a method a local parameter name by default, and gives the second and subsequent parameter names both local and external parameter names by default.&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  class Counter {
-</span><span class='line'>  var count: Int = 0
-</span><span class='line'>  func incrementBy(amount: Int, numberOfTimes: Int) {
-</span><span class='line'>      count += amount * numberOfTimes
-</span><span class='line'>  }
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>  let counter = Counter()
-</span><span class='line'>  counter.incrementBy(5, numberOfTimes: 3)
-</span><span class='line'>  // counter value is now 15
-</span><span class='line'>
-</span><span class='line'>  // It is behaved as the same as putting a '#' symbol before the name
-</span><span class='line'>
-</span><span class='line'>  func incrementBy(amount: Int, #numberOfTimes: Int) {
-</span><span class='line'>  count += amount * numberOfTimes
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>  // This will not allow external name
-</span><span class='line'>
-</span><span class='line'>  func incrementBy(amount: Int, _ : Int) {
-</span><span class='line'>  count += amount * numberOfTimes
-</span><span class='line'>  }
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;/ul&gt;
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>&lt;!-- more --&gt;
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>&lt;ul&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;The self Property</span></code></pre></td></tr></table></div></figure>
-      func increment() {
-          self.count++
-      }</p>
-
-<pre><code>  struct Point {
-      var x = 0.0, y = 0.0
-      func isToTheRightOfX(x: Double) -&gt; Bool {
-          return self.x &gt; x
-      }
-  }
-  let somePoint = Point(x: 4.0, y: 5.0)
-  if somePoint.isToTheRightOfX(1.0) {
-      println("This point is to the right of the line where x == 1.0")
-  }
-  // prints "This point is to the right of the line where x == 1.0"
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Modifying Value Types from Within Instance Methods
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  struct Point {
-</span><span class='line'>      var x = 0.0, y = 0.0
-</span><span class='line'>      mutating func moveByX(deltaX: Double, y deltaY: Double) {
-</span><span class='line'>          x += deltaX
-</span><span class='line'>          y += deltaY
-</span><span class='line'>      }
-</span><span class='line'>  }
-</span><span class='line'>  var somePoint = Point(x: 1.0, y: 1.0)
-</span><span class='line'>  somePoint.moveByX(2.0, y: 3.0)
-</span><span class='line'>  println(&ldquo;The point is now at ((somePoint.x), (somePoint.y))&rdquo;)
-</span><span class='line'>  // prints &ldquo;The point is now at (3.0, 4.0)&rdquo;&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  // constant instance's properties cannot be modified
-</span><span class='line'>
-</span><span class='line'>  let fixedPoint = Point(x: 3.0, y: 3.0)
-</span><span class='line'>  fixedPoint.moveByX(2.0, y: 3.0)
-</span><span class='line'>  // this will report an error
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Assigning to self Within a Mutating Method</span></code></pre></td></tr></table></div></figure>
-      struct Point {
-          var x = 0.0, y = 0.0
-          mutating func moveByX(deltaX: Double, y deltaY: Double) {
-              self = Point(x: x + deltaX, y: y + deltaY)
-          }
-      }</p>
-
-<pre><code>  enum TriStateSwitch {
-      case Off, Low, High
-      mutating func next() {
-          switch self {
-          case Off:
-              self = Low
-          case Low:
-              self = High
-          case High:
-              self = Off
-          }
-      }
-  }
-  var ovenLight = TriStateSwitch.Low
-  ovenLight.next()
-  // ovenLight is now equal to .High
-  ovenLight.next()
-  // ovenLight is now equal to .Off
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Type Methods
 &#8220;`
-      class SomeClass {
-          class func someTypeMethod() {
-              // type method implementation goes here
+      class AutomaticCar: Car {
+          override var currentSpeed: Double {
+              didSet {
+                  gear = Int(currentSpeed / 10.0) + 1
+              }
           }
-      }
-      SomeClass.someTypeMethod()</p>
+      }</p>
 
-<pre><code>  // Within the body of a type method, the implicit self property refers to the type itself, rather than an instance of that type. For structures and enumerations, this means that you can use self to disambiguate between static properties and static method parameters, just as you do for instance properties and instance method parameters.
-
-  struct LevelTracker {
-      static var highestUnlockedLevel = 1
-      static func unlockLevel(level: Int) {
-          if level &gt; highestUnlockedLevel { highestUnlockedLevel = level }
-      }
-      static func levelIsUnlocked(level: Int) -&gt; Bool {
-          return level &lt;= highestUnlockedLevel
-      }
-      var currentLevel = 1
-      mutating func advanceToLevel(level: Int) -&gt; Bool {
-          if LevelTracker.levelIsUnlocked(level) {
-              currentLevel = level
-              return true
-          } else {
-              return false
-          }
-      }
-  }
-
-  class Player {
-      var tracker = LevelTracker()
-      let playerName: String
-      func completedLevel(level: Int) {
-          LevelTracker.unlockLevel(level + 1)
-          tracker.advanceToLevel(level + 1)
-      }
-      init(name: String) {
-          playerName = name
-      }
-  }
-
-  var player = Player(name: "Argyrios")
-  player.completedLevel(1)
-  println("highest unlocked level is now \(LevelTracker.highestUnlockedLevel)")
-  // prints "highest unlocked level is now 2"
-
-  player = Player(name: "Beto")
-  if player.tracker.advanceToLevel(6) {
-      println("player is now on level 6")
-  } else {
-      println("level 6 has not yet been unlocked")
-  }
-  // prints "level 6 has not yet been unlocked"
+<pre><code>  let automatic = AutomaticCar()
+  automatic.currentSpeed = 35.0
+  println("AutomaticCar: \(automatic.description)")
+  // AutomaticCar: traveling at 35.0 miles per hour in gear 4
 </code></pre>
 
 <p>&#8220;`</p></li>
+<li>Preventing Overrides
+
+<ul>
+<li>You can prevent a method, property, or subscript from being overridden by marking it as final. Do this by writing the final modifier before the method, property, or subscript’s introducer keyword (such as final var, final func, final class func, and final subscript).</li>
+<li>Any attempt to override a final method, property, or subscript in a subclass is reported as a compile-time error. Methods, properties, or subscripts that you add to a class in an extension can also be marked as final within the extension’s definition.</li>
+<li>You can mark an entire class as final by writing the final modifier before the class keyword in its class definition (final class). Any attempt to subclass a final class is reported as a compile-time error.</li>
+</ul>
+</li>
 </ul>
 
 ]]></content>

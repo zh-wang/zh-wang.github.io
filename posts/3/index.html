@@ -9,7 +9,9 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="仕事の関係で、Google Playからユーザーレビューをエクスポート（csvファイル）して、特定なレビューを収集するタスクがあった。rubyで割と簡単にできたので、一応手順をメモしようと思った。 Google Play Developer Consoleからcsvをエクスポート &hellip;">
+  <meta name="description" content="Vim-quickrunの設定を書いたので、一応メモする。 必要なバンドル " これがないと意味ないだろう
+Bundle 'thinca/vim-quickrun' " vimから非同期実行。quickrunが実行中でも、ファイル編集が出来るようになる。
+Bundle 'Shougo/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -59,7 +61,9 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="仕事の関係で、Google Playからユーザーレビューをエクスポート（csvファイル）して、特定なレビューを収集するタスクがあった。rubyで割と簡単にできたので、一応手順をメモしようと思った。 Google Play Developer Consoleからcsvをエクスポート &hellip;" />
+<meta property="og:description" content="Vim-quickrunの設定を書いたので、一応メモする。 必要なバンドル " これがないと意味ないだろう
+Bundle 'thinca/vim-quickrun' " vimから非同期実行。quickrunが実行中でも、ファイル編集が出来るようになる。
+Bundle 'Shougo/ &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/posts/3/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -102,6 +106,98 @@ MathJax.Hub.Config({
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/11/28/vim-quickrun-config/">Vim-quickrun Config</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-28T10:51:39+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/11/28/vim-quickrun-config/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/11/28/vim-quickrun-config/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Vim-quickrunの設定を書いたので、一応メモする。</p>
+
+<h3>必要なバンドル</h3>
+
+<pre><code>" これがないと意味ないだろう
+Bundle 'thinca/vim-quickrun'
+
+" vimから非同期実行。quickrunが実行中でも、ファイル編集が出来るようになる。
+Bundle 'Shougo/vimproc.git'
+
+" hookが使えるようになる
+Bundle 'osyo-manga/shabadou.vim'
+
+" uniteのウィンドウにquickfixを開く"
+Bundle 'osyo-manga/unite-quickfix'
+</code></pre>
+
+<p>まず以上のバンドルを入れる。</p>
+
+<h3>設定</h3>
+
+<pre><code>" 出力がないやエラーの場合はquickfixに出力。それ以外は普通にバッファへ。
+" vimprocの非同期設定。
+" ウィンドウのサイズなど
+let g:quickrun_config = {
+\   "_" : {
+\       "hook/close_unite_quickfix/enable_hook_loaded" : 1,
+\       "hook/unite_quickfix/enable_failure" : 1,
+\       "hook/close_quickfix/enable_exit" : 1,
+\       "hook/close_buffer/enable_failure" : 1,
+\       "hook/close_buffer/enable_empty_data" : 1,
+\       "runner" : "vimproc",
+\       "runner/vimproc/updatetime" : 60,
+\       "outputter" : "multi:buffer:quickfix",
+\       "outputter/buffer/split" : ":botright 8sp",
+\   },
+\}
+
+" quickrunを強制終了
+nnoremap &lt;expr&gt;&lt;silent&gt; &lt;C-c&gt; quickrun#is_running() ? quickrun#sweep_sessions() : "\&lt;C-c&gt;"
+
+" 簡単起動
+cmap qr QuickRun
+cmap QR QuickRun
+
+" 簡単終了
+command! -nargs=0 QC call CloseQuickRunWindow()
+function! CloseQuickRunWindow()
+    execute "normal \&lt;c-c&gt;\&lt;c-w&gt;jZZ"
+endfunction
+cmap qc QC
+</code></pre>
+
+<p>これで快適快適(・ω&lt;)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1224,122 +1320,6 @@ Most code are from the guide, with some modification by me.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/09/05/learning-swift-part-3/">Learning Swift Part 3 - Basic Operators</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-05T17:59:28+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/09/05/learning-swift-part-3/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/09/05/learning-swift-part-3/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Just some notes after reading Apple&rsquo;s official online guide.
-Most code are from the guide, with some modification by me.</p>
-
-<h2>===== Full Notes =====</h2>
-
-<h3>Basic Operators</h3>
-
-<ul>
-<li>Terminology</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="o">-</span> <span class="n">Unary</span>
-</span><span class='line'>    <span class="o">-</span> <span class="n">Binary</span>
-</span><span class='line'>    <span class="o">-</span> <span class="n">Ternary</span> <span class="p">(</span><span class="n">There</span> <span class="kt">is</span> <span class="n">only</span> <span class="n">one</span> <span class="k">in</span> <span class="n">a</span> <span class="o">?</span> <span class="nl">b</span> <span class="p">:</span><span class="n">c</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Assignment Operator</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="c1">// Not a vaild assignment</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">x</span> <span class="o">=</span> <span class="n">y</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Arithmetic Operators
-
-<ul>
-<li>Not allow overflow.</li>
-<li>You can opt in to value overflow behavior by using Swift&rsquo;s overflow operators (such as a &amp;+ b).</li>
-<li>The addition operator is also supported for <strong>String</strong> concatenation.</li>
-</ul>
-</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>        <span class="k">let</span> <span class="nl">dog</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;🐶&quot;</span>
-</span><span class='line'>        <span class="k">let</span> <span class="nl">cow</span><span class="p">:</span> <span class="n">Character</span> <span class="o">=</span> <span class="s">&quot;🐮&quot;</span>
-</span><span class='line'>        <span class="k">let</span> <span class="n">dogCow</span> <span class="o">=</span> <span class="n">dog</span> <span class="o">+</span> <span class="n">cow</span>
-</span><span class='line'>        <span class="c1">// dogCow is equal to &quot;🐶🐮&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Remainder Operator</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="mi">9</span> <span class="o">%</span> <span class="mi">4</span> <span class="c1">// equals 1</span>
-</span><span class='line'>    <span class="o">-</span><span class="mi">9</span> <span class="o">%</span> <span class="mi">4</span> <span class="c1">// equals -1</span>
-</span><span class='line'>    <span class="o">-</span><span class="mi">9</span> <span class="o">%</span> <span class="mi">4</span> <span class="c1">// equals -9 % -4</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/09/05/learning-swift-part-3/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="4">&larr; Older</a>
@@ -1357,6 +1337,10 @@ Most code are from the guide, with some modification by me.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/05/20/generics-enum-in-swift/">Generics Enum in Swift</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/05/14/check-stack-usage-of-cpp-code/">checkstack.plを遊んでみた</a>
       </li>
     
@@ -1365,15 +1349,11 @@ Most code are from the guide, with some modification by me.</p>
       </li>
     
       <li class="post">
-        <a href="/blog/2015/05/12/learning-swift-part-14/">Learning Swift Part 14</a>
+        <a href="/blog/2015/05/12/learning-swift-part-14/">Learning Swift Part 14 - Optional Chaining</a>
       </li>
     
       <li class="post">
         <a href="/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting/">FB HackerCup 2015 R1 40:CorporateGifting</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete/">FB HackerCup 2015 R1 25:Autocomplete</a>
       </li>
     
   </ul>
@@ -1384,11 +1364,11 @@ Most code are from the guide, with some modification by me.</p>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (9)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (14)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (9)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (15)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 98.57142857142857%'>algorithm(9)</a> <a href='/blog/categories/android' style='font-size: 85.71428571428572%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 81.42857142857143%'>codility(5)</a> <a href='/blog/categories/cpp' style='font-size: 64.28571428571429%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 64.28571428571429%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.28571428571429%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.28571428571429%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.28571428571429%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 72.85714285714286%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 68.57142857142857%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 64.28571428571429%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 85.71428571428572%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(14)</a> <a href='/blog/categories/vim' style='font-size: 68.57142857142857%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.28571428571429%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 96.0%'>algorithm(9)</a> <a href='/blog/categories/android' style='font-size: 84.0%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 80.0%'>codility(5)</a> <a href='/blog/categories/cpp' style='font-size: 64.0%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 64.0%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.0%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.0%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.0%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 72.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 68.0%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 64.0%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 84.0%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(15)</a> <a href='/blog/categories/vim' style='font-size: 68.0%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.0%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

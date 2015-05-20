@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-05-14T17:04:28+09:00</updated>
+  <updated>2015-05-20T17:05:14+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,236 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Generics Enum in Swift]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/05/20/generics-enum-in-swift/"/>
+    <updated>2015-05-20T15:27:01+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/05/20/generics-enum-in-swift</id>
+    <content type="html"><![CDATA[<p>If we want handle different data type, according to the result of calling some APIs. We may need the code like this.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">enum</span> <span class="n">APIResponse</span><span class="o">&lt;</span><span class="n">JsonType</span><span class="p">,</span> <span class="n">ErrorMsgType</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">Success</span><span class="p">(</span><span class="n">JsonType</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">Fail</span><span class="p">(</span><span class="n">ErrorMsgType</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span> <span class="c1">// compile error</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But the code above cannot be compiled.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// integer overflows when converted from &#39;Builtin.Int32&#39; to &#39;Builtin.Int8&#39;MyPlayground.playground:148:6: error: unimplemented IR generation feature non-fixed multi-payload enum layout</span>
+</span><span class='line'><span class="c1">//     enum APIResponse&lt;JsonType, ErrorMsgType&gt; {</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>How can we actually do this</h3>
+
+<p>We can use <code>Container Class</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">class</span> <span class="n">SuccessContainer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">init</span> <span class="p">(</span><span class="nl">t</span> <span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="n">ErrorContainer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">init</span> <span class="p">(</span><span class="nl">t</span> <span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// ...</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">enum</span> <span class="n">APIResponse</span><span class="o">&lt;</span><span class="n">JsonType</span><span class="p">,</span> <span class="n">ErrorMsgType</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">Success</span><span class="p">(</span><span class="n">SuccessContainer</span><span class="o">&lt;</span><span class="n">JsonType</span><span class="o">&gt;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">Fail</span><span class="p">(</span><span class="n">ErrorContainer</span><span class="o">&lt;</span><span class="n">ErrorMsgType</span><span class="o">&gt;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// usage</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="n">GenAPIResponseSuccess</span><span class="o">&lt;</span><span class="n">JsonType</span><span class="p">,</span> <span class="n">ErrorMsgType</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">json</span> <span class="p">:</span> <span class="n">JsonType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">APIResponse</span><span class="o">&lt;</span><span class="n">JsonType</span><span class="p">,</span> <span class="n">ErrorMsgType</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">.</span><span class="n">Success</span><span class="p">(</span><span class="n">SuccessContainer</span><span class="o">&lt;</span><span class="n">JsonType</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">t</span><span class="p">:</span> <span class="n">json</span><span class="p">))</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="n">GenAPIResponseFail</span><span class="o">&lt;</span><span class="n">JsonType</span><span class="p">,</span> <span class="n">ErrorMsgType</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">errorMsg</span> <span class="p">:</span> <span class="n">ErrorMsgType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">APIResponse</span><span class="o">&lt;</span><span class="n">JsonType</span><span class="p">,</span> <span class="n">ErrorMsgType</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">.</span><span class="n">Fail</span><span class="p">(</span><span class="n">ErrorContainer</span><span class="o">&lt;</span><span class="n">ErrorMsgType</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">t</span><span class="p">:</span> <span class="n">errorMsg</span><span class="p">))</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="n">callbackFromAPI</span><span class="p">(</span><span class="nl">response</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">APIResponse</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">hasPrefix</span><span class="p">(</span><span class="s">&quot;success&quot;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">GenAPIResponseSuccess</span><span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="c1">// can be parsed to json</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">GenAPIResponseFail</span><span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="c1">// just a plain error msg</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">callbackFromAPI</span><span class="p">(</span><span class="s">&quot;success. I&#39;m Json&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">callbackFromAPI</span><span class="p">(</span><span class="s">&quot;404 or something else&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But it is awful to write bunch of code for creating container classes, for each type you need.</p>
+
+<h3>Better Solution?</h3>
+
+<p>Here is a very useful lib. <a href="https://github.com/robrix/Box">https://github.com/robrix/Box</a></p>
+
+<p>It provide a container class called <code>Box</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">public</span> <span class="n">final</span> <span class="k">class</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;:</span> <span class="n">BoxType</span><span class="p">,</span> <span class="n">Printable</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">/// Initializes a `Box` with the given value.</span>
+</span><span class='line'>    <span class="n">public</span> <span class="k">init</span><span class="p">(</span><span class="n">_</span> <span class="nl">value</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">/// Constructs a `Box` with the given `value`.</span>
+</span><span class='line'>    <span class="n">public</span> <span class="k">class</span> <span class="k">func</span> <span class="n">unit</span><span class="p">(</span><span class="nl">value</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">Box</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">/// The (immutable) value wrapped by the receiver.</span>
+</span><span class='line'>    <span class="n">public</span> <span class="k">let</span> <span class="nl">value</span><span class="p">:</span> <span class="n">T</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">/// Constructs a new Box by transforming `value` by `f`.</span>
+</span><span class='line'>    <span class="n">public</span> <span class="k">func</span> <span class="n">map</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">(@</span><span class="n">noescape</span> <span class="nl">f</span><span class="p">:</span> <span class="n">T</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="n">f</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// MARK: Printable</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">public</span> <span class="k">var</span> <span class="nl">description</span><span class="p">:</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">toString</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Finally</h3>
+
+<p>We can rewrite above code into this. Much more elegant.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">enum</span> <span class="n">APIResponse2</span><span class="o">&lt;</span><span class="n">JsonType</span><span class="p">,</span> <span class="n">ErrorMsgType</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">Success</span><span class="p">(</span><span class="n">Box</span><span class="o">&lt;</span><span class="n">JsonType</span><span class="o">&gt;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">case</span> <span class="n">Fail</span><span class="p">(</span><span class="n">Box</span><span class="o">&lt;</span><span class="n">ErrorMsgType</span><span class="o">&gt;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="n">GenAPIResponseSuccess2</span><span class="o">&lt;</span><span class="n">JsonType</span><span class="p">,</span> <span class="n">ErrorMsgType</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">json</span> <span class="p">:</span> <span class="n">JsonType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">APIResponse2</span><span class="o">&lt;</span><span class="n">JsonType</span><span class="p">,</span> <span class="n">ErrorMsgType</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">.</span><span class="n">Success</span><span class="p">(</span><span class="n">Box</span><span class="o">&lt;</span><span class="n">JsonType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">json</span><span class="p">))</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="n">GenAPIResponseFail2</span><span class="o">&lt;</span><span class="n">JsonType</span><span class="p">,</span> <span class="n">ErrorMsgType</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">errorMsg</span> <span class="p">:</span> <span class="n">ErrorMsgType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">APIResponse2</span><span class="o">&lt;</span><span class="n">JsonType</span><span class="p">,</span> <span class="n">ErrorMsgType</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">.</span><span class="n">Fail</span><span class="p">(</span><span class="n">Box</span><span class="o">&lt;</span><span class="n">ErrorMsgType</span><span class="o">&gt;</span><span class="p">(</span><span class="n">errorMsg</span><span class="p">))</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="n">callbackFromAPI2</span><span class="p">(</span><span class="nl">response</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">APIResponse2</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">hasPrefix</span><span class="p">(</span><span class="s">&quot;success&quot;</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">GenAPIResponseSuccess2</span><span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="c1">// can be parsed to json</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">GenAPIResponseFail2</span><span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="c1">// just a plain error msg</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">callbackFromAPI2</span><span class="p">(</span><span class="s">&quot;success. I&#39;m Json&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">callbackFromAPI2</span><span class="p">(</span><span class="s">&quot;404 or something else&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[checkstack.plを遊んでみた]]></title>
@@ -258,7 +488,7 @@ In binary,
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Learning Swift Part 14]]></title>
+    <title type="html"><![CDATA[Learning Swift Part 14 - Optional Chaining]]></title>
     <link href="http://zh-wang.github.io/blog/2015/05/12/learning-swift-part-14/"/>
     <updated>2015-05-12T12:20:35+09:00</updated>
     <id>http://zh-wang.github.io/blog/2015/05/12/learning-swift-part-14</id>
@@ -3486,68 +3716,6 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 <p>それ以上走らせると、やっはり順番待ちになるのね。</p>
 
 <p><img src="http://zh-wang.github.io/images/2014_12_19_image03.png" title="結果3" alt="結果3" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Vim-quickrun Config]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/11/28/vim-quickrun-config/"/>
-    <updated>2014-11-28T10:51:39+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/11/28/vim-quickrun-config</id>
-    <content type="html"><![CDATA[<p>Vim-quickrunの設定を書いたので、一応メモする。</p>
-
-<h3>必要なバンドル</h3>
-
-<pre><code>" これがないと意味ないだろう
-Bundle 'thinca/vim-quickrun'
-
-" vimから非同期実行。quickrunが実行中でも、ファイル編集が出来るようになる。
-Bundle 'Shougo/vimproc.git'
-
-" hookが使えるようになる
-Bundle 'osyo-manga/shabadou.vim'
-
-" uniteのウィンドウにquickfixを開く"
-Bundle 'osyo-manga/unite-quickfix'
-</code></pre>
-
-<p>まず以上のバンドルを入れる。</p>
-
-<h3>設定</h3>
-
-<pre><code>" 出力がないやエラーの場合はquickfixに出力。それ以外は普通にバッファへ。
-" vimprocの非同期設定。
-" ウィンドウのサイズなど
-let g:quickrun_config = {
-\   "_" : {
-\       "hook/close_unite_quickfix/enable_hook_loaded" : 1,
-\       "hook/unite_quickfix/enable_failure" : 1,
-\       "hook/close_quickfix/enable_exit" : 1,
-\       "hook/close_buffer/enable_failure" : 1,
-\       "hook/close_buffer/enable_empty_data" : 1,
-\       "runner" : "vimproc",
-\       "runner/vimproc/updatetime" : 60,
-\       "outputter" : "multi:buffer:quickfix",
-\       "outputter/buffer/split" : ":botright 8sp",
-\   },
-\}
-
-" quickrunを強制終了
-nnoremap &lt;expr&gt;&lt;silent&gt; &lt;C-c&gt; quickrun#is_running() ? quickrun#sweep_sessions() : "\&lt;C-c&gt;"
-
-" 簡単起動
-cmap qr QuickRun
-cmap QR QuickRun
-
-" 簡単終了
-command! -nargs=0 QC call CloseQuickRunWindow()
-function! CloseQuickRunWindow()
-    execute "normal \&lt;c-c&gt;\&lt;c-w&gt;jZZ"
-endfunction
-cmap qc QC
-</code></pre>
-
-<p>これで快適快適(・ω&lt;)</p>
 ]]></content>
   </entry>
   
