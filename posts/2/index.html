@@ -9,8 +9,8 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="When I need screenshot for blog post, I always use Mac&rsquo;s default shortcuts to take them.
-It&rsquo;s super easy to do so. But Mac always store &hellip;">
+  <meta name="description" content="Movie view does not work sometimes There are several ways to decode and show GIF format image on android.
+I tried using framework&rsquo;s Movie class &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -60,8 +60,8 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="When I need screenshot for blog post, I always use Mac&rsquo;s default shortcuts to take them.
-It&rsquo;s super easy to do so. But Mac always store &hellip;" />
+<meta property="og:description" content="Movie view does not work sometimes There are several ways to decode and show GIF format image on android.
+I tried using framework&rsquo;s Movie class &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/posts/2/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -104,6 +104,106 @@ It&rsquo;s super easy to do so. But Mac always store &hellip;" />
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/03/10/gif-view-for-android/">GIF View for Android</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-10T23:25:52+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/03/10/gif-view-for-android/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/03/10/gif-view-for-android/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Movie view does not work sometimes</h2>
+
+<p>There are several ways to decode and show GIF format image on android.<br/>
+I tried using framework&rsquo;s <code>Movie</code> class to decode GIF, but it crashes on device which runs 4.1 or later.<br/>
+Don&rsquo;t know why that occurs but I need to show animated GIF on all OS version.<br/>
+So I write a custom view to do that, and in a simple way.</p>
+
+<p>Source can be found on <a href="https://github.com/zh-wang/AndroidGifView">Github</a>.</p>
+
+<h2>Something Wired</h2>
+
+<p>GIF&rsquo;s document says that it is encoded in little-endian<a href="http://www.w3.org/Graphics/GIF/spec-gif89a.txt">GIF Specification</a>.<br/>
+But sometimes the HEADER part is in big-endian, like this.</p>
+
+<p><img src="/images/2015_03_10_image01.png" title="GIF image bytes in hex" alt="Image 01" /></p>
+
+<p>The first 6 bytes <code>47 49 46 38 39 61</code> is <code>GIF89a</code>, in big-endian. But sometimes in little-endian.(Not confirmed but I found some open source libraries read them by little-endian).<br/>
+Note that, the following image size sector <code>7c02 fa00</code> (width: 636, height: 250) is little-endian.<br/>
+So I should read bytes first in <code>BIG_ENDIAN</code>, then turn byte order into <code>LITTLE_ENDIAN</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="cm">/**</span>
+</span><span class='line'><span class="cm"> * Reads GIF file header information.</span>
+</span><span class='line'><span class="cm"> */</span>
+</span><span class='line'><span class="kd">protected</span> <span class="kt">void</span> <span class="nf">readHeader</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">String</span> <span class="n">id</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">rawData</span><span class="o">.</span><span class="na">order</span><span class="o">(</span><span class="n">ByteOrder</span><span class="o">.</span><span class="na">BIG_ENDIAN</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">6</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">id</span> <span class="o">+=</span> <span class="o">(</span><span class="kt">char</span><span class="o">)</span> <span class="n">read</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">rawData</span><span class="o">.</span><span class="na">order</span><span class="o">(</span><span class="n">ByteOrder</span><span class="o">.</span><span class="na">LITTLE_ENDIAN</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(!</span><span class="n">id</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s">&quot;GIF&quot;</span><span class="o">))</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">status</span> <span class="o">=</span> <span class="n">STATUS_FORMAT_ERROR</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">return</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="n">readLSD</span><span class="o">();</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">gctFlag</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">err</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">gct</span> <span class="o">=</span> <span class="n">readColorTable</span><span class="o">(</span><span class="n">gctSize</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">bgColor</span> <span class="o">=</span> <span class="n">gct</span><span class="o">[</span><span class="n">bgIndex</span><span class="o">];</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1413,61 +1513,6 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/12/19/android-asynctask-parallelexcution/">AsyncTask同士は非同期実行</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-12-19T12:25:51+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/12/19/android-asynctask-parallelexcution/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/12/19/android-asynctask-parallelexcution/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>AsyncTaskはなに？</h2>
-
-<p><a href="http://developer.android.com/reference/android/os/AsyncTask.html">http://developer.android.com/reference/android/os/AsyncTask.html</a></p>
-
-<ul>
-<li>AsyncTask enables proper and easy use of the UI thread. This class allows to perform background operations and publish results on the UI thread without having to manipulate threads and/or handlers.</li>
-</ul>
-
-
-<h2>ほんとに非同期なの？</h2>
-
-<p>AsyncTaskはUIThreadと非同期処理を行うが、AsyncTask同士の間ではデフォルトで<strong>同期</strong>的に行っているみたいね。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/12/19/android-asynctask-parallelexcution/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="3">&larr; Older</a>
@@ -1485,6 +1530,10 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/07/02/surrogate-support-for-swifts-string/">Surrogate Support for Swift&#8217;s String</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/05/20/generics-enum-in-swift/">Generics Enum in Swift</a>
       </li>
     
@@ -1500,10 +1549,6 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
         <a href="/blog/2015/05/12/learning-swift-part-14/">Learning Swift Part 14 - Optional Chaining</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting/">FB HackerCup 2015 R1 40:CorporateGifting</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1512,11 +1557,11 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (9)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (15)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (9)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (16)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 96.0%'>algorithm(9)</a> <a href='/blog/categories/android' style='font-size: 84.0%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 80.0%'>codility(5)</a> <a href='/blog/categories/cpp' style='font-size: 64.0%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 64.0%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 64.0%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 64.0%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 64.0%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 72.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 68.0%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 64.0%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 84.0%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(15)</a> <a href='/blog/categories/vim' style='font-size: 68.0%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 64.0%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 93.75%'>algorithm(9)</a> <a href='/blog/categories/android' style='font-size: 82.5%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 78.75%'>codility(5)</a> <a href='/blog/categories/cpp' style='font-size: 63.75%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.75%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 63.75%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.75%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.75%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 71.25%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 67.5%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.75%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 82.5%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(16)</a> <a href='/blog/categories/vim' style='font-size: 67.5%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.75%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

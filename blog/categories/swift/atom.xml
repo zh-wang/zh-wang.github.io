@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-05-20T17:05:14+09:00</updated>
+  <updated>2015-07-02T12:47:59+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,31 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Surrogate Support for Swift's String]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/07/02/surrogate-support-for-swifts-string/"/>
+    <updated>2015-07-02T12:41:54+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/07/02/surrogate-support-for-swifts-string</id>
+    <content type="html"><![CDATA[<p>String in Swift does not support UTF16 surrogate in default.</p>
+
+<p>From <a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html">Swift Official Guild</a></p>
+
+<blockquote><p>A Unicode scalar is any Unicode code point in the range U+0000 to U+D7FF inclusive or U+E000 to U+10FFFF inclusive. Unicode scalars do not include the Unicode surrogate pair code points, which are the code points in the range U+D800 to U+DFFF inclusive.</p></blockquote>
+
+<p>Therefore, I wrote a support class for it. :)</p>
+
+<hr />
+
+<p><a href="https://github.com/zh-wang/SwiftySurrogate">SwiftSurrogate on Github</a></p>
+
+<p>Now you can decode Swift String from UTF16 surrogate pair like this.</p>
+
+<pre><code class="swift">    var emoji1 = SwiftySurrogate.decodeFromSurrogatePair(surrogatePair: "D83D:DCC9")
+    var emoji2 = SwiftySurrogate.decodeFromSurrogatePair(high: 0xD83C, low: 0xDF80)
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Generics Enum in Swift]]></title>
@@ -811,190 +836,6 @@
     println("The bank now has \(Bank.coinsInBank) coins")
     // prints "The bank now has 10000 coins"
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Swift Part 11 - Inheritance]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/11/20/learning-swift-part-11/"/>
-    <updated>2014-11-20T19:10:05+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/11/20/learning-swift-part-11</id>
-    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
-
-<h3>Inheritance</h3>
-
-<ul>
-<li>A base class, Vehicle
-<code>
-      class Vehicle {
-          var currentSpeed = 0.0
-          var description: String {
-                  return "traveling at \(currentSpeed) miles per hour"
-          }
-          func makeNoise() {
-                  // do nothing - an arbitrary vehicle doesn't necessarily make a noise
-          }
-      }
-</code></li>
-<li><p>Subclass, Bicycle and Tandem
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  class Bicycle: Vehicle {
-</span><span class='line'>      var hasBasket = false
-</span><span class='line'>  }&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;pre&gt;&lt;code&gt;  class Tandem: Bicycle {
-</span><span class='line'>  var currentNumberOfPassengers = 0
-</span><span class='line'>  }
-</span><span class='line'>
-</span><span class='line'>  let tandem = Tandem()
-</span><span class='line'>  tandem.hasBasket = true
-</span><span class='line'>  tandem.currentNumberOfPassengers = 2
-</span><span class='line'>  tandem.currentSpeed = 22.0
-</span><span class='line'>  println("Tandem: \(tandem.description)")
-</span><span class='line'>  // Tandem: traveling at 22.0 miles per hour
-</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;/ul&gt;
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>&lt;!-- more --&gt;
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>&lt;ul&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Overriding&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;ul&gt;
-</span><span class='line'>&lt;li&gt;A subclass can provide its own custom implementation of an instance method, class method, instance property, class property, or subscript that it would otherwise inherit from a superclass. This is known as overriding.&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;To override a characteristic that would otherwise be inherited, you prefix your overriding definition with the override keyword. Doing so clarifies that you intend to provide an override and have not provided a matching definition by mistake. Overriding by accident can cause unexpected behavior, and any overrides without the override keyword are diagnosed as an error when your code is compiled.&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;The override keyword also prompts the Swift compiler to check that your overriding class’s superclass (or one of its parents) has a declaration that matches the one you provided for the override. This check ensures that your overriding definition is correct.&lt;/li&gt;
-</span><span class='line'>&lt;/ul&gt;
-</span><span class='line'>&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Accessing Superclass Methods, Properties, and Subscripts&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;ul&gt;
-</span><span class='line'>&lt;li&gt;An overridden method named someMethod can call the superclass version of someMethod by calling super.someMethod() within the overriding method implementation.&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;An overridden property called someProperty can access the superclass version of someProperty as super.someProperty within the overriding getter or setter implementation.&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;An overridden subscript for someIndex can access the superclass version of the same subscript as super[someIndex] from within the overriding subscript implementation.&lt;/li&gt;
-</span><span class='line'>&lt;/ul&gt;
-</span><span class='line'>&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;&lt;p&gt;Overriding Methods</span></code></pre></td></tr></table></div></figure>
-      class Train: Vehicle {
-          override func makeNoise() {
-              println(&ldquo;Choo Choo&rdquo;)
-          }
-      }</p>
-
-<pre><code>  let train = Train()
-  train.makeNoise()
-  // prints "Choo Choo"
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li><p>Overriding Properties</p>
-
-<ul>
-<li>You can override an inherited instance or class property to provide your own custom getter and setter for that property, or to add property observers to enable the overriding property to observe when the underlying property value changes.</li>
-</ul>
-</li>
-<li><p>Overriding Property Getters and Setters</p>
-
-<ul>
-<li>You can present an inherited read-only property as a read-write property by providing both a getter and a setter in your subclass property override. You cannot, however, present an inherited read-write property as a read-only property.</li>
-<li><p>If you provide a setter as part of a property override, you must also provide a getter for that override. If you don’t want to modify the inherited property’s value within the overriding getter, you can simply pass through the inherited value by returning super.someProperty from the getter, where someProperty is the name of the property you are overriding.
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  class Car: Vehicle {
-</span><span class='line'>      var gear = 1
-</span><span class='line'>      override var description: String {
-</span><span class='line'>          return super.description + &ldquo; in gear (gear)&rdquo;
-</span><span class='line'>      }
-</span><span class='line'>  }&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;  let car = Car()
-</span><span class='line'>  car.currentSpeed = 25.0
-</span><span class='line'>  car.gear = 3
-</span><span class='line'>  println(&ldquo;Car: (car.description)&rdquo;)
-</span><span class='line'>  // Car: traveling at 25.0 miles per hour in gear 3</span></code></pre></td></tr></table></div></figure></p></li>
-</ul>
-</li>
-<li><p>Overriding Property Observers
-&#8220;`
-      class AutomaticCar: Car {
-          override var currentSpeed: Double {
-              didSet {
-                  gear = Int(currentSpeed / 10.0) + 1
-              }
-          }
-      }</p>
-
-<pre><code>  let automatic = AutomaticCar()
-  automatic.currentSpeed = 35.0
-  println("AutomaticCar: \(automatic.description)")
-  // AutomaticCar: traveling at 35.0 miles per hour in gear 4
-</code></pre>
-
-<p>&#8220;`</p></li>
-<li>Preventing Overrides
-
-<ul>
-<li>You can prevent a method, property, or subscript from being overridden by marking it as final. Do this by writing the final modifier before the method, property, or subscript’s introducer keyword (such as final var, final func, final class func, and final subscript).</li>
-<li>Any attempt to override a final method, property, or subscript in a subclass is reported as a compile-time error. Methods, properties, or subscripts that you add to a class in an extension can also be marked as final within the extension’s definition.</li>
-<li>You can mark an entire class as final by writing the final modifier before the class keyword in its class definition (final class). Any attempt to subclass a final class is reported as a compile-time error.</li>
-</ul>
-</li>
-</ul>
-
 ]]></content>
   </entry>
   
