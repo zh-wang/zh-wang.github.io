@@ -151,7 +151,7 @@ MathJax.Hub.Config({
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>But, it is not correct.</p>
+<p>But, it is not correct. <code>NSString</code>&rsquo;s implementation is based on UTF-16 and handing index for it is just confusing.</p>
 
 <p>Take a look at the following test.</p>
 
@@ -164,6 +164,8 @@ MathJax.Hub.Config({
 <p><a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html">Swift Online Guide</a> has a detail explanation for this problem.</p>
 
 <p>We should use <code>String.Index</code> to handle different byte length of each character, and also decomposed and precomposed characters.</p>
+
+<p>Because <code>String</code> in Swift is implemented as <strong>Unicode Scalar</strong>, or <strong>UTF-32</strong>, is always 4-byte long for each character and it default behaviour can handle composed characters.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
