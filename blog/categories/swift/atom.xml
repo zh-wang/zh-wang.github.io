@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-07-02T12:47:59+09:00</updated>
+  <updated>2015-07-02T17:05:27+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -14,13 +14,58 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Swift String Operations]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/07/02/swift-string-operation/"/>
+    <updated>2015-07-02T16:24:46+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/07/02/swift-string-operation</id>
+    <content type="html"><![CDATA[<p>String operations of Swift seems to be easy to handle, but we should take care of them in development.</p>
+
+<p>For example, this is a common code snippet which stays on the top spot, by searching &lsquo;<strong>swift substring</strong>&rsquo; from <a href="www.google.co.jp">www.google.co.jp</a>.</p>
+
+<pre><code class="swift">extension String {
+    public func substring(location:Int, length:Int) -&gt; String! {
+        return (self as NSString).substringWithRange(NSMakeRange(location, length))
+    }
+}
+</code></pre>
+
+<p>But, it is not correct.</p>
+
+<p>Take a look at the following test.</p>
+
+<p><img src="/images/2015_07_02_image01.png" title="Test Failed" alt="IMGAE_A" /></p>
+
+<p>Because index in <code>NSString</code> format is different from index in <code>String</code> format. The text is counted as length 2 in <code>NSString</code>, but only 1 in <code>String</code>.</p>
+
+<p>So using <code>substring</code> in <code>NSString</code> only get half of it, from its binary expression. Then certainly, it cannot be decoded correctly.</p>
+
+<p><a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html">Swift Online Guide</a> has a detail explanation for this problem.</p>
+
+<p>We should use <code>String.Index</code> to handle different byte length of each character, and also decomposed and precomposed characters.</p>
+
+<pre><code>    public func substring2(location: Int, length:Int) -&gt; String! {
+        assert(location &gt;= 0, "OMG")
+        assert(location + length &lt;= count(self), "OMG again")
+        var startIndex = self.startIndex
+        startIndex = advance(startIndex, location)
+        var res = self.substringFromIndex(startIndex)
+        var endIndex = advance(startIndex, length)
+        return res.substringToIndex(endIndex)
+    }
+</code></pre>
+
+<p><img src="" title="images/2015_07_02_image02.png &quot;Test Passed" alt="IMAGE_B" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Surrogate Support for Swift's String]]></title>
     <link href="http://zh-wang.github.io/blog/2015/07/02/surrogate-support-for-swifts-string/"/>
     <updated>2015-07-02T12:41:54+09:00</updated>
     <id>http://zh-wang.github.io/blog/2015/07/02/surrogate-support-for-swifts-string</id>
     <content type="html"><![CDATA[<p>String in Swift does not support UTF16 surrogate in default.</p>
 
-<p>From <a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html">Swift Official Guild</a></p>
+<p>From <a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html">Swift Official Guide</a></p>
 
 <blockquote><p>A Unicode scalar is any Unicode code point in the range U+0000 to U+D7FF inclusive or U+E000 to U+10FFFF inclusive. Unicode scalars do not include the Unicode surrogate pair code points, which are the code points in the range U+D800 to U+DFFF inclusive.</p></blockquote>
 
@@ -773,69 +818,6 @@
 </li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Swift Part 12 - Deinitialization]]></title>
-    <link href="http://zh-wang.github.io/blog/2015/01/06/learning-swift-part-12/"/>
-    <updated>2015-01-06T19:34:40+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2015/01/06/learning-swift-part-12</id>
-    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
-
-<h3>Deinitialization</h3>
-
-<ul>
-<li><p>How Deinitialization Works</p>
-
-<p>  Swift automatically deallocates your instances when they are no longer needed, to free up resources. Swift handles the memory management of instances through automatic reference counting (ARC), as described in Automatic Reference Counting.</p></li>
-<li><p>Deinitializers in Action, a sample of Bank operations</p></li>
-</ul>
-
-
-<pre><code class="swift">    struct Bank {
-        static var coinsInBank = 10_000
-        static func vendCoins(var numberOfCoinsToVend: Int) -&gt; Int {
-            numberOfCoinsToVend = min(numberOfCoinsToVend, coinsInBank)
-            coinsInBank -= numberOfCoinsToVend
-            return numberOfCoinsToVend
-        }
-        static func receiveCoins(coins: Int) {
-            coinsInBank += coins
-        }
-    }
-
-    class Player {
-        var coinsInPurse: Int
-        init(coins: Int) {
-            coinsInPurse = Bank.vendCoins(coins)
-        }
-        func winCoins(coins: Int) {
-            coinsInPurse += Bank.vendCoins(coins)
-        }
-        deinit {
-            Bank.receiveCoins(coinsInPurse)
-        }
-    }
-
-    var playerOne: Player? = Player(coins: 100)
-    println("A new player has joined the game with \(playerOne!.coinsInPurse) coins")
-    // prints "A new player has joined the game with 100 coins"
-    println("There are now \(Bank.coinsInBank) coins left in the bank")
-    // prints "There are now 9900 coins left in the bank"
-
-    playerOne!.winCoins(2_000)
-    println("PlayerOne won 2000 coins &amp; now has \(playerOne!.coinsInPurse) coins")
-    // prints "PlayerOne won 2000 coins &amp; now has 2100 coins"
-    println("The bank now only has \(Bank.coinsInBank) coins left")
-    // prints "The bank now only has 7900 coins left"
-
-    playerOne = nil
-    println("PlayerOne has left the game")
-    // prints "PlayerOne has left the game"
-    println("The bank now has \(Bank.coinsInBank) coins")
-    // prints "The bank now has 10000 coins"
-</code></pre>
 ]]></content>
   </entry>
   

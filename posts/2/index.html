@@ -9,8 +9,7 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Movie view does not work sometimes There are several ways to decode and show GIF format image on android.
-I tried using framework&rsquo;s Movie class &hellip;">
+  <meta name="description" content="Description (From train.usaco.org) Three farmers rise at 5 am each morning and head for the barn to milk three cows. The first farmer begins milking &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -60,8 +59,7 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Movie view does not work sometimes There are several ways to decode and show GIF format image on android.
-I tried using framework&rsquo;s Movie class &hellip;" />
+<meta property="og:description" content="Description (From train.usaco.org) Three farmers rise at 5 am each morning and head for the barn to milk three cows. The first farmer begins milking &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/posts/2/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -104,6 +102,81 @@ I tried using framework&rsquo;s Movie class &hellip;" />
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/03/15/analysis-of-prob-milking-cows/">Analysis of PROB Milking Cows</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-15T21:14:14+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/03/15/analysis-of-prob-milking-cows/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/03/15/analysis-of-prob-milking-cows/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Description</h2>
+
+<p>(From train.usaco.org) Three farmers rise at 5 am each morning and head for the barn to milk three cows. The first farmer begins milking his cow at time 300 (measured in seconds after 5 am) and ends at time 1000. The second farmer begins at time 700 and ends at time 1200. The third farmer begins at time 1500 and ends at time 2100. The longest continuous time during which at least one farmer was milking a cow was 900 seconds (from 300 to 1200). The longest time no milking was done, between the beginning and the ending of all milking, was 300 seconds (1500 minus 1200).</p>
+
+<p>Your job is to write a program that will examine a list of beginning and ending times for N (1 &lt;= N &lt;= 5000) farmers milking N cows and compute (in seconds):</p>
+
+<p>The longest time interval at least one cow was milked.
+The longest time interval (after milking starts) during which no cows were being milked.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>SAMPLE INPUT (file milk2.in)
+</span><span class='line'>3
+</span><span class='line'>300 1000
+</span><span class='line'>700 1200
+</span><span class='line'>1500 2100</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>SAMPLE OUTPUT (file milk2.out)
+</span><span class='line'>900 300</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Analysis</h2>
+
+<p>A straight-forward, brute-force solution is to keep a large array $k$, with each element $k_i$ is a boolean value indicates whether at least one cow is being milked at time $i$. Then travel from the start to the end to get the answer.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/03/15/analysis-of-prob-milking-cows/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -1377,142 +1450,6 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/06/learning-swift-part-12/">Learning Swift Part 12 - Deinitialization</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-06T19:34:40+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2015/01/06/learning-swift-part-12/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2015/01/06/learning-swift-part-12/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>===== Full Notes =====</h2>
-
-<h3>Deinitialization</h3>
-
-<ul>
-<li><p>How Deinitialization Works</p>
-
-<p>  Swift automatically deallocates your instances when they are no longer needed, to free up resources. Swift handles the memory management of instances through automatic reference counting (ARC), as described in Automatic Reference Counting.</p></li>
-<li><p>Deinitializers in Action, a sample of Bank operations</p></li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">struct</span> <span class="n">Bank</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">static</span> <span class="k">var</span> <span class="n">coinsInBank</span> <span class="o">=</span> <span class="mi">10</span><span class="n">_000</span>
-</span><span class='line'>    <span class="k">static</span> <span class="k">func</span> <span class="n">vendCoins</span><span class="p">(</span><span class="k">var</span> <span class="nl">numberOfCoinsToVend</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">numberOfCoinsToVend</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">numberOfCoinsToVend</span><span class="p">,</span> <span class="n">coinsInBank</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">coinsInBank</span> <span class="o">-=</span> <span class="n">numberOfCoinsToVend</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">numberOfCoinsToVend</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">static</span> <span class="k">func</span> <span class="n">receiveCoins</span><span class="p">(</span><span class="nl">coins</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">coinsInBank</span> <span class="o">+=</span> <span class="n">coins</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="n">Player</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">var</span> <span class="nl">coinsInPurse</span><span class="p">:</span> <span class="n">Int</span>
-</span><span class='line'>    <span class="k">init</span><span class="p">(</span><span class="nl">coins</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">coinsInPurse</span> <span class="o">=</span> <span class="n">Bank</span><span class="p">.</span><span class="n">vendCoins</span><span class="p">(</span><span class="n">coins</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">func</span> <span class="n">winCoins</span><span class="p">(</span><span class="nl">coins</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">coinsInPurse</span> <span class="o">+=</span> <span class="n">Bank</span><span class="p">.</span><span class="n">vendCoins</span><span class="p">(</span><span class="n">coins</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">deinit</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">Bank</span><span class="p">.</span><span class="n">receiveCoins</span><span class="p">(</span><span class="n">coinsInPurse</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">var</span> <span class="nl">playerOne</span><span class="p">:</span> <span class="n">Player</span><span class="o">?</span> <span class="o">=</span> <span class="n">Player</span><span class="p">(</span><span class="nl">coins</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
-</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;A new player has joined the game with \(playerOne!.coinsInPurse) coins&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1">// prints &quot;A new player has joined the game with 100 coins&quot;</span>
-</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;There are now \(Bank.coinsInBank) coins left in the bank&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1">// prints &quot;There are now 9900 coins left in the bank&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">playerOne</span><span class="o">!</span><span class="p">.</span><span class="n">winCoins</span><span class="p">(</span><span class="mi">2</span><span class="n">_000</span><span class="p">)</span>
-</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;PlayerOne won 2000 coins &amp; now has \(playerOne!.coinsInPurse) coins&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1">// prints &quot;PlayerOne won 2000 coins &amp; now has 2100 coins&quot;</span>
-</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;The bank now only has \(Bank.coinsInBank) coins left&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1">// prints &quot;The bank now only has 7900 coins left&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">playerOne</span> <span class="o">=</span> <span class="nb">nil</span>
-</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;PlayerOne has left the game&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1">// prints &quot;PlayerOne has left the game&quot;</span>
-</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;The bank now has \(Bank.coinsInBank) coins&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1">// prints &quot;The bank now has 10000 coins&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="3">&larr; Older</a>
@@ -1530,6 +1467,10 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/07/02/swift-string-operation/">Swift String Operations</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/07/02/surrogate-support-for-swifts-string/">Surrogate Support for Swift&#8217;s String</a>
       </li>
     
@@ -1545,10 +1486,6 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
         <a href="/blog/2015/05/13/popcount-in-ruby/">Popcount in Ruby</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/05/12/learning-swift-part-14/">Learning Swift Part 14 - Optional Chaining</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1557,11 +1494,11 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (9)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (16)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (9)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (17)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 93.75%'>algorithm(9)</a> <a href='/blog/categories/android' style='font-size: 82.5%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 78.75%'>codility(5)</a> <a href='/blog/categories/cpp' style='font-size: 63.75%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.75%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 63.75%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.75%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.75%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 71.25%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 67.5%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.75%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 82.5%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(16)</a> <a href='/blog/categories/vim' style='font-size: 67.5%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.75%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 91.76470588235294%'>algorithm(9)</a> <a href='/blog/categories/android' style='font-size: 81.17647058823529%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 77.64705882352942%'>codility(5)</a> <a href='/blog/categories/cpp' style='font-size: 63.529411764705884%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.529411764705884%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 63.529411764705884%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.529411764705884%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.529411764705884%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 70.58823529411765%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 67.05882352941177%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.529411764705884%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 81.17647058823529%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(17)</a> <a href='/blog/categories/vim' style='font-size: 67.05882352941177%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.529411764705884%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

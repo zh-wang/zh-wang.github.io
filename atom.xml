@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-07-02T12:47:59+09:00</updated>
+  <updated>2015-07-02T17:05:27+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -14,13 +14,74 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Swift String Operations]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/07/02/swift-string-operation/"/>
+    <updated>2015-07-02T16:24:46+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/07/02/swift-string-operation</id>
+    <content type="html"><![CDATA[<p>String operations of Swift seems to be easy to handle, but we should take care of them in development.</p>
+
+<p>For example, this is a common code snippet which stays on the top spot, by searching &lsquo;<strong>swift substring</strong>&rsquo; from <a href="www.google.co.jp">www.google.co.jp</a>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">extension</span> <span class="n">String</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">public</span> <span class="k">func</span> <span class="n">substring</span><span class="p">(</span><span class="nl">location</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span> <span class="nl">length</span><span class="p">:</span><span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">!</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="p">(</span><span class="nb">self</span> <span class="kt">as</span> <span class="bp">NSString</span><span class="p">).</span><span class="n">substringWithRange</span><span class="p">(</span><span class="n">NSMakeRange</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">length</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But, it is not correct.</p>
+
+<p>Take a look at the following test.</p>
+
+<p><img src="http://zh-wang.github.io/images/2015_07_02_image01.png" title="Test Failed" alt="IMGAE_A" /></p>
+
+<p>Because index in <code>NSString</code> format is different from index in <code>String</code> format. The text is counted as length 2 in <code>NSString</code>, but only 1 in <code>String</code>.</p>
+
+<p>So using <code>substring</code> in <code>NSString</code> only get half of it, from its binary expression. Then certainly, it cannot be decoded correctly.</p>
+
+<p><a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html">Swift Online Guide</a> has a detail explanation for this problem.</p>
+
+<p>We should use <code>String.Index</code> to handle different byte length of each character, and also decomposed and precomposed characters.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">public</span> <span class="k">func</span> <span class="n">substring2</span><span class="p">(</span><span class="nl">location</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">length</span><span class="p">:</span><span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">!</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">assert</span><span class="p">(</span><span class="n">location</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;OMG&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">assert</span><span class="p">(</span><span class="n">location</span> <span class="o">+</span> <span class="n">length</span> <span class="o">&lt;=</span> <span class="n">count</span><span class="p">(</span><span class="nb">self</span><span class="p">),</span> <span class="s">&quot;OMG again&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">startIndex</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">startIndex</span>
+</span><span class='line'>    <span class="n">startIndex</span> <span class="o">=</span> <span class="n">advance</span><span class="p">(</span><span class="n">startIndex</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">res</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">substringFromIndex</span><span class="p">(</span><span class="n">startIndex</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">var</span> <span class="n">endIndex</span> <span class="o">=</span> <span class="n">advance</span><span class="p">(</span><span class="n">startIndex</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">res</span><span class="p">.</span><span class="n">substringToIndex</span><span class="p">(</span><span class="n">endIndex</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img src="" title="images/2015_07_02_image02.png &quot;Test Passed" alt="IMAGE_B" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Surrogate Support for Swift's String]]></title>
     <link href="http://zh-wang.github.io/blog/2015/07/02/surrogate-support-for-swifts-string/"/>
     <updated>2015-07-02T12:41:54+09:00</updated>
     <id>http://zh-wang.github.io/blog/2015/07/02/surrogate-support-for-swifts-string</id>
     <content type="html"><![CDATA[<p>String in Swift does not support UTF16 surrogate in default.</p>
 
-<p>From <a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html">Swift Official Guild</a></p>
+<p>From <a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html">Swift Official Guide</a></p>
 
 <blockquote><p>A Unicode scalar is any Unicode code point in the range U+0000 to U+D7FF inclusive or U+E000 to U+10FFFF inclusive. Unicode scalars do not include the Unicode surrogate pair code points, which are the code points in the range U+D800 to U+DFFF inclusive.</p></blockquote>
 
@@ -3448,112 +3509,6 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 </span><span class='line'>
 </span><span class='line'>    <span class="n">paragraph</span> <span class="o">=</span> <span class="nb">nil</span>
 </span><span class='line'>    <span class="c1">// prints &quot;p is being deinitialized&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Swift Part 12 - Deinitialization]]></title>
-    <link href="http://zh-wang.github.io/blog/2015/01/06/learning-swift-part-12/"/>
-    <updated>2015-01-06T19:34:40+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2015/01/06/learning-swift-part-12</id>
-    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
-
-<h3>Deinitialization</h3>
-
-<ul>
-<li><p>How Deinitialization Works</p>
-
-<p>  Swift automatically deallocates your instances when they are no longer needed, to free up resources. Swift handles the memory management of instances through automatic reference counting (ARC), as described in Automatic Reference Counting.</p></li>
-<li><p>Deinitializers in Action, a sample of Bank operations</p></li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">struct</span> <span class="n">Bank</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">static</span> <span class="k">var</span> <span class="n">coinsInBank</span> <span class="o">=</span> <span class="mi">10</span><span class="n">_000</span>
-</span><span class='line'>    <span class="k">static</span> <span class="k">func</span> <span class="n">vendCoins</span><span class="p">(</span><span class="k">var</span> <span class="nl">numberOfCoinsToVend</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">numberOfCoinsToVend</span> <span class="o">=</span> <span class="n">min</span><span class="p">(</span><span class="n">numberOfCoinsToVend</span><span class="p">,</span> <span class="n">coinsInBank</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">coinsInBank</span> <span class="o">-=</span> <span class="n">numberOfCoinsToVend</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">numberOfCoinsToVend</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">static</span> <span class="k">func</span> <span class="n">receiveCoins</span><span class="p">(</span><span class="nl">coins</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">coinsInBank</span> <span class="o">+=</span> <span class="n">coins</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="n">Player</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">var</span> <span class="nl">coinsInPurse</span><span class="p">:</span> <span class="n">Int</span>
-</span><span class='line'>    <span class="k">init</span><span class="p">(</span><span class="nl">coins</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">coinsInPurse</span> <span class="o">=</span> <span class="n">Bank</span><span class="p">.</span><span class="n">vendCoins</span><span class="p">(</span><span class="n">coins</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">func</span> <span class="n">winCoins</span><span class="p">(</span><span class="nl">coins</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">coinsInPurse</span> <span class="o">+=</span> <span class="n">Bank</span><span class="p">.</span><span class="n">vendCoins</span><span class="p">(</span><span class="n">coins</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">deinit</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">Bank</span><span class="p">.</span><span class="n">receiveCoins</span><span class="p">(</span><span class="n">coinsInPurse</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">var</span> <span class="nl">playerOne</span><span class="p">:</span> <span class="n">Player</span><span class="o">?</span> <span class="o">=</span> <span class="n">Player</span><span class="p">(</span><span class="nl">coins</span><span class="p">:</span> <span class="mi">100</span><span class="p">)</span>
-</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;A new player has joined the game with \(playerOne!.coinsInPurse) coins&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1">// prints &quot;A new player has joined the game with 100 coins&quot;</span>
-</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;There are now \(Bank.coinsInBank) coins left in the bank&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1">// prints &quot;There are now 9900 coins left in the bank&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">playerOne</span><span class="o">!</span><span class="p">.</span><span class="n">winCoins</span><span class="p">(</span><span class="mi">2</span><span class="n">_000</span><span class="p">)</span>
-</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;PlayerOne won 2000 coins &amp; now has \(playerOne!.coinsInPurse) coins&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1">// prints &quot;PlayerOne won 2000 coins &amp; now has 2100 coins&quot;</span>
-</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;The bank now only has \(Bank.coinsInBank) coins left&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1">// prints &quot;The bank now only has 7900 coins left&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">playerOne</span> <span class="o">=</span> <span class="nb">nil</span>
-</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;PlayerOne has left the game&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1">// prints &quot;PlayerOne has left the game&quot;</span>
-</span><span class='line'><span class="n">println</span><span class="p">(</span><span class="s">&quot;The bank now has \(Bank.coinsInBank) coins&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1">// prints &quot;The bank now has 10000 coins&quot;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
