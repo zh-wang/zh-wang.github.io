@@ -9,7 +9,7 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="String operations of Swift seems to be easy to handle, but we should take care of them in development. For example, this is a common code snippet &hellip;">
+  <meta name="description" content="Introduction In computer science, the longest increasing subsequence problem is to find a subsequence of a given sequence in which the subsequence& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -59,7 +59,7 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="String operations of Swift seems to be easy to handle, but we should take care of them in development. For example, this is a common code snippet &hellip;" />
+<meta property="og:description" content="Introduction In computer science, the longest increasing subsequence problem is to find a subsequence of a given sequence in which the subsequence& &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -102,6 +102,183 @@ MathJax.Hub.Config({
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/07/15/longest-ascending-subsequence/">Longest Ascending Subsequence</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-07-15T22:16:50+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/07/15/longest-ascending-subsequence/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/07/15/longest-ascending-subsequence/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Introduction</h2>
+
+<p>In computer science, the longest increasing subsequence problem is to find a subsequence of a given sequence in which the subsequence&rsquo;s elements are in sorted order, lowest to highest, and in which the subsequence is as long as possible.</p>
+
+<p>For example, a longest increasing subsequence of <code>0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15</code> is <code>0, 2, 6, 9, 11, 15</code>.</p>
+
+<h2>An O(N<sup>2</sup>) Solution</h2>
+
+<p>We define a <code>dp</code> table, which <code>dp[i]</code> is the length of a longest subsequence which ends at <code>inputs[i]</code>.</p>
+
+<p>For each <code>inputs[i]</code>, we search every inputs before it, and choose the longest possible <code>dp</code> value from them, fill it in <code>dp[i]</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">inputs</span> <span class="o">=</span> <span class="o">{</span><span class="mi">0</span><span class="o">,</span> <span class="mi">8</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">12</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">10</span><span class="o">,</span> <span class="mi">6</span><span class="o">,</span> <span class="mi">14</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">9</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">13</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">11</span><span class="o">,</span> <span class="mi">7</span><span class="o">,</span> <span class="mi">15</span><span class="o">};</span>
+</span><span class='line'><span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">dp</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">128</span><span class="o">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">dp</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span> <span class="n">dp</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="o">}</span>
+</span><span class='line'>    <span class="n">dp</span><span class="o">[</span><span class="mi">0</span><span class="o">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">inputs</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">longest</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span><span class="o">;</span> <span class="n">j</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">inputs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">&gt;</span> <span class="n">inputs</span><span class="o">[</span><span class="n">j</span><span class="o">])</span> <span class="o">{</span>
+</span><span class='line'>                <span class="n">longest</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">longest</span><span class="o">,</span> <span class="n">dp</span><span class="o">[</span><span class="n">j</span><span class="o">]</span> <span class="o">+</span> <span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="n">dp</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">longest</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">dp</span><span class="o">[</span><span class="n">inputs</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">];</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>An O(N*Log(N)) Solution</h2>
+
+<p>We define a <code>seq</code> table, which <code>seq[i]</code> is the ending number of subsequence whose length is <code>i</code>.</p>
+
+<h4>Note that, <code>seq</code> is always in increasing order.</h4>
+
+<p>Because if these exist $i &lt; j$ and $seq[i] > seq[j]$, which means a longer subsequence end with a smaller number.</p>
+
+<p>Then we could generate a new subsequence, which length is $i$, by removing $j - i$ numbers from tail of <code>j</code>-length subsequence. The ending number of the new subsequence will be smaller than $seq[i]$.</p>
+
+<p>Therefore, we can use binary search in each iteration, to find the largest <code>seq[k]</code> which is smaller than <code>inputs[i]</code>. If <code>k</code> can be found (<code>k &gt; -1</code>), then we update the number stored in <code>seq[k]</code> with <code>inputs[i]</code> if <code>inputs[i] &lt; seq[k]</code>.</p>
+
+<p>This yields an $O(N*Log(N))$ solution.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">private</span> <span class="kt">int</span><span class="o">[]</span> <span class="n">seq</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">[</span><span class="mi">128</span><span class="o">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">int</span> <span class="nf">solution2</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">seq</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span> <span class="n">seq</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">;</span> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="n">Integer</span><span class="o">.</span><span class="na">MIN_VALUE</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">inputs</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">longest</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">bestSeqLength</span> <span class="o">=</span> <span class="n">binarySearch</span><span class="o">(</span><span class="n">seq</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="n">i</span><span class="o">,</span> <span class="n">inputs</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">bestSeqLength</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">longest</span> <span class="o">=</span> <span class="n">bestSeqLength</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="n">seq</span><span class="o">[</span><span class="n">longest</span><span class="o">]</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">min</span><span class="o">(</span><span class="n">seq</span><span class="o">[</span><span class="n">longest</span><span class="o">],</span> <span class="n">inputs</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+</span><span class='line'>        <span class="n">res</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">res</span><span class="o">,</span> <span class="n">longest</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">res</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">public</span> <span class="kt">int</span> <span class="nf">binarySearch</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">array</span><span class="o">,</span> <span class="kt">int</span> <span class="n">begin</span><span class="o">,</span> <span class="kt">int</span> <span class="n">end</span><span class="o">,</span> <span class="kt">int</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">s</span> <span class="o">=</span> <span class="n">begin</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">t</span> <span class="o">=</span> <span class="n">end</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">m</span> <span class="o">=</span> <span class="n">s</span><span class="o">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">result</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span> <span class="c1">// !!!</span>
+</span><span class='line'>    <span class="k">while</span> <span class="o">(</span><span class="n">s</span> <span class="o">&lt;=</span> <span class="n">t</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">m</span> <span class="o">=</span> <span class="o">(</span><span class="n">s</span> <span class="o">+</span> <span class="n">t</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">array</span><span class="o">[</span><span class="n">m</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">s</span> <span class="o">=</span> <span class="n">m</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>            <span class="n">result</span> <span class="o">=</span> <span class="n">m</span><span class="o">;</span> <span class="c1">// result index, which array.get(result) is most close to &amp; less than target</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="nf">if</span> <span class="o">(</span><span class="n">array</span><span class="o">[</span><span class="n">m</span><span class="o">]</span> <span class="o">==</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="n">m</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+</span><span class='line'>            <span class="n">t</span> <span class="o">=</span> <span class="n">m</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">result</span><span class="o">;</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1459,187 +1636,6 @@ This is a basic problem which can be solved directly by a Tri-tree.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/03/23/enable-hide-and-internal-classes-in-android-sdk/">Enable Hide and Internal Classes in Android SDK</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-03-23T14:36:26+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2015/03/23/enable-hide-and-internal-classes-in-android-sdk/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2015/03/23/enable-hide-and-internal-classes-in-android-sdk/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Hide and Internal Classes</h2>
-
-<p>During android development, you may need to access some method or classes which is not contained in official SDK.<br/>
-For example, <code>dalvik.system.VMRuntime</code>, <code>com.android.internal.app.AlertController</code>, etc.<br/>
-Although you can done with Java&rsquo;s reflection, it is not developer friendly.<br/>
-Here is a more friendly way to do this.</p>
-
-<h2>Preparation</h2>
-
-<p>(I&rsquo;m working on a Mac. But I think procedure is similar if working on other OS.)</p>
-
-<ol>
-<li>Android&rsquo;s official SDK. We use android-17(4.2.2) here.</li>
-<li>Android emulator.</li>
-<li>Can run ruby.</li>
-</ol>
-
-
-<h2>Steps</h2>
-
-<ol>
-<li>Create an emulator for 4.2.2 OS. Name it as &ldquo;android422&rdquo;. (by command line or Eclipse)</li>
-<li><p>Pull all framework libraries to working machine, which contains all hide and internal classes.</p>
-
-<pre><code> emulator -avd android422
- adb pull /system/framework/* framework
-</code></pre></li>
-<li><p>Get decompiling tools for odex. Download <code>smali-2.0.3.jar</code> and <code>baksmali-2.0.3.jar</code>. <a href="https://code.google.com/p/smali/">https://code.google.com/p/smali/</a></p></li>
-<li>Put them in same directory, run <code>./create_custom_sdk.rb</code></li>
-<li>Then you use choose the created custom sdk from Eclipse.</li>
-</ol>
-
-
-<p><img src="/images/2015_03_23_image01.png" title="Choose custom sdk" alt="Image A" /></p>
-
-<h2>Source</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># -- create_custom_sdk.rb --</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">#!/usr/bin/env ruby</span>
-</span><span class='line'><span class="c1"># encoding: utf-8</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># clear &#39;out&#39; directory</span>
-</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;rm -rf out&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;mkdir out&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="no">Dir</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;out&quot;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># core.odex(optimized dex) file -&gt; dex file</span>
-</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;java -jar ../baksmali-2.0.3.jar -a 17 -d ../framework -x ../framework/core.odex -o internal_core_smali&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;java -jar ../smali-2.0.3.jar -x -o core.dex internal_core_smali&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="c1"># framework.odex(optimized dex) file -&gt; dex file</span>
-</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;java -jar ../baksmali-2.0.3.jar -a 17 -d ../framework -x ../framework/framework.odex -o internal_framework_smali&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;java -jar ../smali-2.0.3.jar -x -o framework.dex internal_framework_smali&quot;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># .dex -&gt; .class, which contains all symbols including hide and internal</span>
-</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;dex2jar core.dex&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;unzip core_dex2jar.jar -d full-symbol-android&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;dex2jar framework.dex&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;unzip framework_dex2jar.jar -d full-symbol-android&quot;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># copy offical sdk here</span>
-</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;cp -r ~/sdk/android-sdk-macosx/platforms/android-17 android422&quot;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># unzip offical android.jar, merge full-symbol-android into it</span>
-</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;unzip android422/android.jar -d custom-android&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;cp -r full-symbol-android/* custom-android&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="no">Dir</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;custom-android&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;zip -r9 internal-android.zip *&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="no">Dir</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="s2">&quot;..&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;mv custom-android/internal-android.zip android422/android.jar&quot;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># Fix some properties to enable custom sdk shown in Eclipse</span>
-</span><span class='line'><span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;android422/build.prop&quot;</span>
-</span><span class='line'><span class="n">text</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-</span><span class='line'><span class="nb">puts</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/ro\.build\.id=.*/</span><span class="p">,</span> <span class="s2">&quot;ro.build.id=Custom422&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/ro\.build\.version\.sdk=17/</span><span class="p">,</span> <span class="s2">&quot;ro.build.version.sdk=422&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/ro\.build\.version\.release=.*/</span><span class="p">,</span> <span class="s2">&quot;ro.build.version.release=4.2.2.c&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span> <span class="n">file</span> <span class="o">&lt;&lt;</span> <span class="nb">puts</span> <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;android422/source.properties&quot;</span>
-</span><span class='line'><span class="n">text</span> <span class="o">=</span> <span class="no">File</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-</span><span class='line'><span class="nb">puts</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/AndroidVersion\.ApiLevel=17/</span><span class="p">,</span> <span class="s2">&quot;AndroidVersion.ApiLevel=422&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="o">.</span><span class="n">gsub</span><span class="p">(</span><span class="sr">/Pkg\.Desc=Android SDK Platform 4\.2\.2/</span><span class="p">,</span> <span class="s2">&quot;Pkg.Desc=Android SDK Platform Custom422&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="p">{</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span> <span class="n">file</span> <span class="o">&lt;&lt;</span> <span class="nb">puts</span> <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># Copy custom sdk to offical sdk&#39;s directory</span>
-</span><span class='line'><span class="nb">system</span><span class="p">(</span><span class="s2">&quot;cp -r android422 ~/sdk/android-sdk-macosx/platforms&quot;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="s2">&quot;Done&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -1653,6 +1649,10 @@ Here is a more friendly way to do this.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/07/15/longest-ascending-subsequence/">Longest Ascending Subsequence</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/07/02/swift-string-operation/">Swift String Operations</a>
@@ -1670,10 +1670,6 @@ Here is a more friendly way to do this.</p>
         <a href="/blog/2015/05/14/check-stack-usage-of-cpp-code/">checkstack.plを遊んでみた</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/05/13/popcount-in-ruby/">Popcount in Ruby</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1682,11 +1678,11 @@ Here is a more friendly way to do this.</p>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (9)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (17)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (11)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (17)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 91.76470588235294%'>algorithm(9)</a> <a href='/blog/categories/android' style='font-size: 81.17647058823529%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 77.64705882352942%'>codility(5)</a> <a href='/blog/categories/cpp' style='font-size: 63.529411764705884%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.529411764705884%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 63.529411764705884%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.529411764705884%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.529411764705884%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 70.58823529411765%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 67.05882352941177%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.529411764705884%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 81.17647058823529%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(17)</a> <a href='/blog/categories/vim' style='font-size: 67.05882352941177%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.529411764705884%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 98.8235294117647%'>algorithm(11)</a> <a href='/blog/categories/android' style='font-size: 81.17647058823529%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 77.64705882352942%'>codility(5)</a> <a href='/blog/categories/cpp' style='font-size: 63.529411764705884%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.529411764705884%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 63.529411764705884%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.529411764705884%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.529411764705884%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 70.58823529411765%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 67.05882352941177%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.529411764705884%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 81.17647058823529%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(17)</a> <a href='/blog/categories/vim' style='font-size: 67.05882352941177%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.529411764705884%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithm | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/algorithm/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-07-02T18:53:48+09:00</updated>
+  <updated>2015-07-15T23:03:53+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,173 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Longest Ascending Subsequence]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/07/15/longest-ascending-subsequence/"/>
+    <updated>2015-07-15T22:16:50+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/07/15/longest-ascending-subsequence</id>
+    <content type="html"><![CDATA[<h2>Introduction</h2>
+
+<p>In computer science, the longest increasing subsequence problem is to find a subsequence of a given sequence in which the subsequence&rsquo;s elements are in sorted order, lowest to highest, and in which the subsequence is as long as possible.</p>
+
+<p>For example, a longest increasing subsequence of <code>0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15</code> is <code>0, 2, 6, 9, 11, 15</code>.</p>
+
+<h2>An O(N<sup>2</sup>) Solution</h2>
+
+<p>We define a <code>dp</code> table, which <code>dp[i]</code> is the length of a longest subsequence which ends at <code>inputs[i]</code>.</p>
+
+<p>For each <code>inputs[i]</code>, we search every inputs before it, and choose the longest possible <code>dp</code> value from them, fill it in <code>dp[i]</code>.</p>
+
+<pre><code class="java">    private int[] inputs = {0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15};
+    private int[] dp = new int[128];
+
+    public int solution() {
+        for (int i = 0; i &lt; dp.length; i++) { dp[i] = 0; }
+        dp[0] = 1;
+
+        for (int i = 1; i &lt; inputs.length; i++) {
+            int longest = 1;
+            for (int j = 0; j &lt; i; j++) {
+                if (inputs[i] &gt; inputs[j]) {
+                    longest = Math.max(longest, dp[j] + 1);
+                }
+            }
+            dp[i] = longest;
+        }
+        return dp[inputs.length - 1];
+    }
+</code></pre>
+
+<h2>An O(N*Log(N)) Solution</h2>
+
+<p>We define a <code>seq</code> table, which <code>seq[i]</code> is the ending number of subsequence whose length is <code>i</code>.</p>
+
+<h4>Note that, <code>seq</code> is always in increasing order.</h4>
+
+<p>Because if these exist $i &lt; j$ and $seq[i] > seq[j]$, which means a longer subsequence end with a smaller number.</p>
+
+<p>Then we could generate a new subsequence, which length is $i$, by removing $j - i$ numbers from tail of <code>j</code>-length subsequence. The ending number of the new subsequence will be smaller than $seq[i]$.</p>
+
+<p>Therefore, we can use binary search in each iteration, to find the largest <code>seq[k]</code> which is smaller than <code>inputs[i]</code>. If <code>k</code> can be found (<code>k &gt; -1</code>), then we update the number stored in <code>seq[k]</code> with <code>inputs[i]</code> if <code>inputs[i] &lt; seq[k]</code>.</p>
+
+<p>This yields an $O(N*Log(N))$ solution.</p>
+
+<pre><code class="java">    private int[] seq = new int[128];
+
+    public int solution2() {
+        for (int i = 0; i &lt; seq.length; i++) { seq[i] = Integer.MAX_VALUE; }
+
+        int res = Integer.MIN_VALUE;
+        for (int i = 0; i &lt; inputs.length; i++) {
+            int longest = 1;
+            int bestSeqLength = binarySearch(seq, 0, i, inputs[i]);
+            if (bestSeqLength &gt; -1) {
+                longest = bestSeqLength + 1;
+            }
+            seq[longest] = Math.min(seq[longest], inputs[i]);
+            res = Math.max(res, longest);
+        }
+        return res;
+    }
+
+    public int binarySearch(int[] array, int begin, int end, int target) {
+        int s = begin;
+        int t = end;
+        int m = s;
+        int result = -1; // !!!
+        while (s &lt;= t) {
+            m = (s + t) / 2;
+            if (array[m] &lt; target) {
+                s = m + 1;
+                result = m; // result index, which array.get(result) is most close to &amp; less than target
+            } else if (array[m] == target) {
+                return m;
+            } else {
+                t = m - 1;
+            }
+        }
+        return result;
+    }
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Popcount in Ruby]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/05/13/popcount-in-ruby/"/>
+    <updated>2015-05-13T16:14:27+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/05/13/popcount-in-ruby</id>
+    <content type="html"><![CDATA[<h3>Source</h3>
+
+<pre><code class="ruby">    # Assume v is 32-bit long
+    def popcount(v)
+        v = v - ((v &gt;&gt; 1) &amp; 0x55555555)
+        v = (v &amp; 0x33333333) + ((v &gt;&gt; 2) &amp; 0x33333333)
+        ((v + (v &gt;&gt; 4) &amp; 0xF0F0F0F) * 0x1010101) &gt;&gt; 24
+    end
+
+    puts popcount(8)
+</code></pre>
+
+<h3>Analysis</h3>
+
+<p>For example, let v = 01001110 (lowest 8 bits, others are all 0, in binary)</p>
+
+<h4>Step 1</h4>
+
+<pre><code>v = v - ((v &gt;&gt; 1) &amp; 0x55555555)
+</code></pre>
+
+<p>This step count 1&rsquo;s appearance in each 2bits.</p>
+
+<pre><code>0x5 = 0101
+
+In binary,
+00 - 00 &amp; 01 = 00 (0 1s in 00)
+01 - 00 &amp; 01 = 01 (1 1s in 01)
+10 - 01 &amp; 01 = 01 (1 1s in 10)
+11 - 01 &amp; 01 = 10 (2 1s in 11)
+
+01001110 -&gt; 01001001
+</code></pre>
+
+<h4>Step 2</h4>
+
+<pre><code>v = (v &amp; 0x33333333) + ((v &gt;&gt; 2) &amp; 0x33333333)
+</code></pre>
+
+<p>This step mask high 2 bits to 0 in each 4 bits, then add low 2 bits in each 4 bits.</p>
+
+<pre><code>In binary,
+0100 -&gt; 0000 + 0001 -&gt; 0001
+1001 -&gt; 0001 + 0010 -&gt; 0011
+
+01001110 -&gt; 00010011
+</code></pre>
+
+<h4>Step 3</h4>
+
+<pre><code>((v + (v &gt;&gt; 4) &amp; 0xF0F0F0F) * 0x1010101) &gt;&gt; 24
+</code></pre>
+
+<p>This step <code>(v + (v &gt;&gt; 4) &amp; 0xF0F0F0F)</code> add high 4 bits to low 4 bits, then <code>&amp; 0xF0F0F0F</code> mask high 4 bit to 0 in each 8 bits.</p>
+
+<p><code>* 0x1010101</code> can be treaded as <code>* (0x01000000 + 0x00010000 + 0x00000100 + 0x00000001)</code>.</p>
+
+<p><code>* 0x0100000</code> means left shift 24 times.</p>
+
+<p><code>* 0x0001000</code> means left shift 16 times.</p>
+
+<p><code>* 0x0000010</code> means left shift 8 times.</p>
+
+<p><code>* 0x0000000</code> do nothing.</p>
+
+<p>Then we add them up. Now we have the sum of 1s&#8217; count in each 8 bits, stored in a 32-bits data&rsquo;s highest 8 bits.</p>
+
+<p><code>&gt;&gt; 24</code> outputs the sum.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[FB HackerCup 2015 R1 40:CorporateGifting]]></title>
@@ -323,293 +490,6 @@ int main(){
     //for(int i=0;i&lt;21;i++) cout&lt;&lt;k[i]&lt;&lt;" ";
     return 0;
 }
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Analysis of PROB Broken Necklace]]></title>
-    <link href="http://zh-wang.github.io/blog/2015/02/25/usaco-prob-broken-necklace/"/>
-    <updated>2015-02-25T17:58:16+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2015/02/25/usaco-prob-broken-necklace</id>
-    <content type="html"><![CDATA[<h2>Introduction</h2>
-
-<p>This is an analysis of PROB Broken Necklace, one of USA Computer Olympiad&rsquo;s training problems.<br/>
-Just doing some disposal on my old stuff.</p>
-
-<h2>Description</h2>
-
-<p>You have a necklace of N red, white, or blue beads (3&lt;=N&lt;=350) some of which are red, others blue, and others white, arranged at random. Here are two examples for n=29:</p>
-
-<pre><code>            1 2                               1 2
-        r b b r                           b r r b
-      r         b                       b         b
-     r           r                     b           r
-    r             r                   w             r
-   b               r                 w               w
-  b                 b               r                 r
-  b                 b               b                 b
-  b                 b               r                 b
-   r               r                 b               r
-    b             r                   r             r
-     b           r                     r           r
-       r       r                         r       b
-         r b r                             r r w
-        Figure A                         Figure B
-                    r red bead
-                    b blue bead
-                    w white bead
-</code></pre>
-
-<p>The beads considered first and second in the text that follows have been marked in the picture.</p>
-
-<p>The configuration in Figure A may be represented as a string of b&rsquo;s and r&rsquo;s, where b represents a blue bead and r represents a red one, as follows: brbrrrbbbrrrrrbrrbbrbbbbrrrrb .</p>
-
-<p>Suppose you are to break the necklace at some point, lay it out straight, and then collect beads of the same color from one end until you reach a bead of a different color, and do the same for the other end (which might not be of the same color as the beads collected before this).</p>
-
-<p>Determine the point where the necklace should be broken so that the most number of beads can be collected.</p>
-
-<!--more-->
-
-
-<h2>Analysis</h2>
-
-<p>Given an input string &lsquo;wwwbbrwrbrbrrbrbrwrwwrbwrwrrb&rsquo;, we concatenate it with itself, result in &lsquo;wwwbbrwrbrbrrbrbrwrwwrbwrwrrbwwwbbrwrbrbrrbrbrwrwwrbwrwrrb&rsquo;. This trick, working on handling minus or over-length index is easier.</p>
-
-<ol>
-<li><p>Brute force solution.</p>
-
-<p> For each index $a_i$ as a start, if $a_{i+1}$ can be picked into the longest substring, we pick it then do this again on $a_{i+1}$. Note that, if $a_i$ is w, we must treat it as b and r, one by one. We do N times of picking attempt for each $a_i$. Therefore complexity is O(N<sup>2</sup>). Just a straight forward solution.</p></li>
-<li><p>DP solution.</p>
-
-<p> We denote substring composed by successive r, which <strong>ends</strong> at index $i$ to $t_{i,r}$.</p></li>
-</ol>
-
-
-<p><script type="math/tex; mode=display">
-    t<em>{i,r} = \begin{cases}
-        t</em>{i-1,r} + 1 &amp; \text{if $a_i$ is r or w} \
-        0 &amp; \text{if $a_i$ is b or $i$ > N}
-    \end{cases}
-</script></p>
-
-<p>Similarly, we denote substring composed by successive b, which <strong>ends</strong> at index $i$ to $t_{i,b}$.</p>
-
-<p><script type="math/tex; mode=display">
-    t<em>{i,b} = \begin{cases}
-        t</em>{i-1,b} + 1 &amp; \text{if $a_i$ is b or w} \
-        0 &amp; \text{if $a_i$ is r or $i$ > N}
-    \end{cases}
-</script></p>
-
-<p>On the other hand, we denote substring composed by successive r, which <strong>starts</strong> at index $i$ to $s_{i,r}$.</p>
-
-<p><script type="math/tex; mode=display">
-    s<em>{i,r} = \begin{cases}
-        s</em>{i+1,r} + 1 &amp; \text{if $a_i$ is r or w} \
-        0 &amp; \text{if $a_{i-1}$ is b or $i = 0$}
-    \end{cases}
-</script></p>
-
-<p>And substring composed by successive b, which <strong>starts</strong> at index $i$ to $t_{i,b}$.</p>
-
-<p><script type="math/tex; mode=display">
-    s<em>{i,b} = \begin{cases}
-        s</em>{i+1,b} + 1 &amp; \text{if $a_i$ is b or w} \
-        0 &amp; \text{if $a_{i-1}$ is r or $i = 0$}
-    \end{cases}
-</script></p>
-
-<p>For each index $a_i$, $\max \{s_{i,r}, s_{i,b} \} + \max \{t_{i,r}, t_{i,b} \}$ is the length of longest substring if we break it at index $i$. We do this for N times, the greatest one is the answer. Complexity of this algorithm is O(n).</p>
-
-<h2>Source Code of DP Solution</h2>
-
-<pre><code class="cpp">/*
-ID: viennak1
-PROB: beads
-LANG: C++
-*/
-
-// Section 1.1 PROB Broken Necklace
-
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;cstring&gt;
-#include &lt;cmath&gt;
-#include &lt;climits&gt;
-#include &lt;cassert&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;algorithm&gt;
-#include &lt;map&gt;
-#include &lt;set&gt;
-#include &lt;queue&gt;
-#include &lt;sstream&gt;
-#include &lt;numeric&gt;
-#include &lt;fstream&gt;
-#include &lt;iostream&gt;
-#include &lt;utility&gt;
-#include &lt;iomanip&gt;
-#include &lt;stack&gt;
-using namespace std;
-
-int N,res;
-int ENDS[700][2],STARTS[700][2];
-string s;
-int main(){
-    ofstream fout ("beads.out");
-    ifstream fin ("beads.in");
-    fin&gt;&gt;N; fin&gt;&gt;s;
-    int L=s.length();
-    s=s+s;
-    if(s[0]=='r') ENDS[0][0]=1;
-    else if(s[0]=='b') ENDS[0][1]=1;
-    else ENDS[0][0]=ENDS[0][1]=1;
-    for(int i=1;i&lt;L*2;i++){
-        if(s[i]=='r') ENDS[i][0]=ENDS[i-1][0]+1;
-        if(s[i]=='b') ENDS[i][1]=ENDS[i-1][1]+1;
-        if(s[i]=='w') ENDS[i][0]=ENDS[i-1][0]+1,ENDS[i][1]=ENDS[i-1][1]+1;
-    }
-    if(s[2*L-1]=='r') STARTS[2*L-1][0]=1;
-    else if(s[2*L-1]=='b') STARTS[2*L-1][1]=1;
-    else STARTS[2*L-1][0]=STARTS[2*L-1][1]=1;
-    for(int i=2*L-2;i&gt;=0;i--){
-        if(s[i]=='r') STARTS[i][0]=STARTS[i+1][0]+1;
-        if(s[i]=='b') STARTS[i][1]=STARTS[i+1][1]+1;
-        if(s[i]=='w') STARTS[i][0]=STARTS[i+1][0]+1,STARTS[i][1]=STARTS[i+1][1]+1;
-    }
-    for(int i=0;i&lt;2*L-1;i++)
-        res=max(res, max(ENDS[i][0],ENDS[i][1])+max(STARTS[i+1][0],STARTS[i+1][1]));
-    if(res&gt;L) fout&lt;&lt;L&lt;&lt;endl;
-    else fout&lt;&lt;res&lt;&lt;endl;
-    return 0;
-}
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Codility - Phosphorus - 2014]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/08/14/codility-phosphorus-2014/"/>
-    <updated>2014-08-14T15:04:36+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/08/14/codility-phosphorus-2014</id>
-    <content type="html"><![CDATA[<h2>Introduction</h2>
-
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Prosphorus 2014 Challenge</a>.</p>
-
-<ul>
-<li>This problem is, finding the minimal number of guards to set in a tree which can prevent prisoners escaping to tree leaves.</li>
-<li>Time bound and space bound are both O(N).</li>
-</ul>
-
-
-<h2>Analysis</h2>
-
-<ul>
-<li>Create a <code>Node</code> structure, holding its parent index, a boolean value presenting it is a prisoner or not. Then a boolean value presenting whether prisoners can escape down to leaves, and another boolean value presenting whether prisoners can escape from the root.</li>
-<li>Depth-First-Search from node 0.</li>
-<li>Adjust the result according to node 0&rsquo;s state. Done.</li>
-<li>A classic DFS holds time bound and space bound.</li>
-</ul>
-
-
-<pre><code class="java">
-    static int N = 200003;
-
-    boolean[] visited = new boolean[N];
-    Node[] nodes = new Node[N];
-    int res = 0;
-
-    public int solution(int A[], int B[], int C[]) {
-        for (int i = 0; i &lt; A.length; i++) {
-            if (nodes[A[i]] == null) nodes[A[i]] = new Node();
-            if (nodes[B[i]] == null) nodes[B[i]] = new Node();
-            nodes[A[i]].tlist.add(B[i]);
-            nodes[B[i]].tlist.add(A[i]);
-        }
-
-        if (C.length == 0) return 0;
-
-        // if a prison is on leaf(exit), then we cannot stop them escaping
-        for (int i = 0; i &lt; C.length; i++) {
-            if (isLeaf(nodes[C[i]])) {
-                return -1;
-            }
-            nodes[C[i]].isPrisoner = true;
-        }
-
-        dfs(0);
-
-        // if node 0 is has only one path, then it is an exit. 
-        // we should set a guard if node 0 is exit &amp;&amp; prisoners can escape to root
-        return nodes[0].hasEscapeRoot &amp;&amp; nodes[0].tlist.size() == 1 ? res + 1 : res;
-    }
-
-    void dfs(int nodeIndex) {
-        visited[nodeIndex] = true;
-        Node node = nodes[nodeIndex];
-
-        for (int i = 0; i &lt; node.tlist.size(); i++) {
-            int nextNodeIndex = node.tlist.get(i);
-            if (!visited[nextNodeIndex]) {
-                nodes[nextNodeIndex].parentIndex = nodeIndex;
-                dfs(nextNodeIndex);
-            }
-        }
-
-        if (nodeIndex != node.parentIndex &amp;&amp; (isLeaf(node)))  return;
-
-        int n = 0;
-        int escapesLeaf = 0;
-        int escapesRoot = 0;
-        for (int i = 0; i &lt; node.tlist.size(); ++i) {
-            int next = node.tlist.get(i);
-            if (node.parentIndex == next) continue;
-            n++;
-            if (nodes[next].hasEscapeLeaf) escapesLeaf++;
-            if (nodes[next].hasEscapeRoot) escapesRoot++;
-        }
-
-        if (node.isPrisoner) { // if root is PRISONER,
-            node.hasEscapeLeaf = false; // then it must not have escape paths to leaf
-            node.hasEscapeRoot = true; // but it can escape to root
-            res += escapesLeaf; // set guards on those leaves
-        } else { // if root is NOT PRISONER, 
-            if (escapesLeaf == n) { // all subtrees has escape to leaf
-                // it a empty subtree, do nothing
-            } else if (escapesLeaf == 0) { // no subtree has escape to leaf
-                // then we do NOT need a guard here
-                node.hasEscapeLeaf = false; // set no escape to leaf
-                if (escapesRoot &gt; 0) { // if at least one subtree has prisoner can escape to root
-                    node.hasEscapeRoot = true;
-                }
-            } else { // has SOME escape path
-                if (escapesRoot == 0) { // if no prisoner can escape to root
-                    // then we do NOT need a guard here
-                    node.hasEscapeLeaf = true; // because it has escape paths
-                    node.hasEscapeRoot = false; // obviously
-                } else { // if some prisoner can escape to root
-                    res++; // set guard here, prevent them escape to leaves through this node
-                    node.hasEscapeLeaf = false; // we set the guard, so there is no escape path to leaves
-                    node.hasEscapeRoot = false; // as above
-                }
-            }
-        }
-
-    }
-
-    boolean isLeaf(Node node) {
-        if (node.tlist.size() == 1) return true;
-        else return false;
-    }
-
-    class Node {
-        int parentIndex;
-        boolean isPrisoner = false;
-        boolean hasEscapeLeaf = true;
-        boolean hasEscapeRoot = false;
-        List&lt;Integer&gt; tlist = new ArrayList&lt;Integer&gt;();
-    }
 </code></pre>
 ]]></content>
   </entry>
