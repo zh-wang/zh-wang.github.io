@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-07-15T23:03:53+09:00</updated>
+  <updated>2015-07-16T10:04:42+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -14,10 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Longest Ascending Subsequence]]></title>
-    <link href="http://zh-wang.github.io/blog/2015/07/15/longest-ascending-subsequence/"/>
+    <title type="html"><![CDATA[Longest Increasing Subsequence]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/07/15/longest-increasing-subsequence/"/>
     <updated>2015-07-15T22:16:50+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2015/07/15/longest-ascending-subsequence</id>
+    <id>http://zh-wang.github.io/blog/2015/07/15/longest-increasing-subsequence</id>
     <content type="html"><![CDATA[<h2>Introduction</h2>
 
 <p>In computer science, the longest increasing subsequence problem is to find a subsequence of a given sequence in which the subsequence&rsquo;s elements are in sorted order, lowest to highest, and in which the subsequence is as long as possible.</p>
@@ -26,9 +26,9 @@
 
 <h2>An O(N<sup>2</sup>) Solution</h2>
 
-<p>We define a <code>dp</code> table, which <code>dp[i]</code> is the length of a longest subsequence which ends at <code>inputs[i]</code>.</p>
+<p>We define a $dp$ table, which $dp[i]$ is the length of a longest subsequence which ends at $inputs[i]$.</p>
 
-<p>For each <code>inputs[i]</code>, we search every inputs before it, and choose the longest possible <code>dp</code> value from them, fill it in <code>dp[i]</code>.</p>
+<p>For each $inputs[i]$, we search every inputs before it, and choose the longest possible $dp$ value from them, fill it in $dp[i]$.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -71,17 +71,17 @@
 
 <h2>An O(N*Log(N)) Solution</h2>
 
-<p>We define a <code>seq</code> table, which <code>seq[i]</code> is the ending number of subsequence whose length is <code>i</code>.</p>
+<p>We define a $seq$ table, which $seq[i]$ is the ending number of subsequence whose length is $i$.</p>
 
-<h4>Note that, <code>seq</code> is always in increasing order.</h4>
+<h4>Note that, $seq$ is always in increasing order.</h4>
 
 <p>Because if these exist $i &lt; j$ and $seq[i] > seq[j]$, which means a longer subsequence end with a smaller number.</p>
 
-<p>Then we could generate a new subsequence, which length is $i$, by removing $j - i$ numbers from tail of <code>j</code>-length subsequence. The ending number of the new subsequence will be smaller than $seq[i]$.</p>
+<p>Then we could generate a new subsequence, which length is $i$, by removing $j - i$ numbers from tail of $j$-length subsequence. The ending number of the new subsequence will be smaller than $seq[i]$.</p>
 
-<p>Therefore, we can use binary search in each iteration, to find the largest <code>seq[k]</code> which is smaller than <code>inputs[i]</code>. If <code>k</code> can be found (<code>k &gt; -1</code>), then we update the number stored in <code>seq[k]</code> with <code>inputs[i]</code> if <code>inputs[i] &lt; seq[k]</code>.</p>
+<p>Therefore, we can use binary search in each iteration, to find the largest $seq[k]$ which is smaller than $inputs[i]$. If $k$ can be found ($k > -1$), then we update the number stored in $seq[k]$ with $inputs[i]$ if $inputs[i] &lt; seq[k]$.</p>
 
-<p>This yields an $O(N*Log(N))$ solution.</p>
+<p>This yields an <strong>O(N*Log(N))</strong> solution.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
