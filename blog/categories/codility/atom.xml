@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Codility | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/codility/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-07-16T10:04:42+09:00</updated>
+  <updated>2015-08-24T22:48:31+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -166,12 +166,23 @@
 </ul>
 
 
-<p>The only <strong>interesting</strong> thing is that, for calculating the rank of a element in 2-d array, we need O(N) time.<br/>
-But in this problem, after we sort edges in <em>x</em> and <em>y</em>, we can do rank calculation in O(N) time, as implemented in <code>fastPartition</code> method.</p>
+<p>The <strong>interesting</strong> thing is that, for calculating the rank of an element in such 2-d array, we have to calculate all elements, then sort them. This costs at least O(N<sup>2</sup>) time.</p>
 
-<p>(Hint: after we sort the edges, we can ensure that elements in left-bottom are always equal or smaller than elements in right-top. We just need to find the smallest element of each column, follow the red arrow, in O(N) time)</p>
+<p>But in this problem, after we sort edges in <em>x</em> and <em>y</em>, we can do rank calculation in O(N) time, as implemented in <code>fastPartition</code> method.</p>
+
+<p>(Hint: after we sort the edges, we can ensure that elements in left-bottom are always equal or smaller than elements in right-top. We can search from left-top to right-bottom, following the red arrow, in O(N) time)</p>
 
 <p><img src="/images/2014_07_22_illustration.png" title="hint" alt="hint" /></p>
+
+<p>For example, let $x = (1, 2, 2, 4), y = (1, 2, 3, 4)$. We need the rank of target &lsquo;4&rsquo;.</p>
+
+<p>First, we need the start element at the left-most column. We just do a binary search on the left-most column, to <strong>find the element equal or larger than target in left-most column</strong>. Then we know we should start from column 1, row 4, which is exactly, &lsquo;4&rsquo;. (Step 1).</p>
+
+<p>Then we move to next line in the right. We need go up to down, until find an element is smaller than target. Now we arrive at column 2, row 2, which is also &lsquo;4&rsquo;. (Step 2)</p>
+
+<p>And repeat step 2, until the right-most column. (Step 2)</p>
+
+<p>Because elements in left-bottom(which background) are always equal or smaller than elements in right-top(red background), we can calculate target&rsquo;s rank by add up number of white elements, for each column. (Step 3)</p>
 
 <!-- more -->
 
@@ -181,6 +192,7 @@ But in this problem, after we sort edges in <em>x</em> and <em>y</em>, we can do
 
     private int fastPartition(int target, int[] x, int[] y) {
 
+        // Step 1
         // find the element equal or larger than target in left-most column
         int nx = 0, ny = 0;
         int low = 0;
@@ -197,6 +209,7 @@ But in this problem, after we sort edges in <em>x</em> and <em>y</em>, we can do
 
         largerEqualList[nx] = ny;
 
+        // Step 2
         // search elements' index by red arrow mentioned above
         while (++nx &lt; N) {
             while (ny - 1 &gt;= 0 &amp;&amp; x[nx] * y[ny - 1] &gt;= target) {
@@ -205,6 +218,7 @@ But in this problem, after we sort edges in <em>x</em> and <em>y</em>, we can do
             largerEqualList[nx] = ny;
         }
 
+        // Step 3
         // get the rank of target
         int rank = 0;
         for (int i = 0; i &lt; N; i++) {
