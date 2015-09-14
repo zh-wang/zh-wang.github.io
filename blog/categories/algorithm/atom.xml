@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Algorithm | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/algorithm/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-09-14T12:06:34+09:00</updated>
+  <updated>2015-09-14T12:08:59+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -28,11 +28,11 @@
 
 <p>For each iteration of binary search, detail steps are written in the following code.</p>
 
-<h2>For 100% solution</h2>
+<h2>Optimization for 100% solution</h2>
 
 <p>This problem is very time strict for java.</p>
 
-<p>For large data set, my old answer which use many <code>Collections</code> always run for 6+ seconds, but time limit is only 4 seconds.</p>
+<p>For large data set, my old answer which use many <code>Collections</code> always runs for 6+ seconds, but time limit is only 4 seconds.</p>
 
 <p>So I replace almost all of them with array in heavy calculation part, to reduce time consuming of GC.</p>
 
