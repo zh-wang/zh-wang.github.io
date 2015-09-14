@@ -9,8 +9,18 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Hide and Internal Classes During android development, you may need to access some method or classes which is not contained in official SDK.
-For &hellip;">
+  <meta name="description" content="Only source code :) 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+#!/usr/bin/env ruby
+# encoding: utf-8 require &#39;RMagick&#39; img = Magick::ImageList.new(&quot;FILENAME. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -60,8 +70,18 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Hide and Internal Classes During android development, you may need to access some method or classes which is not contained in official SDK.
-For &hellip;" />
+<meta property="og:description" content="Only source code :) 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+#!/usr/bin/env ruby
+# encoding: utf-8 require &#39;RMagick&#39; img = Magick::ImageList.new(&quot;FILENAME. &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/posts/2/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -104,6 +124,68 @@ For &hellip;" />
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/03/25/resize-gif-by-rmagick/">Resize Gif by RMagick</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-25T18:31:47+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/03/25/resize-gif-by-rmagick/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/03/25/resize-gif-by-rmagick/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Only source code :)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env ruby</span>
+</span><span class='line'><span class="c1"># encoding: utf-8</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;RMagick&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">img</span> <span class="o">=</span> <span class="no">Magick</span><span class="o">::</span><span class="no">ImageList</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;FILENAME.gif&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">img</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">frame</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">frame</span><span class="o">.</span><span class="n">resize!</span><span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="mi">5</span><span class="p">)</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'><span class="n">img</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;FILENAME_s.gif&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1448,82 +1530,6 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/28/upload-image-with-imgur-api-on-android/">Upload Pics by Imgur Api on Android</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-28T16:29:13+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2015/01/28/upload-image-with-imgur-api-on-android/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2015/01/28/upload-image-with-imgur-api-on-android/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Introduction</h2>
-
-<p>This an example android application which use Imgur&rsquo;s api to upload image, with OAuth2 authorization.</p>
-
-<h2>Steps</h2>
-
-<ol>
-<li>You need an account on Imgur. Then create an app from &ldquo;Settings -> Applications&rdquo;. The redirect link should set to <code>YOUR_APP_IDENTIFIER://callback</code> or something else you like, but must match <code>scheme</code> in step 5.</li>
-<li>Get your app&rsquo;s client id.</li>
-<li>Replace it with <code>CLIENT_ID</code> in the source code.</li>
-<li>Create an sample android project with an activity with the source code below.</li>
-<li><p>Add following lines to <code>AndroidManifest.xml</code>, under Activity <code>OAuthTestActivity</code>. This allows transition from authorization page to your android app.</p>
-
-<pre><code> &lt;intent-filter&gt;
-     &lt;action android:name="android.intent.action.VIEW" /&gt;
-     &lt;category android:name="android.intent.category.DEFAULT" /&gt;
-     &lt;category android:name="android.intent.category.BROWSABLE" /&gt;
-     &lt;data android:scheme="YOUR_APP_IDENTIFIER" android:host="callback" /&gt;
- &lt;/intent-filter&gt;
-</code></pre></li>
-<li><p>Build and Run.</p></li>
-<li>Authorize with your imgur&rsquo;s account with your web browser.
-<img src="/images/2015_01_28_image04.png" title="Authorize with your imgur's account" alt="Image A" /></li>
-<li>Choose an image to upload.
-<img src="/images/2015_01_28_image01.png" title="Choose an image" alt="Image B" /></li>
-<li>Upload.
-<img src="/images/2015_01_28_image02.png" title="Upload" alt="Image C" /></li>
-<li>Check the uploaded image in your web browser.
-<img src="/images/2015_01_28_image03.png" title="Open browser" alt="Image D" /></li>
-</ol>
-
-
-<h2>Source Code</h2>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/01/28/upload-image-with-imgur-api-on-android/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="3">&larr; Older</a>
@@ -1541,6 +1547,10 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/09/14/codility-calcium-2015/">Codility Calcium 2015</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/07/15/longest-increasing-subsequence/">Longest Increasing Subsequence</a>
       </li>
     
@@ -1556,10 +1566,6 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
         <a href="/blog/2015/05/20/generics-enum-in-swift/">Generics Enum in Swift</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/05/14/check-stack-usage-of-cpp-code/">checkstack.plを遊んでみた</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1568,11 +1574,11 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (11)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (17)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (12)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (6)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (17)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 98.8235294117647%'>algorithm(11)</a> <a href='/blog/categories/android' style='font-size: 81.17647058823529%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 77.64705882352942%'>codility(5)</a> <a href='/blog/categories/cpp' style='font-size: 63.529411764705884%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.529411764705884%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 63.529411764705884%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.529411764705884%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.529411764705884%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 70.58823529411765%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 67.05882352941177%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.529411764705884%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 81.17647058823529%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(17)</a> <a href='/blog/categories/vim' style='font-size: 67.05882352941177%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.529411764705884%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 102.35294117647058%'>algorithm(12)</a> <a href='/blog/categories/android' style='font-size: 81.17647058823529%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 81.17647058823529%'>codility(6)</a> <a href='/blog/categories/cpp' style='font-size: 63.529411764705884%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.529411764705884%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 63.529411764705884%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.529411764705884%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.529411764705884%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 70.58823529411765%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 67.05882352941177%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.529411764705884%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 81.17647058823529%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(17)</a> <a href='/blog/categories/vim' style='font-size: 67.05882352941177%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.529411764705884%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

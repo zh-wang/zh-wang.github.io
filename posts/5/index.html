@@ -9,7 +9,8 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="What is MathJax? MathJax is an open source JavaScript display engine for mathematics that works in all browsers. By importing MathJax to Octopress( &hellip;">
+  <meta name="description" content="はじめに iOS 8ではサードパーティIMEが開発できるようになったので、mozcのiOS版を作ってみたい。
+まだ初期段階ですが、JUST KEEP BUILDING! 環境について 今回は、android版を参考し、mozcのコア機能が含まれるライブラリを作りたいですね。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -59,7 +60,8 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="What is MathJax? MathJax is an open source JavaScript display engine for mathematics that works in all browsers. By importing MathJax to Octopress( &hellip;" />
+<meta property="og:description" content="はじめに iOS 8ではサードパーティIMEが開発できるようになったので、mozcのiOS版を作ってみたい。
+まだ初期段階ですが、JUST KEEP BUILDING! 環境について 今回は、android版を参考し、mozcのコア機能が含まれるライブラリを作りたいですね。 &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/posts/5/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -102,6 +104,97 @@ MathJax.Hub.Config({
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/11/mozc-for-ios/">Mozc for iOS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-11T18:10:34+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/07/11/mozc-for-ios/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/07/11/mozc-for-ios/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>はじめに</h2>
+
+<p>iOS 8ではサードパーティIMEが開発できるようになったので、mozcのiOS版を作ってみたい。<br/>
+まだ初期段階ですが、JUST KEEP BUILDING!</p>
+
+<h2>環境について</h2>
+
+<p>今回は、android版を参考し、mozcのコア機能が含まれるライブラリを作りたいですね。<br/>
+使うmozcソースのリビジョンは</p>
+
+<pre><code>18:06 zhenghongwang@viennakanon:projects/mozc/src (svn)[src:266]$ svn log -r COMMITTED
+------------------------------------------------------------------------
+r266 | yukawa@google.com | 2014-07-06 16:49:48 +0900 (日, 06  7 2014) | 11 lines
+
+Use Ninja to build Android, NaCl, and Linux Desktop binaries
+
+With this CL, Mozc starts using Ninja instead of Make to build Android, NaCl, and Linux Desktop binaries.  Note that Windows binaries have already been built with Ninja for one and a half years.
+
+This CL is supposed not to change any user-visible behavior.
+
+Closes Issue 222.
+
+BUG=Issue mozc:222
+TEST=unittest
+</code></pre>
+
+<p>ninjaを使い始めたみたいです。まあ、iOSやMACならxcodeでビルドするからあんまり関係ないよね。</p>
+
+<p>ビルドマシンはMBP, OSX 10.9, xcode 5。</p>
+
+<p>他の注意点</p>
+
+<ul>
+<li>変換のコアライブラリだけをビルドする。androidのnative側と同じです。</li>
+<li>gypは事前にインストールした。</li>
+<li>protobufをiOS向けにビルドすると、<code>target specifies product type 'com.apple.product-type.tool', but there's no such product type for the 'iphoneos' platform</code>が出てしまうので、protobufも事前にインストール。</li>
+<li>ソースの中のprotobufをarm64にビルドするために、patchが必要みたい。まだ未解決なので、今回はarmv7とarmv7sにビルドする。</li>
+</ul>
+
+
+<h2>ソースの変更点</h2>
+
+<ol>
+<li>src/iosのフォルダを新規。中はgypの設定、ビルドのターゲットなどが書かれている。</li>
+<li>src/build_ios.pyを新規。ビルドのスクリプトです。</li>
+<li>一部のソールを変更した。srcの中で、<code>svn diff</code>を見ればわかる。</li>
+</ol>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/07/11/mozc-for-ios/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -559,6 +652,10 @@ originates from Google Japanese Input.</p></blockquote>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/09/14/codility-calcium-2015/">Codility Calcium 2015</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/07/15/longest-increasing-subsequence/">Longest Increasing Subsequence</a>
       </li>
     
@@ -574,10 +671,6 @@ originates from Google Japanese Input.</p></blockquote>
         <a href="/blog/2015/05/20/generics-enum-in-swift/">Generics Enum in Swift</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/05/14/check-stack-usage-of-cpp-code/">checkstack.plを遊んでみた</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -586,11 +679,11 @@ originates from Google Japanese Input.</p></blockquote>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (11)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (5)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (17)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (12)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (6)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (17)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 98.8235294117647%'>algorithm(11)</a> <a href='/blog/categories/android' style='font-size: 81.17647058823529%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 77.64705882352942%'>codility(5)</a> <a href='/blog/categories/cpp' style='font-size: 63.529411764705884%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.529411764705884%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 63.529411764705884%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.529411764705884%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.529411764705884%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 70.58823529411765%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 67.05882352941177%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.529411764705884%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 81.17647058823529%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(17)</a> <a href='/blog/categories/vim' style='font-size: 67.05882352941177%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.529411764705884%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 102.35294117647058%'>algorithm(12)</a> <a href='/blog/categories/android' style='font-size: 81.17647058823529%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 81.17647058823529%'>codility(6)</a> <a href='/blog/categories/cpp' style='font-size: 63.529411764705884%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.529411764705884%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 63.529411764705884%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.529411764705884%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.529411764705884%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 70.58823529411765%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 67.05882352941177%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.529411764705884%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 81.17647058823529%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(17)</a> <a href='/blog/categories/vim' style='font-size: 67.05882352941177%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.529411764705884%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>
