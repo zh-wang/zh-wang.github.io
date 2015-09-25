@@ -9,7 +9,7 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Introduction This is an solution in java of Codility Calcium 2015. You can find problem definition here. https://codility.com/programmers/challenges &hellip;">
+  <meta name="description" content="In android development, Dialog are DialogFragment are very common UI parts. They come with a default border, with black or white background depending &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -64,7 +64,7 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Introduction This is an solution in java of Codility Calcium 2015. You can find problem definition here. https://codility.com/programmers/challenges &hellip;" />
+<meta property="og:description" content="In android development, Dialog are DialogFragment are very common UI parts. They come with a default border, with black or white background depending &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -107,6 +107,207 @@ MathJax.Hub.Config({
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/09/25/remove-border-from-android-dialog/">Remove Border From Android Dialog</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-09-25T12:53:24+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/09/25/remove-border-from-android-dialog/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/09/25/remove-border-from-android-dialog/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In android development, <code>Dialog</code> are <code>DialogFragment</code> are very common UI parts. They come with a default border, with black or white background depending on android system version.</p>
+
+<p><img src="/images/2015_09_25_image02.png" title="dialog with border" alt="IMAGE_A" /></p>
+
+<p>The default border, which is actually a <code>drawable</code>, is defined in android themes file.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;style name="Theme.Dialog"&gt;
+</span><span class='line'>    &lt;item name="windowFrame"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowTitleStyle"&gt;@style/DialogWindowTitle&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowBackground"&gt;@drawable/panel_background&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowIsFloating"&gt;true&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowContentOverlay"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowAnimationStyle"&gt;@style/Animation.Dialog&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowSoftInputMode"&gt;stateUnspecified|adjustPan&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowCloseOnTouchOutside"&gt;@bool/config_closeDialogWhenTouchOutside&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowActionModeOverlay"&gt;true&lt;/item&gt;
+</span><span class='line'>    &lt;item name="colorBackgroundCacheHint"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearance"&gt;@style/TextAppearance&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceInverse"&gt;@style/TextAppearance.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimary"&gt;@color/primary_text_dark&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorSecondary"&gt;@color/secondary_text_dark&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorTertiary"&gt;@color/tertiary_text_dark&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimaryInverse"&gt;@color/primary_text_light&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorSecondaryInverse"&gt;@color/secondary_text_light&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorTertiaryInverse"&gt;@color/tertiary_text_light&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimaryDisableOnly"&gt;@color/primary_text_dark_disable_only&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimaryInverseDisableOnly"&gt;@color/primary_text_light_disable_only&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimaryNoDisable"&gt;@color/primary_text_dark_nodisable&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorSecondaryNoDisable"&gt;@color/secondary_text_dark_nodisable&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimaryInverseNoDisable"&gt;@color/primary_text_light_nodisable&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorSecondaryInverseNoDisable"&gt;@color/secondary_text_light_nodisable&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorHint"&gt;@color/hint_foreground_dark&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorHintInverse"&gt;@color/hint_foreground_light&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorSearchUrl"&gt;@color/search_url_text&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceLarge"&gt;@style/TextAppearance.Large&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceMedium"&gt;@style/TextAppearance.Medium&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceSmall"&gt;@style/TextAppearance.Small&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceLargeInverse"&gt;@style/TextAppearance.Large.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceMediumInverse"&gt;@style/TextAppearance.Medium.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceSmallInverse"&gt;@style/TextAppearance.Small.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="listPreferredItemPaddingLeft"&gt;10dip&lt;/item&gt;
+</span><span class='line'>    &lt;item name="listPreferredItemPaddingRight"&gt;10dip&lt;/item&gt;
+</span><span class='line'>    &lt;item name="listPreferredItemPaddingStart"&gt;10dip&lt;/item&gt;
+</span><span class='line'>    &lt;item name="listPreferredItemPaddingEnd"&gt;10dip&lt;/item&gt;
+</span><span class='line'>    &lt;item name="preferencePanelStyle"&gt;@style/PreferencePanel.Dialog&lt;/item&gt;
+</span><span class='line'>&lt;/style&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>panel_background</code> in <code>&lt;item name="windowBackground"&gt;@drawable/panel_background&lt;/item&gt;</code> is a 9-patch image file.</p>
+
+<p><img src="/images/2015_09_25_image03.png" title="border image file" alt="IMAGE_B" /></p>
+
+<p>We can remove the border by defining <code>windowBackground</code> property, in our own custom style file, to replace the default one.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;style name="CustomDialogStyle" parent="@android:style/Theme.Dialog"&gt;
+</span><span class='line'>   &lt;item name="android:windowBackground"&gt;@drawable/custom_dialog_background&lt;/item&gt; // a custom 9-patch or something else
+</span><span class='line'>&lt;/style&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or, use the following one-line code solution.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Also, there are other dialog styles defined in android themes file.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!-- Variant of {@link Theme_Dialog} that does not include a frame (or background).
+</span><span class='line'>     The view hierarchy of the dialog is responsible for drawing all of
+</span><span class='line'>     its pixels. --&gt;
+</span><span class='line'>&lt;style name="Theme.Dialog.NoFrame"&gt;
+</span><span class='line'>    &lt;item name="windowBackground"&gt;@color/transparent&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowFrame"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowContentOverlay"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowAnimationStyle"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="backgroundDimEnabled"&gt;false&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowIsTranslucent"&gt;true&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowNoTitle"&gt;true&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowCloseOnTouchOutside"&gt;false&lt;/item&gt;
+</span><span class='line'>&lt;/style&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;!-- Default theme for alert dialog windows (on API level 10 and lower), which is used by the
+</span><span class='line'>     {@link android.app.AlertDialog} class.  This is basically a dialog
+</span><span class='line'>     but sets the background to empty so it can do two-tone backgrounds. --&gt;
+</span><span class='line'>&lt;style name="Theme.Dialog.Alert"&gt;
+</span><span class='line'>    &lt;item name="windowBackground"&gt;@color/transparent&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowTitleStyle"&gt;@style/DialogWindowTitle&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowContentOverlay"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="itemTextAppearance"&gt;@style/TextAppearance.Large.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceListItem"&gt;@style/TextAppearance.Large.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceListItemSmall"&gt;@style/TextAppearance.Large.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceListItemSecondary"&gt;@style/TextAppearance.Small.Inverse&lt;/item&gt;
+</span><span class='line'>&lt;/style&gt;</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1736,193 +1937,6 @@ And if keep dp size for about $\sqrt{N}$ will cause the program run too LONG!</p
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete/">FB HackerCup 2015 R1 25:Autocomplete</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-04-02T18:16:03+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2015/04/02/fb-hackercup-2015-r1-25-autocomplete/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Problem definition can be found <a href="https://www.facebook.com/hackercup/problems.php?pid=313229895540583&amp;round=344496159068801">here</a>.<br/>
-This is a basic problem which can be solved directly by a Tri-tree.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;cstdio&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;cstdlib&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;cstring&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;cmath&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;climits&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;cassert&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;string&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;algorithm&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;map&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;set&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;queue&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;sstream&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;numeric&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;fstream&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;utility&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;iomanip&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;stack&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;list&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;sstream&gt;</span>
-</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span><span class='line'><span class="cp">#define PB push_back</span>
-</span><span class='line'><span class="cp">#define MP make_pair</span>
-</span><span class='line'><span class="cp">#define REP(i, n) for (int i(0); i &lt; n; ++i)</span>
-</span><span class='line'><span class="cp">#define REP1(i, n) for (int i(1); i &lt; n; ++i)</span>
-</span><span class='line'><span class="cp">#define FOR(i, a, b) for (int i(a); i &lt;= b; ++i)</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">struct</span> <span class="n">node</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">node</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">childs</span> <span class="o">=</span> <span class="k">new</span> <span class="n">node</span><span class="o">*</span><span class="p">[</span><span class="mi">26</span><span class="p">];</span>
-</span><span class='line'>        <span class="n">REP</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">26</span><span class="p">)</span> <span class="n">childs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">NULL</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">node</span><span class="o">**</span> <span class="n">childs</span><span class="p">;</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="n">tc</span><span class="p">;</span>
-</span><span class='line'><span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
-</span><span class='line'><span class="n">string</span> <span class="n">word</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">findWordAndBuildTree</span><span class="p">(</span><span class="n">node</span><span class="o">*</span> <span class="n">root</span><span class="p">,</span> <span class="n">string</span> <span class="n">word</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">node</span><span class="o">*</span> <span class="n">p</span> <span class="o">=</span> <span class="n">root</span><span class="p">;</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>    <span class="kt">bool</span> <span class="n">found</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">REP</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">word</span><span class="p">.</span><span class="n">length</span><span class="p">())</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">p</span><span class="o">-&gt;</span><span class="n">childs</span><span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="sc">&#39;a&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">found</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                <span class="n">res</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>                <span class="n">found</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>            <span class="n">p</span><span class="o">-&gt;</span><span class="n">childs</span><span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="sc">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="n">node</span><span class="p">();</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">-&gt;</span><span class="n">childs</span><span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="sc">&#39;a&#39;</span><span class="p">];</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">res</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">tc</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">REP</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">tc</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">node</span><span class="o">*</span> <span class="n">root</span> <span class="o">=</span> <span class="k">new</span> <span class="n">node</span><span class="p">();</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">REP</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">word</span><span class="p">;</span>
-</span><span class='line'>            <span class="n">res</span> <span class="o">+=</span> <span class="n">findWordAndBuildTree</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">word</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">res</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -1936,6 +1950,10 @@ This is a basic problem which can be solved directly by a Tri-tree.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/09/25/remove-border-from-android-dialog/">Remove Border From Android Dialog</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/09/14/codility-calcium-2015/">Codility Calcium 2015</a>
@@ -1953,10 +1971,6 @@ This is a basic problem which can be solved directly by a Tri-tree.</p>
         <a href="/blog/2015/07/02/surrogate-support-for-swifts-string/">Surrogate Support for Swift&#8217;s String</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/05/20/generics-enum-in-swift/">Generics Enum in Swift</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1965,11 +1979,11 @@ This is a basic problem which can be solved directly by a Tri-tree.</p>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (12)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (6)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (17)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (12)</a></li><li><a href='/blog/categories/android/'>android (7)</a></li><li><a href='/blog/categories/codility/'>codility (6)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (17)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 102.35294117647058%'>algorithm(12)</a> <a href='/blog/categories/android' style='font-size: 81.17647058823529%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 81.17647058823529%'>codility(6)</a> <a href='/blog/categories/cpp' style='font-size: 63.529411764705884%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.529411764705884%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 63.529411764705884%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.529411764705884%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.529411764705884%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 70.58823529411765%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 67.05882352941177%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.529411764705884%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 81.17647058823529%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(17)</a> <a href='/blog/categories/vim' style='font-size: 67.05882352941177%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.529411764705884%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 102.35294117647058%'>algorithm(12)</a> <a href='/blog/categories/android' style='font-size: 84.70588235294117%'>android(7)</a> <a href='/blog/categories/codility' style='font-size: 81.17647058823529%'>codility(6)</a> <a href='/blog/categories/cpp' style='font-size: 63.529411764705884%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.529411764705884%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 63.529411764705884%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.529411764705884%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.529411764705884%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 70.58823529411765%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 67.05882352941177%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.529411764705884%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 81.17647058823529%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(17)</a> <a href='/blog/categories/vim' style='font-size: 67.05882352941177%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.529411764705884%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

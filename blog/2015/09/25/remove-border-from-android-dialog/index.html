@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Auto &#8216;Set Paste&#8217; on Demand - Welcome to FutureAppLaboratory</title>
+  <title>Remove Border From Android Dialog - Welcome to FutureAppLaboratory</title>
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Insertモードで編集している間にソースコードを貼付けたい時に、毎回'set paste'と'set nopaste'をやらないといけない、ちょっと面倒くさいです。
-更に、'set paste'抜きで貼付けた場合、内容の長さによりvimが一時的にフリーズしちゃいますので大変です。 &hellip;">
+  <meta name="description" content="In android development, Dialog are DialogFragment are very common UI parts. They come with a default border, with black or white background depending &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://zh-wang.github.io/blog/2015/02/17/auto-set-paste-on-demand">
+  <link rel="canonical" href="http://zh-wang.github.io/blog/2015/09/25/remove-border-from-android-dialog">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Welcome to FutureAppLaboratory" type="application/atom+xml">
@@ -64,10 +63,9 @@ MathJax.Hub.Config({
   </script>
 
 
-  <meta property="og:title" content="Auto 'set paste' on Demand - Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Insertモードで編集している間にソースコードを貼付けたい時に、毎回'set paste'と'set nopaste'をやらないといけない、ちょっと面倒くさいです。
-更に、'set paste'抜きで貼付けた場合、内容の長さによりvimが一時的にフリーズしちゃいますので大変です。 &hellip;" />
-<meta property="og:url" content="http://zh-wang.github.io/blog/2015/02/17/auto-set-paste-on-demand/" />
+  <meta property="og:title" content="Remove Border from Android Dialog - Welcome to FutureAppLaboratory" />
+<meta property="og:description" content="In android development, Dialog are DialogFragment are very common UI parts. They come with a default border, with black or white background depending &hellip;" />
+<meta property="og:url" content="http://zh-wang.github.io/blog/2015/09/25/remove-border-from-android-dialog/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
 <meta property="og:site_name" content="Welcome to FutureAppLaboratory" />
@@ -112,7 +110,7 @@ MathJax.Hub.Config({
   
   <header>
     
-      <h1 class="entry-title">Auto &#8216;Set Paste&#8217; on Demand</h1>
+      <h1 class="entry-title">Remove Border From Android Dialog</h1>
     
     
       <p class="meta">
@@ -128,7 +126,7 @@ MathJax.Hub.Config({
   
 
 
-<time datetime="2015-02-17T12:47:51+09:00" pubdate data-updated="true"></time>
+<time datetime="2015-09-25T12:53:24+09:00" pubdate data-updated="true"></time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://zh-wang.github.io">Comments</a>
@@ -138,24 +136,11 @@ MathJax.Hub.Config({
   </header>
 
 
-<div class="entry-content"><p>Insertモードで編集している間にソースコードを貼付けたい時に、毎回&#8217;set paste&#8217;と&#8217;set nopaste&#8217;をやらないといけない、ちょっと面倒くさいです。<br/>
-更に、&#8217;set paste&#8217;抜きで貼付けた場合、内容の長さによりvimが一時的にフリーズしちゃいますので大変です。<br/>
-コマンドマッピングを導入しても、結局自分でコマンドを入れないといけないですね。</p>
+<div class="entry-content"><p>In android development, <code>Dialog</code> are <code>DialogFragment</code> are very common UI parts. They come with a default border, with black or white background depending on android system version.</p>
 
-<p>なので今日は移動的に&#8217;set paste&#8217;と&#8217;set nopaste&#8217;をしてくれる便利なプラグインを紹介します。</p>
+<p><img src="/images/2015_09_25_image02.png" title="dialog with border" alt="IMAGE_A" /></p>
 
-<h2>Installation</h2>
-
-<p>リポはこちらです。<a href="https://github.com/ConradIrwin/vim-bracketed-paste">https://github.com/ConradIrwin/vim-bracketed-paste</a><br/>
-バンドル管理ツール経由でインストールします。私の環境では</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Bundle 'ConradIrwin/vim-bracketed-paste'</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Make a step deeper</h2>
-
-<p>基本的なアイディアはシステムのbracketed paste挙動を探知して、コマンドマッピングを自動で実行されます。</p>
+<p>The default border, which is actually a <code>drawable</code>, is defined in android themes file.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -171,38 +156,148 @@ MathJax.Hub.Config({
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
 <span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>if &term =~ "xterm.*"
-</span><span class='line'>    let &t_ti = &t_ti . "\e[?2004h"                " alternate screenに入る時、bracketed pasteを有効にする( ESC[?2004h] )
-</span><span class='line'>    let &t_te = "\e[?2004l" . &t_te                " alternate screenから戻る時、bracketed pasteを無効にする( ESC[?2004l] )
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;style name="Theme.Dialog"&gt;
+</span><span class='line'>    &lt;item name="windowFrame"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowTitleStyle"&gt;@style/DialogWindowTitle&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowBackground"&gt;@drawable/panel_background&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowIsFloating"&gt;true&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowContentOverlay"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowAnimationStyle"&gt;@style/Animation.Dialog&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowSoftInputMode"&gt;stateUnspecified|adjustPan&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowCloseOnTouchOutside"&gt;@bool/config_closeDialogWhenTouchOutside&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowActionModeOverlay"&gt;true&lt;/item&gt;
+</span><span class='line'>    &lt;item name="colorBackgroundCacheHint"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearance"&gt;@style/TextAppearance&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceInverse"&gt;@style/TextAppearance.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimary"&gt;@color/primary_text_dark&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorSecondary"&gt;@color/secondary_text_dark&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorTertiary"&gt;@color/tertiary_text_dark&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimaryInverse"&gt;@color/primary_text_light&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorSecondaryInverse"&gt;@color/secondary_text_light&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorTertiaryInverse"&gt;@color/tertiary_text_light&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimaryDisableOnly"&gt;@color/primary_text_dark_disable_only&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimaryInverseDisableOnly"&gt;@color/primary_text_light_disable_only&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimaryNoDisable"&gt;@color/primary_text_dark_nodisable&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorSecondaryNoDisable"&gt;@color/secondary_text_dark_nodisable&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimaryInverseNoDisable"&gt;@color/primary_text_light_nodisable&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorSecondaryInverseNoDisable"&gt;@color/secondary_text_light_nodisable&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorHint"&gt;@color/hint_foreground_dark&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorHintInverse"&gt;@color/hint_foreground_light&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorSearchUrl"&gt;@color/search_url_text&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceLarge"&gt;@style/TextAppearance.Large&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceMedium"&gt;@style/TextAppearance.Medium&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceSmall"&gt;@style/TextAppearance.Small&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceLargeInverse"&gt;@style/TextAppearance.Large.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceMediumInverse"&gt;@style/TextAppearance.Medium.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceSmallInverse"&gt;@style/TextAppearance.Small.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="listPreferredItemPaddingLeft"&gt;10dip&lt;/item&gt;
+</span><span class='line'>    &lt;item name="listPreferredItemPaddingRight"&gt;10dip&lt;/item&gt;
+</span><span class='line'>    &lt;item name="listPreferredItemPaddingStart"&gt;10dip&lt;/item&gt;
+</span><span class='line'>    &lt;item name="listPreferredItemPaddingEnd"&gt;10dip&lt;/item&gt;
+</span><span class='line'>    &lt;item name="preferencePanelStyle"&gt;@style/PreferencePanel.Dialog&lt;/item&gt;
+</span><span class='line'>&lt;/style&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>panel_background</code> in <code>&lt;item name="windowBackground"&gt;@drawable/panel_background&lt;/item&gt;</code> is a 9-patch image file.</p>
+
+<p><img src="/images/2015_09_25_image03.png" title="border image file" alt="IMAGE_B" /></p>
+
+<p>We can remove the border by defining <code>windowBackground</code> property, in our own custom style file, to replace the default one.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;style name="CustomDialogStyle" parent="@android:style/Theme.Dialog"&gt;
+</span><span class='line'>   &lt;item name="android:windowBackground"&gt;@drawable/custom_dialog_background&lt;/item&gt; // a custom 9-patch or something else
+</span><span class='line'>&lt;/style&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or, use the following one-line code solution.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Also, there are other dialog styles defined in android themes file.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!-- Variant of {@link Theme_Dialog} that does not include a frame (or background).
+</span><span class='line'>     The view hierarchy of the dialog is responsible for drawing all of
+</span><span class='line'>     its pixels. --&gt;
+</span><span class='line'>&lt;style name="Theme.Dialog.NoFrame"&gt;
+</span><span class='line'>    &lt;item name="windowBackground"&gt;@color/transparent&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowFrame"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowContentOverlay"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowAnimationStyle"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="backgroundDimEnabled"&gt;false&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowIsTranslucent"&gt;true&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowNoTitle"&gt;true&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowCloseOnTouchOutside"&gt;false&lt;/item&gt;
+</span><span class='line'>&lt;/style&gt;
 </span><span class='line'>
-</span><span class='line'>    function XTermPasteBegin(ret)                  " mode change & set paste方法
-</span><span class='line'>        set pastetoggle=&lt;Esc&gt;[201~                 " bracketed pasteを終了識別子を検出する時、pasteモードをtoggle
-</span><span class='line'>        set paste                                  " mode changeする前に、set paste実行
-</span><span class='line'>        return a:ret                               " パラメータでどのモードに入るのをコントロールする
-</span><span class='line'>    endfunction
-</span><span class='line'>    map &lt;expr&gt; &lt;Esc&gt;[200~ XTermPasteBegin("i")     " normal modeでbracketed pasteの開始識別子(ESC[200~])を検出する時、insert modeになる
-</span><span class='line'>    imap &lt;expr&gt; &lt;Esc&gt;[200~ XTermPasteBegin("")     " insert modeならモードがそのまま
-</span><span class='line'>    cmap &lt;Esc&gt;[200~ &lt;nop&gt;                          " command modeなら以上のコードを使うとおかしくなるので、回避
-</span><span class='line'>    cmap &lt;Esc&gt;[201~ &lt;nop&gt;                          " 同じく回避
-</span><span class='line'>endif</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Reference</h2>
-
-<ul>
-<li>What is alternate screen? <a href="http://superuser.com/questions/321204/what-does-terminal-apps-show-alternate-screen-do-os-x">http://superuser.com/questions/321204/what-does-terminal-apps-show-alternate-screen-do-os-x</a></li>
-</ul>
-
-
-<p>以下はプラグインのソースから抜きました。</p>
-
-<ul>
-<li><a href="http://stackoverflow.com/questions/5585129/pasting-code-into-terminal-window-into-vim-on-mac-os-x">http://stackoverflow.com/questions/5585129/pasting-code-into-terminal-window-into-vim-on-mac-os-x</a></li>
-<li><a href="https://coderwall.com/p/if9mda">https://coderwall.com/p/if9mda</a></li>
-<li><a href="https://github.com/aaronjensen/vimfiles/blob/59a7019b1f2d08c70c28a41ef4e2612470ea0549/plugin/terminaltweaks.vim">https://github.com/aaronjensen/vimfiles/blob/59a7019b1f2d08c70c28a41ef4e2612470ea0549/plugin/terminaltweaks.vim</a> to fix the escape time problem with insert mode.</li>
-<li>Docs on bracketed paste mode. <a href="http://www.xfree86.org/current/ctlseqs.html">http://www.xfree86.org/current/ctlseqs.html</a></li>
-<li>Docs on mapping fast escape codes in vim. <a href="http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim">http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim</a></li>
-</ul>
+</span><span class='line'>&lt;!-- Default theme for alert dialog windows (on API level 10 and lower), which is used by the
+</span><span class='line'>     {@link android.app.AlertDialog} class.  This is basically a dialog
+</span><span class='line'>     but sets the background to empty so it can do two-tone backgrounds. --&gt;
+</span><span class='line'>&lt;style name="Theme.Dialog.Alert"&gt;
+</span><span class='line'>    &lt;item name="windowBackground"&gt;@color/transparent&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowTitleStyle"&gt;@style/DialogWindowTitle&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowContentOverlay"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="itemTextAppearance"&gt;@style/TextAppearance.Large.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceListItem"&gt;@style/TextAppearance.Large.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceListItemSmall"&gt;@style/TextAppearance.Large.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceListItemSecondary"&gt;@style/TextAppearance.Small.Inverse&lt;/item&gt;
+</span><span class='line'>&lt;/style&gt;</span></code></pre></td></tr></table></div></figure>
 
 </div>
 
@@ -226,12 +321,12 @@ MathJax.Hub.Config({
   
 
 
-<time datetime="2015-02-17T12:47:51+09:00" pubdate data-updated="true"></time>
+<time datetime="2015-09-25T12:53:24+09:00" pubdate data-updated="true"></time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/vim/'>vim</a>
+    <a class='category' href='/blog/categories/android/'>android</a>
   
 </span>
 
@@ -240,7 +335,7 @@ MathJax.Hub.Config({
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2015/02/17/auto-set-paste-on-demand/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2015/02/17/auto-set-paste-on-demand/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2015/09/25/remove-border-from-android-dialog/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2015/09/25/remove-border-from-android-dialog/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -253,10 +348,8 @@ MathJax.Hub.Config({
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2015/02/16/sample-script-of-aws-ruby-api/" title="Previous Post: Sample Script of AWS Ruby Api">&laquo; Sample Script of AWS Ruby Api</a>
+        <a class="basic-alignment left" href="/blog/2015/09/14/codility-calcium-2015/" title="Previous Post: Codility Calcium 2015">&laquo; Codility Calcium 2015</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2015/02/25/usaco-prob-broken-necklace/" title="Next Post: Analysis of PROB Broken Necklace">Analysis of PROB Broken Necklace &raquo;</a>
       
     </p>
   </footer>
@@ -406,8 +499,8 @@ MathJax.Hub.Config({
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://zh-wang.github.io/blog/2015/02/17/auto-set-paste-on-demand/';
-        var disqus_url = 'http://zh-wang.github.io/blog/2015/02/17/auto-set-paste-on-demand/';
+        var disqus_identifier = 'http://zh-wang.github.io/blog/2015/09/25/remove-border-from-android-dialog/';
+        var disqus_url = 'http://zh-wang.github.io/blog/2015/09/25/remove-border-from-android-dialog/';
         var disqus_script = 'embed.js';
       
     (function () {

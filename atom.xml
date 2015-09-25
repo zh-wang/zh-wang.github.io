@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-09-16T17:14:16+09:00</updated>
+  <updated>2015-09-25T13:33:01+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,177 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Remove Border From Android Dialog]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/09/25/remove-border-from-android-dialog/"/>
+    <updated>2015-09-25T12:53:24+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/09/25/remove-border-from-android-dialog</id>
+    <content type="html"><![CDATA[<p>In android development, <code>Dialog</code> are <code>DialogFragment</code> are very common UI parts. They come with a default border, with black or white background depending on android system version.</p>
+
+<p><img src="http://zh-wang.github.io/images/2015_09_25_image02.png" title="dialog with border" alt="IMAGE_A" /></p>
+
+<p>The default border, which is actually a <code>drawable</code>, is defined in android themes file.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;style name="Theme.Dialog"&gt;
+</span><span class='line'>    &lt;item name="windowFrame"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowTitleStyle"&gt;@style/DialogWindowTitle&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowBackground"&gt;@drawable/panel_background&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowIsFloating"&gt;true&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowContentOverlay"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowAnimationStyle"&gt;@style/Animation.Dialog&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowSoftInputMode"&gt;stateUnspecified|adjustPan&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowCloseOnTouchOutside"&gt;@bool/config_closeDialogWhenTouchOutside&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowActionModeOverlay"&gt;true&lt;/item&gt;
+</span><span class='line'>    &lt;item name="colorBackgroundCacheHint"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearance"&gt;@style/TextAppearance&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceInverse"&gt;@style/TextAppearance.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimary"&gt;@color/primary_text_dark&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorSecondary"&gt;@color/secondary_text_dark&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorTertiary"&gt;@color/tertiary_text_dark&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimaryInverse"&gt;@color/primary_text_light&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorSecondaryInverse"&gt;@color/secondary_text_light&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorTertiaryInverse"&gt;@color/tertiary_text_light&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimaryDisableOnly"&gt;@color/primary_text_dark_disable_only&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimaryInverseDisableOnly"&gt;@color/primary_text_light_disable_only&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimaryNoDisable"&gt;@color/primary_text_dark_nodisable&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorSecondaryNoDisable"&gt;@color/secondary_text_dark_nodisable&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorPrimaryInverseNoDisable"&gt;@color/primary_text_light_nodisable&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorSecondaryInverseNoDisable"&gt;@color/secondary_text_light_nodisable&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorHint"&gt;@color/hint_foreground_dark&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorHintInverse"&gt;@color/hint_foreground_light&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textColorSearchUrl"&gt;@color/search_url_text&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceLarge"&gt;@style/TextAppearance.Large&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceMedium"&gt;@style/TextAppearance.Medium&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceSmall"&gt;@style/TextAppearance.Small&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceLargeInverse"&gt;@style/TextAppearance.Large.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceMediumInverse"&gt;@style/TextAppearance.Medium.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceSmallInverse"&gt;@style/TextAppearance.Small.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="listPreferredItemPaddingLeft"&gt;10dip&lt;/item&gt;
+</span><span class='line'>    &lt;item name="listPreferredItemPaddingRight"&gt;10dip&lt;/item&gt;
+</span><span class='line'>    &lt;item name="listPreferredItemPaddingStart"&gt;10dip&lt;/item&gt;
+</span><span class='line'>    &lt;item name="listPreferredItemPaddingEnd"&gt;10dip&lt;/item&gt;
+</span><span class='line'>    &lt;item name="preferencePanelStyle"&gt;@style/PreferencePanel.Dialog&lt;/item&gt;
+</span><span class='line'>&lt;/style&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>panel_background</code> in <code>&lt;item name="windowBackground"&gt;@drawable/panel_background&lt;/item&gt;</code> is a 9-patch image file.</p>
+
+<p><img src="http://zh-wang.github.io/images/2015_09_25_image03.png" title="border image file" alt="IMAGE_B" /></p>
+
+<p>We can remove the border by defining <code>windowBackground</code> property, in our own custom style file, to replace the default one.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;style name="CustomDialogStyle" parent="@android:style/Theme.Dialog"&gt;
+</span><span class='line'>   &lt;item name="android:windowBackground"&gt;@drawable/custom_dialog_background&lt;/item&gt; // a custom 9-patch or something else
+</span><span class='line'>&lt;/style&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or, use the following one-line code solution.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Also, there are other dialog styles defined in android themes file.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;!-- Variant of {@link Theme_Dialog} that does not include a frame (or background).
+</span><span class='line'>     The view hierarchy of the dialog is responsible for drawing all of
+</span><span class='line'>     its pixels. --&gt;
+</span><span class='line'>&lt;style name="Theme.Dialog.NoFrame"&gt;
+</span><span class='line'>    &lt;item name="windowBackground"&gt;@color/transparent&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowFrame"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowContentOverlay"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowAnimationStyle"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="backgroundDimEnabled"&gt;false&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowIsTranslucent"&gt;true&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowNoTitle"&gt;true&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowCloseOnTouchOutside"&gt;false&lt;/item&gt;
+</span><span class='line'>&lt;/style&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;!-- Default theme for alert dialog windows (on API level 10 and lower), which is used by the
+</span><span class='line'>     {@link android.app.AlertDialog} class.  This is basically a dialog
+</span><span class='line'>     but sets the background to empty so it can do two-tone backgrounds. --&gt;
+</span><span class='line'>&lt;style name="Theme.Dialog.Alert"&gt;
+</span><span class='line'>    &lt;item name="windowBackground"&gt;@color/transparent&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowTitleStyle"&gt;@style/DialogWindowTitle&lt;/item&gt;
+</span><span class='line'>    &lt;item name="windowContentOverlay"&gt;@null&lt;/item&gt;
+</span><span class='line'>    &lt;item name="itemTextAppearance"&gt;@style/TextAppearance.Large.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceListItem"&gt;@style/TextAppearance.Large.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceListItemSmall"&gt;@style/TextAppearance.Large.Inverse&lt;/item&gt;
+</span><span class='line'>    &lt;item name="textAppearanceListItemSecondary"&gt;@style/TextAppearance.Small.Inverse&lt;/item&gt;
+</span><span class='line'>&lt;/style&gt;</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Codility Calcium 2015]]></title>
@@ -2774,240 +2945,6 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 </span><span class='line'>    <span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">in_time_zone</span><span class="p">(</span><span class="s1">&#39;Asia/Tokyo&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">iso8601</span>
 </span><span class='line'>  <span class="k">end</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Upload Pics by Imgur Api in Ruby]]></title>
-    <link href="http://zh-wang.github.io/blog/2015/02/06/upload-pics-to-imgur-by-ruby/"/>
-    <updated>2015-02-06T12:43:58+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2015/02/06/upload-pics-to-imgur-by-ruby</id>
-    <content type="html"><![CDATA[<h2>Introduction</h2>
-
-<p>Sample ruby script. Use Imgur&rsquo;s api to upload image, with OAuth2 authorization.</p>
-
-<h2>Source Code</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env ruby</span>
-</span><span class='line'><span class="c1"># encoding: utf-8</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;httpclient&#39;</span>
-</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;json&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">ImgurUploader</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="no">AUTH_URL</span> <span class="o">=</span> <span class="s1">&#39;https://api.imgur.com/oauth2/authorize&#39;</span>
-</span><span class='line'>  <span class="no">EXC_TOKEN_URL</span> <span class="o">=</span> <span class="s1">&#39;https://api.imgur.com/oauth2/token&#39;</span>
-</span><span class='line'>  <span class="no">UPLOAD_URL</span> <span class="o">=</span> <span class="s1">&#39;https://api.imgur.com/3/image&#39;</span>
-</span><span class='line'>  <span class="no">CLIENT_ID</span> <span class="o">=</span> <span class="s1">&#39;YOUR_CLIENT_ID&#39;</span>
-</span><span class='line'>  <span class="no">CLIENT_SE</span> <span class="o">=</span> <span class="s1">&#39;YOUR_CLIENT_SECRET_KEY&#39;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="vi">@file_path</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span class='line'>  <span class="vi">@access_token</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@file_path</span> <span class="o">=</span> <span class="n">file_path</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">setAccessToken</span><span class="p">(</span><span class="n">access_token</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@access_token</span> <span class="o">=</span> <span class="n">access_token</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">applyAccessToken</span>
-</span><span class='line'>    <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>      <span class="ss">:client_id</span> <span class="o">=&gt;</span> <span class="no">CLIENT_ID</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:response_type</span> <span class="o">=&gt;</span> <span class="s2">&quot;pin&quot;</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:state</span> <span class="o">=&gt;</span> <span class="s1">&#39;init&#39;</span>
-</span><span class='line'>    <span class="p">}</span><span class="o">.</span><span class="n">map</span><span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">v</span><span class="o">|</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">=</span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span><span class="o">.</span><span class="n">reduce</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">v</span><span class="o">|</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">&amp;</span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nb">system</span><span class="p">(</span><span class="s1">&#39;open&#39;</span><span class="p">,</span> <span class="no">AUTH_URL</span> <span class="o">+</span> <span class="s2">&quot;?&quot;</span> <span class="o">+</span> <span class="n">params</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;input PIN here: &quot;</span>
-</span><span class='line'>    <span class="n">mypin</span> <span class="o">=</span> <span class="no">STDIN</span><span class="o">.</span><span class="n">gets</span><span class="o">.</span><span class="n">chomp</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">body</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>      <span class="ss">:client_id</span> <span class="o">=&gt;</span> <span class="no">CLIENT_ID</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:client_secret</span> <span class="o">=&gt;</span> <span class="no">CLIENT_SE</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:grant_type</span> <span class="o">=&gt;</span> <span class="s2">&quot;pin&quot;</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:pin</span> <span class="o">=&gt;</span> <span class="n">mypin</span>
-</span><span class='line'>    <span class="p">}</span><span class="o">.</span><span class="n">map</span><span class="p">{</span> <span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">v</span><span class="o">|</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">=</span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span><span class="o">.</span><span class="n">reduce</span><span class="p">{</span><span class="o">|</span><span class="n">x</span><span class="p">,</span><span class="n">v</span><span class="o">|</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">x</span><span class="si">}</span><span class="s2">&amp;</span><span class="si">#{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">client</span> <span class="o">=</span> <span class="no">HTTPClient</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'>    <span class="vi">@res</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="no">EXC_TOKEN_URL</span><span class="p">,</span> <span class="n">body</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nb">puts</span> <span class="vi">@res</span><span class="o">.</span><span class="n">body</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">result</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="vi">@res</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="vi">@access_token</span> <span class="o">=</span> <span class="n">result</span><span class="o">[</span><span class="s1">&#39;access_token&#39;</span><span class="o">]</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;access_token: &quot;</span> <span class="o">+</span> <span class="vi">@access_token</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;access_token.tmp&quot;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># store access_token to local file,</span>
-</span><span class='line'>      <span class="c1"># no need to authorize again if access_token is not expired</span>
-</span><span class='line'>      <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">f</span><span class="o">.</span><span class="n">write</span> <span class="vi">@access_token</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">upload</span>
-</span><span class='line'>    <span class="n">auth_header</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;Authorization&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Bearer &#39;</span> <span class="o">+</span> <span class="vi">@access_token</span> <span class="p">}</span>
-</span><span class='line'>    <span class="n">client</span> <span class="o">=</span> <span class="no">HTTPClient</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'>    <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="vi">@file_path</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">file</span><span class="o">|</span>
-</span><span class='line'>      <span class="n">body</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">&#39;image&#39;</span> <span class="o">=&gt;</span> <span class="n">file</span> <span class="p">}</span>
-</span><span class='line'>      <span class="vi">@res</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="no">UPLOAD_URL</span><span class="p">,</span> <span class="n">body</span><span class="p">,</span> <span class="n">auth_header</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">end</span>
-</span><span class='line'>    <span class="k">begin</span>
-</span><span class='line'>      <span class="n">result</span> <span class="o">=</span> <span class="no">JSON</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="vi">@res</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
-</span><span class='line'>      <span class="nb">puts</span> <span class="vi">@res</span><span class="o">.</span><span class="n">body</span>
-</span><span class='line'>      <span class="n">result</span><span class="o">[</span><span class="s1">&#39;status&#39;</span><span class="o">]</span>
-</span><span class='line'>    <span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">ex</span>
-</span><span class='line'>      <span class="nb">puts</span> <span class="n">ex</span><span class="o">.</span><span class="n">message</span>
-</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;upload failed on Authorization&quot;</span>
-</span><span class='line'>      <span class="o">-</span><span class="mi">1</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">if</span> <span class="no">ARGV</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="mi">1</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;usage&quot;</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;ruby imgur.rb [image file path]&quot;</span>
-</span><span class='line'>  <span class="nb">exit</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">uploader</span> <span class="o">=</span> <span class="no">ImgurUploader</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="no">ARGV</span><span class="o">[</span><span class="mi">0</span><span class="o">].</span><span class="n">chomp</span><span class="o">.</span><span class="n">strip</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">begin</span>
-</span><span class='line'>  <span class="no">File</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">&quot;access_token.tmp&quot;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="p">{</span> <span class="c1"># read local access_token</span>
-</span><span class='line'>    <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="n">uploader</span><span class="o">.</span><span class="n">setAccessToken</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">gets</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">if</span> <span class="n">uploader</span><span class="o">.</span><span class="n">upload</span> <span class="o">==</span> <span class="mi">200</span> <span class="c1"># if uploaded</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;Upload ok&quot;</span>
-</span><span class='line'>  <span class="k">else</span> <span class="c1"># if upload failed by expired token</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;Upload failed, try to update access_token&quot;</span>
-</span><span class='line'>    <span class="n">uploader</span><span class="o">.</span><span class="n">applyAccessToken</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">uploader</span><span class="o">.</span><span class="n">upload</span> <span class="o">==</span> <span class="mi">200</span> <span class="c1"># upload again</span>
-</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;Upload ok&quot;</span>
-</span><span class='line'>    <span class="k">else</span> <span class="c1"># still fails</span>
-</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;Upload failed, need detail check&quot;</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">ex</span> <span class="c1"># local file not exists, apply for access_token and upload</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="n">ex</span><span class="o">.</span><span class="n">message</span>
-</span><span class='line'>  <span class="nb">puts</span> <span class="s2">&quot;No access_token is stored. Do Authorization again.&quot;</span>
-</span><span class='line'>  <span class="n">uploader</span><span class="o">.</span><span class="n">applyAccessToken</span>
-</span><span class='line'>  <span class="n">uploader</span><span class="o">.</span><span class="n">upload</span>
 </span><span class='line'><span class="k">end</span>
 </span></code></pre></td></tr></table></div></figure>
 

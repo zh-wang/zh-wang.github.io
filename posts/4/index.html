@@ -9,20 +9,8 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="===== Full Notes ===== Closure Closure Expression Syntax 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14 let names = [&quot;Chris&quot;, &quot;Alex&quot;, &quot;Ewa &hellip;">
+  <meta name="description" content="===== Full Notes ===== Classes and Structures Comparing Classes and Structures (Both can) Define properties to store values
+Define methods to provide &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,20 +65,8 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="===== Full Notes ===== Closure Closure Expression Syntax 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14 let names = [&quot;Chris&quot;, &quot;Alex&quot;, &quot;Ewa &hellip;" />
+<meta property="og:description" content="===== Full Notes ===== Classes and Structures Comparing Classes and Structures (Both can) Define properties to store values
+Define methods to provide &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/posts/4/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -133,6 +109,114 @@ MathJax.Hub.Config({
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/10/24/learning-swift-part-8/">Learning Swift Part 8 - Classes & Structures</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-10-24T18:41:40+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2014/10/24/learning-swift-part-8/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2014/10/24/learning-swift-part-8/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>===== Full Notes =====</h2>
+
+<h3>Classes and Structures</h3>
+
+<ul>
+<li><p>Comparing Classes and Structures (Both can)</p>
+
+<ul>
+<li>Define properties to store values</li>
+<li>Define methods to provide functionality</li>
+<li>Define subscripts to provide access to their values using subscript syntax</li>
+<li>Define initializers to set up their initial state</li>
+<li>Be extended to expand their functionality beyond a default implementation</li>
+<li>Conform to protocols to provide standard functionality of a certain kind</li>
+</ul>
+</li>
+<li><p>Classes have additional capabilities that structures do NOT</p>
+
+<ul>
+<li>Inheritance enables one class to inherit the characteristics of another.</li>
+<li>Type casting enables you to check and interpret the type of a class instance at runtime.</li>
+<li>Deinitializers enable an instance of a class to free up any resources it has assigned.</li>
+<li>Reference counting allows more than one reference to a class instance.</li>
+</ul>
+</li>
+<li><p>Definition Syntax</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'>    <span class="k">class</span> <span class="n">SomeClass</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// class definition goes here</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">struct</span> <span class="n">SomeStructure</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// structure definition goes here</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">struct</span> <span class="n">Resolution</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">class</span> <span class="n">VideoMode</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">resolution</span> <span class="o">=</span> <span class="n">Resolution</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">interlaced</span> <span class="o">=</span> <span class="nb">false</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">frameRate</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span class='line'>        <span class="k">var</span> <span class="nl">name</span><span class="p">:</span> <span class="n">String</span><span class="o">?</span>
+</span><span class='line'>    <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2014/10/24/learning-swift-part-8/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -1455,88 +1539,6 @@ Most code are from the guide, with some modification by me.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/07/22/codility-silicium-2014/">Codility - Silicium - 2014</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-22T17:02:26+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/07/22/codility-silicium-2014/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/07/22/codility-silicium-2014/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Introduction</h2>
-
-<p>This is an analysis of <a href="https://codility.com/programmers/challenges/">Codility - Silicium 2014 Challenge</a>.</p>
-
-<ul>
-<li>The problem is, finding the k-th largest piece of cake after cutting a big cake with straight cuts.</li>
-<li>The longest edge of a cake piece is 10000.</li>
-<li>Time bound is O(N * log(N + X + Y)), where N is the number of cuts, X and Y are largest size of the cake.</li>
-<li>Space bound is O(N).</li>
-</ul>
-
-
-<h2>Analysis</h2>
-
-<p>In order to find the k-th element is an array of set of elements, we can always do binary search. Find a middle elements, calculate the rank, do partition if needed, recursively.</p>
-
-<ul>
-<li>First, we calculate length of each edges, the sort them by their length.</li>
-<li>Then do a traditional binary search.</li>
-</ul>
-
-
-<p>The <strong>interesting</strong> thing is that, for calculating the rank of an element in such 2-d array, we have to calculate all elements, then sort them. This costs at least O(N<sup>2</sup>) time.</p>
-
-<p>But in this problem, after we sort edges in <em>x</em> and <em>y</em>, we can do rank calculation in O(N) time, as implemented in <code>fastPartition</code> method.</p>
-
-<p>(Hint: after we sort the edges, we can ensure that elements in left-bottom are always equal or smaller than elements in right-top. We can search from left-top to right-bottom, following the red arrow, in O(N) time)</p>
-
-<p><img src="/images/2014_07_22_illustration.png" title="hint" alt="hint" /></p>
-
-<p>For example, let $x = (1, 2, 2, 4), y = (1, 2, 3, 4)$. We need the rank of target &lsquo;4&rsquo;.</p>
-
-<p>First, we need the start element at the left-most column. We just do a binary search on the left-most column, to <strong>find the element equal or larger than target in left-most column</strong>. Then we know we should start from column 1, row 4, which is exactly, &lsquo;4&rsquo;. (Step 1).</p>
-
-<p>Then we move to next line in the right. We need go up to down, until find an element is smaller than target. Now we arrive at column 2, row 2, which is also &lsquo;4&rsquo;. (Step 2)</p>
-
-<p>And repeat step 2, until the right-most column. (Step 2)</p>
-
-<p>Because elements in left-bottom(which background) are always equal or smaller than elements in right-top(red background), we can calculate target&rsquo;s rank by add up number of white elements, for each column. (Step 3)</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/07/22/codility-silicium-2014/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="5">&larr; Older</a>
@@ -1554,6 +1556,10 @@ Most code are from the guide, with some modification by me.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/09/25/remove-border-from-android-dialog/">Remove Border From Android Dialog</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/09/14/codility-calcium-2015/">Codility Calcium 2015</a>
       </li>
     
@@ -1569,10 +1575,6 @@ Most code are from the guide, with some modification by me.</p>
         <a href="/blog/2015/07/02/surrogate-support-for-swifts-string/">Surrogate Support for Swift&#8217;s String</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/05/20/generics-enum-in-swift/">Generics Enum in Swift</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1581,11 +1583,11 @@ Most code are from the guide, with some modification by me.</p>
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (12)</a></li><li><a href='/blog/categories/android/'>android (6)</a></li><li><a href='/blog/categories/codility/'>codility (6)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (17)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (12)</a></li><li><a href='/blog/categories/android/'>android (7)</a></li><li><a href='/blog/categories/codility/'>codility (6)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (17)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 102.35294117647058%'>algorithm(12)</a> <a href='/blog/categories/android' style='font-size: 81.17647058823529%'>android(6)</a> <a href='/blog/categories/codility' style='font-size: 81.17647058823529%'>codility(6)</a> <a href='/blog/categories/cpp' style='font-size: 63.529411764705884%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.529411764705884%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 63.529411764705884%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.529411764705884%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.529411764705884%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 70.58823529411765%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 67.05882352941177%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.529411764705884%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 81.17647058823529%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(17)</a> <a href='/blog/categories/vim' style='font-size: 67.05882352941177%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.529411764705884%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 102.35294117647058%'>algorithm(12)</a> <a href='/blog/categories/android' style='font-size: 84.70588235294117%'>android(7)</a> <a href='/blog/categories/codility' style='font-size: 81.17647058823529%'>codility(6)</a> <a href='/blog/categories/cpp' style='font-size: 63.529411764705884%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.529411764705884%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 63.529411764705884%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.529411764705884%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.529411764705884%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 70.58823529411765%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 67.05882352941177%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.529411764705884%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 81.17647058823529%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(17)</a> <a href='/blog/categories/vim' style='font-size: 67.05882352941177%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.529411764705884%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

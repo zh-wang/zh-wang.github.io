@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-09-16T17:14:16+09:00</updated>
+  <updated>2015-09-25T13:33:01+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,108 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Remove Border From Android Dialog]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/09/25/remove-border-from-android-dialog/"/>
+    <updated>2015-09-25T12:53:24+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/09/25/remove-border-from-android-dialog</id>
+    <content type="html"><![CDATA[<p>In android development, <code>Dialog</code> are <code>DialogFragment</code> are very common UI parts. They come with a default border, with black or white background depending on android system version.</p>
+
+<p><img src="/images/2015_09_25_image02.png" title="dialog with border" alt="IMAGE_A" /></p>
+
+<p>The default border, which is actually a <code>drawable</code>, is defined in android themes file.</p>
+
+<pre><code>    &lt;style name="Theme.Dialog"&gt;
+        &lt;item name="windowFrame"&gt;@null&lt;/item&gt;
+        &lt;item name="windowTitleStyle"&gt;@style/DialogWindowTitle&lt;/item&gt;
+        &lt;item name="windowBackground"&gt;@drawable/panel_background&lt;/item&gt;
+        &lt;item name="windowIsFloating"&gt;true&lt;/item&gt;
+        &lt;item name="windowContentOverlay"&gt;@null&lt;/item&gt;
+        &lt;item name="windowAnimationStyle"&gt;@style/Animation.Dialog&lt;/item&gt;
+        &lt;item name="windowSoftInputMode"&gt;stateUnspecified|adjustPan&lt;/item&gt;
+        &lt;item name="windowCloseOnTouchOutside"&gt;@bool/config_closeDialogWhenTouchOutside&lt;/item&gt;
+        &lt;item name="windowActionModeOverlay"&gt;true&lt;/item&gt;
+        &lt;item name="colorBackgroundCacheHint"&gt;@null&lt;/item&gt;
+        &lt;item name="textAppearance"&gt;@style/TextAppearance&lt;/item&gt;
+        &lt;item name="textAppearanceInverse"&gt;@style/TextAppearance.Inverse&lt;/item&gt;
+        &lt;item name="textColorPrimary"&gt;@color/primary_text_dark&lt;/item&gt;
+        &lt;item name="textColorSecondary"&gt;@color/secondary_text_dark&lt;/item&gt;
+        &lt;item name="textColorTertiary"&gt;@color/tertiary_text_dark&lt;/item&gt;
+        &lt;item name="textColorPrimaryInverse"&gt;@color/primary_text_light&lt;/item&gt;
+        &lt;item name="textColorSecondaryInverse"&gt;@color/secondary_text_light&lt;/item&gt;
+        &lt;item name="textColorTertiaryInverse"&gt;@color/tertiary_text_light&lt;/item&gt;
+        &lt;item name="textColorPrimaryDisableOnly"&gt;@color/primary_text_dark_disable_only&lt;/item&gt;
+        &lt;item name="textColorPrimaryInverseDisableOnly"&gt;@color/primary_text_light_disable_only&lt;/item&gt;
+        &lt;item name="textColorPrimaryNoDisable"&gt;@color/primary_text_dark_nodisable&lt;/item&gt;
+        &lt;item name="textColorSecondaryNoDisable"&gt;@color/secondary_text_dark_nodisable&lt;/item&gt;
+        &lt;item name="textColorPrimaryInverseNoDisable"&gt;@color/primary_text_light_nodisable&lt;/item&gt;
+        &lt;item name="textColorSecondaryInverseNoDisable"&gt;@color/secondary_text_light_nodisable&lt;/item&gt;
+        &lt;item name="textColorHint"&gt;@color/hint_foreground_dark&lt;/item&gt;
+        &lt;item name="textColorHintInverse"&gt;@color/hint_foreground_light&lt;/item&gt;
+        &lt;item name="textColorSearchUrl"&gt;@color/search_url_text&lt;/item&gt;
+        &lt;item name="textAppearanceLarge"&gt;@style/TextAppearance.Large&lt;/item&gt;
+        &lt;item name="textAppearanceMedium"&gt;@style/TextAppearance.Medium&lt;/item&gt;
+        &lt;item name="textAppearanceSmall"&gt;@style/TextAppearance.Small&lt;/item&gt;
+        &lt;item name="textAppearanceLargeInverse"&gt;@style/TextAppearance.Large.Inverse&lt;/item&gt;
+        &lt;item name="textAppearanceMediumInverse"&gt;@style/TextAppearance.Medium.Inverse&lt;/item&gt;
+        &lt;item name="textAppearanceSmallInverse"&gt;@style/TextAppearance.Small.Inverse&lt;/item&gt;
+        &lt;item name="listPreferredItemPaddingLeft"&gt;10dip&lt;/item&gt;
+        &lt;item name="listPreferredItemPaddingRight"&gt;10dip&lt;/item&gt;
+        &lt;item name="listPreferredItemPaddingStart"&gt;10dip&lt;/item&gt;
+        &lt;item name="listPreferredItemPaddingEnd"&gt;10dip&lt;/item&gt;
+        &lt;item name="preferencePanelStyle"&gt;@style/PreferencePanel.Dialog&lt;/item&gt;
+    &lt;/style&gt;
+</code></pre>
+
+<p><code>panel_background</code> in <code>&lt;item name="windowBackground"&gt;@drawable/panel_background&lt;/item&gt;</code> is a 9-patch image file.</p>
+
+<p><img src="/images/2015_09_25_image03.png" title="border image file" alt="IMAGE_B" /></p>
+
+<p>We can remove the border by defining <code>windowBackground</code> property, in our own custom style file, to replace the default one.</p>
+
+<p>&#8220;`</p>
+
+
+
+<pre><code>
+Or, use the following one-line code solution.
+</code></pre>
+
+<p>dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+&#8220;`</p>
+
+<p>Also, there are other dialog styles defined in android themes file.</p>
+
+<pre><code>    &lt;!-- Variant of {@link Theme_Dialog} that does not include a frame (or background).
+         The view hierarchy of the dialog is responsible for drawing all of
+         its pixels. --&gt;
+    &lt;style name="Theme.Dialog.NoFrame"&gt;
+        &lt;item name="windowBackground"&gt;@color/transparent&lt;/item&gt;
+        &lt;item name="windowFrame"&gt;@null&lt;/item&gt;
+        &lt;item name="windowContentOverlay"&gt;@null&lt;/item&gt;
+        &lt;item name="windowAnimationStyle"&gt;@null&lt;/item&gt;
+        &lt;item name="backgroundDimEnabled"&gt;false&lt;/item&gt;
+        &lt;item name="windowIsTranslucent"&gt;true&lt;/item&gt;
+        &lt;item name="windowNoTitle"&gt;true&lt;/item&gt;
+        &lt;item name="windowCloseOnTouchOutside"&gt;false&lt;/item&gt;
+    &lt;/style&gt;
+
+    &lt;!-- Default theme for alert dialog windows (on API level 10 and lower), which is used by the
+         {@link android.app.AlertDialog} class.  This is basically a dialog
+         but sets the background to empty so it can do two-tone backgrounds. --&gt;
+    &lt;style name="Theme.Dialog.Alert"&gt;
+        &lt;item name="windowBackground"&gt;@color/transparent&lt;/item&gt;
+        &lt;item name="windowTitleStyle"&gt;@style/DialogWindowTitle&lt;/item&gt;
+        &lt;item name="windowContentOverlay"&gt;@null&lt;/item&gt;
+        &lt;item name="itemTextAppearance"&gt;@style/TextAppearance.Large.Inverse&lt;/item&gt;
+        &lt;item name="textAppearanceListItem"&gt;@style/TextAppearance.Large.Inverse&lt;/item&gt;
+        &lt;item name="textAppearanceListItemSmall"&gt;@style/TextAppearance.Large.Inverse&lt;/item&gt;
+        &lt;item name="textAppearanceListItemSecondary"&gt;@style/TextAppearance.Small.Inverse&lt;/item&gt;
+    &lt;/style&gt;
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Enable Hide and Internal Classes in Android SDK]]></title>
@@ -510,97 +612,6 @@ public class OAuthTestActivity extends Activity {
 <p>それ以上走らせると、やっはり順番待ちになるのね。</p>
 
 <p><img src="/images/2014_12_19_image03.png" title="結果3" alt="結果3" /></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Mozc完全解説02]]></title>
-    <link href="http://zh-wang.github.io/blog/2014/05/01/mozc-analysis-02/"/>
-    <updated>2014-05-01T15:18:39+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2014/05/01/mozc-analysis-02</id>
-    <content type="html"><![CDATA[<h2>はじめに</h2>
-
-<p><a href="/blog/2014/04/22/mozc-analysis-01/">前回</a>では、android側からタッチ反応を発生してから、jniを通して変換エンジンのnative側が候補を返すまでを説明した。<br/>
-今回ではjni部分のコードを少し説明する。</p>
-
-<h2>What is jni?</h2>
-
-<p>言わばjavaとc, cppとの間のインターフェイスですね。cやcppを使って、java側とデータのやり取りができる。<br/>
-<a href="http://ja.wikipedia.org/wiki/Java_Native_Interface">Java Native Interface</a></p>
-
-<h2>mozcに使われているjni</h2>
-
-<p>java側ではMozcJNI.javaというラッパーがある。メソッドはこの通り。</p>
-
-<ul>
-<li><code>load(String, Buffer, Buffer, String)</code><br/>
-  初期化用のメソッド、apkの中に入っている辞書データなどをnative側に渡す</li>
-<li><code>evalCommand(byte[])</code><br/>
-  native側と通信するメソッド、jniで実装</li>
-<li><code>onPostLoad(String, Buffer, Buffer)</code><br/>
-  loadメソッドに使われている、jniで実装</li>
-<li><code>getVersion()</code><br/>
-  native側のバージョン情報をjava側に渡す。loadメソッドに使われている、jniで実装</li>
-</ul>
-
-
-<p>jniの実装ファイルはjni/mozcjni.cc。では、<code>evalCommand(byte[])</code>を詳しく見てみよう。</p>
-
-<!-- more -->
-
-
-<pre><code class="cpp">// ------&gt; この矢印のあたりは、私の追加したコメントです
-jbyteArray JNICALL evalCommand(JNIEnv *env, jclass clazz, jbyteArray in_bytes_array) {
-  jboolean is_copy = false;
-  jbyte *in_bytes = env-&gt;GetByteArrayElements(in_bytes_array, &amp;is_copy);
-  const jsize in_size = env-&gt;GetArrayLength(in_bytes_array);
-
-  // ------&gt; commandにパースする。session/commands.protoにはcommandの定義が書かれいる。
-  // ------&gt; protobuf(Protocol Buffers)というライブラリを使っています。
-  mozc::commands::Command command;
-  command.ParseFromArray(in_bytes, in_size);
-
-  // ------&gt; native側でcommandを処理する。結果はcommandの中に格納する。
-  mozc::Singleton&lt;SessionHandlerSingletonAdapter&gt;::get()-&gt;getHandler()
-      -&gt;EvalCommand(&amp;command);
-
-  // Use JNI_ABORT because in_bytes is read only.
-  // ------&gt; JNI_ABORT: 要素列をJava配列に反映させず、要素列バッファを解放する。
-  env-&gt;ReleaseByteArrayElements(in_bytes_array, in_bytes, JNI_ABORT);
-
-  // 変換結果はjbyteArrayとしてjava側に返す
-  const int out_size = command.ByteSize();
-  jbyteArray out_bytes_array = env-&gt;NewByteArray(out_size);
-
-
-  // ------&gt; is_copy: 0の場合、生成された配列(out_bytes)を変更すると、java側にも変更される。
-  //                  1の場合、変更してもjava側には変更されない。
-  jbyte *out_bytes = env-&gt;GetByteArrayElements(out_bytes_array, &amp;is_copy);
-  command.SerializeToArray(out_bytes, out_size);
-
-  // Use 0 to copy out_bytes to out_bytes_array.
-  // ------&gt; 0の場合、要素列をJava配列に反映させ、要素列バッファを解放する。
-  env-&gt;ReleaseByteArrayElements(out_bytes_array, out_bytes, 0);
-
-  return out_bytes_array;
-}
-</code></pre>
-
-<p><code>in_bytes_array</code>には、タッチされたキーの情報などが入っている。<br/>
-<code>out_bytes_array</code>には、変換候補などが入っている。<br/>
-<a href="/blog/2014/04/22/mozc-analysis-01/">前回</a>最後のlog部分を参考してくだい。</p>
-
-<h2>終わりに</h2>
-
-<p>jni側の実装に関する説明はここまで。<br/>
-次回では<code>evalCommand</code>メソッドをもっと細かく説明する。</p>
-
-<script language="javaScript">
-$(document).ready( function () { $("a[href^='http']:not([href*='" + location.hostname + "'])").attr('target', '_blank'); })
-</script>
-
-
-
 ]]></content>
   </entry>
   
