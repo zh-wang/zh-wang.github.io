@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-10-10T21:10:06+09:00</updated>
+  <updated>2015-10-10T21:17:58+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -145,8 +145,8 @@ let plusThreeBox = Optional&lt;IntFunction&gt;.Some(plusThree)
 Int?.Some(3).apply(plusThreeBox) // Int?(6)
 </code></pre>
 
-<p>&#8220;`
-Haskell-like version.</p>
+<pre><code>Haskell-like version.
+</code></pre>
 
 <pre><code>infix operator &lt;*&gt; { associativity left }
 
@@ -164,6 +164,8 @@ func &lt;*&gt;&lt;T, U&gt;(a: [T], f: [T -&gt; U]) -&gt; [U] {
 [1, 2, 3] &lt;*&gt; [ { $0 + 3 }, { $0 * 2 } ]
 // =&gt; [ 4, 5, 6, 2, 4, 6 ]
 </code></pre>
+
+<p>&#8220;`</p>
 ]]></content>
   </entry>
   

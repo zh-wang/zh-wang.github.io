@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-10-10T21:10:06+09:00</updated>
+  <updated>2015-10-10T21:17:58+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -221,22 +221,38 @@
 
 <p>Haskell-like version.</p>
 
-<pre><code>infix operator &lt;*&gt; { associativity left }
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="kr">infix</span> <span class="kr">operator</span> <span class="o">&lt;*&gt;</span> <span class="p">{</span> <span class="kr">associativity</span> <span class="kr">left</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="o">&lt;*&gt;&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">a</span><span class="p">:</span> <span class="n">T</span><span class="o">?</span><span class="p">,</span> <span class="nl">f</span><span class="p">:</span> <span class="p">(</span><span class="n">T</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">)</span><span class="o">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">?</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="o">&lt;*&gt;&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">a</span><span class="p">:</span> <span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="nl">f</span><span class="p">:</span> <span class="p">[</span><span class="n">T</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">U</span><span class="p">]</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="n">Optional</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;*&gt;</span> <span class="n">Optional</span><span class="p">.</span><span class="n">Some</span><span class="p">({</span> <span class="err">$</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">3</span> <span class="p">}))</span>
+</span><span class='line'><span class="c1">// =&gt; 5</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&lt;*&gt;</span> <span class="p">[</span> <span class="p">{</span> <span class="err">$</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">3</span> <span class="p">},</span> <span class="p">{</span> <span class="err">$</span><span class="mi">0</span> <span class="o">*</span> <span class="mi">2</span> <span class="p">}</span> <span class="p">]</span>
+</span><span class='line'><span class="c1">// =&gt; [ 4, 5, 6, 2, 4, 6 ]</span>
+</span></code></pre></td></tr></table></div></figure>
 
-func &lt;*&gt;&lt;T, U&gt;(a: T?, f: (T -&gt; U)?) -&gt; U? {
-    return a.apply(f)
-}
-
-func &lt;*&gt;&lt;T, U&gt;(a: [T], f: [T -&gt; U]) -&gt; [U] {
-    return a.apply(f)
-}
-
-(Optional.Some(2) &lt;*&gt; Optional.Some({ $0 + 3 }))
-// =&gt; 5
-
-[1, 2, 3] &lt;*&gt; [ { $0 + 3 }, { $0 * 2 } ]
-// =&gt; [ 4, 5, 6, 2, 4, 6 ]
-</code></pre>
 ]]></content>
   </entry>
   
