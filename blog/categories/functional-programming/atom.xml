@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Functional Programming | Welcome to FutureAppLaboratory]]></title>
+  <link href="http://zh-wang.github.io/blog/categories/functional-programming/atom.xml" rel="self"/>
+  <link href="http://zh-wang.github.io/"/>
+  <updated>2015-10-10T21:10:06+09:00</updated>
+  <id>http://zh-wang.github.io/</id>
+  <author>
+    <name><![CDATA[viennakanon]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Functor, Monad, Applicative in Swift]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/10/09/functor-monad-applicative-in-swift/"/>
+    <updated>2015-10-09T10:29:12+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/10/09/functor-monad-applicative-in-swift</id>
+    <content type="html"><![CDATA[<p>Some Implementation in Swift.</p>
+
+<h3>Functor</h3>
+
+<p>Let $C$ be a constructor which takes a variable as parameter.</p>
+
+<p>$C$ is a <strong>Functor</strong> if $C$ has the following ability.</p>
+
+<p><script type="math/tex; mode=display">
+    C[A].map(A \rightarrow B) = C[B]
+</script></p>
+
+<p>For example, we can write such a function <code>map</code> for <code>Optional</code>. (Well, swift already has such built-in function.)
+&#8220;`swift
+    extension Optional {
+        func map<U>(f: Wrapped -> U) -> U? {
+            switch self {
+                case .Some(let x): return f(x)
+                case .None: return .None
+            }
+        }</p>
+
+<pre><code>    // take out the wrapped item
+    func toValue() -&gt; Wrapped? {
+        switch self {
+            case .Some(let x): return x
+            case .None: return .None
+        }
+    }
+}
+
+// A -&gt; B
+func plusTwo(addend: Int) -&gt; Double {
+    return Double(addend) + 2.0
+}
+
+// C[A] -&gt; C[B]
+Int?.Some(3).map(plusTwo) // Change Optional&lt;Int&gt;(3) into Optional&lt;Double&gt;(5.0)
+</code></pre>
+
+<pre><code>
+And we can chain functors like this.
+</code></pre>
+
+<pre><code>func plusThree(addend: Int) -&gt; Int {
+    return addend + 3
+}
+
+Int?.Some(3).map(plusThree).map(plusTwo)
+</code></pre>
+
+<pre><code>We can also do it like Haskell
+</code></pre>
+
+<pre><code>// This is a custom operator
+infix operator &lt;^&gt; { associativity left }
+func &lt;^&gt;&lt;T, U&gt;(a: T?, f: T -&gt; U) -&gt; U? {
+    return a.map(f)
+}
+
+Optional.Some(2) &lt;^&gt; plusThree // Int?(5)
+Optional.Some(2) &lt;^&gt; plusThree &lt;^&gt; plusThree // Int?(8)
+</code></pre>
+
+<pre><code>
+### Monad
+
+$C$ is a __Monad__ if $C$ has the following ability.
+
+<script type="math/tex; mode=display">
+    C[A].flatmap(A \rightarrow C[B]) = C[B]
+</script>
+</code></pre>
+
+<pre><code>extension Optional {
+    func flatMap&lt;U&gt;(f: Wrapped -&gt; U?) -&gt; U? {
+        switch self {
+            case .Some(let x): return f(x)
+            case .None: return .None
+        }
+    }
+}
+
+func half(a: Int) -&gt; Int? {
+    return a % 2 == 0 ? a / 2 : .None
+}
+
+Int?.Some(4).flatMap(half) // Int?(2)
+</code></pre>
+
+<pre><code>Haskell-like version.
+</code></pre>
+
+<pre><code>infix operator &gt;&gt;- { associativity left }
+
+func &gt;&gt;-&lt;T, U&gt;(a: T?, f: T -&gt; U?) -&gt; U? {
+    return a.flatMap(f)
+}
+
+Int?(3) &gt;&gt;- half // Optional.None
+Int?(4) &gt;&gt;- half &gt;&gt;- half // Int?(2)
+</code></pre>
+
+<pre><code>### Applicative
+
+$C$ is a __Applicative__ if $C$ has the following ability.
+
+<script type="math/tex; mode=display">
+    C[A].apply(C[A \rightarrow B]) = C[B]
+</script>
+</code></pre>
+
+<pre><code>extension Optional {
+    func apply&lt;U&gt;(f: (Wrapped -&gt; U)?) -&gt; U? {
+        switch f {
+        case .Some(let someF): return self.map(someF)
+        case .None: return .None
+        }
+    }
+}
+
+// This is a IntFunction? type
+let plusThreeBox = Optional&lt;IntFunction&gt;.Some(plusThree)
+
+Int?.Some(3).apply(plusThreeBox) // Int?(6)
+</code></pre>
+
+<p>&#8220;`
+Haskell-like version.</p>
+
+<pre><code>infix operator &lt;*&gt; { associativity left }
+
+func &lt;*&gt;&lt;T, U&gt;(a: T?, f: (T -&gt; U)?) -&gt; U? {
+    return a.apply(f)
+}
+
+func &lt;*&gt;&lt;T, U&gt;(a: [T], f: [T -&gt; U]) -&gt; [U] {
+    return a.apply(f)
+}
+
+(Optional.Some(2) &lt;*&gt; Optional.Some({ $0 + 3 }))
+// =&gt; 5
+
+[1, 2, 3] &lt;*&gt; [ { $0 + 3 }, { $0 * 2 } ]
+// =&gt; [ 4, 5, 6, 2, 4, 6 ]
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

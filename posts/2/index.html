@@ -10,23 +10,8 @@
 
   
   <meta name="description" content="Problem definition can be found here.
-This is a basic problem which can be solved directly by a Tri-tree. 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17 &hellip;">
+Need some tricks on recursion.
+And if keep dp size for about $\sqrt{N}$ will cause the program run too LONG! 1 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -50,9 +35,10 @@ This is a basic problem which can be solved directly by a Tri-tree. 1
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
 <!-- Load Google Noto Font from local -->
-<!--<link href="/stylesheets/google-noto-fonts.css" rel="stylesheet" type="text/css">&#8211;>
+<link href="/stylesheets/google-noto-fonts.css" rel="stylesheet" type="text/css">
 
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"> </script> 
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+</script>
 
 <!-- open new tab for jumping -->
 <script language="javaScript">
@@ -82,23 +68,8 @@ MathJax.Hub.Config({
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
 <meta property="og:description" content="Problem definition can be found here.
-This is a basic problem which can be solved directly by a Tri-tree. 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17 &hellip;" />
+Need some tricks on recursion.
+And if keep dp size for about $\sqrt{N}$ will cause the program run too LONG! 1 &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/posts/2/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -141,6 +112,272 @@ This is a basic problem which can be solved directly by a Tri-tree. 1
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting/">FB HackerCup 2015 R1 40:CorporateGifting</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-03T23:48:59+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Problem definition can be found <a href="https://www.facebook.com/hackercup/problems.php?pid=759650454070547&amp;round=344496159068801">here</a>.<br/>
+Need some tricks on recursion.<br/>
+And if keep dp size for about $\sqrt{N}$ will cause the program run too LONG!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;cstdio&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cstdlib&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cstring&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cmath&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;climits&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;cassert&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;algorithm&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;map&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;set&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;queue&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;sstream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;numeric&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;fstream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;utility&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iomanip&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;stack&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;list&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;sstream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'><span class="cp">#define PB push_back</span>
+</span><span class='line'><span class="cp">#define MP make_pair</span>
+</span><span class='line'><span class="cp">#define REP(i, n) for (int i(0); i &lt; n; ++i)</span>
+</span><span class='line'><span class="cp">#define REP1(i, n) for (int i(1); i &lt; n; ++i)</span>
+</span><span class='line'><span class="cp">#define REP1N(i, n) for (int i(1); i &lt;= n; ++i)</span>
+</span><span class='line'><span class="cp">#define FOR(i, a, b) for (int i(a); i &lt;= b; ++i)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">typedef</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">ll</span><span class="p">;</span>
+</span><span class='line'><span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">ll</span><span class="o">&gt;</span> <span class="n">vll</span><span class="p">;</span>
+</span><span class='line'><span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vi</span><span class="p">;</span>
+</span><span class='line'><span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vi</span><span class="o">&gt;</span> <span class="n">vvi</span><span class="p">;</span>
+</span><span class='line'><span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">vb</span><span class="p">;</span>
+</span><span class='line'><span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vb</span><span class="o">&gt;</span> <span class="n">vvb</span><span class="p">;</span>
+</span><span class='line'><span class="k">typedef</span> <span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">pii</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">tc</span><span class="p">;</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">parentIndex</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">struct</span> <span class="n">node</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">node</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">child</span> <span class="o">=</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">child</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">node</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">200001</span><span class="p">];</span>
+</span><span class='line'><span class="n">pii</span> <span class="n">best1</span><span class="p">[</span><span class="mi">200001</span><span class="p">];</span>
+</span><span class='line'><span class="n">pii</span> <span class="n">best2</span><span class="p">[</span><span class="mi">200001</span><span class="p">];</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">bool</span> <span class="nf">sort_bests</span><span class="p">(</span><span class="k">const</span> <span class="n">pii</span><span class="o">&amp;</span> <span class="n">left</span><span class="p">,</span> <span class="k">const</span> <span class="n">pii</span><span class="o">&amp;</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">left</span><span class="p">.</span><span class="n">second</span> <span class="o">==</span> <span class="n">right</span><span class="p">.</span><span class="n">second</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">left</span><span class="p">.</span><span class="n">first</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">left</span><span class="p">.</span><span class="n">second</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">solve</span><span class="p">(</span><span class="kt">int</span> <span class="n">depth</span><span class="p">,</span> <span class="kt">int</span> <span class="n">rootIndex</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">node</span><span class="o">*</span> <span class="n">root</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">nodes</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">];</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">csize</span> <span class="o">=</span> <span class="n">root</span><span class="o">-&gt;</span><span class="n">child</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">REP</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">csize</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">solve</span><span class="p">(</span><span class="o">++</span><span class="n">depth</span><span class="p">,</span> <span class="n">root</span><span class="o">-&gt;</span><span class="n">child</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">maxColor</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">));</span>
+</span><span class='line'>    <span class="n">REP1N</span><span class="p">(</span><span class="n">rootColor</span><span class="p">,</span> <span class="n">maxColor</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// find color should be choosen for root</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">_res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// subtree sum of root, when picking rootColor</span>
+</span><span class='line'>        <span class="n">REP</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">csize</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// for each child</span>
+</span><span class='line'>            <span class="kt">int</span> <span class="n">childIndex</span> <span class="o">=</span> <span class="n">root</span><span class="o">-&gt;</span><span class="n">child</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+</span><span class='line'>            <span class="n">node</span><span class="o">*</span> <span class="n">child</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">nodes</span><span class="p">[</span><span class="n">childIndex</span><span class="p">];</span>
+</span><span class='line'>            <span class="kt">int</span> <span class="n">__res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="n">rootColor</span> <span class="o">==</span> <span class="n">best1</span><span class="p">[</span><span class="n">childIndex</span><span class="p">].</span><span class="n">first</span><span class="p">)</span>
+</span><span class='line'>                <span class="n">__res</span> <span class="o">+=</span> <span class="n">best2</span><span class="p">[</span><span class="n">childIndex</span><span class="p">].</span><span class="n">second</span><span class="p">;</span>
+</span><span class='line'>            <span class="k">else</span>
+</span><span class='line'>                <span class="n">__res</span> <span class="o">+=</span> <span class="n">best1</span><span class="p">[</span><span class="n">childIndex</span><span class="p">].</span><span class="n">second</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">_res</span> <span class="o">+=</span> <span class="n">__res</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="n">_res</span> <span class="o">+=</span> <span class="n">rootColor</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">pii</span> <span class="n">new_best</span> <span class="o">=</span> <span class="n">MP</span><span class="p">(</span><span class="n">rootColor</span><span class="p">,</span> <span class="n">_res</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">sort_bests</span><span class="p">(</span><span class="n">new_best</span><span class="p">,</span> <span class="n">best1</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">]))</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">best2</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">]</span> <span class="o">=</span> <span class="n">best1</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">];</span>
+</span><span class='line'>            <span class="n">best1</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_best</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">sort_bests</span><span class="p">(</span><span class="n">new_best</span><span class="p">,</span> <span class="n">best2</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">]))</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">best2</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_best</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">tc</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">REP</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">tc</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">REP</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="mi">200001</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">nodes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="p">();</span>
+</span><span class='line'>            <span class="n">best1</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">MP</span><span class="p">(</span><span class="n">INT_MAX</span><span class="p">,</span> <span class="n">INT_MAX</span><span class="p">);</span>
+</span><span class='line'>            <span class="n">best2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">MP</span><span class="p">(</span><span class="n">INT_MAX</span><span class="p">,</span> <span class="n">INT_MAX</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="n">REP</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">parentIndex</span><span class="p">;</span>
+</span><span class='line'>            <span class="n">nodes</span><span class="p">[</span><span class="n">parentIndex</span><span class="p">].</span><span class="n">child</span><span class="p">.</span><span class="n">PB</span><span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="n">solve</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="n">best1</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">second</span> <span class="o">&gt;</span> <span class="n">best2</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">second</span> <span class="o">?</span> <span class="n">best2</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nl">second</span> <span class="p">:</span> <span class="n">best1</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">second</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">res</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1077,399 +1314,6 @@ Just doing some disposal on my old stuff.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/02/16/sample-script-of-aws-ruby-api/">Sample Script of AWS Ruby Api</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-02-16T21:26:55+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2015/02/16/sample-script-of-aws-ruby-api/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2015/02/16/sample-script-of-aws-ruby-api/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Introduction</h2>
-
-<p>Some ruby script working on AWS api.<br/>
-I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif sharing system later :)</p>
-
-<h2>Source Code</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-<span class='line-number'>115</span>
-<span class='line-number'>116</span>
-<span class='line-number'>117</span>
-<span class='line-number'>118</span>
-<span class='line-number'>119</span>
-<span class='line-number'>120</span>
-<span class='line-number'>121</span>
-<span class='line-number'>122</span>
-<span class='line-number'>123</span>
-<span class='line-number'>124</span>
-<span class='line-number'>125</span>
-<span class='line-number'>126</span>
-<span class='line-number'>127</span>
-<span class='line-number'>128</span>
-<span class='line-number'>129</span>
-<span class='line-number'>130</span>
-<span class='line-number'>131</span>
-<span class='line-number'>132</span>
-<span class='line-number'>133</span>
-<span class='line-number'>134</span>
-<span class='line-number'>135</span>
-<span class='line-number'>136</span>
-<span class='line-number'>137</span>
-<span class='line-number'>138</span>
-<span class='line-number'>139</span>
-<span class='line-number'>140</span>
-<span class='line-number'>141</span>
-<span class='line-number'>142</span>
-<span class='line-number'>143</span>
-<span class='line-number'>144</span>
-<span class='line-number'>145</span>
-<span class='line-number'>146</span>
-<span class='line-number'>147</span>
-<span class='line-number'>148</span>
-<span class='line-number'>149</span>
-<span class='line-number'>150</span>
-<span class='line-number'>151</span>
-<span class='line-number'>152</span>
-<span class='line-number'>153</span>
-<span class='line-number'>154</span>
-<span class='line-number'>155</span>
-<span class='line-number'>156</span>
-<span class='line-number'>157</span>
-<span class='line-number'>158</span>
-<span class='line-number'>159</span>
-<span class='line-number'>160</span>
-<span class='line-number'>161</span>
-<span class='line-number'>162</span>
-<span class='line-number'>163</span>
-<span class='line-number'>164</span>
-<span class='line-number'>165</span>
-<span class='line-number'>166</span>
-<span class='line-number'>167</span>
-<span class='line-number'>168</span>
-<span class='line-number'>169</span>
-<span class='line-number'>170</span>
-<span class='line-number'>171</span>
-<span class='line-number'>172</span>
-<span class='line-number'>173</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#!/usr/bin/env ruby</span>
-</span><span class='line'><span class="c1"># encoding: utf-8</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;AWS&#39;</span>
-</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;active_support/all&#39;</span>
-</span><span class='line'><span class="nb">require</span> <span class="s1">&#39;./StringColorize.rb&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">GIF_TYPE_DEFAULT</span> <span class="o">=</span> <span class="s1">&#39;GIF_TYPE_DEFAULT&#39;</span>
-</span><span class='line'><span class="no">GIF_TYPE_ANIMAL</span> <span class="o">=</span> <span class="s1">&#39;GIF_TYPE_ANIMAL&#39;</span>
-</span><span class='line'><span class="no">GIF_TYPE_DOG</span> <span class="o">=</span> <span class="s1">&#39;GIF_TYPE_DOG&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">IMAGE_INFO_DOMAIN_NAME</span> <span class="o">=</span> <span class="s2">&quot;IMAGE_INFO_DOMAIN_NAME&quot;</span>
-</span><span class='line'><span class="no">GROUP_INFO_DOMAIN_NAME</span> <span class="o">=</span> <span class="s2">&quot;GROUP_INFO_DOMAIN_NAME&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">AWSUtils</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="no">ACCESS_KEY_ID</span> <span class="o">=</span> <span class="s1">&#39;MY_ACCESS_KEY_ID&#39;</span>
-</span><span class='line'>  <span class="no">SECRET_ACCESS_KEY</span> <span class="o">=</span> <span class="s1">&#39;MY_SECRET_ACCESS_KEY&#39;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span>
-</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
-</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareDomainSDB</span><span class="p">(</span><span class="no">IMAGE_INFO_DOMAIN_NAME</span><span class="p">)</span>
-</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareDomainSDB</span><span class="p">(</span><span class="no">GROUP_INFO_DOMAIN_NAME</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">listImageInfos</span>
-</span><span class='line'>    <span class="n">imageDomain</span> <span class="o">=</span> <span class="n">getDomain</span><span class="p">(</span><span class="no">IMAGE_INFO_DOMAIN_NAME</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">list_item_by_domain_name</span><span class="p">(</span><span class="n">imageDomain</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">item</span><span class="o">|</span>
-</span><span class='line'>      <span class="n">list_attributes_by_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">listGroupInfos</span>
-</span><span class='line'>    <span class="n">groupDomain</span> <span class="o">=</span> <span class="n">getDomain</span><span class="p">(</span><span class="no">GROUP_INFO_DOMAIN_NAME</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">list_item_by_domain_name</span><span class="p">(</span><span class="n">groupDomain</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">item</span><span class="o">|</span>
-</span><span class='line'>      <span class="n">list_attributes_by_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">regions</span><span class="p">()</span>
-</span><span class='line'>    <span class="no">AWS</span><span class="o">::</span><span class="n">regions</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">region</span><span class="o">|</span>
-</span><span class='line'>      <span class="nb">puts</span> <span class="n">region</span><span class="o">.</span><span class="n">name</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">prepareSDB</span><span class="p">()</span>
-</span><span class='line'>    <span class="k">if</span> <span class="vi">@sdb</span><span class="o">.</span><span class="n">nil?</span>
-</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;===&gt; prepare sdb&quot;</span>
-</span><span class='line'>      <span class="vi">@sdb</span> <span class="o">=</span> <span class="no">AWS</span><span class="o">::</span><span class="no">SimpleDB</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
-</span><span class='line'>        <span class="ss">:access_key_id</span> <span class="o">=&gt;</span> <span class="no">ACCESS_KEY_ID</span><span class="p">,</span>
-</span><span class='line'>        <span class="ss">:secret_access_key</span> <span class="o">=&gt;</span> <span class="no">SECRET_ACCESS_KEY</span><span class="p">,</span>
-</span><span class='line'>        <span class="ss">:region</span> <span class="o">=&gt;</span> <span class="s1">&#39;ap-northeast-1&#39;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">prepareDomainSDB</span><span class="p">(</span><span class="n">domain_name</span><span class="p">)</span>
-</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;===&gt; initialize domain &quot;</span> <span class="o">+</span> <span class="n">domain_name</span>
-</span><span class='line'>    <span class="vi">@sdb</span><span class="o">.</span><span class="n">domains</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">domain_name</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">getDomain</span><span class="p">(</span><span class="n">domain_name</span><span class="p">)</span>
-</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
-</span><span class='line'>    <span class="vi">@sdb</span><span class="o">.</span><span class="n">domains</span><span class="o">[</span><span class="n">domain_name</span><span class="o">]</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1"># ==== Deletion ====</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">deleteEmptyDomain</span><span class="p">(</span><span class="n">domain</span><span class="p">)</span>
-</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
-</span><span class='line'>    <span class="k">begin</span>
-</span><span class='line'>      <span class="nb">puts</span> <span class="n">domain</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; is deleted because empty&quot;</span>
-</span><span class='line'>      <span class="n">domain</span><span class="o">.</span><span class="n">delete</span>
-</span><span class='line'>    <span class="k">rescue</span> <span class="o">=&gt;</span> <span class="n">ex</span>
-</span><span class='line'>      <span class="nb">puts</span> <span class="n">domain</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot; delete error -&gt; &quot;</span> <span class="o">+</span> <span class="n">ex</span><span class="o">.</span><span class="n">to_s</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1"># ==== List ====</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">listDomainSDB</span><span class="p">(</span><span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
-</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
-</span><span class='line'>    <span class="vi">@sdb</span><span class="o">.</span><span class="n">domains</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">domain</span><span class="o">|</span>
-</span><span class='line'>        <span class="nb">puts</span> <span class="s2">&quot;===&gt; listing domain: &quot;</span> <span class="o">+</span> <span class="n">domain</span><span class="o">.</span><span class="n">name</span>
-</span><span class='line'>        <span class="k">unless</span> <span class="n">block</span><span class="o">.</span><span class="n">nil?</span>
-</span><span class='line'>          <span class="k">yield</span> <span class="n">domain</span>
-</span><span class='line'>        <span class="k">end</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">list_item_by_domain_name</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">block</span><span class="p">)</span>
-</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
-</span><span class='line'>    <span class="c1">#domain = @sdb.domains.create(domain_name)</span>
-</span><span class='line'><span class="c1">#    puts domain.items.collect(&amp;:name) # list name</span>
-</span><span class='line'>    <span class="n">domain</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">item</span><span class="o">|</span>
-</span><span class='line'>      <span class="nb">puts</span> <span class="s2">&quot;===&gt; listing item: &quot;</span> <span class="o">+</span> <span class="n">item</span><span class="o">.</span><span class="n">name</span>
-</span><span class='line'>      <span class="k">unless</span> <span class="n">block</span><span class="o">.</span><span class="n">nil?</span>
-</span><span class='line'>        <span class="k">yield</span> <span class="n">item</span>
-</span><span class='line'>      <span class="k">end</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">list_attributes_by_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;===&gt; listing attributes: &quot;</span> <span class="o">+</span> <span class="n">item</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">to_h</span><span class="p">()</span><span class="o">.</span><span class="n">to_s</span><span class="p">()</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1"># ==== Insert ====</span>
-</span><span class='line'>  <span class="c1">#</span>
-</span><span class='line'>  <span class="c1"># item key -&gt; image&#39;s md5</span>
-</span><span class='line'>  <span class="c1">#</span>
-</span><span class='line'>  <span class="c1"># followed by a hash contains</span>
-</span><span class='line'>  <span class="c1">#</span>
-</span><span class='line'>  <span class="c1"># upload_time -&gt; ISO 8601 formatted time stamp</span>
-</span><span class='line'>  <span class="c1"># title -&gt; [title_en, title_ja, ...]</span>
-</span><span class='line'>  <span class="c1"># type -&gt; type string (Dog, Cat etc.)</span>
-</span><span class='line'>  <span class="c1"># group -&gt; [group id 1, group id 2, ...], may be nil</span>
-</span><span class='line'>  <span class="c1"># link -&gt; an Imgur link</span>
-</span><span class='line'>  <span class="c1"># json -&gt; response of uploaded image</span>
-</span><span class='line'>  <span class="c1"># comment -&gt; [], may be nil</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">insert_image_info_item</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">type</span><span class="p">,</span> <span class="n">md5</span><span class="p">,</span> <span class="n">link</span><span class="p">,</span> <span class="n">json</span><span class="p">)</span>
-</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
-</span><span class='line'>    <span class="n">image_domain</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">getDomain</span><span class="p">(</span><span class="no">IMAGE_INFO_DOMAIN_NAME</span><span class="p">)</span>
-</span><span class='line'>    <span class="nb">hash</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>      <span class="ss">:upload_time</span> <span class="o">=&gt;</span> <span class="n">time2ISO8601</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:title</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="n">title</span><span class="o">]</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:type</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="n">type</span><span class="o">]</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:group</span> <span class="o">=&gt;</span> <span class="o">[]</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:link</span> <span class="o">=&gt;</span> <span class="n">link</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:json</span> <span class="o">=&gt;</span> <span class="n">json</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:comment</span> <span class="o">=&gt;</span> <span class="o">[]</span><span class="p">,</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;===&gt; inserting: </span><span class="si">#{</span><span class="n">md5</span><span class="si">}</span><span class="s2"> , </span><span class="si">#{</span><span class="nb">hash</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span class='line'>    <span class="n">image_domain</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">md5</span><span class="p">,</span> <span class="nb">hash</span><span class="p">)</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;===&gt; ok&quot;</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1"># item key -&gt; group id, this is auto-generated</span>
-</span><span class='line'>  <span class="c1">#</span>
-</span><span class='line'>  <span class="c1"># followed by a hash contains</span>
-</span><span class='line'>  <span class="c1">#</span>
-</span><span class='line'>  <span class="c1"># upload_time -&gt; ISO 8601 formatted time stamp</span>
-</span><span class='line'>  <span class="c1"># title -&gt; [title_en, title_ja, ...]</span>
-</span><span class='line'>  <span class="c1"># images_md5 -&gt; [md5_1, md5_2, ...]</span>
-</span><span class='line'>  <span class="c1"># type -&gt; type string (Dog, Cat etc.)</span>
-</span><span class='line'>  <span class="c1"># comment -&gt; [], may be nil</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">insert_group_info_item</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">images_md5</span><span class="p">,</span> <span class="n">type</span><span class="p">)</span>
-</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">prepareSDB</span>
-</span><span class='line'>    <span class="n">group_domian</span> <span class="o">=</span> <span class="nb">self</span><span class="o">.</span><span class="n">getDomain</span><span class="p">(</span><span class="no">GROUP_INFO_DOMAIN_NAME</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">uniq_id</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="o">.</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">map</span> <span class="p">{</span> <span class="p">(</span><span class="mi">65</span> <span class="o">+</span> <span class="nb">rand</span><span class="p">(</span><span class="mi">26</span><span class="p">))</span><span class="o">.</span><span class="n">chr</span> <span class="p">}</span><span class="o">.</span><span class="n">join</span>
-</span><span class='line'>    <span class="nb">hash</span> <span class="o">=</span> <span class="p">{</span>
-</span><span class='line'>      <span class="ss">:upload_time</span> <span class="o">=&gt;</span> <span class="n">time2ISO8601</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:title</span> <span class="o">=&gt;</span> <span class="o">[</span><span class="n">title</span><span class="o">]</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:images_md5</span> <span class="o">=&gt;</span> <span class="n">images_md5</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:type</span> <span class="o">=&gt;</span> <span class="n">type</span><span class="p">,</span>
-</span><span class='line'>      <span class="ss">:comment</span> <span class="o">=&gt;</span> <span class="o">[]</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="nb">puts</span> <span class="s2">&quot;===&gt; inserting: </span><span class="si">#{</span><span class="n">uniq_id</span><span class="si">}</span><span class="s2"> , </span><span class="si">#{</span><span class="nb">hash</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span class='line'>    <span class="n">group_domian</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">uniq_id</span><span class="p">,</span> <span class="nb">hash</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">duplicated</span><span class="p">(</span><span class="n">domain</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
-</span><span class='line'>    <span class="o">!</span><span class="n">domain</span><span class="o">.</span><span class="n">items</span><span class="o">[</span><span class="n">key</span><span class="o">].</span><span class="n">attributes</span><span class="o">.</span><span class="n">to_h</span><span class="o">.</span><span class="n">empty?</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">duplicated_in_domain_name</span><span class="p">(</span><span class="n">domain_name</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">duplicated</span><span class="p">(</span><span class="n">getDomain</span><span class="p">(</span><span class="n">domain_name</span><span class="p">),</span> <span class="n">key</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">time2ISO8601</span>
-</span><span class='line'>    <span class="no">Time</span><span class="o">.</span><span class="n">now</span><span class="o">.</span><span class="n">in_time_zone</span><span class="p">(</span><span class="s1">&#39;Asia/Tokyo&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">iso8601</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="3">&larr; Older</a>
@@ -1487,6 +1331,10 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/10/09/functor-monad-applicative-in-swift/">Functor, Monad, Applicative in Swift</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/09/25/remove-border-from-android-dialog/">Remove Border From Android Dialog</a>
       </li>
     
@@ -1502,10 +1350,6 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
         <a href="/blog/2015/07/02/swift-string-operation/">Swift String Operations</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/07/02/surrogate-support-for-swifts-string/">Surrogate Support for Swift&#8217;s String</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1514,11 +1358,11 @@ I will integrate them with Imgur&rsquo;s ruby script to build a backend of gif s
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (12)</a></li><li><a href='/blog/categories/android/'>android (7)</a></li><li><a href='/blog/categories/codility/'>codility (6)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (17)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (12)</a></li><li><a href='/blog/categories/android/'>android (7)</a></li><li><a href='/blog/categories/codility/'>codility (6)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/functional-programming/'>functional programming (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (18)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 102.35294117647058%'>algorithm(12)</a> <a href='/blog/categories/android' style='font-size: 84.70588235294117%'>android(7)</a> <a href='/blog/categories/codility' style='font-size: 81.17647058823529%'>codility(6)</a> <a href='/blog/categories/cpp' style='font-size: 63.529411764705884%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.529411764705884%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 63.529411764705884%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.529411764705884%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.529411764705884%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 70.58823529411765%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 67.05882352941177%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.529411764705884%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 81.17647058823529%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(17)</a> <a href='/blog/categories/vim' style='font-size: 67.05882352941177%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.529411764705884%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 100.0%'>algorithm(12)</a> <a href='/blog/categories/android' style='font-size: 83.33333333333333%'>android(7)</a> <a href='/blog/categories/codility' style='font-size: 80.0%'>codility(6)</a> <a href='/blog/categories/cpp' style='font-size: 63.333333333333336%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.333333333333336%'>csv(1)</a> <a href='/blog/categories/functional-programming' style='font-size: 63.333333333333336%'>functional programming(1)</a> <a href='/blog/categories/ios' style='font-size: 63.333333333333336%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.333333333333336%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.333333333333336%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 70.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 66.66666666666667%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.333333333333336%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 80.0%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(18)</a> <a href='/blog/categories/vim' style='font-size: 66.66666666666667%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.333333333333336%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

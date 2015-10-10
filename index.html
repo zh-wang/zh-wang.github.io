@@ -9,7 +9,7 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="In android development, Dialog are DialogFragment are very common UI parts. They come with a default border, with black or white background depending &hellip;">
+  <meta name="description" content="Some Implementation in Swift. Functor Let $C$ be a constructor which takes a variable as parameter. $C$ is a Functor if $C$ has the following ability &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -33,9 +33,10 @@
 <link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
 <!-- Load Google Noto Font from local -->
-<!--<link href="/stylesheets/google-noto-fonts.css" rel="stylesheet" type="text/css">&#8211;>
+<link href="/stylesheets/google-noto-fonts.css" rel="stylesheet" type="text/css">
 
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"> </script> 
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML">
+</script>
 
 <!-- open new tab for jumping -->
 <script language="javaScript">
@@ -64,7 +65,7 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="In android development, Dialog are DialogFragment are very common UI parts. They come with a default border, with black or white background depending &hellip;" />
+<meta property="og:description" content="Some Implementation in Swift. Functor Let $C$ be a constructor which takes a variable as parameter. $C$ is a Functor if $C$ has the following ability &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -107,6 +108,263 @@ MathJax.Hub.Config({
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/09/functor-monad-applicative-in-swift/">Functor, Monad, Applicative in Swift</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-09T10:29:12+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/10/09/functor-monad-applicative-in-swift/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/10/09/functor-monad-applicative-in-swift/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Some Implementation in Swift.</p>
+
+<h3>Functor</h3>
+
+<p>Let $C$ be a constructor which takes a variable as parameter.</p>
+
+<p>$C$ is a <strong>Functor</strong> if $C$ has the following ability.</p>
+
+<script type="math/tex; mode=display">
+    C[A].map(A \rightarrow B) = C[B]
+</script>
+
+
+<p>For example, we can write such a function <code>map</code> for <code>Optional</code>. (Well, swift already has such built-in function.)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">extension</span> <span class="n">Optional</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">func</span> <span class="n">map</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">f</span><span class="p">:</span> <span class="n">Wrapped</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">?</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">switch</span> <span class="nb">self</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">case</span> <span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="k">let</span> <span class="n">x</span><span class="p">)</span><span class="o">:</span> <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">case</span> <span class="p">.</span><span class="nl">None</span><span class="p">:</span> <span class="k">return</span> <span class="p">.</span><span class="n">None</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// take out the wrapped item</span>
+</span><span class='line'>    <span class="k">func</span> <span class="n">toValue</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Wrapped</span><span class="o">?</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">switch</span> <span class="nb">self</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">case</span> <span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="k">let</span> <span class="n">x</span><span class="p">)</span><span class="o">:</span> <span class="k">return</span> <span class="n">x</span>
+</span><span class='line'>            <span class="k">case</span> <span class="p">.</span><span class="nl">None</span><span class="p">:</span> <span class="k">return</span> <span class="p">.</span><span class="n">None</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// A -&gt; B</span>
+</span><span class='line'><span class="k">func</span> <span class="n">plusTwo</span><span class="p">(</span><span class="nl">addend</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Double</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">Double</span><span class="p">(</span><span class="n">addend</span><span class="p">)</span> <span class="o">+</span> <span class="mf">2.0</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// C[A] -&gt; C[B]</span>
+</span><span class='line'><span class="n">Int</span><span class="o">?</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="n">map</span><span class="p">(</span><span class="n">plusTwo</span><span class="p">)</span> <span class="c1">// Change Optional&lt;Int&gt;(3) into Optional&lt;Double&gt;(5.0)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And we can chain functors like this.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="n">plusThree</span><span class="p">(</span><span class="nl">addend</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">addend</span> <span class="o">+</span> <span class="mi">3</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Int</span><span class="o">?</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="n">map</span><span class="p">(</span><span class="n">plusThree</span><span class="p">).</span><span class="n">map</span><span class="p">(</span><span class="n">plusTwo</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We can also do it like Haskell</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// This is a custom operator</span>
+</span><span class='line'><span class="kr">infix</span> <span class="kr">operator</span> <span class="o">&lt;^&gt;</span> <span class="p">{</span> <span class="kr">associativity</span> <span class="kr">left</span> <span class="p">}</span>
+</span><span class='line'><span class="k">func</span> <span class="o">&lt;^&gt;&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">a</span><span class="p">:</span> <span class="n">T</span><span class="o">?</span><span class="p">,</span> <span class="nl">f</span><span class="p">:</span> <span class="n">T</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">?</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Optional</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;^&gt;</span> <span class="n">plusThree</span> <span class="c1">// Int?(5)</span>
+</span><span class='line'><span class="n">Optional</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;^&gt;</span> <span class="n">plusThree</span> <span class="o">&lt;^&gt;</span> <span class="n">plusThree</span> <span class="c1">// Int?(8)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Monad</h3>
+
+<p>$C$ is a <strong>Monad</strong> if $C$ has the following ability.</p>
+
+<script type="math/tex; mode=display">
+    C[A].flatmap(A \rightarrow C[B]) = C[B]
+</script>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">extension</span> <span class="n">Optional</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">func</span> <span class="n">flatMap</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">f</span><span class="p">:</span> <span class="n">Wrapped</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">?</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">switch</span> <span class="nb">self</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">case</span> <span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="k">let</span> <span class="n">x</span><span class="p">)</span><span class="o">:</span> <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">case</span> <span class="p">.</span><span class="nl">None</span><span class="p">:</span> <span class="k">return</span> <span class="p">.</span><span class="n">None</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="n">half</span><span class="p">(</span><span class="nl">a</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span><span class="o">?</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">a</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">a</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">:</span> <span class="p">.</span><span class="n">None</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Int</span><span class="o">?</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="mi">4</span><span class="p">).</span><span class="n">flatMap</span><span class="p">(</span><span class="n">half</span><span class="p">)</span> <span class="c1">// Int?(2)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Haskell-like version.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="kr">infix</span> <span class="kr">operator</span> <span class="o">&gt;&gt;-</span> <span class="p">{</span> <span class="kr">associativity</span> <span class="kr">left</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="o">&gt;&gt;-&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">a</span><span class="p">:</span> <span class="n">T</span><span class="o">?</span><span class="p">,</span> <span class="nl">f</span><span class="p">:</span> <span class="n">T</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">?</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="n">flatMap</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Int</span><span class="o">?</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;-</span> <span class="n">half</span> <span class="c1">// Optional.None</span>
+</span><span class='line'><span class="n">Int</span><span class="o">?</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&gt;&gt;-</span> <span class="n">half</span> <span class="o">&gt;&gt;-</span> <span class="n">half</span> <span class="c1">// Int?(2)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Applicative</h3>
+
+<p>$C$ is a <strong>Applicative</strong> if $C$ has the following ability.</p>
+
+<script type="math/tex; mode=display">
+    C[A].apply(C[A \rightarrow B]) = C[B]
+</script>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">extension</span> <span class="n">Optional</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">func</span> <span class="n">apply</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">f</span><span class="p">:</span> <span class="p">(</span><span class="n">Wrapped</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">)</span><span class="o">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">?</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">switch</span> <span class="n">f</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">case</span> <span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="k">let</span> <span class="n">someF</span><span class="p">)</span><span class="o">:</span> <span class="k">return</span> <span class="nb">self</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">someF</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">case</span> <span class="p">.</span><span class="nl">None</span><span class="p">:</span> <span class="k">return</span> <span class="p">.</span><span class="n">None</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// This is a IntFunction? type</span>
+</span><span class='line'><span class="k">let</span> <span class="n">plusThreeBox</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">IntFunction</span><span class="o">&gt;</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="n">plusThree</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Int</span><span class="o">?</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="n">apply</span><span class="p">(</span><span class="n">plusThreeBox</span><span class="p">)</span> <span class="c1">// Int?(6)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Haskell-like version.</p>
+
+<pre><code>infix operator &lt;*&gt; { associativity left }
+
+func &lt;*&gt;&lt;T, U&gt;(a: T?, f: (T -&gt; U)?) -&gt; U? {
+    return a.apply(f)
+}
+
+func &lt;*&gt;&lt;T, U&gt;(a: [T], f: [T -&gt; U]) -&gt; [U] {
+    return a.apply(f)
+}
+
+(Optional.Some(2) &lt;*&gt; Optional.Some({ $0 + 3 }))
+// =&gt; 5
+
+[1, 2, 3] &lt;*&gt; [ { $0 + 3 }, { $0 * 2 } ]
+// =&gt; [ 4, 5, 6, 2, 4, 6 ]
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1671,272 +1929,6 @@ In binary,
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting/">FB HackerCup 2015 R1 40:CorporateGifting</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-04-03T23:48:59+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2015/04/03/fb-hackcup-2015-r1-40-corporategifting/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Problem definition can be found <a href="https://www.facebook.com/hackercup/problems.php?pid=759650454070547&amp;round=344496159068801">here</a>.<br/>
-Need some tricks on recursion.<br/>
-And if keep dp size for about $\sqrt{N}$ will cause the program run too LONG!</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cp">#include &lt;cstdio&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;cstdlib&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;cstring&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;cmath&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;climits&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;cassert&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;string&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;algorithm&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;map&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;set&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;queue&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;sstream&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;numeric&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;fstream&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;utility&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;iomanip&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;stack&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;list&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;sstream&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
-</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span><span class='line'><span class="cp">#define PB push_back</span>
-</span><span class='line'><span class="cp">#define MP make_pair</span>
-</span><span class='line'><span class="cp">#define REP(i, n) for (int i(0); i &lt; n; ++i)</span>
-</span><span class='line'><span class="cp">#define REP1(i, n) for (int i(1); i &lt; n; ++i)</span>
-</span><span class='line'><span class="cp">#define REP1N(i, n) for (int i(1); i &lt;= n; ++i)</span>
-</span><span class='line'><span class="cp">#define FOR(i, a, b) for (int i(a); i &lt;= b; ++i)</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">typedef</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">ll</span><span class="p">;</span>
-</span><span class='line'><span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">ll</span><span class="o">&gt;</span> <span class="n">vll</span><span class="p">;</span>
-</span><span class='line'><span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">vi</span><span class="p">;</span>
-</span><span class='line'><span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vi</span><span class="o">&gt;</span> <span class="n">vvi</span><span class="p">;</span>
-</span><span class='line'><span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">vb</span><span class="p">;</span>
-</span><span class='line'><span class="k">typedef</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">vb</span><span class="o">&gt;</span> <span class="n">vvb</span><span class="p">;</span>
-</span><span class='line'><span class="k">typedef</span> <span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;</span> <span class="n">pii</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="n">tc</span><span class="p">;</span>
-</span><span class='line'><span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
-</span><span class='line'><span class="kt">int</span> <span class="n">parentIndex</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">struct</span> <span class="n">node</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">node</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">child</span> <span class="o">=</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">();</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">child</span><span class="p">;</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">node</span> <span class="n">nodes</span><span class="p">[</span><span class="mi">200001</span><span class="p">];</span>
-</span><span class='line'><span class="n">pii</span> <span class="n">best1</span><span class="p">[</span><span class="mi">200001</span><span class="p">];</span>
-</span><span class='line'><span class="n">pii</span> <span class="n">best2</span><span class="p">[</span><span class="mi">200001</span><span class="p">];</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">bool</span> <span class="nf">sort_bests</span><span class="p">(</span><span class="k">const</span> <span class="n">pii</span><span class="o">&amp;</span> <span class="n">left</span><span class="p">,</span> <span class="k">const</span> <span class="n">pii</span><span class="o">&amp;</span> <span class="n">right</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">left</span><span class="p">.</span><span class="n">second</span> <span class="o">==</span> <span class="n">right</span><span class="p">.</span><span class="n">second</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">left</span><span class="p">.</span><span class="n">first</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">.</span><span class="n">first</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">left</span><span class="p">.</span><span class="n">second</span> <span class="o">&lt;</span> <span class="n">right</span><span class="p">.</span><span class="n">second</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="nf">solve</span><span class="p">(</span><span class="kt">int</span> <span class="n">depth</span><span class="p">,</span> <span class="kt">int</span> <span class="n">rootIndex</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">node</span><span class="o">*</span> <span class="n">root</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">nodes</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">];</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">csize</span> <span class="o">=</span> <span class="n">root</span><span class="o">-&gt;</span><span class="n">child</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-</span><span class='line'>    <span class="n">REP</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">csize</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">solve</span><span class="p">(</span><span class="o">++</span><span class="n">depth</span><span class="p">,</span> <span class="n">root</span><span class="o">-&gt;</span><span class="n">child</span><span class="p">[</span><span class="n">j</span><span class="p">]);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">maxColor</span> <span class="o">=</span> <span class="n">ceil</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">));</span>
-</span><span class='line'>    <span class="n">REP1N</span><span class="p">(</span><span class="n">rootColor</span><span class="p">,</span> <span class="n">maxColor</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// find color should be choosen for root</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">_res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// subtree sum of root, when picking rootColor</span>
-</span><span class='line'>        <span class="n">REP</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">csize</span><span class="p">)</span> <span class="p">{</span> <span class="c1">// for each child</span>
-</span><span class='line'>            <span class="kt">int</span> <span class="n">childIndex</span> <span class="o">=</span> <span class="n">root</span><span class="o">-&gt;</span><span class="n">child</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
-</span><span class='line'>            <span class="n">node</span><span class="o">*</span> <span class="n">child</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">nodes</span><span class="p">[</span><span class="n">childIndex</span><span class="p">];</span>
-</span><span class='line'>            <span class="kt">int</span> <span class="n">__res</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>            <span class="k">if</span> <span class="p">(</span><span class="n">rootColor</span> <span class="o">==</span> <span class="n">best1</span><span class="p">[</span><span class="n">childIndex</span><span class="p">].</span><span class="n">first</span><span class="p">)</span>
-</span><span class='line'>                <span class="n">__res</span> <span class="o">+=</span> <span class="n">best2</span><span class="p">[</span><span class="n">childIndex</span><span class="p">].</span><span class="n">second</span><span class="p">;</span>
-</span><span class='line'>            <span class="k">else</span>
-</span><span class='line'>                <span class="n">__res</span> <span class="o">+=</span> <span class="n">best1</span><span class="p">[</span><span class="n">childIndex</span><span class="p">].</span><span class="n">second</span><span class="p">;</span>
-</span><span class='line'>            <span class="n">_res</span> <span class="o">+=</span> <span class="n">__res</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="n">_res</span> <span class="o">+=</span> <span class="n">rootColor</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">pii</span> <span class="n">new_best</span> <span class="o">=</span> <span class="n">MP</span><span class="p">(</span><span class="n">rootColor</span><span class="p">,</span> <span class="n">_res</span><span class="p">);</span>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">sort_bests</span><span class="p">(</span><span class="n">new_best</span><span class="p">,</span> <span class="n">best1</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">]))</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">best2</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">]</span> <span class="o">=</span> <span class="n">best1</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">];</span>
-</span><span class='line'>            <span class="n">best1</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_best</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">sort_bests</span><span class="p">(</span><span class="n">new_best</span><span class="p">,</span> <span class="n">best2</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">]))</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">best2</span><span class="p">[</span><span class="n">rootIndex</span><span class="p">]</span> <span class="o">=</span> <span class="n">new_best</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span> <span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">tc</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">REP</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">tc</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">REP</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="mi">200001</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">nodes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="p">();</span>
-</span><span class='line'>            <span class="n">best1</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">MP</span><span class="p">(</span><span class="n">INT_MAX</span><span class="p">,</span> <span class="n">INT_MAX</span><span class="p">);</span>
-</span><span class='line'>            <span class="n">best2</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">MP</span><span class="p">(</span><span class="n">INT_MAX</span><span class="p">,</span> <span class="n">INT_MAX</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="n">REP</span><span class="p">(</span><span class="n">j</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">parentIndex</span><span class="p">;</span>
-</span><span class='line'>            <span class="n">nodes</span><span class="p">[</span><span class="n">parentIndex</span><span class="p">].</span><span class="n">child</span><span class="p">.</span><span class="n">PB</span><span class="p">(</span><span class="n">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="n">solve</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="n">best1</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">second</span> <span class="o">&gt;</span> <span class="n">best2</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">second</span> <span class="o">?</span> <span class="n">best2</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nl">second</span> <span class="p">:</span> <span class="n">best1</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">second</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">res</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -1950,6 +1942,10 @@ And if keep dp size for about $\sqrt{N}$ will cause the program run too LONG!</p
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/10/09/functor-monad-applicative-in-swift/">Functor, Monad, Applicative in Swift</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/09/25/remove-border-from-android-dialog/">Remove Border From Android Dialog</a>
@@ -1967,10 +1963,6 @@ And if keep dp size for about $\sqrt{N}$ will cause the program run too LONG!</p
         <a href="/blog/2015/07/02/swift-string-operation/">Swift String Operations</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/07/02/surrogate-support-for-swifts-string/">Surrogate Support for Swift&#8217;s String</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1979,11 +1971,11 @@ And if keep dp size for about $\sqrt{N}$ will cause the program run too LONG!</p
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (12)</a></li><li><a href='/blog/categories/android/'>android (7)</a></li><li><a href='/blog/categories/codility/'>codility (6)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (17)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (12)</a></li><li><a href='/blog/categories/android/'>android (7)</a></li><li><a href='/blog/categories/codility/'>codility (6)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/functional-programming/'>functional programming (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (18)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 102.35294117647058%'>algorithm(12)</a> <a href='/blog/categories/android' style='font-size: 84.70588235294117%'>android(7)</a> <a href='/blog/categories/codility' style='font-size: 81.17647058823529%'>codility(6)</a> <a href='/blog/categories/cpp' style='font-size: 63.529411764705884%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.529411764705884%'>csv(1)</a> <a href='/blog/categories/ios' style='font-size: 63.529411764705884%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.529411764705884%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.529411764705884%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 70.58823529411765%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 67.05882352941177%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.529411764705884%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 81.17647058823529%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(17)</a> <a href='/blog/categories/vim' style='font-size: 67.05882352941177%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.529411764705884%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 100.0%'>algorithm(12)</a> <a href='/blog/categories/android' style='font-size: 83.33333333333333%'>android(7)</a> <a href='/blog/categories/codility' style='font-size: 80.0%'>codility(6)</a> <a href='/blog/categories/cpp' style='font-size: 63.333333333333336%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.333333333333336%'>csv(1)</a> <a href='/blog/categories/functional-programming' style='font-size: 63.333333333333336%'>functional programming(1)</a> <a href='/blog/categories/ios' style='font-size: 63.333333333333336%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.333333333333336%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.333333333333336%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 70.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 66.66666666666667%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.333333333333336%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 80.0%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(18)</a> <a href='/blog/categories/vim' style='font-size: 66.66666666666667%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.333333333333336%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>
