@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Functional Programming | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/functional-programming/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-10-10T21:17:58+09:00</updated>
+  <updated>2015-10-13T11:54:52+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -131,6 +131,7 @@ $C$ is a __Applicative__ if $C$ has the following ability.
 </code></pre>
 
 <pre><code>extension Optional {
+    // Note that function `f` is ALSO wrapped in Optional type
     func apply&lt;U&gt;(f: (Wrapped -&gt; U)?) -&gt; U? {
         switch f {
         case .Some(let someF): return self.map(someF)
@@ -139,10 +140,25 @@ $C$ is a __Applicative__ if $C$ has the following ability.
     }
 }
 
+extension Array {
+    // Note that function `f` is ALSO wrapped in Array type
+    func apply&lt;U&gt;(fs: [Element -&gt; U]) -&gt; [U] {
+        var result = [U]()
+        for f in fs {
+            for element in self.map(f) {
+                result.append(element)
+            }
+        }
+        return result
+    }
+}
+
 // This is a IntFunction? type
 let plusThreeBox = Optional&lt;IntFunction&gt;.Some(plusThree)
 
 Int?.Some(3).apply(plusThreeBox) // Int?(6)
+
+[1, 2, 3].apply( [ {$0 + 10}, {$0 + 100} ] ) // [11, 12, 13, 101, 102, 103]
 </code></pre>
 
 <pre><code>Haskell-like version.

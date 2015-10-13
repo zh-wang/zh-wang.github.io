@@ -322,7 +322,24 @@ MathJax.Hub.Config({
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
 </pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">extension</span> <span class="n">Optional</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Note that function `f` is ALSO wrapped in Optional type</span>
 </span><span class='line'>    <span class="k">func</span> <span class="n">apply</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">f</span><span class="p">:</span> <span class="p">(</span><span class="n">Wrapped</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">)</span><span class="o">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">?</span> <span class="p">{</span>
 </span><span class='line'>        <span class="k">switch</span> <span class="n">f</span> <span class="p">{</span>
 </span><span class='line'>        <span class="k">case</span> <span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="k">let</span> <span class="n">someF</span><span class="p">)</span><span class="o">:</span> <span class="k">return</span> <span class="nb">self</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">someF</span><span class="p">)</span>
@@ -331,10 +348,25 @@ MathJax.Hub.Config({
 </span><span class='line'>    <span class="p">}</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
+</span><span class='line'><span class="k">extension</span> <span class="n">Array</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Note that function `f` is ALSO wrapped in Array type</span>
+</span><span class='line'>    <span class="k">func</span> <span class="n">apply</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">fs</span><span class="p">:</span> <span class="p">[</span><span class="n">Element</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">U</span><span class="p">]</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">var</span> <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">U</span><span class="p">]()</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">f</span> <span class="k">in</span> <span class="n">fs</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">for</span> <span class="n">element</span> <span class="k">in</span> <span class="nb">self</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">result</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">result</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
 </span><span class='line'><span class="c1">// This is a IntFunction? type</span>
 </span><span class='line'><span class="k">let</span> <span class="n">plusThreeBox</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">IntFunction</span><span class="o">&gt;</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="n">plusThree</span><span class="p">)</span>
 </span><span class='line'>
 </span><span class='line'><span class="n">Int</span><span class="o">?</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="n">apply</span><span class="p">(</span><span class="n">plusThreeBox</span><span class="p">)</span> <span class="c1">// Int?(6)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">].</span><span class="n">apply</span><span class="p">(</span> <span class="p">[</span> <span class="p">{</span><span class="err">$</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">10</span><span class="p">},</span> <span class="p">{</span><span class="err">$</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">100</span><span class="p">}</span> <span class="p">]</span> <span class="p">)</span> <span class="c1">// [11, 12, 13, 101, 102, 103]</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
