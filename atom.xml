@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-10-13T11:54:52+09:00</updated>
+  <updated>2015-10-23T14:54:36+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,163 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Update UI With Observer]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/10/23/update-ui-with-observer/"/>
+    <updated>2015-10-23T12:36:43+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/10/23/update-ui-with-observer</id>
+    <content type="html"><![CDATA[<p>Sometimes I need to update UI from different <code>Fragment</code>s. But it seems that writing update method in each <code>Fragment</code> is absurd if I have a lot of <code>Fragment</code> to handle with.</p>
+
+<p>Here is a better solution by using <code>Observer</code> pattern, IMO.</p>
+
+<h3>Sample</h3>
+
+<ol>
+<li>Define an <code>EventObject</code>, which is a event(or message) will be passed to <code>Observer</code>.</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ViewPagerTabsUIEventObject</span> <span class="kd">extends</span> <span class="n">EventObject</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">enum</span> <span class="n">EventType</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">LABEL_ON</span><span class="o">,</span>
+</span><span class='line'>        <span class="n">LABEL_OFF</span><span class="o">,</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">private</span> <span class="n">EventType</span> <span class="n">mEventType</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="nf">ViewPagerTabsUIEventObject</span><span class="o">(</span><span class="n">Object</span> <span class="n">source</span><span class="o">,</span> <span class="n">EventType</span> <span class="n">eventType</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="kd">super</span><span class="o">(</span><span class="n">source</span><span class="o">);</span>
+</span><span class='line'>        <span class="n">mEventType</span> <span class="o">=</span> <span class="n">eventType</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">TAG</span> <span class="o">=</span> <span class="s">&quot;ViewPagerTabsUIEventObject&quot;</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">EventType</span> <span class="nf">getEventType</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">mEventType</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>Define an <code>Observable</code>, which will dispatch event or message to <code>Observer</code>.</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ViewPagerTabsObservable</span> <span class="kd">extends</span> <span class="n">Observable</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">TAG</span> <span class="o">=</span> <span class="s">&quot;ViewPagerTabsObservable&quot;</span><span class="o">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kd">static</span> <span class="n">ViewPagerTabsObservable</span> <span class="n">sInstance</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ViewPagerTabsObservable</span><span class="o">();</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="nf">ViewPagerTabsObservable</span><span class="o">()</span> <span class="o">{</span> <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">notice</span><span class="o">(</span><span class="n">ViewPagerTabsUIEventObject</span> <span class="n">eventObject</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="n">setChanged</span><span class="o">();</span>
+</span><span class='line'>        <span class="n">notifyObservers</span><span class="o">(</span><span class="n">eventObject</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>Caller. Use a shared instance of <code>Observable</code> to dispatch event to <code>Observer</code>.</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="n">ViewPagerTabsUIEventObject</span> <span class="n">eventObject</span> <span class="o">=</span> <span class="k">new</span> <span class="nf">ViewPagerTabsUIEventObject</span><span class="o">(</span><span class="k">this</span><span class="o">,</span> <span class="n">EventType</span><span class="o">.</span><span class="na">LABEL_OFF</span><span class="o">);</span>
+</span><span class='line'><span class="n">ViewPagerTabsObservable</span><span class="o">.</span><span class="na">sInstance</span><span class="o">.</span><span class="na">notice</span><span class="o">(</span><span class="n">eventObject</span><span class="o">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>Receiver, which implements <code>Observer</code> interface.</li>
+</ol>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ViewPagerTabs</span> <span class="kd">extends</span> <span class="n">LinearLayout</span> <span class="kd">implements</span> <span class="n">Observer</span> <span class="o">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="cm">/* ... */</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nd">@Override</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">update</span><span class="o">(</span><span class="n">Observable</span> <span class="n">observable</span><span class="o">,</span> <span class="n">Object</span> <span class="n">data</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="c1">// TODO Auto-generated method stub</span>
+</span><span class='line'>        <span class="n">ViewPagerTabsUIEventObject</span> <span class="n">eventObject</span> <span class="o">=</span> <span class="o">(</span><span class="n">ViewPagerTabsUIEventObject</span><span class="o">)</span> <span class="n">data</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">switch</span> <span class="o">(</span><span class="n">eventObject</span><span class="o">.</span><span class="na">getEventType</span><span class="o">())</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">case</span> <span class="nl">LABEL_OFF:</span>
+</span><span class='line'>            <span class="c1">// do something</span>
+</span><span class='line'>            <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">case</span> <span class="nl">LABEL_ON:</span>
+</span><span class='line'>            <span class="c1">// do something else</span>
+</span><span class='line'>            <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">default</span><span class="o">:</span>
+</span><span class='line'>            <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Functor, Monad, Applicative in Swift]]></title>
@@ -2785,80 +2942,6 @@ Just doing some disposal on my old stuff.</p>
 </span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Auto 'Set Paste' on Demand]]></title>
-    <link href="http://zh-wang.github.io/blog/2015/02/17/auto-set-paste-on-demand/"/>
-    <updated>2015-02-17T12:47:51+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2015/02/17/auto-set-paste-on-demand</id>
-    <content type="html"><![CDATA[<p>Insertモードで編集している間にソースコードを貼付けたい時に、毎回&#8217;set paste&#8217;と&#8217;set nopaste&#8217;をやらないといけない、ちょっと面倒くさいです。<br/>
-更に、&#8217;set paste&#8217;抜きで貼付けた場合、内容の長さによりvimが一時的にフリーズしちゃいますので大変です。<br/>
-コマンドマッピングを導入しても、結局自分でコマンドを入れないといけないですね。</p>
-
-<p>なので今日は移動的に&#8217;set paste&#8217;と&#8217;set nopaste&#8217;をしてくれる便利なプラグインを紹介します。</p>
-
-<h2>Installation</h2>
-
-<p>リポはこちらです。<a href="https://github.com/ConradIrwin/vim-bracketed-paste">https://github.com/ConradIrwin/vim-bracketed-paste</a><br/>
-バンドル管理ツール経由でインストールします。私の環境では</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Bundle 'ConradIrwin/vim-bracketed-paste'</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Make a step deeper</h2>
-
-<p>基本的なアイディアはシステムのbracketed paste挙動を探知して、コマンドマッピングを自動で実行されます。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>if &term =~ "xterm.*"
-</span><span class='line'>    let &t_ti = &t_ti . "\e[?2004h"                " alternate screenに入る時、bracketed pasteを有効にする( ESC[?2004h] )
-</span><span class='line'>    let &t_te = "\e[?2004l" . &t_te                " alternate screenから戻る時、bracketed pasteを無効にする( ESC[?2004l] )
-</span><span class='line'>
-</span><span class='line'>    function XTermPasteBegin(ret)                  " mode change & set paste方法
-</span><span class='line'>        set pastetoggle=&lt;Esc&gt;[201~                 " bracketed pasteを終了識別子を検出する時、pasteモードをtoggle
-</span><span class='line'>        set paste                                  " mode changeする前に、set paste実行
-</span><span class='line'>        return a:ret                               " パラメータでどのモードに入るのをコントロールする
-</span><span class='line'>    endfunction
-</span><span class='line'>    map &lt;expr&gt; &lt;Esc&gt;[200~ XTermPasteBegin("i")     " normal modeでbracketed pasteの開始識別子(ESC[200~])を検出する時、insert modeになる
-</span><span class='line'>    imap &lt;expr&gt; &lt;Esc&gt;[200~ XTermPasteBegin("")     " insert modeならモードがそのまま
-</span><span class='line'>    cmap &lt;Esc&gt;[200~ &lt;nop&gt;                          " command modeなら以上のコードを使うとおかしくなるので、回避
-</span><span class='line'>    cmap &lt;Esc&gt;[201~ &lt;nop&gt;                          " 同じく回避
-</span><span class='line'>endif</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Reference</h2>
-
-<ul>
-<li>What is alternate screen? <a href="http://superuser.com/questions/321204/what-does-terminal-apps-show-alternate-screen-do-os-x">http://superuser.com/questions/321204/what-does-terminal-apps-show-alternate-screen-do-os-x</a></li>
-</ul>
-
-
-<p>以下はプラグインのソースから抜きました。</p>
-
-<ul>
-<li><a href="http://stackoverflow.com/questions/5585129/pasting-code-into-terminal-window-into-vim-on-mac-os-x">http://stackoverflow.com/questions/5585129/pasting-code-into-terminal-window-into-vim-on-mac-os-x</a></li>
-<li><a href="https://coderwall.com/p/if9mda">https://coderwall.com/p/if9mda</a></li>
-<li><a href="https://github.com/aaronjensen/vimfiles/blob/59a7019b1f2d08c70c28a41ef4e2612470ea0549/plugin/terminaltweaks.vim">https://github.com/aaronjensen/vimfiles/blob/59a7019b1f2d08c70c28a41ef4e2612470ea0549/plugin/terminaltweaks.vim</a> to fix the escape time problem with insert mode.</li>
-<li>Docs on bracketed paste mode. <a href="http://www.xfree86.org/current/ctlseqs.html">http://www.xfree86.org/current/ctlseqs.html</a></li>
-<li>Docs on mapping fast escape codes in vim. <a href="http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim">http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim</a></li>
-</ul>
 
 ]]></content>
   </entry>
