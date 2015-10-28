@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Rx | Welcome to FutureAppLaboratory]]></title>
+  <link href="http://zh-wang.github.io/blog/categories/rx/atom.xml" rel="self"/>
+  <link href="http://zh-wang.github.io/"/>
+  <updated>2015-10-28T18:35:30+09:00</updated>
+  <id>http://zh-wang.github.io/</id>
+  <author>
+    <name><![CDATA[viennakanon]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Learning RxSwift's Github Sample]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/10/27/learning-rxswifts-github-sample/"/>
+    <updated>2015-10-27T16:05:38+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/10/27/learning-rxswifts-github-sample</id>
+    <content type="html"><![CDATA[<p>Examples of RxSwift can be found here. <a href="https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples">https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples</a></p>
+
+<p>The first example is mock Github sign-up view controller. It checks availability of user name, password. Then simulate a sign-up process.</p>
+
+<p> In a common sign-up process, we have to check</p>
+
+<ol>
+<li>User name is empty or includes illegal character</li>
+<li>User name has been signed up</li>
+<li>Password and Password Repeat are the same</li>
+<li>Request can be handled correctly or not</li>
+</ol>
+
+
+<p> ### Listen user input
+ This is very simple for Rx framework. The <code>rx_text</code> field of <code>UITextField</code> is defined in <code>RxCocoa</code> is just what you want.</p>
+
+<pre><code class="swift">    let username = usernameOutlet.rx_text
+</code></pre>
+
+<p>It tracks <code>textViewDidChange</code> wrap all changes into <code>Observable</code>, which is an basic event sequence can be <strong>Observed</strong> by <code>Observer</code>.</p>
+
+<pre><code>let each user input event as E, then this event sequence can be illustrated as
+    ---E---E-E-----E-----
+</code></pre>
+
+<!-- more -->
+
+
+<h3>Check availability</h3>
+
+<p>This is a <code>flatmap</code> function for <code>Observable</code>. (Definition on <code>flatmap</code> can be found in this post. <a href="http://zh-wang.github.io/blog/2015/10/09/functor-monad-applicative-in-swift/">Functor, Monad, Applicative in Swift</a></p>
+
+<pre><code class="swift">    typealias ValidationResult = (valid: Bool?, message: String?)
+
+    func validateUsername(username: String) -&gt; Observable&lt;ValidationResult&gt; {
+        if username.characters.count == 0 {
+            return just((false, nil))
+        }
+
+        // this obviously won't be
+        if username.rangeOfCharacterFromSet(NSCharacterSet.alphanumericCharacterSet().invertedSet) != nil {
+            return just((false, "Username can only contain numbers or digits"))
+        }
+
+        let loadingValue = (valid: nil as Bool?, message: "Checking availabilty ..." as String?)
+
+        return API.usernameAvailable(username)
+            .map { available in
+                if available {
+                    return (true, "Username available")
+                }
+                else {
+                    return (false, "Username already taken")
+                }
+            }
+            .startWith(loadingValue)
+    }
+</code></pre>
+
+<p>The wrapped value in <code>Observable</code> is a <code>Bool</code> and <code>String</code> pair.</p>
+
+<p>The first two <code>if</code> clause are for checking empty and illegal characters, respectively. The result will be returned immediately because they are local process.</p>
+
+<p>The last part is a http request which returns result after a short period of time.</p>
+
+<p>If we call &lsquo;validateUsername&rsquo; at each event in user input event sequence,</p>
+
+<pre><code class="swift">    let usernameValidation = username
+    .map { username in
+        return validationService.validateUsername(username)
+    }
+</code></pre>
+
+<p>Event sequence will become (V for validation, R for result)
+<code>
+    ---+---+-+-----+-----
+       |   | |     |
+       V   V V     V
+       |   | |     |
+       R   | |     |
+           R |     R
+             R
+</code>
+Note that even validations are called in order, results are returned in random order according to network state. And actually we only need the latest validation&rsquo;s result.</p>
+
+<p>So we use <code>switch</code> method here. <code>switchlatest</code> is one of <code>switch</code>&rsquo;s implementation, which will always switch to the latest event occurred and dispose former events. <a href="http://www.introtorx.com/content/v1.0.10621.0/12_CombiningSequences.html#Switch">Intro_to_rx_switch</a>.</p>
+
+<p>And <code>shareReplay(1)</code> will keep only 1 allocation even this observer gets new subscriptions later. <a href="https://github.com/ReactiveX/RxSwift/blob/master/Documentation/GettingStarted.md#sharing-subscription-and-sharereplay-operator">Rxswift_replay</a></p>
+
+<pre><code class="swift">    let usernameValidation = username
+    .map { username in
+        return validationService.validateUsername(username)
+    }
+    .switchLatest()
+    .shareReplay(1)
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

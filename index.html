@@ -9,7 +9,7 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Sometimes I need to update UI from different Fragments. But it seems that writing update method in each Fragment is absurd if I have a lot of &hellip;">
+  <meta name="description" content="Examples of RxSwift can be found here. https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples The first example is mock Github &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,7 +65,7 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Sometimes I need to update UI from different Fragments. But it seems that writing update method in each Fragment is absurd if I have a lot of &hellip;" />
+<meta property="og:description" content="Examples of RxSwift can be found here. https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples The first example is mock Github &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -108,6 +108,81 @@ MathJax.Hub.Config({
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/10/27/learning-rxswifts-github-sample/">Learning RxSwift&#8217;s Github Sample</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-27T16:05:38+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/10/27/learning-rxswifts-github-sample/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/10/27/learning-rxswifts-github-sample/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Examples of RxSwift can be found here. <a href="https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples">https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples</a></p>
+
+<p>The first example is mock Github sign-up view controller. It checks availability of user name, password. Then simulate a sign-up process.</p>
+
+<p> In a common sign-up process, we have to check</p>
+
+<ol>
+<li>User name is empty or includes illegal character</li>
+<li>User name has been signed up</li>
+<li>Password and Password Repeat are the same</li>
+<li>Request can be handled correctly or not</li>
+</ol>
+
+
+<p> ### Listen user input
+ This is very simple for Rx framework. The <code>rx_text</code> field of <code>UITextField</code> is defined in <code>RxCocoa</code> is just what you want.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">username</span> <span class="o">=</span> <span class="n">usernameOutlet</span><span class="p">.</span><span class="n">rx_text</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It tracks <code>textViewDidChange</code> wrap all changes into <code>Observable</code>, which is an basic event sequence can be <strong>Observed</strong> by <code>Observer</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">each</span> <span class="n">user</span> <span class="n">input</span> <span class="n">event</span> <span class="kt">as</span> <span class="n">E</span><span class="p">,</span> <span class="n">then</span> <span class="n">this</span> <span class="n">event</span> <span class="n">sequence</span> <span class="n">can</span> <span class="n">be</span> <span class="n">illustrated</span> <span class="kt">as</span>
+</span><span class='line'>    <span class="o">---</span><span class="n">E</span><span class="o">---</span><span class="n">E</span><span class="o">-</span><span class="n">E</span><span class="o">-----</span><span class="n">E</span><span class="o">-----</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/10/27/learning-rxswifts-github-sample/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -1925,121 +2000,6 @@ gobjdump -d a.out | checkstack
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/05/13/popcount-in-ruby/">Popcount in Ruby</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-05-13T16:14:27+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2015/05/13/popcount-in-ruby/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2015/05/13/popcount-in-ruby/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Source</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Assume v is 32-bit long</span>
-</span><span class='line'><span class="k">def</span> <span class="nf">popcount</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">v</span> <span class="o">=</span> <span class="n">v</span> <span class="o">-</span> <span class="p">((</span><span class="n">v</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x55555555</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">v</span> <span class="o">&amp;</span> <span class="mh">0x33333333</span><span class="p">)</span> <span class="o">+</span> <span class="p">((</span><span class="n">v</span> <span class="o">&gt;&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x33333333</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">((</span><span class="n">v</span> <span class="o">+</span> <span class="p">(</span><span class="n">v</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xF0F0F0F</span><span class="p">)</span> <span class="o">*</span> <span class="mh">0x1010101</span><span class="p">)</span> <span class="o">&gt;&gt;</span> <span class="mi">24</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">puts</span> <span class="n">popcount</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Analysis</h3>
-
-<p>For example, let v = 01001110 (lowest 8 bits, others are all 0, in binary)</p>
-
-<h4>Step 1</h4>
-
-<pre><code>v = v - ((v &gt;&gt; 1) &amp; 0x55555555)
-</code></pre>
-
-<p>This step count 1&rsquo;s appearance in each 2bits.</p>
-
-<pre><code>0x5 = 0101
-
-In binary,
-00 - 00 &amp; 01 = 00 (0 1s in 00)
-01 - 00 &amp; 01 = 01 (1 1s in 01)
-10 - 01 &amp; 01 = 01 (1 1s in 10)
-11 - 01 &amp; 01 = 10 (2 1s in 11)
-
-01001110 -&gt; 01001001
-</code></pre>
-
-<h4>Step 2</h4>
-
-<pre><code>v = (v &amp; 0x33333333) + ((v &gt;&gt; 2) &amp; 0x33333333)
-</code></pre>
-
-<p>This step mask high 2 bits to 0 in each 4 bits, then add low 2 bits in each 4 bits.</p>
-
-<pre><code>In binary,
-0100 -&gt; 0000 + 0001 -&gt; 0001
-1001 -&gt; 0001 + 0010 -&gt; 0011
-
-01001110 -&gt; 00010011
-</code></pre>
-
-<h4>Step 3</h4>
-
-<pre><code>((v + (v &gt;&gt; 4) &amp; 0xF0F0F0F) * 0x1010101) &gt;&gt; 24
-</code></pre>
-
-<p>This step <code>(v + (v &gt;&gt; 4) &amp; 0xF0F0F0F)</code> add high 4 bits to low 4 bits, then <code>&amp; 0xF0F0F0F</code> mask high 4 bit to 0 in each 8 bits.</p>
-
-<p><code>* 0x1010101</code> can be treaded as <code>* (0x01000000 + 0x00010000 + 0x00000100 + 0x00000001)</code>.</p>
-
-<p><code>* 0x0100000</code> means left shift 24 times.</p>
-
-<p><code>* 0x0001000</code> means left shift 16 times.</p>
-
-<p><code>* 0x0000010</code> means left shift 8 times.</p>
-
-<p><code>* 0x0000000</code> do nothing.</p>
-
-<p>Then we add them up. Now we have the sum of 1s&#8217; count in each 8 bits, stored in a 32-bits data&rsquo;s highest 8 bits.</p>
-
-<p><code>&gt;&gt; 24</code> outputs the sum.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="2">&larr; Older</a>
@@ -2053,6 +2013,10 @@ In binary,
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/10/27/learning-rxswifts-github-sample/">Learning RxSwift&#8217;s Github Sample</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/10/23/update-ui-with-observer/">Update UI With Observer</a>
@@ -2070,10 +2034,6 @@ In binary,
         <a href="/blog/2015/09/14/codility-calcium-2015/">Codility Calcium 2015</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/07/15/longest-increasing-subsequence/">Longest Increasing Subsequence</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -2082,11 +2042,11 @@ In binary,
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (12)</a></li><li><a href='/blog/categories/android/'>android (8)</a></li><li><a href='/blog/categories/codility/'>codility (6)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/functional-programming/'>functional programming (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (18)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (12)</a></li><li><a href='/blog/categories/android/'>android (8)</a></li><li><a href='/blog/categories/codility/'>codility (6)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/functional-programming/'>functional programming (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/rx/'>rx (1)</a></li><li><a href='/blog/categories/swift/'>swift (19)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 100.0%'>algorithm(12)</a> <a href='/blog/categories/android' style='font-size: 86.66666666666667%'>android(8)</a> <a href='/blog/categories/codility' style='font-size: 80.0%'>codility(6)</a> <a href='/blog/categories/cpp' style='font-size: 63.333333333333336%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.333333333333336%'>csv(1)</a> <a href='/blog/categories/functional-programming' style='font-size: 63.333333333333336%'>functional programming(1)</a> <a href='/blog/categories/ios' style='font-size: 63.333333333333336%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.333333333333336%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.333333333333336%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 70.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 66.66666666666667%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.333333333333336%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 80.0%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(18)</a> <a href='/blog/categories/vim' style='font-size: 66.66666666666667%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.333333333333336%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 97.89473684210526%'>algorithm(12)</a> <a href='/blog/categories/android' style='font-size: 85.26315789473685%'>android(8)</a> <a href='/blog/categories/codility' style='font-size: 78.94736842105263%'>codility(6)</a> <a href='/blog/categories/cpp' style='font-size: 63.1578947368421%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.1578947368421%'>csv(1)</a> <a href='/blog/categories/functional-programming' style='font-size: 63.1578947368421%'>functional programming(1)</a> <a href='/blog/categories/ios' style='font-size: 63.1578947368421%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.1578947368421%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.1578947368421%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 69.47368421052632%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 66.3157894736842%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.1578947368421%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 78.94736842105263%'>ruby(6)</a> <a href='/blog/categories/rx' style='font-size: 63.1578947368421%'>rx(1)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(19)</a> <a href='/blog/categories/vim' style='font-size: 66.3157894736842%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.1578947368421%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

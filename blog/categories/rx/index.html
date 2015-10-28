@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Swift String Operations - Welcome to FutureAppLaboratory</title>
+  <title>Category: Rx - Welcome to FutureAppLaboratory</title>
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="String operations of Swift seems to be easy to handle, but we should take care of them in development. For example, this is a common code snippet &hellip;">
+  <meta name="description" content="Category: rx">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://zh-wang.github.io/blog/2015/07/02/swift-string-operation">
+  <link rel="canonical" href="http://zh-wang.github.io/blog/categories/rx">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Welcome to FutureAppLaboratory" type="application/atom+xml">
@@ -64,9 +64,9 @@ MathJax.Hub.Config({
   </script>
 
 
-  <meta property="og:title" content="Swift String Operations - Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="String operations of Swift seems to be easy to handle, but we should take care of them in development. For example, this is a common code snippet &hellip;" />
-<meta property="og:url" content="http://zh-wang.github.io/blog/2015/07/02/swift-string-operation/" />
+  <meta property="og:title" content="Category: rx - Welcome to FutureAppLaboratory" />
+<meta property="og:description" content="Category: rx" />
+<meta property="og:url" content="http://zh-wang.github.io/blog/categories/rx/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
 <meta property="og:site_name" content="Welcome to FutureAppLaboratory" />
@@ -107,156 +107,36 @@ MathJax.Hub.Config({
   <div id="main">
     <div id="content">
       <div>
-<article class="hentry" role="article">
+<article role="article">
   
   <header>
-    
-      <h1 class="entry-title">Swift String Operations</h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-07-02T16:24:46+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io">Comments</a>
-        
-      </p>
+    <h1 class="entry-title">Category: Rx</h1>
     
   </header>
-
-
-<div class="entry-content"><p>String operations of Swift seems to be easy to handle, but we should take care of them in development.</p>
-
-<p>For example, this is a common code snippet which stays on the top spot, by searching &lsquo;<strong>swift substring</strong>&rsquo; from <a href="www.google.co.jp">www.google.co.jp</a>.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">extension</span> <span class="n">String</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">public</span> <span class="k">func</span> <span class="n">substring</span><span class="p">(</span><span class="nl">location</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span> <span class="nl">length</span><span class="p">:</span><span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">!</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="p">(</span><span class="nb">self</span> <span class="kt">as</span> <span class="bp">NSString</span><span class="p">).</span><span class="n">substringWithRange</span><span class="p">(</span><span class="n">NSMakeRange</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">length</span><span class="p">))</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>But, it is not correct. <code>NSString</code>&rsquo;s implementation is based on UTF-16 and handing index for it is just confusing.</p>
-
-<p>Take a look at the following test.</p>
-
-<p><img src="/images/2015_07_02_image01.png" title="Test Failed" alt="IMGAE_A" /></p>
-
-<p>Because index in <code>NSString</code> format is different from index in <code>String</code> format. The text is counted as length 2 in <code>NSString</code>, but only 1 in <code>String</code>.</p>
-
-<p>So using <code>substring</code> in <code>NSString</code> only get half of it, from its binary expression. Then certainly, it cannot be decoded correctly.</p>
-
-<p><a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html">Swift Online Guide</a> has a detail explanation for this problem.</p>
-
-<p>We should use <code>String.Index</code> to handle different byte length of each character, and also decomposed and precomposed characters.</p>
-
-<p>Because <code>String</code> in Swift is implemented as <strong>Unicode Scalar</strong>, or <strong>UTF-32</strong>, is always 4-byte long for each character and it default behaviour can handle composed characters.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">public</span> <span class="k">func</span> <span class="n">substring2</span><span class="p">(</span><span class="nl">location</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">length</span><span class="p">:</span><span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">!</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">assert</span><span class="p">(</span><span class="n">location</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;OMG&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">assert</span><span class="p">(</span><span class="n">location</span> <span class="o">+</span> <span class="n">length</span> <span class="o">&lt;=</span> <span class="n">count</span><span class="p">(</span><span class="nb">self</span><span class="p">),</span> <span class="s">&quot;OMG again&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">startIndex</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">startIndex</span>
-</span><span class='line'>    <span class="n">startIndex</span> <span class="o">=</span> <span class="n">advance</span><span class="p">(</span><span class="n">startIndex</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">res</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">substringFromIndex</span><span class="p">(</span><span class="n">startIndex</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">endIndex</span> <span class="o">=</span> <span class="n">advance</span><span class="p">(</span><span class="n">startIndex</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">res</span><span class="p">.</span><span class="n">substringToIndex</span><span class="p">(</span><span class="n">endIndex</span><span class="p">)</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><img src="/images/2015_07_02_image02.png" title="Test Passed" alt="IMAGE_B" /></p>
-
-<p>For further reading about encoding, I recommend this page. <a href="http://www.objc.io/issues/9-strings/unicode/#utf-8">http://www.objc.io/issues/9-strings/unicode/#utf-8</a></p>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
   
-
-<span class="byline author vcard">Posted by <span class="fn">viennakanon</span></span>
-
-      
-
-
-
-
-
+  <div id="blog-archives" class="category">
 
 
 
   
+  <h2>2015</h2>
+
+<article>
+  
+<h1><a href="/blog/2015/10/27/learning-rxswifts-github-sample/">Learning RxSwift&#8217;s Github Sample</a></h1>
+<time datetime="2015-10-27T16:05:38+09:00" pubdate><span class='month'>Oct</span> <span class='day'>27</span> <span class='year'>2015</span></time>
+
+<footer>
+  <span class="categories">posted in <a class='category' href='/blog/categories/rx/'>rx</a>, <a class='category' href='/blog/categories/swift/'>swift</a></span>
+</footer>
 
 
-<time datetime="2015-07-02T16:24:46+09:00" pubdate data-updated="true"></time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/swift/'>swift</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2015/07/02/swift-string-operation/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2015/07/02/swift-string-operation/" >Tweet</a>
-  
-  
-  <div class="g-plusone" data-size="medium"></div>
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
-    
-    <p class="meta">
-      
-        <a class="basic-alignment left" href="/blog/2015/07/02/surrogate-support-for-swifts-string/" title="Previous Post: Surrogate Support for Swift's String">&laquo; Surrogate Support for Swift&#8217;s String</a>
-      
-      
-        <a class="basic-alignment right" href="/blog/2015/07/15/longest-increasing-subsequence/" title="Next Post: Longest Increasing Subsequence">Longest Increasing Subsequence &raquo;</a>
-      
-    </p>
-  </footer>
 </article>
 
-  <section>
-    <h1>Comments</h1>
-    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-  </section>
+
+  
+</article>
 
 </div>
 
@@ -395,10 +275,7 @@ MathJax.Hub.Config({
       var disqus_shortname = 'viennakanon';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://zh-wang.github.io/blog/2015/07/02/swift-string-operation/';
-        var disqus_url = 'http://zh-wang.github.io/blog/2015/07/02/swift-string-operation/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

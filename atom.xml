@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-10-23T14:54:36+09:00</updated>
+  <updated>2015-10-28T18:35:30+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,167 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Learning RxSwift's Github Sample]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/10/27/learning-rxswifts-github-sample/"/>
+    <updated>2015-10-27T16:05:38+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/10/27/learning-rxswifts-github-sample</id>
+    <content type="html"><![CDATA[<p>Examples of RxSwift can be found here. <a href="https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples">https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples</a></p>
+
+<p>The first example is mock Github sign-up view controller. It checks availability of user name, password. Then simulate a sign-up process.</p>
+
+<p> In a common sign-up process, we have to check</p>
+
+<ol>
+<li>User name is empty or includes illegal character</li>
+<li>User name has been signed up</li>
+<li>Password and Password Repeat are the same</li>
+<li>Request can be handled correctly or not</li>
+</ol>
+
+
+<p> ### Listen user input
+ This is very simple for Rx framework. The <code>rx_text</code> field of <code>UITextField</code> is defined in <code>RxCocoa</code> is just what you want.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">username</span> <span class="o">=</span> <span class="n">usernameOutlet</span><span class="p">.</span><span class="n">rx_text</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It tracks <code>textViewDidChange</code> wrap all changes into <code>Observable</code>, which is an basic event sequence can be <strong>Observed</strong> by <code>Observer</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">each</span> <span class="n">user</span> <span class="n">input</span> <span class="n">event</span> <span class="kt">as</span> <span class="n">E</span><span class="p">,</span> <span class="n">then</span> <span class="n">this</span> <span class="n">event</span> <span class="n">sequence</span> <span class="n">can</span> <span class="n">be</span> <span class="n">illustrated</span> <span class="kt">as</span>
+</span><span class='line'>    <span class="o">---</span><span class="n">E</span><span class="o">---</span><span class="n">E</span><span class="o">-</span><span class="n">E</span><span class="o">-----</span><span class="n">E</span><span class="o">-----</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
+
+
+<h3>Check availability</h3>
+
+<p>This is a <code>flatmap</code> function for <code>Observable</code>. (Definition on <code>flatmap</code> can be found in this post. <a href="http://zh-wang.github.io/blog/2015/10/09/functor-monad-applicative-in-swift/">Functor, Monad, Applicative in Swift</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">typealias</span> <span class="n">ValidationResult</span> <span class="o">=</span> <span class="p">(</span><span class="nl">valid</span><span class="p">:</span> <span class="n">Bool</span><span class="o">?</span><span class="p">,</span> <span class="nl">message</span><span class="p">:</span> <span class="n">String</span><span class="o">?</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="n">validateUsername</span><span class="p">(</span><span class="nl">username</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Observable</span><span class="o">&lt;</span><span class="n">ValidationResult</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">username</span><span class="p">.</span><span class="n">characters</span><span class="p">.</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">just</span><span class="p">((</span><span class="nb">false</span><span class="p">,</span> <span class="nb">nil</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// this obviously won&#39;t be</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">username</span><span class="p">.</span><span class="n">rangeOfCharacterFromSet</span><span class="p">(</span><span class="bp">NSCharacterSet</span><span class="p">.</span><span class="n">alphanumericCharacterSet</span><span class="p">().</span><span class="n">invertedSet</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">just</span><span class="p">((</span><span class="nb">false</span><span class="p">,</span> <span class="s">&quot;Username can only contain numbers or digits&quot;</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">loadingValue</span> <span class="o">=</span> <span class="p">(</span><span class="nl">valid</span><span class="p">:</span> <span class="nb">nil</span> <span class="kt">as</span> <span class="n">Bool</span><span class="o">?</span><span class="p">,</span> <span class="nl">message</span><span class="p">:</span> <span class="s">&quot;Checking availabilty ...&quot;</span> <span class="kt">as</span> <span class="n">String</span><span class="o">?</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">API</span><span class="p">.</span><span class="n">usernameAvailable</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">available</span> <span class="k">in</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">available</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">return</span> <span class="p">(</span><span class="nb">true</span><span class="p">,</span> <span class="s">&quot;Username available&quot;</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">return</span> <span class="p">(</span><span class="nb">false</span><span class="p">,</span> <span class="s">&quot;Username already taken&quot;</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="p">.</span><span class="n">startWith</span><span class="p">(</span><span class="n">loadingValue</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The wrapped value in <code>Observable</code> is a <code>Bool</code> and <code>String</code> pair.</p>
+
+<p>The first two <code>if</code> clause are for checking empty and illegal characters, respectively. The result will be returned immediately because they are local process.</p>
+
+<p>The last part is a http request which returns result after a short period of time.</p>
+
+<p>If we call &lsquo;validateUsername&rsquo; at each event in user input event sequence,</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">usernameValidation</span> <span class="o">=</span> <span class="n">username</span>
+</span><span class='line'><span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">username</span> <span class="k">in</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">validationService</span><span class="p">.</span><span class="n">validateUsername</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Event sequence will become (V for validation, R for result)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="o">---+---+-+-----+-----</span>
+</span><span class='line'>   <span class="o">|</span>   <span class="o">|</span> <span class="o">|</span>     <span class="o">|</span>
+</span><span class='line'>   <span class="n">V</span>   <span class="n">V</span> <span class="n">V</span>     <span class="n">V</span>
+</span><span class='line'>   <span class="o">|</span>   <span class="o">|</span> <span class="o">|</span>     <span class="o">|</span>
+</span><span class='line'>   <span class="n">R</span>   <span class="o">|</span> <span class="o">|</span>     <span class="o">|</span>
+</span><span class='line'>       <span class="n">R</span> <span class="o">|</span>     <span class="n">R</span>
+</span><span class='line'>         <span class="n">R</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that even validations are called in order, results are returned in random order according to network state. And actually we only need the latest validation&rsquo;s result.</p>
+
+<p>So we use <code>switch</code> method here. <code>switchlatest</code> is one of <code>switch</code>&rsquo;s implementation, which will always switch to the latest event occurred and dispose former events. <a href="http://www.introtorx.com/content/v1.0.10621.0/12_CombiningSequences.html#Switch">Intro_to_rx_switch</a>.</p>
+
+<p>And <code>shareReplay(1)</code> will keep only 1 allocation even this observer gets new subscriptions later. <a href="https://github.com/ReactiveX/RxSwift/blob/master/Documentation/GettingStarted.md#sharing-subscription-and-sharereplay-operator">Rxswift_replay</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">usernameValidation</span> <span class="o">=</span> <span class="n">username</span>
+</span><span class='line'><span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">username</span> <span class="k">in</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">validationService</span><span class="p">.</span><span class="n">validateUsername</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="p">.</span><span class="n">switchLatest</span><span class="p">()</span>
+</span><span class='line'><span class="p">.</span><span class="n">shareReplay</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Update UI With Observer]]></title>
@@ -2717,232 +2878,6 @@ So I write some script to make it easier.</p>
 
 <p>NVRAMに関する紹介はこちらにあります。<br/>
 <a href="http://support.apple.com/en-us/HT204063">How to Reset NVRAM on your Mac</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Analysis of PROB Broken Necklace]]></title>
-    <link href="http://zh-wang.github.io/blog/2015/02/25/usaco-prob-broken-necklace/"/>
-    <updated>2015-02-25T17:58:16+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2015/02/25/usaco-prob-broken-necklace</id>
-    <content type="html"><![CDATA[<h2>Introduction</h2>
-
-<p>This is an analysis of PROB Broken Necklace, one of USA Computer Olympiad&rsquo;s training problems.<br/>
-Just doing some disposal on my old stuff.</p>
-
-<h2>Description</h2>
-
-<p>You have a necklace of N red, white, or blue beads (3&lt;=N&lt;=350) some of which are red, others blue, and others white, arranged at random. Here are two examples for n=29:</p>
-
-<pre><code>            1 2                               1 2
-        r b b r                           b r r b
-      r         b                       b         b
-     r           r                     b           r
-    r             r                   w             r
-   b               r                 w               w
-  b                 b               r                 r
-  b                 b               b                 b
-  b                 b               r                 b
-   r               r                 b               r
-    b             r                   r             r
-     b           r                     r           r
-       r       r                         r       b
-         r b r                             r r w
-        Figure A                         Figure B
-                    r red bead
-                    b blue bead
-                    w white bead
-</code></pre>
-
-<p>The beads considered first and second in the text that follows have been marked in the picture.</p>
-
-<p>The configuration in Figure A may be represented as a string of b&rsquo;s and r&rsquo;s, where b represents a blue bead and r represents a red one, as follows: brbrrrbbbrrrrrbrrbbrbbbbrrrrb .</p>
-
-<p>Suppose you are to break the necklace at some point, lay it out straight, and then collect beads of the same color from one end until you reach a bead of a different color, and do the same for the other end (which might not be of the same color as the beads collected before this).</p>
-
-<p>Determine the point where the necklace should be broken so that the most number of beads can be collected.</p>
-
-<!--more-->
-
-
-<h2>Analysis</h2>
-
-<p>Given an input string &lsquo;wwwbbrwrbrbrrbrbrwrwwrbwrwrrb&rsquo;, we concatenate it with itself, result in &lsquo;wwwbbrwrbrbrrbrbrwrwwrbwrwrrbwwwbbrwrbrbrrbrbrwrwwrbwrwrrb&rsquo;. This trick, working on handling minus or over-length index is easier.</p>
-
-<ol>
-<li><p>Brute force solution.</p>
-
-<p> For each index $a_i$ as a start, if $a_{i+1}$ can be picked into the longest substring, we pick it then do this again on $a_{i+1}$. Note that, if $a_i$ is w, we must treat it as b and r, one by one. We do N times of picking attempt for each $a_i$. Therefore complexity is O(N<sup>2</sup>). Just a straight forward solution.</p></li>
-<li><p>DP solution.</p>
-
-<p> We denote substring composed by successive r, which <strong>ends</strong> at index $i$ to $t_{i,r}$.</p></li>
-</ol>
-
-
-<script type="math/tex; mode=display">
-    t_{i,r} = \begin{cases}
-        t_{i-1,r} + 1 & \text{if $a_i$ is r or w} \\
-        0 & \text{if $a_i$ is b or $i$ > N}
-    \end{cases}
-</script>
-
-
-<p>Similarly, we denote substring composed by successive b, which <strong>ends</strong> at index $i$ to $t_{i,b}$.</p>
-
-<script type="math/tex; mode=display">
-    t_{i,b} = \begin{cases}
-        t_{i-1,b} + 1 & \text{if $a_i$ is b or w} \\
-        0 & \text{if $a_i$ is r or $i$ > N}
-    \end{cases}
-</script>
-
-
-<p>On the other hand, we denote substring composed by successive r, which <strong>starts</strong> at index $i$ to $s_{i,r}$.</p>
-
-<script type="math/tex; mode=display">
-    s_{i,r} = \begin{cases}
-        s_{i+1,r} + 1 & \text{if $a_i$ is r or w} \\
-        0 & \text{if $a_{i-1}$ is b or $i = 0$}
-    \end{cases}
-</script>
-
-
-<p>And substring composed by successive b, which <strong>starts</strong> at index $i$ to $t_{i,b}$.</p>
-
-<script type="math/tex; mode=display">
-    s_{i,b} = \begin{cases}
-        s_{i+1,b} + 1 & \text{if $a_i$ is b or w} \\
-        0 & \text{if $a_{i-1}$ is r or $i = 0$}
-    \end{cases}
-</script>
-
-
-<p>For each index $a_i$, $\max \{s_{i,r}, s_{i,b} \} + \max \{t_{i,r}, t_{i,b} \}$ is the length of longest substring if we break it at index $i$. We do this for N times, the greatest one is the answer. Complexity of this algorithm is O(n).</p>
-
-<h2>Source Code of DP Solution</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="cm">/*</span>
-</span><span class='line'><span class="cm">ID: viennak1</span>
-</span><span class='line'><span class="cm">PROB: beads</span>
-</span><span class='line'><span class="cm">LANG: C++</span>
-</span><span class='line'><span class="cm">*/</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Section 1.1 PROB Broken Necklace</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#include &lt;cstdio&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;cstdlib&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;cstring&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;cmath&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;climits&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;cassert&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;string&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;algorithm&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;map&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;set&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;queue&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;sstream&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;numeric&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;fstream&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;utility&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;iomanip&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;stack&gt;</span>
-</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="n">N</span><span class="p">,</span><span class="n">res</span><span class="p">;</span>
-</span><span class='line'><span class="kt">int</span> <span class="n">ENDS</span><span class="p">[</span><span class="mi">700</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span><span class="n">STARTS</span><span class="p">[</span><span class="mi">700</span><span class="p">][</span><span class="mi">2</span><span class="p">];</span>
-</span><span class='line'><span class="n">string</span> <span class="n">s</span><span class="p">;</span>
-</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
-</span><span class='line'>    <span class="n">ofstream</span> <span class="n">fout</span> <span class="p">(</span><span class="s">&quot;beads.out&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">ifstream</span> <span class="n">fin</span> <span class="p">(</span><span class="s">&quot;beads.in&quot;</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">fin</span><span class="o">&gt;&gt;</span><span class="n">N</span><span class="p">;</span> <span class="n">fin</span><span class="o">&gt;&gt;</span><span class="n">s</span><span class="p">;</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">L</span><span class="o">=</span><span class="n">s</span><span class="p">.</span><span class="n">length</span><span class="p">();</span>
-</span><span class='line'>    <span class="n">s</span><span class="o">=</span><span class="n">s</span><span class="o">+</span><span class="n">s</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="sc">&#39;r&#39;</span><span class="p">)</span> <span class="n">ENDS</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="sc">&#39;b&#39;</span><span class="p">)</span> <span class="n">ENDS</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">else</span> <span class="n">ENDS</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">ENDS</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">L</span><span class="o">*</span><span class="mi">2</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">){</span>
-</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="sc">&#39;r&#39;</span><span class="p">)</span> <span class="n">ENDS</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">ENDS</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="sc">&#39;b&#39;</span><span class="p">)</span> <span class="n">ENDS</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">ENDS</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="sc">&#39;w&#39;</span><span class="p">)</span> <span class="n">ENDS</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">ENDS</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">ENDS</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">ENDS</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">L</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="sc">&#39;r&#39;</span><span class="p">)</span> <span class="n">STARTS</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">L</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">L</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="sc">&#39;b&#39;</span><span class="p">)</span> <span class="n">STARTS</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">L</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">else</span> <span class="n">STARTS</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">L</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">STARTS</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">L</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">2</span><span class="o">*</span><span class="n">L</span><span class="o">-</span><span class="mi">2</span><span class="p">;</span><span class="n">i</span><span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">--</span><span class="p">){</span>
-</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="sc">&#39;r&#39;</span><span class="p">)</span> <span class="n">STARTS</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">STARTS</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="sc">&#39;b&#39;</span><span class="p">)</span> <span class="n">STARTS</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">STARTS</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">==</span><span class="sc">&#39;w&#39;</span><span class="p">)</span> <span class="n">STARTS</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">=</span><span class="n">STARTS</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">STARTS</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">STARTS</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span><span class="n">i</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">*</span><span class="n">L</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
-</span><span class='line'>        <span class="n">res</span><span class="o">=</span><span class="n">max</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">max</span><span class="p">(</span><span class="n">ENDS</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">ENDS</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="n">max</span><span class="p">(</span><span class="n">STARTS</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">STARTS</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]));</span>
-</span><span class='line'>    <span class="k">if</span><span class="p">(</span><span class="n">res</span><span class="o">&gt;</span><span class="n">L</span><span class="p">)</span> <span class="n">fout</span><span class="o">&lt;&lt;</span><span class="n">L</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">else</span> <span class="n">fout</span><span class="o">&lt;&lt;</span><span class="n">res</span><span class="o">&lt;&lt;</span><span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

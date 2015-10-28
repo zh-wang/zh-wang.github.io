@@ -9,8 +9,8 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Insertモードで編集している間にソースコードを貼付けたい時に、毎回'set paste'と'set nopaste'をやらないといけない、ちょっと面倒くさいです。
-更に、'set paste'抜きで貼付けた場合、内容の長さによりvimが一時的にフリーズしちゃいますので大変です。 &hellip;">
+  <meta name="description" content="Introduction This is an analysis of PROB Broken Necklace, one of USA Computer Olympiad&rsquo;s training problems.
+Just doing some disposal on my old &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,8 +66,8 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Insertモードで編集している間にソースコードを貼付けたい時に、毎回'set paste'と'set nopaste'をやらないといけない、ちょっと面倒くさいです。
-更に、'set paste'抜きで貼付けた場合、内容の長さによりvimが一時的にフリーズしちゃいますので大変です。 &hellip;" />
+<meta property="og:description" content="Introduction This is an analysis of PROB Broken Necklace, one of USA Computer Olympiad&rsquo;s training problems.
+Just doing some disposal on my old &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/posts/3/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -110,6 +110,85 @@ MathJax.Hub.Config({
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/25/usaco-prob-broken-necklace/">Analysis of PROB Broken Necklace</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-25T17:58:16+09:00" pubdate data-updated="true"></time>
+        
+           | <a href="/blog/2015/02/25/usaco-prob-broken-necklace/#disqus_thread"
+             data-disqus-identifier="http://zh-wang.github.io/blog/2015/02/25/usaco-prob-broken-necklace/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Introduction</h2>
+
+<p>This is an analysis of PROB Broken Necklace, one of USA Computer Olympiad&rsquo;s training problems.<br/>
+Just doing some disposal on my old stuff.</p>
+
+<h2>Description</h2>
+
+<p>You have a necklace of N red, white, or blue beads (3&lt;=N&lt;=350) some of which are red, others blue, and others white, arranged at random. Here are two examples for n=29:</p>
+
+<pre><code>            1 2                               1 2
+        r b b r                           b r r b
+      r         b                       b         b
+     r           r                     b           r
+    r             r                   w             r
+   b               r                 w               w
+  b                 b               r                 r
+  b                 b               b                 b
+  b                 b               r                 b
+   r               r                 b               r
+    b             r                   r             r
+     b           r                     r           r
+       r       r                         r       b
+         r b r                             r r w
+        Figure A                         Figure B
+                    r red bead
+                    b blue bead
+                    w white bead
+</code></pre>
+
+<p>The beads considered first and second in the text that follows have been marked in the picture.</p>
+
+<p>The configuration in Figure A may be represented as a string of b&rsquo;s and r&rsquo;s, where b represents a blue bead and r represents a red one, as follows: brbrrrbbbrrrrrbrrbbrbbbbrrrrb .</p>
+
+<p>Suppose you are to break the necklace at some point, lay it out straight, and then collect beads of the same color from one end until you reach a bead of a different color, and do the same for the other end (which might not be of the same color as the beads collected before this).</p>
+
+<p>Determine the point where the necklace should be broken so that the most number of beads can be collected.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/02/25/usaco-prob-broken-necklace/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -1414,112 +1493,6 @@ File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理した
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/11/20/learning-swift-part-11/">Learning Swift Part 11 - Inheritance</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-20T19:10:05+09:00" pubdate data-updated="true"></time>
-        
-           | <a href="/blog/2014/11/20/learning-swift-part-11/#disqus_thread"
-             data-disqus-identifier="http://zh-wang.github.io/blog/2014/11/20/learning-swift-part-11/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>===== Full Notes =====</h2>
-
-<h3>Inheritance</h3>
-
-<ul>
-<li>A base class, Vehicle</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>    class Vehicle {
-</span><span class='line'>        var currentSpeed = 0.0
-</span><span class='line'>        var description: String {
-</span><span class='line'>                return "traveling at \(currentSpeed) miles per hour"
-</span><span class='line'>        }
-</span><span class='line'>        func makeNoise() {
-</span><span class='line'>                // do nothing - an arbitrary vehicle doesn't necessarily make a noise
-</span><span class='line'>        }
-</span><span class='line'>    }</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Subclass, Bicycle and Tandem</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>    class Bicycle: Vehicle {
-</span><span class='line'>        var hasBasket = false
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    class Tandem: Bicycle {
-</span><span class='line'>        var currentNumberOfPassengers = 0
-</span><span class='line'>    }
-</span><span class='line'>
-</span><span class='line'>    let tandem = Tandem()
-</span><span class='line'>    tandem.hasBasket = true
-</span><span class='line'>    tandem.currentNumberOfPassengers = 2
-</span><span class='line'>    tandem.currentSpeed = 22.0
-</span><span class='line'>    println("Tandem: \(tandem.description)")
-</span><span class='line'>    // Tandem: traveling at 22.0 miles per hour</span></code></pre></td></tr></table></div></figure>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/11/20/learning-swift-part-11/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="4">&larr; Older</a>
@@ -1537,6 +1510,10 @@ File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理した
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/10/27/learning-rxswifts-github-sample/">Learning RxSwift&#8217;s Github Sample</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/10/23/update-ui-with-observer/">Update UI With Observer</a>
       </li>
     
@@ -1552,10 +1529,6 @@ File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理した
         <a href="/blog/2015/09/14/codility-calcium-2015/">Codility Calcium 2015</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2015/07/15/longest-increasing-subsequence/">Longest Increasing Subsequence</a>
-      </li>
-    
   </ul>
 </section>
 
@@ -1564,11 +1537,11 @@ File.write("201308_201406_review_below_2stars.csv", table.to_csv) # 処理した
 
 <section>
   <h1>Categories</h1>
-    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (12)</a></li><li><a href='/blog/categories/android/'>android (8)</a></li><li><a href='/blog/categories/codility/'>codility (6)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/functional-programming/'>functional programming (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/swift/'>swift (18)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
+    <ul id="category-list"><li><a href='/blog/categories/algorithm/'>algorithm (12)</a></li><li><a href='/blog/categories/android/'>android (8)</a></li><li><a href='/blog/categories/codility/'>codility (6)</a></li><li><a href='/blog/categories/cpp/'>cpp (1)</a></li><li><a href='/blog/categories/csv/'>csv (1)</a></li><li><a href='/blog/categories/functional-programming/'>functional programming (1)</a></li><li><a href='/blog/categories/ios/'>ios (1)</a></li><li><a href='/blog/categories/jni/'>jni (1)</a></li><li><a href='/blog/categories/mac/'>mac (1)</a></li><li><a href='/blog/categories/mozc/'>mozc (3)</a></li><li><a href='/blog/categories/octopress/'>octopress (2)</a></li><li><a href='/blog/categories/perl/'>perl (1)</a></li><li><a href='/blog/categories/ruby/'>ruby (6)</a></li><li><a href='/blog/categories/rx/'>rx (1)</a></li><li><a href='/blog/categories/swift/'>swift (19)</a></li><li><a href='/blog/categories/vim/'>vim (2)</a></li><li><a href='/blog/categories/zsh/'>zsh (1)</a></li></ul>
 </section>
 <section>
   <h1>Tag Cloud</h1>
-    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 100.0%'>algorithm(12)</a> <a href='/blog/categories/android' style='font-size: 86.66666666666667%'>android(8)</a> <a href='/blog/categories/codility' style='font-size: 80.0%'>codility(6)</a> <a href='/blog/categories/cpp' style='font-size: 63.333333333333336%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.333333333333336%'>csv(1)</a> <a href='/blog/categories/functional-programming' style='font-size: 63.333333333333336%'>functional programming(1)</a> <a href='/blog/categories/ios' style='font-size: 63.333333333333336%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.333333333333336%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.333333333333336%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 70.0%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 66.66666666666667%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.333333333333336%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 80.0%'>ruby(6)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(18)</a> <a href='/blog/categories/vim' style='font-size: 66.66666666666667%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.333333333333336%'>zsh(1)</a> </span>
+    <span id="tag-cloud"><a href='/blog/categories/algorithm' style='font-size: 97.89473684210526%'>algorithm(12)</a> <a href='/blog/categories/android' style='font-size: 85.26315789473685%'>android(8)</a> <a href='/blog/categories/codility' style='font-size: 78.94736842105263%'>codility(6)</a> <a href='/blog/categories/cpp' style='font-size: 63.1578947368421%'>cpp(1)</a> <a href='/blog/categories/csv' style='font-size: 63.1578947368421%'>csv(1)</a> <a href='/blog/categories/functional-programming' style='font-size: 63.1578947368421%'>functional programming(1)</a> <a href='/blog/categories/ios' style='font-size: 63.1578947368421%'>ios(1)</a> <a href='/blog/categories/jni' style='font-size: 63.1578947368421%'>jni(1)</a> <a href='/blog/categories/mac' style='font-size: 63.1578947368421%'>mac(1)</a> <a href='/blog/categories/mozc' style='font-size: 69.47368421052632%'>mozc(3)</a> <a href='/blog/categories/octopress' style='font-size: 66.3157894736842%'>octopress(2)</a> <a href='/blog/categories/perl' style='font-size: 63.1578947368421%'>perl(1)</a> <a href='/blog/categories/ruby' style='font-size: 78.94736842105263%'>ruby(6)</a> <a href='/blog/categories/rx' style='font-size: 63.1578947368421%'>rx(1)</a> <a href='/blog/categories/swift' style='font-size: 120.0%'>swift(19)</a> <a href='/blog/categories/vim' style='font-size: 66.3157894736842%'>vim(2)</a> <a href='/blog/categories/zsh' style='font-size: 63.1578947368421%'>zsh(1)</a> </span>
 </section>
 <section>
       <h1>Latest Tweets</h1>

@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Swift String Operations - Welcome to FutureAppLaboratory</title>
+  <title>Learning RxSwift&#8217;s Github Sample - Welcome to FutureAppLaboratory</title>
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="String operations of Swift seems to be easy to handle, but we should take care of them in development. For example, this is a common code snippet &hellip;">
+  <meta name="description" content="Examples of RxSwift can be found here. https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples The first example is mock Github &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://zh-wang.github.io/blog/2015/07/02/swift-string-operation">
+  <link rel="canonical" href="http://zh-wang.github.io/blog/2015/10/27/learning-rxswifts-github-sample">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Welcome to FutureAppLaboratory" type="application/atom+xml">
@@ -64,9 +64,9 @@ MathJax.Hub.Config({
   </script>
 
 
-  <meta property="og:title" content="Swift String Operations - Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="String operations of Swift seems to be easy to handle, but we should take care of them in development. For example, this is a common code snippet &hellip;" />
-<meta property="og:url" content="http://zh-wang.github.io/blog/2015/07/02/swift-string-operation/" />
+  <meta property="og:title" content="Learning RxSwift's Github Sample - Welcome to FutureAppLaboratory" />
+<meta property="og:description" content="Examples of RxSwift can be found here. https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples The first example is mock Github &hellip;" />
+<meta property="og:url" content="http://zh-wang.github.io/blog/2015/10/27/learning-rxswifts-github-sample/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
 <meta property="og:site_name" content="Welcome to FutureAppLaboratory" />
@@ -111,7 +111,7 @@ MathJax.Hub.Config({
   
   <header>
     
-      <h1 class="entry-title">Swift String Operations</h1>
+      <h1 class="entry-title">Learning RxSwift&#8217;s Github Sample</h1>
     
     
       <p class="meta">
@@ -127,7 +127,7 @@ MathJax.Hub.Config({
   
 
 
-<time datetime="2015-07-02T16:24:46+09:00" pubdate data-updated="true"></time>
+<time datetime="2015-10-27T16:05:38+09:00" pubdate data-updated="true"></time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://zh-wang.github.io">Comments</a>
@@ -137,38 +137,45 @@ MathJax.Hub.Config({
   </header>
 
 
-<div class="entry-content"><p>String operations of Swift seems to be easy to handle, but we should take care of them in development.</p>
+<div class="entry-content"><p>Examples of RxSwift can be found here. <a href="https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples">https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples</a></p>
 
-<p>For example, this is a common code snippet which stays on the top spot, by searching &lsquo;<strong>swift substring</strong>&rsquo; from <a href="www.google.co.jp">www.google.co.jp</a>.</p>
+<p>The first example is mock Github sign-up view controller. It checks availability of user name, password. Then simulate a sign-up process.</p>
+
+<p> In a common sign-up process, we have to check</p>
+
+<ol>
+<li>User name is empty or includes illegal character</li>
+<li>User name has been signed up</li>
+<li>Password and Password Repeat are the same</li>
+<li>Request can be handled correctly or not</li>
+</ol>
+
+
+<p> ### Listen user input
+ This is very simple for Rx framework. The <code>rx_text</code> field of <code>UITextField</code> is defined in <code>RxCocoa</code> is just what you want.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">extension</span> <span class="n">String</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">public</span> <span class="k">func</span> <span class="n">substring</span><span class="p">(</span><span class="nl">location</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span> <span class="nl">length</span><span class="p">:</span><span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">!</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="p">(</span><span class="nb">self</span> <span class="kt">as</span> <span class="bp">NSString</span><span class="p">).</span><span class="n">substringWithRange</span><span class="p">(</span><span class="n">NSMakeRange</span><span class="p">(</span><span class="n">location</span><span class="p">,</span> <span class="n">length</span><span class="p">))</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">username</span> <span class="o">=</span> <span class="n">usernameOutlet</span><span class="p">.</span><span class="n">rx_text</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>But, it is not correct. <code>NSString</code>&rsquo;s implementation is based on UTF-16 and handing index for it is just confusing.</p>
+<p>It tracks <code>textViewDidChange</code> wrap all changes into <code>Observable</code>, which is an basic event sequence can be <strong>Observed</strong> by <code>Observer</code>.</p>
 
-<p>Take a look at the following test.</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">each</span> <span class="n">user</span> <span class="n">input</span> <span class="n">event</span> <span class="kt">as</span> <span class="n">E</span><span class="p">,</span> <span class="n">then</span> <span class="n">this</span> <span class="n">event</span> <span class="n">sequence</span> <span class="n">can</span> <span class="n">be</span> <span class="n">illustrated</span> <span class="kt">as</span>
+</span><span class='line'>    <span class="o">---</span><span class="n">E</span><span class="o">---</span><span class="n">E</span><span class="o">-</span><span class="n">E</span><span class="o">-----</span><span class="n">E</span><span class="o">-----</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<p><img src="/images/2015_07_02_image01.png" title="Test Failed" alt="IMGAE_A" /></p>
 
-<p>Because index in <code>NSString</code> format is different from index in <code>String</code> format. The text is counted as length 2 in <code>NSString</code>, but only 1 in <code>String</code>.</p>
 
-<p>So using <code>substring</code> in <code>NSString</code> only get half of it, from its binary expression. Then certainly, it cannot be decoded correctly.</p>
 
-<p><a href="https://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/StringsAndCharacters.html">Swift Online Guide</a> has a detail explanation for this problem.</p>
+<!-- more -->
 
-<p>We should use <code>String.Index</code> to handle different byte length of each character, and also decomposed and precomposed characters.</p>
 
-<p>Because <code>String</code> in Swift is implemented as <strong>Unicode Scalar</strong>, or <strong>UTF-32</strong>, is always 4-byte long for each character and it default behaviour can handle composed characters.</p>
+<h3>Check availability</h3>
+
+<p>This is a <code>flatmap</code> function for <code>Observable</code>. (Definition on <code>flatmap</code> can be found in this post. <a href="http://zh-wang.github.io/blog/2015/10/09/functor-monad-applicative-in-swift/">Functor, Monad, Applicative in Swift</a></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -179,21 +186,110 @@ MathJax.Hub.Config({
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">public</span> <span class="k">func</span> <span class="n">substring2</span><span class="p">(</span><span class="nl">location</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">length</span><span class="p">:</span><span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="o">!</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">assert</span><span class="p">(</span><span class="n">location</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;OMG&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">assert</span><span class="p">(</span><span class="n">location</span> <span class="o">+</span> <span class="n">length</span> <span class="o">&lt;=</span> <span class="n">count</span><span class="p">(</span><span class="nb">self</span><span class="p">),</span> <span class="s">&quot;OMG again&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">startIndex</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">startIndex</span>
-</span><span class='line'>    <span class="n">startIndex</span> <span class="o">=</span> <span class="n">advance</span><span class="p">(</span><span class="n">startIndex</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">res</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">substringFromIndex</span><span class="p">(</span><span class="n">startIndex</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">var</span> <span class="n">endIndex</span> <span class="o">=</span> <span class="n">advance</span><span class="p">(</span><span class="n">startIndex</span><span class="p">,</span> <span class="n">length</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">res</span><span class="p">.</span><span class="n">substringToIndex</span><span class="p">(</span><span class="n">endIndex</span><span class="p">)</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">typealias</span> <span class="n">ValidationResult</span> <span class="o">=</span> <span class="p">(</span><span class="nl">valid</span><span class="p">:</span> <span class="n">Bool</span><span class="o">?</span><span class="p">,</span> <span class="nl">message</span><span class="p">:</span> <span class="n">String</span><span class="o">?</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="n">validateUsername</span><span class="p">(</span><span class="nl">username</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Observable</span><span class="o">&lt;</span><span class="n">ValidationResult</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">username</span><span class="p">.</span><span class="n">characters</span><span class="p">.</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">just</span><span class="p">((</span><span class="nb">false</span><span class="p">,</span> <span class="nb">nil</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// this obviously won&#39;t be</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">username</span><span class="p">.</span><span class="n">rangeOfCharacterFromSet</span><span class="p">(</span><span class="bp">NSCharacterSet</span><span class="p">.</span><span class="n">alphanumericCharacterSet</span><span class="p">().</span><span class="n">invertedSet</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">just</span><span class="p">((</span><span class="nb">false</span><span class="p">,</span> <span class="s">&quot;Username can only contain numbers or digits&quot;</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">loadingValue</span> <span class="o">=</span> <span class="p">(</span><span class="nl">valid</span><span class="p">:</span> <span class="nb">nil</span> <span class="kt">as</span> <span class="n">Bool</span><span class="o">?</span><span class="p">,</span> <span class="nl">message</span><span class="p">:</span> <span class="s">&quot;Checking availabilty ...&quot;</span> <span class="kt">as</span> <span class="n">String</span><span class="o">?</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">API</span><span class="p">.</span><span class="n">usernameAvailable</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">available</span> <span class="k">in</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">available</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">return</span> <span class="p">(</span><span class="nb">true</span><span class="p">,</span> <span class="s">&quot;Username available&quot;</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">return</span> <span class="p">(</span><span class="nb">false</span><span class="p">,</span> <span class="s">&quot;Username already taken&quot;</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="p">.</span><span class="n">startWith</span><span class="p">(</span><span class="n">loadingValue</span><span class="p">)</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><img src="/images/2015_07_02_image02.png" title="Test Passed" alt="IMAGE_B" /></p>
+<p>The wrapped value in <code>Observable</code> is a <code>Bool</code> and <code>String</code> pair.</p>
 
-<p>For further reading about encoding, I recommend this page. <a href="http://www.objc.io/issues/9-strings/unicode/#utf-8">http://www.objc.io/issues/9-strings/unicode/#utf-8</a></p>
+<p>The first two <code>if</code> clause are for checking empty and illegal characters, respectively. The result will be returned immediately because they are local process.</p>
+
+<p>The last part is a http request which returns result after a short period of time.</p>
+
+<p>If we call &lsquo;validateUsername&rsquo; at each event in user input event sequence,</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">usernameValidation</span> <span class="o">=</span> <span class="n">username</span>
+</span><span class='line'><span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">username</span> <span class="k">in</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">validationService</span><span class="p">.</span><span class="n">validateUsername</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Event sequence will become (V for validation, R for result)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="o">---+---+-+-----+-----</span>
+</span><span class='line'>   <span class="o">|</span>   <span class="o">|</span> <span class="o">|</span>     <span class="o">|</span>
+</span><span class='line'>   <span class="n">V</span>   <span class="n">V</span> <span class="n">V</span>     <span class="n">V</span>
+</span><span class='line'>   <span class="o">|</span>   <span class="o">|</span> <span class="o">|</span>     <span class="o">|</span>
+</span><span class='line'>   <span class="n">R</span>   <span class="o">|</span> <span class="o">|</span>     <span class="o">|</span>
+</span><span class='line'>       <span class="n">R</span> <span class="o">|</span>     <span class="n">R</span>
+</span><span class='line'>         <span class="n">R</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Note that even validations are called in order, results are returned in random order according to network state. And actually we only need the latest validation&rsquo;s result.</p>
+
+<p>So we use <code>switch</code> method here. <code>switchlatest</code> is one of <code>switch</code>&rsquo;s implementation, which will always switch to the latest event occurred and dispose former events. <a href="http://www.introtorx.com/content/v1.0.10621.0/12_CombiningSequences.html#Switch">Intro_to_rx_switch</a>.</p>
+
+<p>And <code>shareReplay(1)</code> will keep only 1 allocation even this observer gets new subscriptions later. <a href="https://github.com/ReactiveX/RxSwift/blob/master/Documentation/GettingStarted.md#sharing-subscription-and-sharereplay-operator">Rxswift_replay</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">usernameValidation</span> <span class="o">=</span> <span class="n">username</span>
+</span><span class='line'><span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">username</span> <span class="k">in</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">validationService</span><span class="p">.</span><span class="n">validateUsername</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="p">.</span><span class="n">switchLatest</span><span class="p">()</span>
+</span><span class='line'><span class="p">.</span><span class="n">shareReplay</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
 </div>
 
 
@@ -216,12 +312,12 @@ MathJax.Hub.Config({
   
 
 
-<time datetime="2015-07-02T16:24:46+09:00" pubdate data-updated="true"></time>
+<time datetime="2015-10-27T16:05:38+09:00" pubdate data-updated="true"></time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/swift/'>swift</a>
+    <a class='category' href='/blog/categories/rx/'>rx</a>, <a class='category' href='/blog/categories/swift/'>swift</a>
   
 </span>
 
@@ -230,7 +326,7 @@ MathJax.Hub.Config({
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2015/07/02/swift-string-operation/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2015/07/02/swift-string-operation/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://zh-wang.github.io/blog/2015/10/27/learning-rxswifts-github-sample/" data-via="viennakanon" data-counturl="http://zh-wang.github.io/blog/2015/10/27/learning-rxswifts-github-sample/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -243,10 +339,8 @@ MathJax.Hub.Config({
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2015/07/02/surrogate-support-for-swifts-string/" title="Previous Post: Surrogate Support for Swift's String">&laquo; Surrogate Support for Swift&#8217;s String</a>
+        <a class="basic-alignment left" href="/blog/2015/10/23/update-ui-with-observer/" title="Previous Post: Update UI with Observer">&laquo; Update UI with Observer</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2015/07/15/longest-increasing-subsequence/" title="Next Post: Longest Increasing Subsequence">Longest Increasing Subsequence &raquo;</a>
       
     </p>
   </footer>
@@ -396,8 +490,8 @@ MathJax.Hub.Config({
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://zh-wang.github.io/blog/2015/07/02/swift-string-operation/';
-        var disqus_url = 'http://zh-wang.github.io/blog/2015/07/02/swift-string-operation/';
+        var disqus_identifier = 'http://zh-wang.github.io/blog/2015/10/27/learning-rxswifts-github-sample/';
+        var disqus_url = 'http://zh-wang.github.io/blog/2015/10/27/learning-rxswifts-github-sample/';
         var disqus_script = 'embed.js';
       
     (function () {

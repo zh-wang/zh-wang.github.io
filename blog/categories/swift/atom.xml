@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-10-23T14:54:36+09:00</updated>
+  <updated>2015-10-28T18:35:30+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -12,6 +12,111 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Learning RxSwift's Github Sample]]></title>
+    <link href="http://zh-wang.github.io/blog/2015/10/27/learning-rxswifts-github-sample/"/>
+    <updated>2015-10-27T16:05:38+09:00</updated>
+    <id>http://zh-wang.github.io/blog/2015/10/27/learning-rxswifts-github-sample</id>
+    <content type="html"><![CDATA[<p>Examples of RxSwift can be found here. <a href="https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples">https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples</a></p>
+
+<p>The first example is mock Github sign-up view controller. It checks availability of user name, password. Then simulate a sign-up process.</p>
+
+<p> In a common sign-up process, we have to check</p>
+
+<ol>
+<li>User name is empty or includes illegal character</li>
+<li>User name has been signed up</li>
+<li>Password and Password Repeat are the same</li>
+<li>Request can be handled correctly or not</li>
+</ol>
+
+
+<p> ### Listen user input
+ This is very simple for Rx framework. The <code>rx_text</code> field of <code>UITextField</code> is defined in <code>RxCocoa</code> is just what you want.</p>
+
+<pre><code class="swift">    let username = usernameOutlet.rx_text
+</code></pre>
+
+<p>It tracks <code>textViewDidChange</code> wrap all changes into <code>Observable</code>, which is an basic event sequence can be <strong>Observed</strong> by <code>Observer</code>.</p>
+
+<pre><code>let each user input event as E, then this event sequence can be illustrated as
+    ---E---E-E-----E-----
+</code></pre>
+
+<!-- more -->
+
+
+<h3>Check availability</h3>
+
+<p>This is a <code>flatmap</code> function for <code>Observable</code>. (Definition on <code>flatmap</code> can be found in this post. <a href="http://zh-wang.github.io/blog/2015/10/09/functor-monad-applicative-in-swift/">Functor, Monad, Applicative in Swift</a></p>
+
+<pre><code class="swift">    typealias ValidationResult = (valid: Bool?, message: String?)
+
+    func validateUsername(username: String) -&gt; Observable&lt;ValidationResult&gt; {
+        if username.characters.count == 0 {
+            return just((false, nil))
+        }
+
+        // this obviously won't be
+        if username.rangeOfCharacterFromSet(NSCharacterSet.alphanumericCharacterSet().invertedSet) != nil {
+            return just((false, "Username can only contain numbers or digits"))
+        }
+
+        let loadingValue = (valid: nil as Bool?, message: "Checking availabilty ..." as String?)
+
+        return API.usernameAvailable(username)
+            .map { available in
+                if available {
+                    return (true, "Username available")
+                }
+                else {
+                    return (false, "Username already taken")
+                }
+            }
+            .startWith(loadingValue)
+    }
+</code></pre>
+
+<p>The wrapped value in <code>Observable</code> is a <code>Bool</code> and <code>String</code> pair.</p>
+
+<p>The first two <code>if</code> clause are for checking empty and illegal characters, respectively. The result will be returned immediately because they are local process.</p>
+
+<p>The last part is a http request which returns result after a short period of time.</p>
+
+<p>If we call &lsquo;validateUsername&rsquo; at each event in user input event sequence,</p>
+
+<pre><code class="swift">    let usernameValidation = username
+    .map { username in
+        return validationService.validateUsername(username)
+    }
+</code></pre>
+
+<p>Event sequence will become (V for validation, R for result)
+<code>
+    ---+---+-+-----+-----
+       |   | |     |
+       V   V V     V
+       |   | |     |
+       R   | |     |
+           R |     R
+             R
+</code>
+Note that even validations are called in order, results are returned in random order according to network state. And actually we only need the latest validation&rsquo;s result.</p>
+
+<p>So we use <code>switch</code> method here. <code>switchlatest</code> is one of <code>switch</code>&rsquo;s implementation, which will always switch to the latest event occurred and dispose former events. <a href="http://www.introtorx.com/content/v1.0.10621.0/12_CombiningSequences.html#Switch">Intro_to_rx_switch</a>.</p>
+
+<p>And <code>shareReplay(1)</code> will keep only 1 allocation even this observer gets new subscriptions later. <a href="https://github.com/ReactiveX/RxSwift/blob/master/Documentation/GettingStarted.md#sharing-subscription-and-sharereplay-operator">Rxswift_replay</a></p>
+
+<pre><code class="swift">    let usernameValidation = username
+    .map { username in
+        return validationService.validateUsername(username)
+    }
+    .switchLatest()
+    .shareReplay(1)
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Functor, Monad, Applicative in Swift]]></title>
@@ -387,165 +492,6 @@ func &lt;*&gt;&lt;T, U&gt;(a: [T], f: [T -&gt; U]) -&gt; [U] {
     callbackFromAPI2("success. I'm Json")
     callbackFromAPI2("404 or something else")
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Swift Part 14 - Optional Chaining]]></title>
-    <link href="http://zh-wang.github.io/blog/2015/05/12/learning-swift-part-14/"/>
-    <updated>2015-05-12T12:20:35+09:00</updated>
-    <id>http://zh-wang.github.io/blog/2015/05/12/learning-swift-part-14</id>
-    <content type="html"><![CDATA[<h2>===== Full Notes =====</h2>
-
-<h3>Optional Chaining</h3>
-
-<ul>
-<li><p><em>Optional chaining</em> is a process for querying and calling properties, methods, and subscripts on an optional that might currently be nil.</p>
-
-<ul>
-<li>If the optional contains a value, the property, method, or subscript call succeeds; if the optional is nil, the property, method, or subscript call returns nil.</li>
-<li>Multiple queries can be chained together, and the entire chain fails gracefully if any link in the chain is nil.</li>
-<li>Optional chaining in Swift is similar to messaging nil in Objective-C, but in a way that works for any type, and that can be checked for success or failure.</li>
-</ul>
-</li>
-<li><p>Optional Chaining as an Alternative to Forced Unwrapping</p>
-
-<ul>
-<li><p>Sample of Forced Unwarpping
-        class Person {
-            var residence: Residence?
-        }</p>
-
-<pre><code>    class Residence {
-        var numberOfRooms = 1
-    }
-
-    let john = Persion()
-
-    let roomCount = john.residence!.numberOfRooms
-    // this triggers a runtime error, because residence maybe nil
-</code></pre></li>
-<li><p>Optional chaining provides an alternative way to access the value of numberOfRooms.</p>
-
-<pre><code>    if let roomCount = john.residence?.numberOfRooms {
-        println("John's residence has \(roomCount) room(s).")
-    } else {
-        println("Unable to retrieve the number of rooms.")
-    }
-    // prints "Unable to retrieve the number of rooms.
-
-    // Even numberOfRooms is Int, optional chaining will always return it as Int?
-</code></pre></li>
-</ul>
-</li>
-<li><p>Defining Model Classes for Optional Chaining</p>
-
-<pre><code>      class Residence {
-          var rooms = Room[]()
-          var numberOfRooms: Int {
-          return rooms.count
-          }
-          subscript(i: Int) -&gt; Room {
-              return rooms[i]
-          }
-          func printNumberOfRooms() {
-              println("The number of rooms is \(numberOfRooms)")
-          }
-          var address: Address?
-      }
-
-      class Room {
-          let name: String
-          init(name: String) { self.name = name }
-      }
-
-      class Address {
-          var buildingName: String?
-          var buildingNumber: String?
-          var street: String?
-          func buildingIdentifier() -&gt; String? {
-              if buildingName {
-                  return buildingName
-              } else if buildingNumber {
-                  return buildingNumber
-              } else {
-                  return nil
-              }
-          }
-      }
-</code></pre></li>
-</ul>
-
-
-<!-- more -->
-
-
-<ul>
-<li><p>Calling Properties Through Optional Chaining</p>
-
-<ul>
-<li><p>It is the same as above</p>
-
-<pre><code>    let john = Person()
-    if let roomCount = john.residence?.numberOfRooms {
-        println("John's residence has \(roomCount) room(s).")
-    } else {
-        println("Unable to retrieve the number of rooms.")
-    }
-</code></pre></li>
-</ul>
-</li>
-<li><p>Calling Methods Through Optional Chaining</p>
-
-<pre><code>      func printNumberOfRooms() {
-          println("The number of rooms is \(numberOfRooms)")
-      }
-
-      “if john.residence?.printNumberOfRooms() {
-          println("It was possible to print the number of rooms.")
-      } else {
-          println("It was not possible to print the number of rooms.")
-      }
-      // prints "It was not possible to print the number of rooms.
-</code></pre></li>
-<li><p>Calling Subscripts Through Optional Chaining</p>
-
-<pre><code>      if let firstRoomName = john.residence?[0].name {
-          println("The first room name is \(firstRoomName).")
-      } else {
-          println("Unable to retrieve the first room name.")
-      }
-      // prints "Unable to retrieve the first room name.
-</code></pre></li>
-<li><p>Linking Multiple Levels of Chaining</p>
-
-<ul>
-<li>If the type you are trying to retrieve is not optional, it will become optional because of the optional chaining.</li>
-<li><p>If the type you are trying to retrieve is already optional, it will not become more optional because of the chaining.</p>
-
-<pre><code>    “if let johnsStreet = john.residence?.address?.street {
-        println("John's street name is \(johnsStreet).")
-    } else {
-        println("Unable to retrieve the address.")
-    }
-    // prints "Unable to retrieve the address.”
-</code></pre></li>
-</ul>
-</li>
-<li><p>Chaining on Methods With Optional Return Values</p>
-
-<pre><code>      if let buildingIdentifier = john.residence?.address?.buildingIdentifier() {
-          println("John's building identifier is \(buildingIdentifier).")
-      }
-      // prints "John's building identifier is The Larches.
-
-      “if let upper = john.residence?.address?.buildingIdentifier()?.uppercaseString {
-          println("John's uppercase building identifier is \(upper).")
-      }
-      // prints "John's uppercase building identifier is THE LARCHES.”
-</code></pre></li>
-</ul>
-
 ]]></content>
   </entry>
   
