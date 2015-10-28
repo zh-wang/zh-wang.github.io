@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rx | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/rx/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-10-28T18:35:30+09:00</updated>
+  <updated>2015-10-28T18:36:10+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -32,8 +32,9 @@
 </ol>
 
 
-<p> ### Listen user input
- This is very simple for Rx framework. The <code>rx_text</code> field of <code>UITextField</code> is defined in <code>RxCocoa</code> is just what you want.</p>
+<h3>Listen user input</h3>
+
+<p> This is very simple for Rx framework. The <code>rx_text</code> field of <code>UITextField</code> is defined in <code>RxCocoa</code> is just what you want.</p>
 
 <pre><code class="swift">    let username = usernameOutlet.rx_text
 </code></pre>
