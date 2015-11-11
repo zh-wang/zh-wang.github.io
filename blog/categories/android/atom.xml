@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-10-28T18:36:10+09:00</updated>
+  <updated>2015-11-11T14:43:38+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -24,9 +24,12 @@
 
 <h3>Sample</h3>
 
-<ol>
+<ul>
+<li><ol>
 <li>Define an <code>EventObject</code>, which is a event(or message) will be passed to <code>Observer</code>.</li>
 </ol>
+</li>
+</ul>
 
 
 <pre><code class="java">    public class ViewPagerTabsUIEventObject extends EventObject {
@@ -51,9 +54,12 @@
     }
 </code></pre>
 
-<ol>
+<ul>
+<li><ol>
 <li>Define an <code>Observable</code>, which will dispatch event or message to <code>Observer</code>.</li>
 </ol>
+</li>
+</ul>
 
 
 <pre><code class="java">    public class ViewPagerTabsObservable extends Observable {
@@ -71,18 +77,24 @@
     }
 </code></pre>
 
-<ol>
+<ul>
+<li><ol>
 <li>Caller. Use a shared instance of <code>Observable</code> to dispatch event to <code>Observer</code>.</li>
 </ol>
+</li>
+</ul>
 
 
 <pre><code class="java">    ViewPagerTabsUIEventObject eventObject = new ViewPagerTabsUIEventObject(this, EventType.LABEL_OFF);
     ViewPagerTabsObservable.sInstance.notice(eventObject);
 </code></pre>
 
-<ol>
+<ul>
+<li><ol>
 <li>Receiver, which implements <code>Observer</code> interface.</li>
 </ol>
+</li>
+</ul>
 
 
 <pre><code class="java">    public class ViewPagerTabs extends LinearLayout implements Observer {

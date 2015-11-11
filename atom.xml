@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-10-28T18:36:10+09:00</updated>
+  <updated>2015-11-11T14:43:38+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -18,23 +18,18 @@
     <link href="http://zh-wang.github.io/blog/2015/10/27/learning-rxswifts-github-sample/"/>
     <updated>2015-10-27T16:05:38+09:00</updated>
     <id>http://zh-wang.github.io/blog/2015/10/27/learning-rxswifts-github-sample</id>
-    <content type="html"><![CDATA[<p>Examples of RxSwift can be found here. <a href="https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples">https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples</a></p>
+    <content type="html"><![CDATA[<h2>Introduction</h2>
 
-<p>The first example is mock Github sign-up view controller. It checks availability of user name, password. Then simulate a sign-up process.</p>
+<p>The first example <em>RxSwift</em> mock Github sign-up view controller. It checks availability of user name, password. Then simulate a sign-up process.</p>
 
-<p> In a common sign-up process, we have to check</p>
-
-<ol>
-<li>User name is empty or includes illegal character</li>
-<li>User name has been signed up</li>
-<li>Password and Password Repeat are the same</li>
-<li>Request can be handled correctly or not</li>
-</ol>
+<ul>
+<li>Examples of RxSwift can be found here. <a href="https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples">https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples</a></li>
+</ul>
 
 
-<h3>Listen user input</h3>
+<h2>Listen User Input</h2>
 
-<p> This is very simple for Rx framework. The <code>rx_text</code> field of <code>UITextField</code> is defined in <code>RxCocoa</code> is just what you want.</p>
+<p>This is easy to do with Rx framework. The <code>rx_text</code> field of <code>UITextField</code> is defined in <code>RxCocoa</code> is just what you want.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">username</span> <span class="o">=</span> <span class="n">usernameOutlet</span><span class="p">.</span><span class="n">rx_text</span>
@@ -50,12 +45,28 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>And handling tapping on a button is as easy as</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">signupSampler</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">signupOutlet</span><span class="p">.</span><span class="n">rx_tap</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<!-- more -->
+<h2>Build Basic Observables</h2>
+
+<p>In a common sign-up process, we have to check</p>
+
+<ol>
+<li>User name is empty or includes illegal character</li>
+<li>User name has been signed up</li>
+<li>Password and Password Repeat are the same</li>
+<li>Request can be handled correctly or not</li>
+</ol>
 
 
-<h3>Check availability</h3>
+<p>We build 4 observables, i.e. event stream to handle them separately.</p>
+
+<h3>1. Check User Name</h3>
 
 <p>This is a <code>flatmap</code> function for <code>Observable</code>. (Definition on <code>flatmap</code> can be found in this post. <a href="http://zh-wang.github.io/blog/2015/10/09/functor-monad-applicative-in-swift/">Functor, Monad, Applicative in Swift</a></p>
 
@@ -110,6 +121,11 @@
 </span><span class='line'>        <span class="p">.</span><span class="n">startWith</span><span class="p">(</span><span class="n">loadingValue</span><span class="p">)</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<!-- more -->
 
 
 <p>The wrapped value in <code>Observable</code> is a <code>Bool</code> and <code>String</code> pair.</p>
@@ -171,6 +187,211 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<h3>2. Check Password &amp; Repeated Password</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="n">validatePassword</span><span class="p">(</span><span class="nl">password</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ValidationResult</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">numberOfCharacters</span> <span class="o">=</span> <span class="n">password</span><span class="p">.</span><span class="n">characters</span><span class="p">.</span><span class="n">count</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">numberOfCharacters</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="p">(</span><span class="nb">false</span><span class="p">,</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">numberOfCharacters</span> <span class="o">&lt;</span> <span class="n">minPasswordCount</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="p">(</span><span class="nb">false</span><span class="p">,</span> <span class="s">&quot;Password must be at least \(minPasswordCount) characters&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="p">(</span><span class="nb">true</span><span class="p">,</span> <span class="s">&quot;Password acceptable&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="n">validateRepeatedPassword</span><span class="p">(</span><span class="nl">password</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">repeatedPassword</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ValidationResult</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">repeatedPassword</span><span class="p">.</span><span class="n">characters</span><span class="p">.</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="p">(</span><span class="nb">false</span><span class="p">,</span> <span class="nb">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">repeatedPassword</span> <span class="o">==</span> <span class="n">password</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="p">(</span><span class="nb">true</span><span class="p">,</span> <span class="s">&quot;Password repeated&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="p">(</span><span class="nb">false</span><span class="p">,</span> <span class="s">&quot;Password different&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Combine these two Observables using <code>combineLatest</code>. It does what exactly it says.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">repeatPasswordValidation</span> <span class="o">=</span> <span class="n">combineLatest</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="n">repeatPassword</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="n">repeatedPassword</span><span class="p">)</span> <span class="k">in</span>
+</span><span class='line'>        <span class="n">validationService</span><span class="p">.</span><span class="n">validateRepeatedPassword</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="nl">repeatedPassword</span><span class="p">:</span> <span class="n">repeatedPassword</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="p">.</span><span class="n">shareReplay</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>3. Signing Process</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">signingProcess</span> <span class="o">=</span> <span class="n">combineLatest</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span> <span class="p">{</span> <span class="p">(</span><span class="err">$</span><span class="mi">0</span><span class="p">,</span> <span class="err">$</span><span class="mi">1</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>    <span class="p">.</span><span class="n">sampleLatest</span><span class="p">(</span><span class="n">signupSampler</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="p">)</span> <span class="k">in</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">API</span><span class="p">.</span><span class="n">signup</span><span class="p">(</span><span class="n">username</span><span class="p">,</span> <span class="nl">password</span><span class="p">:</span> <span class="n">password</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="p">.</span><span class="n">switchLatest</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">.</span><span class="n">startWith</span><span class="p">(</span><span class="n">SignupState</span><span class="p">.</span><span class="n">InitialState</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">.</span><span class="n">shareReplay</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <code>signup</code> method is just a delayed Observable, which return true or false after 2 seconds,</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="n">signup</span><span class="p">(</span><span class="nl">username</span><span class="p">:</span> <span class="n">String</span><span class="p">,</span> <span class="nl">password</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Observable</span><span class="o">&lt;</span><span class="n">SignupState</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// this is also just a mock</span>
+</span><span class='line'>    <span class="k">let</span> <span class="n">signupResult</span> <span class="o">=</span> <span class="n">SignupState</span><span class="p">.</span><span class="n">SignedUp</span><span class="p">(</span><span class="nl">signedUp</span><span class="p">:</span> <span class="n">arc4random</span><span class="p">()</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">?</span> <span class="nb">false</span> <span class="o">:</span> <span class="nb">true</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">[</span><span class="n">just</span><span class="p">(</span><span class="n">signupResult</span><span class="p">),</span> <span class="n">never</span><span class="p">()]</span>
+</span><span class='line'>        <span class="p">.</span><span class="n">concat</span><span class="p">()</span>
+</span><span class='line'>        <span class="p">.</span><span class="n">throttle</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">MainScheduler</span><span class="p">.</span><span class="n">sharedInstance</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">.</span><span class="n">startWith</span><span class="p">(</span><span class="n">SignupState</span><span class="p">.</span><span class="n">SigningUp</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>4. Sign-up Enabled</h3>
+
+<p>Just combine validations of user name, password, repeat password</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">signupEnabled</span> <span class="o">=</span> <span class="n">combineLatest</span><span class="p">(</span>
+</span><span class='line'>    <span class="n">usernameValidation</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">passwordValidation</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">repeatPasswordValidation</span><span class="p">,</span>
+</span><span class='line'>    <span class="n">signingProcess</span>
+</span><span class='line'><span class="p">)</span> <span class="p">{</span> <span class="n">un</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">pr</span><span class="p">,</span> <span class="n">signingState</span> <span class="k">in</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">(</span><span class="n">un</span><span class="p">.</span><span class="n">valid</span> <span class="o">??</span> <span class="nb">false</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">valid</span> <span class="o">??</span> <span class="nb">false</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">pr</span><span class="p">.</span><span class="n">valid</span> <span class="o">??</span> <span class="nb">false</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">signingState</span> <span class="o">!=</span> <span class="n">SignupState</span><span class="p">.</span><span class="n">SigningUp</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Bind Observer to UI</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="nf">bindValidationResultToUI</span><span class="p">(</span><span class="nl">source</span><span class="p">:</span> <span class="n">Observable</span><span class="o">&lt;</span><span class="p">(</span><span class="nl">valid</span><span class="p">:</span> <span class="n">Bool</span><span class="o">?</span><span class="p">,</span> <span class="nl">message</span><span class="p">:</span> <span class="n">String</span><span class="o">?</span><span class="p">)</span><span class="o">&gt;</span><span class="p">,</span>
+</span><span class='line'>    <span class="nl">validationErrorLabel</span><span class="p">:</span> <span class="bp">UILabel</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">source</span>
+</span><span class='line'>        <span class="p">.</span><span class="n">subscribeNext</span> <span class="p">{</span> <span class="n">v</span> <span class="k">in</span>
+</span><span class='line'>            <span class="k">let</span> <span class="nl">validationColor</span><span class="p">:</span> <span class="bp">UIColor</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="k">if</span> <span class="k">let</span> <span class="n">valid</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">valid</span> <span class="p">{</span>
+</span><span class='line'>                <span class="n">validationColor</span> <span class="o">=</span> <span class="n">valid</span> <span class="o">?</span> <span class="nl">okColor</span> <span class="p">:</span> <span class="n">errorColor</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>               <span class="n">validationColor</span> <span class="o">=</span> <span class="bp">UIColor</span><span class="p">.</span><span class="n">grayColor</span><span class="p">()</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>            <span class="n">validationErrorLabel</span><span class="p">.</span><span class="n">textColor</span> <span class="o">=</span> <span class="n">validationColor</span>
+</span><span class='line'>            <span class="n">validationErrorLabel</span><span class="p">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">message</span> <span class="o">??</span> <span class="s">&quot;&quot;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="p">.</span><span class="n">addDisposableTo</span><span class="p">(</span><span class="n">disposeBag</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then bind Observables to outlets.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="n">bindValidationResultToUI</span><span class="p">(</span>
+</span><span class='line'>    <span class="n">usernameValidation</span><span class="p">,</span>
+</span><span class='line'>    <span class="nl">validationErrorLabel</span><span class="p">:</span> <span class="nb">self</span><span class="p">.</span><span class="n">usernameValidationOutlet</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">bindValidationResultToUI</span><span class="p">(</span>
+</span><span class='line'>    <span class="n">passwordValidation</span><span class="p">,</span>
+</span><span class='line'>    <span class="nl">validationErrorLabel</span><span class="p">:</span> <span class="nb">self</span><span class="p">.</span><span class="n">passwordValidationOutlet</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">bindValidationResultToUI</span><span class="p">(</span>
+</span><span class='line'>    <span class="n">repeatPasswordValidation</span><span class="p">,</span>
+</span><span class='line'>    <span class="nl">validationErrorLabel</span><span class="p">:</span> <span class="nb">self</span><span class="p">.</span><span class="n">repeatedPasswordValidationOutlet</span>
+</span><span class='line'><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
   </entry>
@@ -186,9 +407,12 @@
 
 <h3>Sample</h3>
 
-<ol>
+<ul>
+<li><ol>
 <li>Define an <code>EventObject</code>, which is a event(or message) will be passed to <code>Observer</code>.</li>
 </ol>
+</li>
+</ul>
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -234,9 +458,12 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<ol>
+<ul>
+<li><ol>
 <li>Define an <code>Observable</code>, which will dispatch event or message to <code>Observer</code>.</li>
 </ol>
+</li>
+</ul>
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -268,9 +495,12 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<ol>
+<ul>
+<li><ol>
 <li>Caller. Use a shared instance of <code>Observable</code> to dispatch event to <code>Observer</code>.</li>
 </ol>
+</li>
+</ul>
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -280,9 +510,12 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<ol>
+<ul>
+<li><ol>
 <li>Receiver, which implements <code>Observer</code> interface.</li>
 </ol>
+</li>
+</ul>
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>

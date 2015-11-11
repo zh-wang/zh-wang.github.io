@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-10-28T18:36:10+09:00</updated>
+  <updated>2015-11-11T14:43:38+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -18,23 +18,18 @@
     <link href="http://zh-wang.github.io/blog/2015/10/27/learning-rxswifts-github-sample/"/>
     <updated>2015-10-27T16:05:38+09:00</updated>
     <id>http://zh-wang.github.io/blog/2015/10/27/learning-rxswifts-github-sample</id>
-    <content type="html"><![CDATA[<p>Examples of RxSwift can be found here. <a href="https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples">https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples</a></p>
+    <content type="html"><![CDATA[<h2>Introduction</h2>
 
-<p>The first example is mock Github sign-up view controller. It checks availability of user name, password. Then simulate a sign-up process.</p>
+<p>The first example <em>RxSwift</em> mock Github sign-up view controller. It checks availability of user name, password. Then simulate a sign-up process.</p>
 
-<p> In a common sign-up process, we have to check</p>
-
-<ol>
-<li>User name is empty or includes illegal character</li>
-<li>User name has been signed up</li>
-<li>Password and Password Repeat are the same</li>
-<li>Request can be handled correctly or not</li>
-</ol>
+<ul>
+<li>Examples of RxSwift can be found here. <a href="https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples">https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples</a></li>
+</ul>
 
 
-<h3>Listen user input</h3>
+<h2>Listen User Input</h2>
 
-<p> This is very simple for Rx framework. The <code>rx_text</code> field of <code>UITextField</code> is defined in <code>RxCocoa</code> is just what you want.</p>
+<p>This is easy to do with Rx framework. The <code>rx_text</code> field of <code>UITextField</code> is defined in <code>RxCocoa</code> is just what you want.</p>
 
 <pre><code class="swift">    let username = usernameOutlet.rx_text
 </code></pre>
@@ -45,10 +40,26 @@
     ---E---E-E-----E-----
 </code></pre>
 
-<!-- more -->
+<p>And handling tapping on a button is as easy as</p>
+
+<pre><code class="swift">    let signupSampler = self.signupOutlet.rx_tap
+</code></pre>
+
+<h2>Build Basic Observables</h2>
+
+<p>In a common sign-up process, we have to check</p>
+
+<ol>
+<li>User name is empty or includes illegal character</li>
+<li>User name has been signed up</li>
+<li>Password and Password Repeat are the same</li>
+<li>Request can be handled correctly or not</li>
+</ol>
 
 
-<h3>Check availability</h3>
+<p>We build 4 observables, i.e. event stream to handle them separately.</p>
+
+<h3>1. Check User Name</h3>
 
 <p>This is a <code>flatmap</code> function for <code>Observable</code>. (Definition on <code>flatmap</code> can be found in this post. <a href="http://zh-wang.github.io/blog/2015/10/09/functor-monad-applicative-in-swift/">Functor, Monad, Applicative in Swift</a></p>
 
@@ -78,6 +89,9 @@
             .startWith(loadingValue)
     }
 </code></pre>
+
+<!-- more -->
+
 
 <p>The wrapped value in <code>Observable</code> is a <code>Bool</code> and <code>String</code> pair.</p>
 
@@ -115,6 +129,121 @@ Note that even validations are called in order, results are returned in random o
     }
     .switchLatest()
     .shareReplay(1)
+</code></pre>
+
+<h3>2. Check Password &amp; Repeated Password</h3>
+
+<pre><code class="swift">    func validatePassword(password: String) -&gt; ValidationResult {
+        let numberOfCharacters = password.characters.count
+        if numberOfCharacters == 0 {
+            return (false, nil)
+        }
+
+        if numberOfCharacters &lt; minPasswordCount {
+            return (false, "Password must be at least \(minPasswordCount) characters")
+        }
+
+        return (true, "Password acceptable")
+    }
+
+    func validateRepeatedPassword(password: String, repeatedPassword: String) -&gt; ValidationResult {
+        if repeatedPassword.characters.count == 0 {
+            return (false, nil)
+        }
+
+        if repeatedPassword == password {
+            return (true, "Password repeated")
+        }
+        else {
+            return (false, "Password different")
+        }
+    }
+</code></pre>
+
+<p>Combine these two Observables using <code>combineLatest</code>. It does what exactly it says.</p>
+
+<pre><code class="swift">    let repeatPasswordValidation = combineLatest(password, repeatPassword) { (password, repeatedPassword) in
+            validationService.validateRepeatedPassword(password, repeatedPassword: repeatedPassword)
+        }
+        .shareReplay(1)
+</code></pre>
+
+<h3>3. Signing Process</h3>
+
+<pre><code class="swift">    let signingProcess = combineLatest(username, password) { ($0, $1) }
+        .sampleLatest(signupSampler)
+        .map { (username, password) in
+            return API.signup(username, password: password)
+        }
+        .switchLatest()
+        .startWith(SignupState.InitialState)
+        .shareReplay(1)
+</code></pre>
+
+<p>The <code>signup</code> method is just a delayed Observable, which return true or false after 2 seconds,</p>
+
+<pre><code class="swift">    func signup(username: String, password: String) -&gt; Observable&lt;SignupState&gt; {
+        // this is also just a mock
+        let signupResult = SignupState.SignedUp(signedUp: arc4random() % 5 == 0 ? false : true)
+        return [just(signupResult), never()]
+            .concat()
+            .throttle(2, MainScheduler.sharedInstance)
+            .startWith(SignupState.SigningUp)
+    }
+</code></pre>
+
+<h3>4. Sign-up Enabled</h3>
+
+<p>Just combine validations of user name, password, repeat password</p>
+
+<pre><code class="swift">let signupEnabled = combineLatest(
+    usernameValidation,
+    passwordValidation,
+    repeatPasswordValidation,
+    signingProcess
+) { un, p, pr, signingState in
+    return (un.valid ?? false) &amp;&amp; (p.valid ?? false) &amp;&amp; (pr.valid ?? false) &amp;&amp; signingState != SignupState.SigningUp
+}
+</code></pre>
+
+<h3>Bind Observer to UI</h3>
+
+<pre><code class="swift">    func bindValidationResultToUI(source: Observable&lt;(valid: Bool?, message: String?)&gt;,
+        validationErrorLabel: UILabel) {
+        source
+            .subscribeNext { v in
+                let validationColor: UIColor
+
+                if let valid = v.valid {
+                    validationColor = valid ? okColor : errorColor
+                }
+                else {
+                   validationColor = UIColor.grayColor()
+                }
+
+                validationErrorLabel.textColor = validationColor
+                validationErrorLabel.text = v.message ?? ""
+            }
+            .addDisposableTo(disposeBag)
+    }
+</code></pre>
+
+<p>Then bind Observables to outlets.</p>
+
+<pre><code class="swift">    bindValidationResultToUI(
+        usernameValidation,
+        validationErrorLabel: self.usernameValidationOutlet
+    )
+
+    bindValidationResultToUI(
+        passwordValidation,
+        validationErrorLabel: self.passwordValidationOutlet
+    )
+
+    bindValidationResultToUI(
+        repeatPasswordValidation,
+        validationErrorLabel: self.repeatedPasswordValidationOutlet
+    )
 </code></pre>
 ]]></content>
   </entry>

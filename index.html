@@ -9,7 +9,7 @@
   <meta name="author" content="viennakanon">
 
   
-  <meta name="description" content="Examples of RxSwift can be found here. https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples The first example is mock Github &hellip;">
+  <meta name="description" content="Introduction The first example RxSwift mock Github sign-up view controller. It checks availability of user name, password. Then simulate a sign-up &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,7 +65,7 @@ MathJax.Hub.Config({
 
 
   <meta property="og:title" content="Welcome to FutureAppLaboratory" />
-<meta property="og:description" content="Examples of RxSwift can be found here. https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples The first example is mock Github &hellip;" />
+<meta property="og:description" content="Introduction The first example RxSwift mock Github sign-up view controller. It checks availability of user name, password. Then simulate a sign-up &hellip;" />
 <meta property="og:url" content="http://zh-wang.github.io/" />
 <meta property="og:image" content="http://zh-wang.github.io/images/psi_storm.jpeg" />
 <meta property="og:author" content="viennakanon" />
@@ -140,23 +140,18 @@ MathJax.Hub.Config({
   </header>
 
 
-  <div class="entry-content"><p>Examples of RxSwift can be found here. <a href="https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples">https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples</a></p>
+  <div class="entry-content"><h2>Introduction</h2>
 
-<p>The first example is mock Github sign-up view controller. It checks availability of user name, password. Then simulate a sign-up process.</p>
+<p>The first example <em>RxSwift</em> mock Github sign-up view controller. It checks availability of user name, password. Then simulate a sign-up process.</p>
 
-<p> In a common sign-up process, we have to check</p>
-
-<ol>
-<li>User name is empty or includes illegal character</li>
-<li>User name has been signed up</li>
-<li>Password and Password Repeat are the same</li>
-<li>Request can be handled correctly or not</li>
-</ol>
+<ul>
+<li>Examples of RxSwift can be found here. <a href="https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples">https://github.com/ReactiveX/RxSwift/tree/master/RxExample/RxExample/Examples</a></li>
+</ul>
 
 
-<h3>Listen user input</h3>
+<h2>Listen User Input</h2>
 
-<p> This is very simple for Rx framework. The <code>rx_text</code> field of <code>UITextField</code> is defined in <code>RxCocoa</code> is just what you want.</p>
+<p>This is easy to do with Rx framework. The <code>rx_text</code> field of <code>UITextField</code> is defined in <code>RxCocoa</code> is just what you want.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">username</span> <span class="o">=</span> <span class="n">usernameOutlet</span><span class="p">.</span><span class="n">rx_text</span>
@@ -169,6 +164,84 @@ MathJax.Hub.Config({
 <span class='line-number'>2</span>
 </pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">each</span> <span class="n">user</span> <span class="n">input</span> <span class="n">event</span> <span class="kt">as</span> <span class="n">E</span><span class="p">,</span> <span class="n">then</span> <span class="n">this</span> <span class="n">event</span> <span class="n">sequence</span> <span class="n">can</span> <span class="n">be</span> <span class="n">illustrated</span> <span class="kt">as</span>
 </span><span class='line'>    <span class="o">---</span><span class="n">E</span><span class="o">---</span><span class="n">E</span><span class="o">-</span><span class="n">E</span><span class="o">-----</span><span class="n">E</span><span class="o">-----</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And handling tapping on a button is as easy as</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">signupSampler</span> <span class="o">=</span> <span class="nb">self</span><span class="p">.</span><span class="n">signupOutlet</span><span class="p">.</span><span class="n">rx_tap</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Build Basic Observables</h2>
+
+<p>In a common sign-up process, we have to check</p>
+
+<ol>
+<li>User name is empty or includes illegal character</li>
+<li>User name has been signed up</li>
+<li>Password and Password Repeat are the same</li>
+<li>Request can be handled correctly or not</li>
+</ol>
+
+
+<p>We build 4 observables, i.e. event stream to handle them separately.</p>
+
+<h3>1. Check User Name</h3>
+
+<p>This is a <code>flatmap</code> function for <code>Observable</code>. (Definition on <code>flatmap</code> can be found in this post. <a href="http://zh-wang.github.io/blog/2015/10/09/functor-monad-applicative-in-swift/">Functor, Monad, Applicative in Swift</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">typealias</span> <span class="n">ValidationResult</span> <span class="o">=</span> <span class="p">(</span><span class="nl">valid</span><span class="p">:</span> <span class="n">Bool</span><span class="o">?</span><span class="p">,</span> <span class="nl">message</span><span class="p">:</span> <span class="n">String</span><span class="o">?</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="n">validateUsername</span><span class="p">(</span><span class="nl">username</span><span class="p">:</span> <span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Observable</span><span class="o">&lt;</span><span class="n">ValidationResult</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">username</span><span class="p">.</span><span class="n">characters</span><span class="p">.</span><span class="n">count</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">just</span><span class="p">((</span><span class="nb">false</span><span class="p">,</span> <span class="nb">nil</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// this obviously won&#39;t be</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">username</span><span class="p">.</span><span class="n">rangeOfCharacterFromSet</span><span class="p">(</span><span class="bp">NSCharacterSet</span><span class="p">.</span><span class="n">alphanumericCharacterSet</span><span class="p">().</span><span class="n">invertedSet</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">nil</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">just</span><span class="p">((</span><span class="nb">false</span><span class="p">,</span> <span class="s">&quot;Username can only contain numbers or digits&quot;</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">let</span> <span class="n">loadingValue</span> <span class="o">=</span> <span class="p">(</span><span class="nl">valid</span><span class="p">:</span> <span class="nb">nil</span> <span class="kt">as</span> <span class="n">Bool</span><span class="o">?</span><span class="p">,</span> <span class="nl">message</span><span class="p">:</span> <span class="s">&quot;Checking availabilty ...&quot;</span> <span class="kt">as</span> <span class="n">String</span><span class="o">?</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="n">API</span><span class="p">.</span><span class="n">usernameAvailable</span><span class="p">(</span><span class="n">username</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">.</span><span class="n">map</span> <span class="p">{</span> <span class="n">available</span> <span class="k">in</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">available</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">return</span> <span class="p">(</span><span class="nb">true</span><span class="p">,</span> <span class="s">&quot;Username available&quot;</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>            <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>                <span class="k">return</span> <span class="p">(</span><span class="nb">false</span><span class="p">,</span> <span class="s">&quot;Username already taken&quot;</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="p">.</span><span class="n">startWith</span><span class="p">(</span><span class="n">loadingValue</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -222,9 +295,12 @@ MathJax.Hub.Config({
 
 <h3>Sample</h3>
 
-<ol>
+<ul>
+<li><ol>
 <li>Define an <code>EventObject</code>, which is a event(or message) will be passed to <code>Observer</code>.</li>
 </ol>
+</li>
+</ul>
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -270,9 +346,12 @@ MathJax.Hub.Config({
 </span></code></pre></td></tr></table></div></figure>
 
 
-<ol>
+<ul>
+<li><ol>
 <li>Define an <code>Observable</code>, which will dispatch event or message to <code>Observer</code>.</li>
 </ol>
+</li>
+</ul>
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -304,9 +383,12 @@ MathJax.Hub.Config({
 </span></code></pre></td></tr></table></div></figure>
 
 
-<ol>
+<ul>
+<li><ol>
 <li>Caller. Use a shared instance of <code>Observable</code> to dispatch event to <code>Observer</code>.</li>
 </ol>
+</li>
+</ul>
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -316,9 +398,12 @@ MathJax.Hub.Config({
 </span></code></pre></td></tr></table></div></figure>
 
 
-<ol>
+<ul>
+<li><ol>
 <li>Receiver, which implements <code>Observer</code> interface.</li>
 </ol>
+</li>
+</ul>
 
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
