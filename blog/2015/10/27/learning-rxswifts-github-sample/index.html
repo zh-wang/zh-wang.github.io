@@ -428,13 +428,15 @@ MathJax.Hub.Config({
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
+<span class='line-number'>9</span>
 </pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">let</span> <span class="n">signupEnabled</span> <span class="o">=</span> <span class="n">combineLatest</span><span class="p">(</span>
 </span><span class='line'>    <span class="n">usernameValidation</span><span class="p">,</span>
 </span><span class='line'>    <span class="n">passwordValidation</span><span class="p">,</span>
 </span><span class='line'>    <span class="n">repeatPasswordValidation</span><span class="p">,</span>
-</span><span class='line'>    <span class="n">signingProcess</span>
-</span><span class='line'><span class="p">)</span> <span class="p">{</span> <span class="n">un</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">pr</span><span class="p">,</span> <span class="n">signingState</span> <span class="k">in</span>
-</span><span class='line'>    <span class="k">return</span> <span class="p">(</span><span class="n">un</span><span class="p">.</span><span class="n">valid</span> <span class="o">??</span> <span class="nb">false</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">valid</span> <span class="o">??</span> <span class="nb">false</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">pr</span><span class="p">.</span><span class="n">valid</span> <span class="o">??</span> <span class="nb">false</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">signingState</span> <span class="o">!=</span> <span class="n">SignupState</span><span class="p">.</span><span class="n">SigningUp</span>
+</span><span class='line'>    <span class="n">signingProcess</span><span class="p">)</span> <span class="p">{</span> <span class="n">un</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">pr</span><span class="p">,</span> <span class="n">signingState</span> <span class="k">in</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">return</span> <span class="p">(</span><span class="n">un</span><span class="p">.</span><span class="n">valid</span> <span class="o">??</span> <span class="nb">false</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">valid</span> <span class="o">??</span> <span class="nb">false</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">pr</span><span class="p">.</span><span class="n">valid</span> <span class="o">??</span> <span class="nb">false</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">signingState</span> <span class="o">!=</span> <span class="n">SignupState</span><span class="p">.</span><span class="n">SigningUp</span>
+</span><span class='line'>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 

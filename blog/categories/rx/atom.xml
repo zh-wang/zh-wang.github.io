@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rx | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/rx/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-11-11T14:43:38+09:00</updated>
+  <updated>2015-11-13T18:47:07+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -196,14 +196,15 @@ Note that even validations are called in order, results are returned in random o
 
 <p>Just combine validations of user name, password, repeat password</p>
 
-<pre><code class="swift">let signupEnabled = combineLatest(
-    usernameValidation,
-    passwordValidation,
-    repeatPasswordValidation,
-    signingProcess
-) { un, p, pr, signingState in
-    return (un.valid ?? false) &amp;&amp; (p.valid ?? false) &amp;&amp; (pr.valid ?? false) &amp;&amp; signingState != SignupState.SigningUp
-}
+<pre><code class="swift">    let signupEnabled = combineLatest(
+        usernameValidation,
+        passwordValidation,
+        repeatPasswordValidation,
+        signingProcess) { un, p, pr, signingState in
+
+            return (un.valid ?? false) &amp;&amp; (p.valid ?? false) &amp;&amp; (pr.valid ?? false) &amp;&amp; signingState != SignupState.SigningUp
+
+    }
 </code></pre>
 
 <h3>Bind Observer to UI</h3>
