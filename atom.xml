@@ -4,7 +4,7 @@
   <title><![CDATA[Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-11-13T18:47:07+09:00</updated>
+  <updated>2015-11-27T18:41:36+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -1038,7 +1038,7 @@
 
 <p>This results an 3+ seconds for each iteration of binary search.</p>
 
-<p><a href="https://codility.com/cert/view/certTC8BGX-RJA53D2WHXPHGD5A/details">https://codility.com/cert/view/certTC8BGX-RJA53D2WHXPHGD5A/details</a></p>
+<p><a href="https://codility.com/cert/view/certXKYPW7-D87MFQHQEGCKWRV9/details">https://codility.com/cert/view/certXKYPW7-D87MFQHQEGCKWRV9/details</a></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1181,6 +1181,8 @@
 <span class='line-number'>139</span>
 <span class='line-number'>140</span>
 <span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
 </pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kn">import</span> <span class="nn">java.util.*</span><span class="o">;</span>
 </span><span class='line'>
 </span><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">TrafficCamera</span> <span class="o">{</span>
@@ -1266,9 +1268,10 @@
 </span><span class='line'><span class="cm">               @  @    a b c d</span>
 </span><span class='line'>
 </span><span class='line'><span class="cm">         step 1: Sort diameters of subtrees in reverse order, store them in an array</span>
-</span><span class='line'><span class="cm">         step 2: For each adjacent pair in the sorted array, e.g. [a, b], [b, c], [c, d].</span>
+</span><span class='line'><span class="cm">         step 2: For each adjacent pair in the sorted array, e.g. (a, b), (b, c), (c, d).</span>
 </span><span class='line'><span class="cm">            If a + b + 2 &gt; limit, we break the edge connecting current node to a, and counter plus 1.</span>
-</span><span class='line'><span class="cm">            Do the same for [b, c] and [c, d]</span>
+</span><span class='line'><span class="cm">            Do the same for (b, c) and (c, d). Note that, if (a, b) passed the test, we don&#39;t need to anymore</span>
+</span><span class='line'><span class="cm">            because (a, b) is the largest pair of them.</span>
 </span><span class='line'><span class="cm">         step 3: For last child d. or if current node has only one child.</span>
 </span><span class='line'><span class="cm">            If d + 1 &gt; limit, we break the edge connecting current node to a, and counter plus 1.</span>
 </span><span class='line'><span class="cm">         step 4: Set diameter of current node to the largest one of the remains(not broken ones).</span>
@@ -1297,6 +1300,7 @@
 </span><span class='line'>                <span class="n">counter</span><span class="o">++;</span>
 </span><span class='line'>            <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
 </span><span class='line'>                <span class="n">maxDiameterAfterRemoval</span> <span class="o">=</span> <span class="n">Math</span><span class="o">.</span><span class="na">max</span><span class="o">(</span><span class="n">maxDiameterAfterRemoval</span><span class="o">,</span> <span class="n">sortedSubtreeDiameters</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
+</span><span class='line'>                <span class="k">break</span><span class="o">;</span> <span class="c1">// Even the largest pair is in the limit, we don&#39;t need check the remaining pairs.</span>
 </span><span class='line'>            <span class="o">}</span>
 </span><span class='line'>        <span class="o">}</span>
 </span><span class='line'>
