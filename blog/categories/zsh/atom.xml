@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Zsh | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/zsh/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-11-27T18:41:36+09:00</updated>
+  <updated>2016-11-10T13:25:22+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -66,16 +66,13 @@ RPROMPT='$(vcs_super_info)'
 
 <ul>
 <li>まずこれをコメントアウト
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>
-</span><span class='line'>&lt;h1&gt;RPROMPT=&lsquo;$(vcs_super_info)&rsquo;&lt;/h1&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;```&lt;/p&gt;&lt;/li&gt;
-</span><span class='line'>&lt;li&gt;以下のコードを.zshrcに追加。(hookしなくても動けますが、promptの中身は更新されないので、ディレクトリ移動しても、gitコマンドを実行しても変わらない。)</span></code></pre></td></tr></table></div></figure>bash
+&#8220;`
+
+<h1>RPROMPT=&lsquo;$(vcs_super_info)&rsquo;</h1>
+
+<p>&#8220;`</p></li>
+<li>以下のコードを.zshrcに追加。(hookしなくても動けますが、promptの中身は更新されないので、ディレクトリ移動しても、gitコマンドを実行しても変わらない。)
+&#8220;`bash
 typeset -ga precmd_functions</li>
 </ul>
 

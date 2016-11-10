@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Functional Programming | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/functional-programming/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2015-11-27T18:41:36+09:00</updated>
+  <updated>2016-11-10T13:25:22+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -26,159 +26,143 @@
 
 <p>$C$ is a <strong>Functor</strong> if $C$ has the following ability.</p>
 
-<p><script type="math/tex; mode=display">
+<p>{% math %}
     C[A].map(A \rightarrow B) = C[B]
-</script></p>
+{% endmath %}</p>
 
-<p>For example, we can write such a function <code>map</code> for <code>Optional</code>. (Well, swift already has such built-in function.)
+<p>For example, we can write such a function <code>functor</code> or <code>map</code>.
 &#8220;`swift
-    extension Optional {
-        func map<U>(f: Wrapped -> U) -> U? {
-            switch self {
-                case .Some(let x): return f(x)
-                case .None: return .None
-            }
+    class Box<T> {
+        var content: T
+        init(content: T) {
+            self.content = content
         }</p>
 
-<pre><code>    // take out the wrapped item
-    func toValue() -&gt; Wrapped? {
-        switch self {
-            case .Some(let x): return x
-            case .None: return .None
-        }
+<pre><code>    func functor&lt;U&gt;(_ relation: (T) -&gt; U) -&gt; Box&lt;U&gt; {
+        return Box&lt;U&gt;(content: relation(self.content))
     }
 }
 
-// A -&gt; B
-func plusTwo(addend: Int) -&gt; Double {
-    return Double(addend) + 2.0
+func functor&lt;T, U&gt;(box: Box&lt;T&gt;, relation: (T) -&gt; U) -&gt; Box&lt;U&gt; {
+    return Box(content: relation(box.content))
 }
 
-// C[A] -&gt; C[B]
-Int?.Some(3).map(plusTwo) // Change Optional&lt;Int&gt;(3) into Optional&lt;Double&gt;(5.0)
+let a = Box(content: 1)
+let b = functor(box: a, relation: { $0 + 100 }).content
+b // 101
 </code></pre>
 
 <pre><code>
 And we can chain functors like this.
 </code></pre>
 
-<pre><code>func plusThree(addend: Int) -&gt; Int {
-    return addend + 3
-}
-
-Int?.Some(3).map(plusThree).map(plusTwo)
+<pre><code>let addup: (Int)-&gt;Int = { $0 + 1 }
+let c = a.functor(addup).functor(addup).content
+c // 3
 </code></pre>
 
-<pre><code>We can also do it like Haskell
+<pre><code>
+We can also do it like Haskell
 </code></pre>
 
-<pre><code>// This is a custom operator
-infix operator &lt;^&gt; { associativity left }
-func &lt;^&gt;&lt;T, U&gt;(a: T?, f: T -&gt; U) -&gt; U? {
-    return a.map(f)
+<pre><code>precedencegroup chainopts {
+    associativity: left
+}
+infix operator &lt;^&gt;: chainopts
+func &lt;^&gt;&lt;T, U&gt;(a: Box&lt;T&gt;, f: (T) -&gt; U) -&gt; Box&lt;U&gt; {
+    return a.functor(f)
 }
 
-Optional.Some(2) &lt;^&gt; plusThree // Int?(5)
-Optional.Some(2) &lt;^&gt; plusThree &lt;^&gt; plusThree // Int?(8)
+let d = a &lt;^&gt; addup &lt;^&gt; addup
+d.content // 3
 </code></pre>
 
 <pre><code>
 ### Monad
 
-$C$ is a __Monad__ if $C$ has the following ability.
+$C$ is a __Monad__ if $C$ has the following ability. This is also called as `flatmap`.
 
-<script type="math/tex; mode=display">
+{% math %}
     C[A].flatmap(A \rightarrow C[B]) = C[B]
-</script>
+{% endmath %}
 </code></pre>
 
-<pre><code>extension Optional {
-    func flatMap&lt;U&gt;(f: Wrapped -&gt; U?) -&gt; U? {
-        switch self {
-            case .Some(let x): return f(x)
-            case .None: return .None
-        }
+<pre><code>class Box&lt;T&gt; {
+    var content: T
+    init(content: T) {
+        self.content = content
+    }
+
+    func monad&lt;U&gt;(_ relation: (T) -&gt; Box&lt;U&gt;) -&gt; Box&lt;U&gt; {
+        return relation(self.content)
     }
 }
 
-func half(a: Int) -&gt; Int? {
-    return a % 2 == 0 ? a / 2 : .None
+func monad&lt;T, U&gt;(box: Box&lt;T&gt;, relation: (T) -&gt; Box&lt;U&gt;) -&gt; Box&lt;U&gt; {
+    return relation(box.content)
 }
 
-Int?.Some(4).flatMap(half) // Int?(2)
+let e = monad(box: a, relation: { Box(content: $0 + 1000) } ).content
+e // 1001
+let addupAndWrap: (Int)-&gt;Box&lt;Int&gt; = { Box(content: $0 + 1000) }
+let f = a.monad(addupAndWrap).monad(addupAndWrap).content
+f // 2001
 </code></pre>
 
-<pre><code>Haskell-like version.
+<pre><code>
+Haskell-like version.
 </code></pre>
 
-<pre><code>infix operator &gt;&gt;- { associativity left }
-
-func &gt;&gt;-&lt;T, U&gt;(a: T?, f: T -&gt; U?) -&gt; U? {
-    return a.flatMap(f)
+<pre><code>infix operator &gt;&gt;-: chainopts
+func &gt;&gt;-&lt;T, U&gt;(a: Box&lt;T&gt;, f: (T) -&gt; Box&lt;U&gt;) -&gt; Box&lt;U&gt; {
+    return a.monad(f)
 }
-
-Int?(3) &gt;&gt;- half // Optional.None
-Int?(4) &gt;&gt;- half &gt;&gt;- half // Int?(2)
+let g = a &gt;&gt;- addupAndWrap &gt;&gt;- addupAndWrap
+g.content // 2001
 </code></pre>
 
-<pre><code>### Applicative
+<pre><code>
+### Applicative
 
 $C$ is a __Applicative__ if $C$ has the following ability.
 
-<script type="math/tex; mode=display">
+{% math %}
     C[A].apply(C[A \rightarrow B]) = C[B]
-</script>
+{% endmath %}
 </code></pre>
 
-<pre><code>extension Optional {
-    // Note that function `f` is ALSO wrapped in Optional type
-    func apply&lt;U&gt;(f: (Wrapped -&gt; U)?) -&gt; U? {
-        switch f {
-        case .Some(let someF): return self.map(someF)
-        case .None: return .None
-        }
+<pre><code>class Box&lt;T&gt; {
+    var content: T
+    init(content: T) {
+        self.content = content
+    }
+
+    func apply&lt;U&gt;(_ relation: Box&lt;(T) -&gt; U&gt;) -&gt; Box&lt;U&gt; {
+        return Box&lt;U&gt;(content: relation.content(self.content))
     }
 }
 
-extension Array {
-    // Note that function `f` is ALSO wrapped in Array type
-    func apply&lt;U&gt;(fs: [Element -&gt; U]) -&gt; [U] {
-        var result = [U]()
-        for f in fs {
-            for element in self.map(f) {
-                result.append(element)
-            }
-        }
-        return result
-    }
+func apply&lt;T, U&gt;(box: Box&lt;T&gt;, relation: Box&lt;(T) -&gt; U&gt;) -&gt; Box&lt;U&gt; {
+    return Box(content: relation.content(box.content))
 }
 
-// This is a IntFunction? type
-let plusThreeBox = Optional&lt;IntFunction&gt;.Some(plusThree)
-
-Int?.Some(3).apply(plusThreeBox) // Int?(6)
-
-[1, 2, 3].apply( [ {$0 + 10}, {$0 + 100} ] ) // [11, 12, 13, 101, 102, 103]
+let h = apply(box: a, relation: Box(content: {$0 + 10000} )).content
+h // 10001
+let anBoxContainsAddup: Box&lt;(Int)-&gt;Int&gt; = Box(content: {$0 + 10000} )
+let i = a.apply(anBoxContainsAddup).apply(anBoxContainsAddup).content
+i // 20001
 </code></pre>
 
-<pre><code>Haskell-like version.
+<pre><code>
+Haskell-like version.
 </code></pre>
 
-<pre><code>infix operator &lt;*&gt; { associativity left }
-
-func &lt;*&gt;&lt;T, U&gt;(a: T?, f: (T -&gt; U)?) -&gt; U? {
+<pre><code>infix operator &lt;*&gt;: chainopts
+func &lt;*&gt;&lt;T, U&gt;(a: Box&lt;T&gt;, f: Box&lt;(T) -&gt; U&gt;) -&gt; Box&lt;U&gt; {
     return a.apply(f)
 }
-
-func &lt;*&gt;&lt;T, U&gt;(a: [T], f: [T -&gt; U]) -&gt; [U] {
-    return a.apply(f)
-}
-
-(Optional.Some(2) &lt;*&gt; Optional.Some({ $0 + 3 }))
-// =&gt; 5
-
-[1, 2, 3] &lt;*&gt; [ { $0 + 3 }, { $0 * 2 } ]
-// =&gt; [ 4, 5, 6, 2, 4, 6 ]
+let j = a &lt;*&gt; anBoxContainsAddup &lt;*&gt; anBoxContainsAddup
+j.content // 20001
 </code></pre>
 
 <p>&#8220;`</p>
