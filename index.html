@@ -501,7 +501,91 @@ MathJax.Hub.Config({
 </script>
 
 
-<p>For example, we can write such a function <code>map</code> for <code>Optional</code>. (Well, swift already has such built-in function.)</p>
+<p>For example, we can write such a function <code>functor</code> or <code>map</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='Swift'><span class='line'><span class="k">class</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">content</span><span class="p">:</span> <span class="n">T</span>
+</span><span class='line'>    <span class="k">init</span><span class="p">(</span><span class="nl">content</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">content</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">func</span> <span class="n">functor</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nl">relation</span><span class="p">:</span> <span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">content</span><span class="p">:</span> <span class="n">relation</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="n">content</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">func</span> <span class="n">functor</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">box</span><span class="p">:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="nl">relation</span><span class="p">:</span> <span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">Box</span><span class="p">(</span><span class="nl">content</span><span class="p">:</span> <span class="n">relation</span><span class="p">(</span><span class="n">box</span><span class="p">.</span><span class="n">content</span><span class="p">))</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">a</span> <span class="o">=</span> <span class="n">Box</span><span class="p">(</span><span class="nl">content</span><span class="p">:</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'><span class="k">let</span> <span class="n">b</span> <span class="o">=</span> <span class="n">functor</span><span class="p">(</span><span class="nl">box</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="nl">relation</span><span class="p">:</span> <span class="p">{</span> <span class="err">$</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">100</span> <span class="p">}).</span><span class="n">content</span>
+</span><span class='line'><span class="n">b</span> <span class="c1">// 101</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And we can chain functors like this.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='Swift'><span class='line'><span class="k">let</span> <span class="nl">addup</span><span class="p">:</span> <span class="p">(</span><span class="n">Int</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Int</span> <span class="o">=</span> <span class="p">{</span> <span class="err">$</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">1</span> <span class="p">}</span>
+</span><span class='line'><span class="k">let</span> <span class="n">c</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">functor</span><span class="p">(</span><span class="n">addup</span><span class="p">).</span><span class="n">functor</span><span class="p">(</span><span class="n">addup</span><span class="p">).</span><span class="n">content</span>
+</span><span class='line'><span class="n">c</span> <span class="c1">// 3</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We can also do it like Haskell</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='Swift'><span class='line'><span class="n">precedencegroup</span> <span class="n">chainopts</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nl">associativity</span><span class="p">:</span> <span class="kr">left</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="kr">infix</span> <span class="kr">operator</span> <span class="o">&lt;^&gt;:</span> <span class="n">chainopts</span>
+</span><span class='line'><span class="k">func</span> <span class="o">&lt;^&gt;&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">a</span><span class="p">:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="nl">f</span><span class="p">:</span> <span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="n">functor</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">d</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&lt;^&gt;</span> <span class="n">addup</span> <span class="o">&lt;^&gt;</span> <span class="n">addup</span>
+</span><span class='line'><span class="n">d</span><span class="p">.</span><span class="n">content</span> <span class="c1">// 3</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Monad</h3>
+
+<p>$C$ is a <strong>Monad</strong> if $C$ has the following ability. This is also called as <code>flatmap</code>.</p>
+
+<script type="math/tex; mode=display">
+    C[A].flatmap(A \rightarrow C[B]) = C[B]
+</script>
+
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -523,110 +607,26 @@ MathJax.Hub.Config({
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
 <span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">extension</span> <span class="n">Optional</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">func</span> <span class="n">map</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">f</span><span class="p">:</span> <span class="n">Wrapped</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">?</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">switch</span> <span class="nb">self</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">case</span> <span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="k">let</span> <span class="n">x</span><span class="p">)</span><span class="o">:</span> <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</span><span class='line'>            <span class="k">case</span> <span class="p">.</span><span class="nl">None</span><span class="p">:</span> <span class="k">return</span> <span class="p">.</span><span class="n">None</span>
-</span><span class='line'>        <span class="p">}</span>
+</pre></td><td class='code'><pre><code class='Swift'><span class='line'><span class="k">class</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">content</span><span class="p">:</span> <span class="n">T</span>
+</span><span class='line'>    <span class="k">init</span><span class="p">(</span><span class="nl">content</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">content</span>
 </span><span class='line'>    <span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'>    <span class="c1">// take out the wrapped item</span>
-</span><span class='line'>    <span class="k">func</span> <span class="n">toValue</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Wrapped</span><span class="o">?</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">switch</span> <span class="nb">self</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">case</span> <span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="k">let</span> <span class="n">x</span><span class="p">)</span><span class="o">:</span> <span class="k">return</span> <span class="n">x</span>
-</span><span class='line'>            <span class="k">case</span> <span class="p">.</span><span class="nl">None</span><span class="p">:</span> <span class="k">return</span> <span class="p">.</span><span class="n">None</span>
-</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="k">func</span> <span class="n">monad</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nl">relation</span><span class="p">:</span> <span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">relation</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="n">content</span><span class="p">)</span>
 </span><span class='line'>    <span class="p">}</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="c1">// A -&gt; B</span>
-</span><span class='line'><span class="k">func</span> <span class="n">plusTwo</span><span class="p">(</span><span class="nl">addend</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Double</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">Double</span><span class="p">(</span><span class="n">addend</span><span class="p">)</span> <span class="o">+</span> <span class="mf">2.0</span>
+</span><span class='line'><span class="k">func</span> <span class="n">monad</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">box</span><span class="p">:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="nl">relation</span><span class="p">:</span> <span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">relation</span><span class="p">(</span><span class="n">box</span><span class="p">.</span><span class="n">content</span><span class="p">)</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="c1">// C[A] -&gt; C[B]</span>
-</span><span class='line'><span class="n">Int</span><span class="o">?</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="n">map</span><span class="p">(</span><span class="n">plusTwo</span><span class="p">)</span> <span class="c1">// Change Optional&lt;Int&gt;(3) into Optional&lt;Double&gt;(5.0)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And we can chain functors like this.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">func</span> <span class="n">plusThree</span><span class="p">(</span><span class="nl">addend</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">addend</span> <span class="o">+</span> <span class="mi">3</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">Int</span><span class="o">?</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="n">map</span><span class="p">(</span><span class="n">plusThree</span><span class="p">).</span><span class="n">map</span><span class="p">(</span><span class="n">plusTwo</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>We can also do it like Haskell</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="c1">// This is a custom operator</span>
-</span><span class='line'><span class="kr">infix</span> <span class="kr">operator</span> <span class="o">&lt;^&gt;</span> <span class="p">{</span> <span class="kr">associativity</span> <span class="kr">left</span> <span class="p">}</span>
-</span><span class='line'><span class="k">func</span> <span class="o">&lt;^&gt;&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">a</span><span class="p">:</span> <span class="n">T</span><span class="o">?</span><span class="p">,</span> <span class="nl">f</span><span class="p">:</span> <span class="n">T</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">?</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">Optional</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;^&gt;</span> <span class="n">plusThree</span> <span class="c1">// Int?(5)</span>
-</span><span class='line'><span class="n">Optional</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;^&gt;</span> <span class="n">plusThree</span> <span class="o">&lt;^&gt;</span> <span class="n">plusThree</span> <span class="c1">// Int?(8)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Monad</h3>
-
-<p>$C$ is a <strong>Monad</strong> if $C$ has the following ability.</p>
-
-<script type="math/tex; mode=display">
-    C[A].flatmap(A \rightarrow C[B]) = C[B]
-</script>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">extension</span> <span class="n">Optional</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">func</span> <span class="n">flatMap</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">f</span><span class="p">:</span> <span class="n">Wrapped</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">?</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">switch</span> <span class="nb">self</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">case</span> <span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="k">let</span> <span class="n">x</span><span class="p">)</span><span class="o">:</span> <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-</span><span class='line'>            <span class="k">case</span> <span class="p">.</span><span class="nl">None</span><span class="p">:</span> <span class="k">return</span> <span class="p">.</span><span class="n">None</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">func</span> <span class="n">half</span><span class="p">(</span><span class="nl">a</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Int</span><span class="o">?</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">a</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">?</span> <span class="n">a</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">:</span> <span class="p">.</span><span class="n">None</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">Int</span><span class="o">?</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="mi">4</span><span class="p">).</span><span class="n">flatMap</span><span class="p">(</span><span class="n">half</span><span class="p">)</span> <span class="c1">// Int?(2)</span>
+</span><span class='line'><span class="k">let</span> <span class="n">e</span> <span class="o">=</span> <span class="n">monad</span><span class="p">(</span><span class="nl">box</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="nl">relation</span><span class="p">:</span> <span class="p">{</span> <span class="n">Box</span><span class="p">(</span><span class="nl">content</span><span class="p">:</span> <span class="err">$</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">1000</span><span class="p">)</span> <span class="p">}</span> <span class="p">).</span><span class="n">content</span>
+</span><span class='line'><span class="n">e</span> <span class="c1">// 1001</span>
+</span><span class='line'><span class="k">let</span> <span class="nl">addupAndWrap</span><span class="p">:</span> <span class="p">(</span><span class="n">Int</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Box</span><span class="o">&lt;</span><span class="n">Int</span><span class="o">&gt;</span> <span class="o">=</span> <span class="p">{</span> <span class="n">Box</span><span class="p">(</span><span class="nl">content</span><span class="p">:</span> <span class="err">$</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">1000</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'><span class="k">let</span> <span class="n">f</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">monad</span><span class="p">(</span><span class="n">addupAndWrap</span><span class="p">).</span><span class="n">monad</span><span class="p">(</span><span class="n">addupAndWrap</span><span class="p">).</span><span class="n">content</span>
+</span><span class='line'><span class="n">f</span> <span class="c1">// 2001</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -638,16 +638,12 @@ MathJax.Hub.Config({
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="kr">infix</span> <span class="kr">operator</span> <span class="o">&gt;&gt;-</span> <span class="p">{</span> <span class="kr">associativity</span> <span class="kr">left</span> <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">func</span> <span class="o">&gt;&gt;-&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">a</span><span class="p">:</span> <span class="n">T</span><span class="o">?</span><span class="p">,</span> <span class="nl">f</span><span class="p">:</span> <span class="n">T</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">?</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="n">flatMap</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></td><td class='code'><pre><code class='Swift'><span class='line'><span class="kr">infix</span> <span class="kr">operator</span> <span class="o">&gt;&gt;-:</span> <span class="n">chainopts</span>
+</span><span class='line'><span class="k">func</span> <span class="o">&gt;&gt;-&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">a</span><span class="p">:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="nl">f</span><span class="p">:</span> <span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="n">monad</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 </span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">Int</span><span class="o">?</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&gt;&gt;-</span> <span class="n">half</span> <span class="c1">// Optional.None</span>
-</span><span class='line'><span class="n">Int</span><span class="o">?</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&gt;&gt;-</span> <span class="n">half</span> <span class="o">&gt;&gt;-</span> <span class="n">half</span> <span class="c1">// Int?(2)</span>
+</span><span class='line'><span class="k">let</span> <span class="n">g</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&gt;&gt;-</span> <span class="n">addupAndWrap</span> <span class="o">&gt;&gt;-</span> <span class="n">addupAndWrap</span>
+</span><span class='line'><span class="n">g</span><span class="p">.</span><span class="n">content</span> <span class="c1">// 2001</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -680,44 +676,26 @@ MathJax.Hub.Config({
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
 <span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="k">extension</span> <span class="n">Optional</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// Note that function `f` is ALSO wrapped in Optional type</span>
-</span><span class='line'>    <span class="k">func</span> <span class="n">apply</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">f</span><span class="p">:</span> <span class="p">(</span><span class="n">Wrapped</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">)</span><span class="o">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">?</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">switch</span> <span class="n">f</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">case</span> <span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="k">let</span> <span class="n">someF</span><span class="p">)</span><span class="o">:</span> <span class="k">return</span> <span class="nb">self</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">someF</span><span class="p">)</span>
-</span><span class='line'>        <span class="k">case</span> <span class="p">.</span><span class="nl">None</span><span class="p">:</span> <span class="k">return</span> <span class="p">.</span><span class="n">None</span>
-</span><span class='line'>        <span class="p">}</span>
+</pre></td><td class='code'><pre><code class='Swift'><span class='line'><span class="k">class</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">var</span> <span class="nl">content</span><span class="p">:</span> <span class="n">T</span>
+</span><span class='line'>    <span class="k">init</span><span class="p">(</span><span class="nl">content</span><span class="p">:</span> <span class="n">T</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nb">self</span><span class="p">.</span><span class="n">content</span> <span class="o">=</span> <span class="n">content</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">func</span> <span class="n">apply</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="n">_</span> <span class="nl">relation</span><span class="p">:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">content</span><span class="p">:</span> <span class="n">relation</span><span class="p">.</span><span class="n">content</span><span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="n">content</span><span class="p">))</span>
 </span><span class='line'>    <span class="p">}</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">extension</span> <span class="n">Array</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// Note that function `f` is ALSO wrapped in Array type</span>
-</span><span class='line'>    <span class="k">func</span> <span class="n">apply</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">fs</span><span class="p">:</span> <span class="p">[</span><span class="n">Element</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">U</span><span class="p">]</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">var</span> <span class="n">result</span> <span class="o">=</span> <span class="p">[</span><span class="n">U</span><span class="p">]()</span>
-</span><span class='line'>        <span class="k">for</span> <span class="n">f</span> <span class="k">in</span> <span class="n">fs</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">for</span> <span class="n">element</span> <span class="k">in</span> <span class="nb">self</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>                <span class="n">result</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
-</span><span class='line'>            <span class="p">}</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">result</span>
-</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="k">func</span> <span class="n">apply</span><span class="o">&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">box</span><span class="p">:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="nl">relation</span><span class="p">:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">Box</span><span class="p">(</span><span class="nl">content</span><span class="p">:</span> <span class="n">relation</span><span class="p">.</span><span class="n">content</span><span class="p">(</span><span class="n">box</span><span class="p">.</span><span class="n">content</span><span class="p">))</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
-</span><span class='line'><span class="c1">// This is a IntFunction? type</span>
-</span><span class='line'><span class="k">let</span> <span class="n">plusThreeBox</span> <span class="o">=</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">IntFunction</span><span class="o">&gt;</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="n">plusThree</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">Int</span><span class="o">?</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="n">apply</span><span class="p">(</span><span class="n">plusThreeBox</span><span class="p">)</span> <span class="c1">// Int?(6)</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">].</span><span class="n">apply</span><span class="p">(</span> <span class="p">[</span> <span class="p">{</span><span class="err">$</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">10</span><span class="p">},</span> <span class="p">{</span><span class="err">$</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">100</span><span class="p">}</span> <span class="p">]</span> <span class="p">)</span> <span class="c1">// [11, 12, 13, 101, 102, 103]</span>
+</span><span class='line'><span class="k">let</span> <span class="n">h</span> <span class="o">=</span> <span class="n">apply</span><span class="p">(</span><span class="nl">box</span><span class="p">:</span> <span class="n">a</span><span class="p">,</span> <span class="nl">relation</span><span class="p">:</span> <span class="n">Box</span><span class="p">(</span><span class="nl">content</span><span class="p">:</span> <span class="p">{</span><span class="err">$</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">10000</span><span class="p">}</span> <span class="p">)).</span><span class="n">content</span>
+</span><span class='line'><span class="n">h</span> <span class="c1">// 10001</span>
+</span><span class='line'><span class="k">let</span> <span class="nl">anBoxContainsAddup</span><span class="p">:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="p">(</span><span class="n">Int</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">Int</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">Box</span><span class="p">(</span><span class="nl">content</span><span class="p">:</span> <span class="p">{</span><span class="err">$</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">10000</span><span class="p">}</span> <span class="p">)</span>
+</span><span class='line'><span class="k">let</span> <span class="n">i</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span><span class="n">anBoxContainsAddup</span><span class="p">).</span><span class="n">apply</span><span class="p">(</span><span class="n">anBoxContainsAddup</span><span class="p">).</span><span class="n">content</span>
+</span><span class='line'><span class="n">i</span> <span class="c1">// 20001</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -729,30 +707,12 @@ MathJax.Hub.Config({
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='swift'><span class='line'><span class="kr">infix</span> <span class="kr">operator</span> <span class="o">&lt;*&gt;</span> <span class="p">{</span> <span class="kr">associativity</span> <span class="kr">left</span> <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">func</span> <span class="o">&lt;*&gt;&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">a</span><span class="p">:</span> <span class="n">T</span><span class="o">?</span><span class="p">,</span> <span class="nl">f</span><span class="p">:</span> <span class="p">(</span><span class="n">T</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">)</span><span class="o">?</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">?</span> <span class="p">{</span>
+</pre></td><td class='code'><pre><code class='Swift'><span class='line'><span class="kr">infix</span> <span class="kr">operator</span> <span class="o">&lt;*&gt;:</span> <span class="n">chainopts</span>
+</span><span class='line'><span class="k">func</span> <span class="o">&lt;*&gt;&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">a</span><span class="p">:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">,</span> <span class="nl">f</span><span class="p">:</span> <span class="n">Box</span><span class="o">&lt;</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Box</span><span class="o">&lt;</span><span class="n">U</span><span class="o">&gt;</span> <span class="p">{</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 </span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">func</span> <span class="o">&lt;*&gt;&lt;</span><span class="n">T</span><span class="p">,</span> <span class="n">U</span><span class="o">&gt;</span><span class="p">(</span><span class="nl">a</span><span class="p">:</span> <span class="p">[</span><span class="n">T</span><span class="p">],</span> <span class="nl">f</span><span class="p">:</span> <span class="p">[</span><span class="n">T</span> <span class="o">-&gt;</span> <span class="n">U</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="n">U</span><span class="p">]</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">a</span><span class="p">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="n">Optional</span><span class="p">.</span><span class="n">Some</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;*&gt;</span> <span class="n">Optional</span><span class="p">.</span><span class="n">Some</span><span class="p">({</span> <span class="err">$</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">3</span> <span class="p">}))</span>
-</span><span class='line'><span class="c1">// =&gt; 5</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&lt;*&gt;</span> <span class="p">[</span> <span class="p">{</span> <span class="err">$</span><span class="mi">0</span> <span class="o">+</span> <span class="mi">3</span> <span class="p">},</span> <span class="p">{</span> <span class="err">$</span><span class="mi">0</span> <span class="o">*</span> <span class="mi">2</span> <span class="p">}</span> <span class="p">]</span>
-</span><span class='line'><span class="c1">// =&gt; [ 4, 5, 6, 2, 4, 6 ]</span>
+</span><span class='line'><span class="k">let</span> <span class="n">j</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&lt;*&gt;</span> <span class="n">anBoxContainsAddup</span> <span class="o">&lt;*&gt;</span> <span class="n">anBoxContainsAddup</span>
+</span><span class='line'><span class="n">j</span><span class="p">.</span><span class="n">content</span> <span class="c1">// 20001</span>
 </span></code></pre></td></tr></table></div></figure>
 
 </div>
@@ -2221,7 +2181,7 @@ gobjdump -d a.out | checkstack
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - viennakanon -
+  Copyright &copy; 2017 - viennakanon -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

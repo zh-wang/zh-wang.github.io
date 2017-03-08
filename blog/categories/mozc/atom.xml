@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Mozc | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/mozc/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2016-11-10T13:25:22+09:00</updated>
+  <updated>2017-03-08T16:01:43+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -211,14 +211,18 @@ ANDROID_SERVICE_NAME=org.mozc.android.inputmethod.japanese.MozcService
 フォルダ自体とその中のprotobuff, resources_ossをeclipseにインポートすればOK。後はMozcProxyPreferenceActivityというプロジェクトを実行するだけ。</p>
 
 <p>※ ビルドする際に、&#8221;SDK does not have any Build Tools installed.&ldquo;が表示されたら、Build Toolsをダウンロードする必要があります。<br/>
-&#8220;`
-$ /usr/bin/curl -L -O &lsquo;<a href="http://dl.google.com/android/repository/build-tools_r19-linux.zip">http://dl.google.com/android/repository/build-tools_r19-linux.zip</a>&rsquo; &amp;&amp; unzip build-tools_r19-linux.zip -d /opt/android/android-sdk-linux/build-tools/
-$ mv /opt/android/android-sdk-linux/build-tools/android-4.4 /opt/android/android-sdk-linux/build-tools/19.0.0</p>
-
-<p>or</p>
-
-<p>$ /opt/android/android-sdk-linux/tools/android update sdk -u -t build-tools-20.0.0
-&#8220;`</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ /usr/bin/curl -L -O &lsquo;&lt;a href="http://dl.google.com/android/repository/build-tools_r19-linux.zip"&gt;http://dl.google.com/android/repository/build-tools_r19-linux.zip&lt;/a&gt;&rsquo; &amp;&amp; unzip build-tools_r19-linux.zip -d /opt/android/android-sdk-linux/build-tools/
+</span><span class='line'>$ mv /opt/android/android-sdk-linux/build-tools/android-4.4 /opt/android/android-sdk-linux/build-tools/19.0.0&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;or&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;$ /opt/android/android-sdk-linux/tools/android update sdk -u -t build-tools-20.0.0</span></code></pre></td></tr></table></div></figure></p>
 
 <h2>(2) キーのタッチから、変換候補がもらうまで、簡単な解析をやります</h2>
 
@@ -273,93 +277,170 @@ org.mozc.android.inputmethod.japanese.session.SessionExecutor:626:sendKey</p>
 <p>↓<br/>
 org.mozc.android.inputmethod.japanese.session.SessionExecutor:612:evaluateAsynchronously<br/>
 asyncなので、handlerに渡します。<br/>
-&#8220;`java
-  void evaluateAsynchronously(Input.Builder inputBuilder, KeyEventInterface triggeringKeyEvent, EvaluationCallback callback) {</p>
-
-<pre><code>...
-
-handler.sendMessage(handler.obtainMessage(type, context));
-</code></pre>
-
-<p>  }
-&#8220;`</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="kt">void</span> <span class="nf">evaluateAsynchronously</span><span class="o">(</span><span class="n">Input</span><span class="o">.</span><span class="na">Builder</span> <span class="n">inputBuilder</span><span class="o">,</span> <span class="n">KeyEventInterface</span> <span class="n">triggeringKeyEvent</span><span class="o">,</span> <span class="n">EvaluationCallback</span> <span class="n">callback</span><span class="o">)</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;...</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">handler</span><span class="o">.</span><span class="na">sendMessage</span><span class="o">(</span><span class="n">handler</span><span class="o">.</span><span class="na">obtainMessage</span><span class="o">(</span><span class="n">type</span><span class="o">,</span> <span class="n">context</span><span class="o">));</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>↓<br/>
 org.mozc.android.inputmethod.japanese.session.SessionExecutor:300:handlerMessage<br/>
 SessionExecutorの中のExecutorMainCallbackがmessageを取り、処理する。<br/>
-&#8220;`java
-  /<em>*
-   * A core implementation of evaluation executing process.
-   *
-   * <p>This class takes messages from the UI thread. By using {@link SessionHandler},
-   * it evaluates the {@link Input} in a message, and then returns the result with notifying
-   * the UI thread if necessary.
-   * All evaluations should be done with this class in order to keep evaluation in the incoming
-   * order.
-   * Package private for testing purpose.
-   </em>/
-  static class ExecutorMainCallback implements Handler.Callback {</p>
-
-<pre><code>...
-
-@Override
-public boolean handleMessage(Message message) {
-  // Dispatch the message.
-  switch (message.what) {
-    case INITIALIZE_SESSION_HANDLER:
-      sessionHandler.initialize(Context.class.cast(message.obj));
-      break;
-    case DELETE_SESSION:
-      deleteSession();
-      break;
-    case EVALUATE_ASYNCHRONOUSLY:
-    case EVALUATE_KEYEVENT_ASYNCHRONOUSLY:
-      evaluateAsynchronously(
-          AsynchronousEvaluationContext.class.cast(message.obj), message.getTarget());
-...
-</code></pre>
-
-<pre><code>
-↓  
-org.mozc.android.inputmethod.japanese.session.SessionExecutor:459  
-</code></pre>
-
-<pre><code>  context.outCommand = evaluate(inputBuilder.build());
-</code></pre>
-
-<pre><code>
-↓  
-org.mozc.android.inputmethod.japanese.session.SessionExecutor:333  
-ここで、JNIを通してnative変換エンジンと通信する。（同期で）
-</code></pre>
-
-<pre><code>private Command evaluate(Input input) {
-    ...
-    Command outCommand = sessionHandler.evalCommand(inCommand);
-    ...
-}
-</code></pre>
-
-<pre><code>
-↓  
-org.mozc.android.inputmethod.japanese.session.LocalSessionHandler:100  
-</code></pre>
-
-<p>  @Override
-  public Command evalCommand(Command command) {
-    byte[] inBytes = command.toByteArray();
-    byte[] outBytes = null;
-    outBytes = MozcJNI.evalCommand(inBytes);
-    try {
-      return Command.parseFrom(outBytes);
-    } catch (InvalidProtocolBufferException e) {
-      MozcLog.w(&ldquo;InvalidProtocolBufferException is thrown.&rdquo;
-          + &ldquo;We can do nothing so just return default instance.&rdquo;);
-      MozcLog.w(e.toString());
-      return Command.getDefaultInstance();
-    }
-  }
-&#8220;`</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'>  <span class="o">/&lt;</span><span class="n">em</span><span class="o">&gt;*</span>
+</span><span class='line'>   <span class="o">*</span> <span class="n">A</span> <span class="n">core</span> <span class="n">implementation</span> <span class="n">of</span> <span class="n">evaluation</span> <span class="n">executing</span> <span class="n">process</span><span class="o">.</span>
+</span><span class='line'>   <span class="o">*</span>
+</span><span class='line'>   <span class="o">*</span> <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">This</span> <span class="kd">class</span> <span class="nc">takes</span> <span class="n">messages</span> <span class="n">from</span> <span class="n">the</span> <span class="n">UI</span> <span class="n">thread</span><span class="o">.</span> <span class="n">By</span> <span class="n">using</span> <span class="o">{</span><span class="nd">@link</span> <span class="n">SessionHandler</span><span class="o">},</span>
+</span><span class='line'>   <span class="o">*</span> <span class="n">it</span> <span class="n">evaluates</span> <span class="n">the</span> <span class="o">{</span><span class="nd">@link</span> <span class="n">Input</span><span class="o">}</span> <span class="n">in</span> <span class="n">a</span> <span class="n">message</span><span class="o">,</span> <span class="n">and</span> <span class="n">then</span> <span class="n">returns</span> <span class="n">the</span> <span class="n">result</span> <span class="n">with</span> <span class="n">notifying</span>
+</span><span class='line'>   <span class="o">*</span> <span class="n">the</span> <span class="n">UI</span> <span class="n">thread</span> <span class="k">if</span> <span class="n">necessary</span><span class="o">.</span>
+</span><span class='line'>   <span class="o">*</span> <span class="n">All</span> <span class="n">evaluations</span> <span class="n">should</span> <span class="n">be</span> <span class="n">done</span> <span class="n">with</span> <span class="k">this</span> <span class="kd">class</span> <span class="nc">in</span> <span class="n">order</span> <span class="n">to</span> <span class="n">keep</span> <span class="n">evaluation</span> <span class="n">in</span> <span class="n">the</span> <span class="n">incoming</span>
+</span><span class='line'>   <span class="o">*</span> <span class="n">order</span><span class="o">.</span>
+</span><span class='line'>   <span class="o">*</span> <span class="n">Package</span> <span class="kd">private</span> <span class="k">for</span> <span class="n">testing</span> <span class="n">purpose</span><span class="o">.</span>
+</span><span class='line'>   <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;/</span>
+</span><span class='line'>  <span class="kd">static</span> <span class="kd">class</span> <span class="nc">ExecutorMainCallback</span> <span class="kd">implements</span> <span class="n">Handler</span><span class="o">.</span><span class="na">Callback</span> <span class="o">{&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;...</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@Override</span>
+</span><span class='line'><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">handleMessage</span><span class="o">(</span><span class="n">Message</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>  <span class="c1">// Dispatch the message.</span>
+</span><span class='line'>  <span class="k">switch</span> <span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">what</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="k">case</span> <span class="nl">INITIALIZE_SESSION_HANDLER:</span>
+</span><span class='line'>      <span class="n">sessionHandler</span><span class="o">.</span><span class="na">initialize</span><span class="o">(</span><span class="n">Context</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">cast</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">obj</span><span class="o">));</span>
+</span><span class='line'>      <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">case</span> <span class="nl">DELETE_SESSION:</span>
+</span><span class='line'>      <span class="n">deleteSession</span><span class="o">();</span>
+</span><span class='line'>      <span class="k">break</span><span class="o">;</span>
+</span><span class='line'>    <span class="k">case</span> <span class="nl">EVALUATE_ASYNCHRONOUSLY:</span>
+</span><span class='line'>    <span class="k">case</span> <span class="nl">EVALUATE_KEYEVENT_ASYNCHRONOUSLY:</span>
+</span><span class='line'>      <span class="n">evaluateAsynchronously</span><span class="o">(</span>
+</span><span class='line'>          <span class="n">AsynchronousEvaluationContext</span><span class="o">.</span><span class="na">class</span><span class="o">.</span><span class="na">cast</span><span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">obj</span><span class="o">),</span> <span class="n">message</span><span class="o">.</span><span class="na">getTarget</span><span class="o">());</span>
+</span><span class='line'><span class="o">...</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'><span class="err">↓</span>
+</span><span class='line'><span class="n">org</span><span class="o">.</span><span class="na">mozc</span><span class="o">.</span><span class="na">android</span><span class="o">.</span><span class="na">inputmethod</span><span class="o">.</span><span class="na">japanese</span><span class="o">.</span><span class="na">session</span><span class="o">.</span><span class="na">SessionExecutor</span><span class="o">:</span><span class="mi">459</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>  <span class="n">context</span><span class="o">.</span><span class="na">outCommand</span> <span class="o">=</span> <span class="n">evaluate</span><span class="o">(</span><span class="n">inputBuilder</span><span class="o">.</span><span class="na">build</span><span class="o">());</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'><span class="err">↓</span>
+</span><span class='line'><span class="n">org</span><span class="o">.</span><span class="na">mozc</span><span class="o">.</span><span class="na">android</span><span class="o">.</span><span class="na">inputmethod</span><span class="o">.</span><span class="na">japanese</span><span class="o">.</span><span class="na">session</span><span class="o">.</span><span class="na">SessionExecutor</span><span class="o">:</span><span class="mi">333</span>
+</span><span class='line'><span class="n">ここで</span><span class="err">、</span><span class="n">JNIを通してnative変換エンジンと通信する</span><span class="err">。（</span><span class="n">同期で</span><span class="err">）</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="kd">private</span> <span class="n">Command</span> <span class="nf">evaluate</span><span class="o">(</span><span class="n">Input</span> <span class="n">input</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'>    <span class="n">Command</span> <span class="n">outCommand</span> <span class="o">=</span> <span class="n">sessionHandler</span><span class="o">.</span><span class="na">evalCommand</span><span class="o">(</span><span class="n">inCommand</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">...</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span>
+</span><span class='line'><span class="err">↓</span>
+</span><span class='line'><span class="n">org</span><span class="o">.</span><span class="na">mozc</span><span class="o">.</span><span class="na">android</span><span class="o">.</span><span class="na">inputmethod</span><span class="o">.</span><span class="na">japanese</span><span class="o">.</span><span class="na">session</span><span class="o">.</span><span class="na">LocalSessionHandler</span><span class="o">:</span><span class="mi">100</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>  <span class="nd">@Override</span>
+</span><span class='line'>  <span class="kd">public</span> <span class="n">Command</span> <span class="nf">evalCommand</span><span class="o">(</span><span class="n">Command</span> <span class="n">command</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kt">byte</span><span class="o">[]</span> <span class="n">inBytes</span> <span class="o">=</span> <span class="n">command</span><span class="o">.</span><span class="na">toByteArray</span><span class="o">();</span>
+</span><span class='line'>    <span class="kt">byte</span><span class="o">[]</span> <span class="n">outBytes</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>    <span class="n">outBytes</span> <span class="o">=</span> <span class="n">MozcJNI</span><span class="o">.</span><span class="na">evalCommand</span><span class="o">(</span><span class="n">inBytes</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">try</span> <span class="o">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">Command</span><span class="o">.</span><span class="na">parseFrom</span><span class="o">(</span><span class="n">outBytes</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">InvalidProtocolBufferException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>      <span class="n">MozcLog</span><span class="o">.</span><span class="na">w</span><span class="o">(&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">InvalidProtocolBufferException</span> <span class="n">is</span> <span class="n">thrown</span><span class="o">.&amp;</span><span class="n">rdquo</span><span class="o">;</span>
+</span><span class='line'>          <span class="o">+</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="o">;</span><span class="n">We</span> <span class="n">can</span> <span class="k">do</span> <span class="n">nothing</span> <span class="n">so</span> <span class="n">just</span> <span class="k">return</span> <span class="k">default</span> <span class="n">instance</span><span class="o">.&amp;</span><span class="n">rdquo</span><span class="o">;);</span>
+</span><span class='line'>      <span class="n">MozcLog</span><span class="o">.</span><span class="na">w</span><span class="o">(</span><span class="n">e</span><span class="o">.</span><span class="na">toString</span><span class="o">());</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">Command</span><span class="o">.</span><span class="na">getDefaultInstance</span><span class="o">();</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'>  <span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure></p>
 
 <p>ここでのCommand.parseFrom(outBytes)をデーバッグすると、以下の入力、出力、変換候補リストが分かります。</p>
 

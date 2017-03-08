@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Swift | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/swift/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2016-11-10T13:25:22+09:00</updated>
+  <updated>2017-03-08T16:01:43+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -262,12 +262,12 @@ Note that even validations are called in order, results are returned in random o
 
 <p>$C$ is a <strong>Functor</strong> if $C$ has the following ability.</p>
 
-<p>{% math %}
+<p><script type="math/tex; mode=display">
     C[A].map(A \rightarrow B) = C[B]
-{% endmath %}</p>
+</script></p>
 
 <p>For example, we can write such a function <code>functor</code> or <code>map</code>.
-&#8220;`swift
+&#8220;`Swift
     class Box<T> {
         var content: T
         init(content: T) {
@@ -318,9 +318,9 @@ d.content // 3
 
 $C$ is a __Monad__ if $C$ has the following ability. This is also called as `flatmap`.
 
-{% math %}
+<script type="math/tex; mode=display">
     C[A].flatmap(A \rightarrow C[B]) = C[B]
-{% endmath %}
+</script>
 </code></pre>
 
 <pre><code>class Box&lt;T&gt; {
@@ -362,9 +362,9 @@ g.content // 2001
 
 $C$ is a __Applicative__ if $C$ has the following ability.
 
-{% math %}
+<script type="math/tex; mode=display">
     C[A].apply(C[A \rightarrow B]) = C[B]
-{% endmath %}
+</script>
 </code></pre>
 
 <pre><code>class Box&lt;T&gt; {

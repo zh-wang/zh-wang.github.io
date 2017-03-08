@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Codility | Welcome to FutureAppLaboratory]]></title>
   <link href="http://zh-wang.github.io/blog/categories/codility/atom.xml" rel="self"/>
   <link href="http://zh-wang.github.io/"/>
-  <updated>2016-11-10T13:25:22+09:00</updated>
+  <updated>2017-03-08T16:01:43+09:00</updated>
   <id>http://zh-wang.github.io/</id>
   <author>
     <name><![CDATA[viennakanon]]></name>
@@ -469,13 +469,13 @@ Now we&rsquo;ll make a solution for the <strong>swap</strong> version.</p>
 
 <h3>1. Split input array</h3>
 
-<p>We split given array {% m %} a_0, a_1, \cdots, a_n-1 {% em %} by index {% m %} i {% em %}. Then we get subarray {% m %} L_1 = {a_0, a_1, \cdots, a_i} {% em %} and {% m %} L_2 = {a_i+1, a_i+2, \cdots, a_n-1} {% em %}.</p>
+<p>We split given array <script type="math/tex"> a_0, a_1, \cdots, a_n-1 </script> by index <script type="math/tex"> i </script>. Then we get subarray <script type="math/tex"> L_1 = {a_0, a_1, \cdots, a_i} </script> and <script type="math/tex"> L_2 = {a_i+1, a_i+2, \cdots, a_n-1} </script>.</p>
 
 <h3>2. Limited Swap</h3>
 
 <p>Note that, we consider that a swap of $a_j$ and $a_k$ only occurs in array $L_1$, $0 \leq j &lt; k &lt; i$. Why? If such a swap occurs in $L_2$, we just reverse the input array, then do the same calculation on it again to get the result.</p>
 
-<p>Now we want to minimize partial sum of {% m %} L_1 {% em %}(after a swap) and {% m %} L_2 {% em %}, as we did in Part 1.</p>
+<p>Now we want to minimize partial sum of <script type="math/tex"> L_1 </script>(after a swap) and <script type="math/tex"> L_2 </script>, as we did in Part 1.</p>
 
 <h3>3. Calculation on $L_1$(after a swap)</h3>
 
@@ -483,33 +483,33 @@ Now we&rsquo;ll make a solution for the <strong>swap</strong> version.</p>
 
 <p>● Calculate partial sum of $L_1$, stored in $psum$ array.</p>
 
-<p>{% math %}
+<p><script type="math/tex; mode=display">
     psum_x = partial_sum(x) = \sum_{k=0}^x a_k , 0 \leq k \leq x &lt; i
-{% endmath %}</p>
+</script></p>
 
 <p>● Calculate the greatest member&rsquo;s value in $a_0, a_1, \cdots, a_x$</p>
 
-<p>{% math %}
+<p><script type="math/tex; mode=display">
     pmax_x = \max { a_0, a_1, \cdots, a_x } , 0 \leq x &lt; i
-{% endmath %}</p>
+</script></p>
 
 <p>● We define $minsub(x)$ as the possible minimal partial sum we could get for $a_0, a_1, \cdots, a_x$, by remove(swap out) the greatest member.</p>
 
-<p>{% math %}
+<p><script type="math/tex; mode=display">
     minsub(x) = \begin{cases}
         0 &amp; (x = 0) \
         \min { minsub(x-1), psum_x - pmax_x } &amp; (otherwise)
     \end{cases}
-{% endmath %}</p>
+</script></p>
 
 <p>● Last, we define $L_1(x)$ as the possible minimal partial sum after swap in $a_x$. Note that for $x=0$, there is only one element in partial array $a_0$, so we cannot make a swap. We just store $a_0$&rsquo;s value as minimal partial sum.</p>
 
-<p>{% math %}
+<p><script type="math/tex; mode=display">
     L_1(x) = \begin{cases}
         a_0 &amp; (x = 0) \
         \min { L_1(x-1), minsub(x) + a_x } &amp; (otherwise)
     \end{cases}
-{% endmath %}</p>
+</script></p>
 
 <h3>Calculation on $L_2$</h3>
 
@@ -517,7 +517,7 @@ Now we&rsquo;ll make a solution for the <strong>swap</strong> version.</p>
 
 <h3>Merge</h3>
 
-<p>Use results of {% m %} L_1 {% em %} and {% m %} L_2 {% em %}. The largest one is the answer.</p>
+<p>Use results of <script type="math/tex"> L_1 </script> and <script type="math/tex"> L_2 </script>. The largest one is the answer.</p>
 
 <p>Because calculation above is on 1-d array, time and space complexity are O(n).</p>
 
@@ -652,37 +652,37 @@ $(document).ready( function () { $("a[href^='http']:not([href*='" + location.hos
 </ul>
 
 
-<p>For a given array {% m %} a_0, a_1, \cdots, a_n-1 {% em %},</p>
+<p>For a given array <script type="math/tex"> a_0, a_1, \cdots, a_n-1 </script>,</p>
 
 <p>The maximum sum of a compact subsequence can be expressed by the following formula.</p>
 
-<p>{% math %}
+<p><script type="math/tex; mode=display">
     \max { \sum_{k=i}^j a_k, 0 \leq i &lt; j \leq n - 1 }
-{% endmath %}</p>
+</script></p>
 
-<p>Beca$use we want the maximal part from {% m %} i {% em %} to {% m %} j {% em %}, by thinking reversely, we can calculate the minimal <a href="http://mathworld.wolfram.com/PartialSum.html">partial sum</a> of sub array {% m %} a_0, a_1, \cdots, a_x-1 {% em %} as {% m %} f(x) {% em %}, minimal partial sum of sub array {% m %} a_x+1, a_x+2, \cdots, a_n-1 {% em %} as {% m %} g(x) {% em %}. Then use the whole sum to subtract them if them are minus values.</p>
+<p>Beca$use we want the maximal part from <script type="math/tex"> i </script> to <script type="math/tex"> j </script>, by thinking reversely, we can calculate the minimal <a href="http://mathworld.wolfram.com/PartialSum.html">partial sum</a> of sub array <script type="math/tex"> a_0, a_1, \cdots, a_x-1 </script> as <script type="math/tex"> f(x) </script>, minimal partial sum of sub array <script type="math/tex"> a_x+1, a_x+2, \cdots, a_n-1 </script> as <script type="math/tex"> g(x) </script>. Then use the whole sum to subtract them if them are minus values.</p>
 
-<p>let {% m %} S {% em %} to be the accumulation of the given array.</p>
+<p>let <script type="math/tex"> S </script> to be the accumulation of the given array.</p>
 
 <p>let
-{% math %}
+<script type="math/tex; mode=display">
     f(x) = \min { \min { partial_sum(p), 0 \leq p \leq x - 1 } , 0 }
-{% endmath %}</p>
+</script></p>
 
-<p>to be the minimal partial sum of sub array {% m %} a_0, a_1, \cdots, a_x-1 {% em %}.</p>
+<p>to be the minimal partial sum of sub array <script type="math/tex"> a_0, a_1, \cdots, a_x-1 </script>.</p>
 
 <p>let
-{% math %}
+<script type="math/tex; mode=display">
     g(x) = \min { \min { partial_sum(q), x + 1 \leq q \leq n - 1 } , 0 }
-{% endmath %}</p>
+</script></p>
 
-<p>to be the minimal partial sum of sub array {% m %} a_x+1, a_x+2, \cdots, a_n-w {% em %}.</p>
+<p>to be the minimal partial sum of sub array <script type="math/tex"> a_x+1, a_x+2, \cdots, a_n-w </script>.</p>
 
 <p>Then we calculate the following formula.</p>
 
-<p>{% math %}
+<p><script type="math/tex; mode=display">
     \max { S - f(x) - g(x), 0 \leq x \leq n - 1 }
-{% endmath %}</p>
+</script></p>
 
 <ul>
 <li>OK, then write above thought into Java, we get the following codes</li>
