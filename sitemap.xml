@@ -317,29 +317,35 @@
   
   <url>
     <loc>http://zh-wang.github.io/blog/archives/</loc>
-    <lastmod>2017-04-04T18:30:17+09:00</lastmod>
+    <lastmod>2017-07-19T15:11:32+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://zh-wang.github.io/</loc>
-    <lastmod>2017-04-04T18:30:17+09:00</lastmod>
+    <lastmod>2017-07-19T15:11:32+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://zh-wang.github.io/about/</loc>
-    <lastmod>2017-04-04T18:30:17+09:00</lastmod>
+    <lastmod>2017-07-19T15:11:32+09:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   
   <url>
+    <loc>http://zh-wang.github.io/mip/index.html</loc>
+    <lastmod>2017-07-19T14:48:18Z</lastmod>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://zh-wang.github.io/mofu2048/index.html</loc>
-    <lastmod>2014-06-19T17:06:54Z</lastmod>
+    <lastmod>2017-06-12T11:58:03Z</lastmod>
     <priority>0.6</priority>
   </url>
   
